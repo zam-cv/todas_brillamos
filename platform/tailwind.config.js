@@ -18,13 +18,15 @@ module.exports = {
     },
     extend: {
       colors: {
+        't-background': '#943370',
+
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
+        ring: "#943370",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "hsl(var(--primary))",
+          DEFAULT: "#943370",
           foreground: "hsl(var(--primary-foreground))",
         },
         secondary: {
