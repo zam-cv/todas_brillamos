@@ -11,19 +11,21 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import mx.cazv.todasbrillamos.view.components.BottomBar
 import mx.cazv.todasbrillamos.view.components.TopBar
+import mx.cazv.todasbrillamos.view.screens.Chat
+import mx.cazv.todasbrillamos.view.screens.Favorites
+import mx.cazv.todasbrillamos.view.screens.ForgotPassword
+import mx.cazv.todasbrillamos.view.screens.Home
 import mx.cazv.todasbrillamos.view.screens.Login
+import mx.cazv.todasbrillamos.view.screens.Notifications
 import mx.cazv.todasbrillamos.view.screens.Register
+import mx.cazv.todasbrillamos.view.screens.Calendar
+import mx.cazv.todasbrillamos.view.screens.Config
+import mx.cazv.todasbrillamos.view.screens.Store
 
 @Composable
 fun App() {
     val navController = rememberNavController()
-
-    Scaffold(
-        topBar = { TopBar() },
-        bottomBar = { BottomBar(navController) }
-    ) { innerPadding ->
-        Nav(navController, Modifier.padding(innerPadding))
-    }
+    Nav(navController)
 }
 
 @Composable
@@ -34,10 +36,43 @@ fun Nav(navController: NavHostController, modifier: Modifier = Modifier) {
 
         // Screens
         composable(Routes.ROUTE_LOGIN) {
-            Login()
+            Login(navController)
         }
+
         composable(Routes.ROUTE_REGISTER) {
-            Register()
+            Register(navController)
+        }
+
+        composable(Routes.ROUTE_FORGOT_PASSWORD) {
+            ForgotPassword(navController)
+        }
+
+        composable(Routes.ROUTE_STORE) {
+            Store(navController)
+        }
+
+        composable(Routes.ROUTE_CALENDAR) {
+            Calendar(navController)
+        }
+
+        composable(Routes.ROUTE_HOME) {
+            Home(navController)
+        }
+
+        composable(Routes.ROUTE_CONFIG) {
+            Config(navController)
+        }
+
+        composable(Routes.ROUTE_CHAT) {
+            Chat(navController)
+        }
+
+        composable(Routes.ROUTE_FAVORITES) {
+            Favorites(navController)
+        }
+
+        composable(Routes.ROUTE_NOTIFICATIONS) {
+            Notifications(navController)
         }
     }
 }

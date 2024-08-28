@@ -9,16 +9,10 @@ import mx.cazv.todasbrillamos.view.Routes
 import mx.cazv.todasbrillamos.view.layouts.BasicLayout
 
 @Composable
-fun Login(navController: NavHostController) {
+fun Favorites(navController: NavHostController) {
     BasicLayout(navController = navController) {
         Column {
-            Text(text = "Login")
-            TextButton(onClick = { navController.navigate(Routes.ROUTE_HOME) }) {
-                Text(text = "Go to Home")
-            }
-            TextButton(onClick = { navController.navigate(Routes.ROUTE_REGISTER) }) {
-                Text(text = "Go to Register")
-            }
+            Text(text = "Favorites")
         }
     }
 }

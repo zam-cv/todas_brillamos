@@ -33,7 +33,6 @@ fun BottomBar(navController: NavHostController) {
                         launchSingleTop = true
                         restoreState = true
                     }
-
                 },
                 label = { Text(text = screen.tag) },
                 icon = {
