@@ -49,28 +49,25 @@ export default function Dashboard() {
   } satisfies ChartConfig
 
   const chartConfig_pie = {
-    sales: {
-      label: "Ventas",
-    },
     Producto1: {
       label: "Producto #1",
-      color: "hsl(var(--chart-1))",
+      color: "hsl(var(--chart-3))",
     },
     Producto2: {
       label: "Producto #2",
-      color: "hsl(var(--chart-2))",
+      color: "hsl(var(--chart-4))",
     },
     Producto3: {
       label: "Producto #3",
-      color: "hsl(var(--chart-3))",
+      color: "hsl(var(--chart-5))",
     },
     Producto4: {
       label: "Producto #4",
-      color: "hsl(var(--chart-4))",
+      color: "hsl(var(--chart-6))",
     },
     Producto5: {
       label: "Producto #5",
-      color: "hsl(var(--chart-5))",
+      color: "hsl(var(--chart-7))",
     },
   } satisfies ChartConfig
   
