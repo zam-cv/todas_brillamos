@@ -6,66 +6,48 @@ import { DataTableColumnHeader } from "./data-table-column-header";
 
 export const columns: ColumnDef<Task>[] = [
     {
-      accessorKey: "username",
+        accessorKey: "idUsuario",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="ID" />
+        ),
+        cell: ({ row }) => {
+          return (
+            <div className="flex space-x-2">
+              <span className="max-w-[500px] truncate font-medium">
+                {row.getValue("idUsuario")}
+              </span>
+            </div>
+          );
+        },
+      },
+    {
+      accessorKey: "nombre",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Username" />
+        <DataTableColumnHeader column={column} title="Nombre" />
       ),
       cell: ({ row }) => {
         return (
           <div className="flex space-x-2">
             <span className="max-w-[500px] truncate font-medium">
-              {row.getValue("username")}
+              {row.getValue("nombre")}
             </span>
           </div>
         );
       },
     },
     {
-      accessorKey: "firstname",
+      accessorKey: "apellido",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Firstname" />
+        <DataTableColumnHeader column={column} title="Apellido" />
       ),
       cell: ({ row }) => {
         return (
           <div className="flex space-x-2">
             <span className="max-w-[500px] truncate font-medium">
-              {row.getValue("firstname")}
+              {row.getValue("apellido")}
             </span>
           </div>
         );
-      },
-    },
-    {
-      accessorKey: "lastname",
-      header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Lastname" />
-      ),
-      cell: ({ row }) => {
-        return (
-          <div className="flex space-x-2">
-            <span className="max-w-[500px] truncate font-medium">
-              {row.getValue("lastname")}
-            </span>
-          </div>
-        );
-      },
-    },
-    {
-      accessorKey: "team",
-      header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Team" />
-      ),
-      cell: ({ row }) => {
-        return (
-          <div className="flex space-x-2">
-            <span className="max-w-[500px] truncate font-medium">
-              {row.getValue("team")}
-            </span>
-          </div>
-        );
-      },
-      filterFn: (row, id, value) => {
-        return value.includes(row.getValue(id))
       },
     },
     {
@@ -99,63 +81,45 @@ export const columns: ColumnDef<Task>[] = [
       },
     },
     {
-      accessorKey: "semester",
+      accessorKey: "curp",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Semester" />
+        <DataTableColumnHeader column={column} title="CURP" />
       ),
       cell: ({ row }) => {
         return (
           <div className="flex space-x-2">
             <span className="max-w-[500px] truncate font-medium">
-              {row.getValue("semester")}
+              {row.getValue("curp")}
             </span>
           </div>
         );
       },
     },
     {
-      accessorKey: "campus",
+      accessorKey: "street",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Campus" />
+        <DataTableColumnHeader column={column} title="Dirección" />
       ),
       cell: ({ row }) => {
         return (
           <div className="flex space-x-2">
             <span className="max-w-[500px] truncate font-medium">
-              {row.getValue("campus")}
-            </span>
-          </div>
-        );
-      },
-      filterFn: (row, id, value) => {
-        return value.includes(row.getValue(id))
-      },
-    },
-    {
-      accessorKey: "major",
-      header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Major" />
-      ),
-      cell: ({ row }) => {
-        return (
-          <div className="flex space-x-2">
-            <span className="max-w-[500px] truncate font-medium">
-              {row.getValue("major")}
+              {row.getValue("street")}
             </span>
           </div>
         );
       },
     },
     {
-      accessorKey: "email",
+      accessorKey: "ZIP",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Email" />
+        <DataTableColumnHeader column={column} title="Código Postal" />
       ),
       cell: ({ row }) => {
         return (
           <div className="flex space-x-2">
             <span className="max-w-[500px] truncate font-medium">
-              {row.getValue("email")}
+              {row.getValue("ZIP")}
             </span>
           </div>
         );
