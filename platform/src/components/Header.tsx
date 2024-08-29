@@ -7,7 +7,8 @@ import {
   ChartArea,
   ShoppingBasket,
   Truck,
-  GraduationCap
+  GraduationCap,
+  User,
 } from "lucide-react"
 import {
   DropdownMenu,
@@ -42,6 +43,11 @@ const LINKS = [
     icon: GraduationCap,
     to: "/specialists",
   },
+  {
+    title: "Usuarios",
+    icon: User,
+    to: "/users",
+  }
 ]
 
 export default function Header() {

@@ -15,6 +15,7 @@ import Dashboard from "./pages/Dashboard";
 import Products from "./pages/Products";
 import Shipments from "./pages/Shipments";
 import Specialists from "./pages/Specialists";
+import Users from "./pages/Users";
 
 function App() {
   return (
@@ -51,6 +52,11 @@ function App() {
         <Route path="/specialists" element={<Layout />}>
           <Route index element={<Specialists />} />
         </Route>
+
+        <Route path="/users" element={<Layout />}>
+          <Route index element={<Users />} />
+        </Route>
+        
       </Routes>
     </BrowserRouter>
   );
