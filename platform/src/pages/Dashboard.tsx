@@ -108,6 +108,13 @@ export default function Dashboard() {
         </MenubarContent>
       </MenubarMenu>
     </Menubar>
+
+    <div className = "grid grid-rows-[10rem_1fr] w-screen h-screen p-5 gap-5">
+      <div></div>
+
+
+    </div>
+   
     
       
     </div>
