@@ -9,7 +9,6 @@ export const taskSchema = z.object({
     curp: z.string().optional(),
     street: z.string().optional(),
     ZIP: z.string().optional(),
-    with_bus: z.boolean(),
   })
   
   export type Task = z.infer<typeof taskSchema>

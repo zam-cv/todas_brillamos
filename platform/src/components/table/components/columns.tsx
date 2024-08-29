@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ColumnDef } from "@tanstack/react-table";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Task } from "./data/schema";
+import { Task } from "../data/schema";
 import { DataTableColumnHeader } from "./data-table-column-header";
 
 export const columns: ColumnDef<Task>[] = [
@@ -125,27 +125,6 @@ export const columns: ColumnDef<Task>[] = [
         );
       },
     },
-    {
-      accessorKey: "with_bus",
-      header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="With Bus" />
-      ),
-      cell: ({ row }) => {
-        return (
-          <div className="flex">
-            <Checkbox
-              checked={row.getValue("with_bus")}
-              aria-label="Confirm"
-              className="ml-5"
-            />
-          </div>
-        );
-      },
-      enableSorting: false,
-      enableHiding: false,
-      filterFn: (row, id, value) => {
-        return value.includes(row.getValue(id))
-      },
-    }
+    
   ];
   
