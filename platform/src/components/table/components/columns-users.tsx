@@ -2,7 +2,7 @@ import { useState } from "react";
 import { ColumnDef } from "@tanstack/react-table";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Task } from "../data/schema";
-import { DataTableColumnHeader } from "./data-table-column-header";
+import { DataTableColumnHeader } from "./data-table-column-header-users";
 
 export const columns: ColumnDef<Task>[] = [
     {

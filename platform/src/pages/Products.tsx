@@ -1,17 +1,14 @@
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableFooter,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
+import { columns } from "@/components/table/components/columns-products";
+import { DataTable } from "@/components/table/components/data-table-products";
 
 export default function Products() {
+  const mockData = [
+    { idProducto: 'XDcaw1', nombreProd: 'Producto #1', cantidad: '12' }
+  ];
+
+
   return(
     <div>
       <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
@@ -24,24 +21,12 @@ export default function Products() {
 
     <br></br>
 
-      <Table>
-        <TableCaption>Inventario Actual de productos</TableCaption>
-        <TableHeader>
-            <TableRow>
-              <TableHead className="w-[300px]">Nombre del producto</TableHead>
-              <TableHead>Cantidad</TableHead>
-              <TableHead>ID de Producto</TableHead>
-            </TableRow>
-        </TableHeader>
-        <TableBody>
-            <TableRow>
-              <TableCell className="font-medium">Producto #1</TableCell>
-              <TableCell>45</TableCell>
-              <TableCell>ID0001</TableCell>
-            </TableRow>
-        </TableBody>
-      </Table>
-
+    <DataTable
+      data = {mockData}
+      columns = {columns}
+      event_id = {1}
+    />
+      
       
     </div>
   ) 

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { columns } from "@/components/table/components/columns";
-import { DataTable } from "@/components/table/components/data-table";
+import { columns } from "@/components/table/components/columns-users";
+import { DataTable } from "@/components/table/components/data-table-users";
 
 export default function Users(){
 
