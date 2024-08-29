@@ -30,11 +30,11 @@ export default function Dashboard() {
   ]
 
   const chartData_Pie = [
-    { product: "Producto #1", sales: 275, fill: "var(--color-chrome)" },
-    { product: "Producto #2", sales: 200, fill: "var(--color-safari)" },
-    { product: "Producto #3", sales: 187, fill: "var(--color-firefox)" },
-    { product: "Producto #4", sales: 173, fill: "var(--color-edge)" },
-    { product: "Producto #5", sales: 90, fill: "var(--color-other)" },
+    { product: "Producto #1", sales: 275},
+    { product: "Producto #2", sales: 200 },
+    { product: "Producto #3", sales: 187 },
+    { product: "Producto #4", sales: 173},
+    { product: "Producto #5", sales: 90},
   ]
 
   const chartConfig = {
