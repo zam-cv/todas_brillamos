@@ -36,7 +36,7 @@ export default function Home() {
           <form>
             <div className="grid gap-2">
               <div className="grid gap-1">
-                <Label className="sr-only" htmlFor="email">
+                <Label className="card" htmlFor="email">
                   Email
                 </Label>
                 <div className="flex flex-col gap-5 pb-5">
@@ -54,6 +54,7 @@ export default function Home() {
                     autoCapitalize="none"
                     autoComplete="email"
                     autoCorrect="off"
+                    
                   />
                 </div>
               </div>
