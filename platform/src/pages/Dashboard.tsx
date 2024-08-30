@@ -13,6 +13,27 @@ import {
   MenubarSubTrigger,
   MenubarTrigger,
 } from "@/components/ui/menubar"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import {
+  Activity,
+  ArrowUpRight,
+  CircleUser,
+  CreditCard,
+  DollarSign,
+  Menu,
+  Package2,
+  Search,
+  Users,
+} from "lucide-react"
+
+
 
 export default function Dashboard() {  
   return (
@@ -108,13 +129,29 @@ export default function Dashboard() {
         </MenubarContent>
       </MenubarMenu>
     </Menubar>
+    <br></br>
+    <div className="grid grid-cols-4 gap-x-4">
+      <div>
+      <Card x-chunk="dashboard-01-chunk-1">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">
+                Subscriptions
+              </CardTitle>
+              <Users className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">+2350</div>
+              <p className="text-xs text-muted-foreground">
+                +180.1% from last month
+              </p>
+            </CardContent>
+          </Card>
 
-    <div className = "grid grid-rows-[10rem_1fr] w-screen h-screen p-5 gap-5">
-      <div></div>
-
-
+      </div>
+      <div className="bg-gray-200 p-4">Block 2</div>
+      <div className="bg-gray-200 p-4">Block 3</div>
+      <div className="bg-gray-200 p-4">Block 4</div>
     </div>
-   
     
       
     </div>
