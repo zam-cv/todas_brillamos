@@ -38,8 +38,34 @@ import {
   AvatarImage,
 } from "@/components/ui/avatar"
 
+import { TrendingUp } from "lucide-react"
+import { Bar, BarChart, CartesianGrid, Cell, LabelList } from "recharts"
+
+import {
+  ChartConfig,
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/components/ui/chart"
+
+const chartData = [
+  { month: "January", visitors: 186 },
+  { month: "February", visitors: 205 },
+  { month: "March", visitors: -207 },
+  { month: "April", visitors: 173 },
+  { month: "May", visitors: -209 },
+  { month: "June", visitors: 214 },
+]
+
+const chartConfig = {
+  visitors: {
+    label: "Visitors",
+  },
+} satisfies ChartConfig
+
 
 export default function Dashboard() {  
+
   return (
     <div>
       <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
@@ -283,6 +309,42 @@ export default function Dashboard() {
               </div>
             </CardContent>
           </Card>
+      </div>
+      <div>
+          <Card x-chunk="dashboard-01-chunk-5">
+              <CardHeader>
+                <CardTitle>Overview</CardTitle>
+              </CardHeader>
+              <CardContent className="grid gap-8">
+              <ChartContainer config={chartConfig}>
+          <BarChart accessibilityLayer data={chartData}>
+            <CartesianGrid vertical={false} />
+            <ChartTooltip
+              cursor={false}
+              content={<ChartTooltipContent hideLabel hideIndicator />}
+            />
+            <Bar dataKey="visitors">
+              <LabelList position="top" dataKey="month" fillOpacity={1} />
+              {chartData.map((item) => (
+                <Cell
+                  key={item.month}
+                  fill={
+                    item.visitors > 0
+                      ? "hsl(var(--chart-1))"
+                      : "hsl(var(--chart-2))"
+                  }
+                />
+              ))}
+            </Bar>
+          </BarChart>
+        </ChartContainer>
+
+
+
+
+              </CardContent>
+          </Card>
+
       </div>
       
     </div>
