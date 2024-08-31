@@ -9,9 +9,30 @@ export default function Specialists() {
           Especialistas
       </h2>   
       <br></br>
-      <Button>
-        <IoIosAddCircleOutline className="mr-2 h-4 w-4"/>Añadir Especialista
-      </Button>
+      <div className="absolute overflow-auto flex flex-col gap-5 ">
+          <div>
+            <Button>
+              <IoIosAddCircleOutline className="mr-2 h-4 w-4"/>Añadir Especialista
+            </Button>
+          </div>
+          <div>
+            <Button>
+              <IoIosAddCircleOutline className="mr-2 h-4 w-4"/>Añadir Producto
+            </Button>
+          </div>
+          <div>
+            <Button>
+              <IoIosAddCircleOutline className="mr-2 h-4 w-4"/>Añadir Etiqueta
+            </Button>
+          </div>
+          <div>
+            <Button>
+              <IoIosAddCircleOutline className="mr-2 h-4 w-4"/>Añadir Artículo
+            </Button>
+          </div>
+       
+      </div>
+      
       
     </div>
   )

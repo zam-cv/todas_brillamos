@@ -18,6 +18,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { IoIosAddCircleOutline } from "react-icons/io";
 import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Button } from "@/components/ui/button"
@@ -39,8 +40,8 @@ const LINKS = [
     to: "/shipments",
   },
   {
-    title: "Especialistas",
-    icon: GraduationCap,
+    title: "Agregar",
+    icon: IoIosAddCircleOutline,
     to: "/specialists",
   },
   {
