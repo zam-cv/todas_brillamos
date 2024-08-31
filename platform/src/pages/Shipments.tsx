@@ -8,11 +8,10 @@ export default function Shipments() {
 
   return (
     <div>
-  <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
+    <h2 className="scroll-m-20 text-3xl font-semibold tracking-tight first:mt-0">
           Envíos
-      </h2>      
-      <br></br>
-      <br></br>
+    </h2>
+    <br></br>      
       <DataTable 
         data = {mockData}
         columns={columns}

@@ -11,13 +11,9 @@ export default function Products() {
 
   return(
     <div>
-      <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
+      <h2 className="scroll-m-20  text-3xl font-semibold tracking-tight first:mt-0">
           Productos
       </h2>
-      <div className="flex w-full max-w-sm items-center space-x-2">
-        <Input type= "search" placeholder = "search" />
-        <Button type= "submit">Añadir Producto</Button>
-      </div>
 
     <br></br>
 
