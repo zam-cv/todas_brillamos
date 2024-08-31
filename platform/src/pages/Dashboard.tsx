@@ -12,7 +12,7 @@ import {
   MenubarSubContent,
   MenubarSubTrigger,
   MenubarTrigger,
-} from "@/components/ui/menubar"
+} from "@/components/ui/menubar";
 import {
   Card,
   CardContent,
@@ -20,7 +20,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 import {
   Activity,
   ArrowUpRight,
@@ -31,23 +31,22 @@ import {
   Package2,
   Search,
   Users,
-} from "lucide-react"
+} from "lucide-react";
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
-} from "@/components/ui/avatar"
+} from "@/components/ui/avatar";
 
-import { TrendingUp } from "lucide-react"
-import { Bar, BarChart, CartesianGrid, Cell, LabelList } from "recharts"
-import { XAxis } from "recharts"
+import { TrendingUp } from "lucide-react";
+import { Bar, BarChart, CartesianGrid, Cell, LabelList, XAxis } from "recharts";
 
 import {
   ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/ui/chart"
+} from "@/components/ui/chart";
 
 const chartData = [
   { month: "January", desktop: 186, mobile: 80 },
@@ -56,8 +55,7 @@ const chartData = [
   { month: "April", desktop: 73, mobile: 190 },
   { month: "May", desktop: 209, mobile: 130 },
   { month: "June", desktop: 214, mobile: 140 },
-]
-
+];
 
 const chartConfig = {
   desktop: {
@@ -68,21 +66,19 @@ const chartConfig = {
     label: "Mobile",
     color: "hsl(var(--chart-2))",
   },
-} satisfies ChartConfig
+} satisfies ChartConfig;
 
-
-export default function Dashboard() {  
-
+export default function Dashboard() {
   return (
     <div>
       <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
         Dashboard
       </h2>
-      <br></br>
-    <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
-      <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4">
-        <div>
-        <Card x-chunk="dashboard-01-chunk-1">
+      <br />
+      <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
+        <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4">
+          <div>
+            <Card x-chunk="dashboard-01-chunk-1">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium">
                   Subscriptions
@@ -96,14 +92,12 @@ export default function Dashboard() {
                 </p>
               </CardContent>
             </Card>
-        </div>
-        
-        <div>
-        <Card x-chunk="dashboard-01-chunk-0">
+          </div>
+
+          <div>
+            <Card x-chunk="dashboard-01-chunk-0">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                  Total Revenue
-                </CardTitle>
+                <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
                 <DollarSign className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
@@ -113,10 +107,10 @@ export default function Dashboard() {
                 </p>
               </CardContent>
             </Card>
-        </div>
+          </div>
 
-        <div>
-        <Card x-chunk="dashboard-01-chunk-2">
+          <div>
+            <Card x-chunk="dashboard-01-chunk-2">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium">Sales</CardTitle>
                 <CreditCard className="h-4 w-4 text-muted-foreground" />
@@ -128,9 +122,10 @@ export default function Dashboard() {
                 </p>
               </CardContent>
             </Card>
-        </div>
-        <div>
-        <Card x-chunk="dashboard-01-chunk-3">
+          </div>
+
+          <div>
+            <Card x-chunk="dashboard-01-chunk-3">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium">Active Now</CardTitle>
                 <Activity className="h-4 w-4 text-muted-foreground" />
@@ -142,11 +137,12 @@ export default function Dashboard() {
                 </p>
               </CardContent>
             </Card>
+          </div>
         </div>
-      </div>
-      <div className="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
-        <div>
-        <Card x-chunk="dashboard-01-chunk-5">
+
+        <div className="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
+          <div>
+            <Card x-chunk="dashboard-01-chunk-5">
               <CardHeader>
                 <CardTitle>Recent Sales</CardTitle>
               </CardHeader>
@@ -166,6 +162,7 @@ export default function Dashboard() {
                   </div>
                   <div className="ml-auto font-medium">+$1,999.00</div>
                 </div>
+
                 <div className="flex items-center gap-4">
                   <Avatar className="hidden h-9 w-9 sm:flex">
                     <AvatarImage src="/avatars/02.png" alt="Avatar" />
@@ -181,6 +178,7 @@ export default function Dashboard() {
                   </div>
                   <div className="ml-auto font-medium">+$39.00</div>
                 </div>
+
                 <div className="flex items-center gap-4">
                   <Avatar className="hidden h-9 w-9 sm:flex">
                     <AvatarImage src="/avatars/03.png" alt="Avatar" />
@@ -196,6 +194,7 @@ export default function Dashboard() {
                   </div>
                   <div className="ml-auto font-medium">+$299.00</div>
                 </div>
+
                 <div className="flex items-center gap-4">
                   <Avatar className="hidden h-9 w-9 sm:flex">
                     <AvatarImage src="/avatars/04.png" alt="Avatar" />
@@ -211,6 +210,7 @@ export default function Dashboard() {
                   </div>
                   <div className="ml-auto font-medium">+$99.00</div>
                 </div>
+
                 <div className="flex items-center gap-4">
                   <Avatar className="hidden h-9 w-9 sm:flex">
                     <AvatarImage src="/avatars/05.png" alt="Avatar" />
@@ -228,46 +228,37 @@ export default function Dashboard() {
                 </div>
               </CardContent>
             </Card>
-        </div>
-        <div>
+          </div>
+
+          <div>
             <Card x-chunk="dashboard-01-chunk-5">
-                <CardHeader>
-                  <CardTitle>Overview</CardTitle>
-                </CardHeader>
-                <CardContent className="grid gap-8">
+              <CardHeader>
+                <CardTitle>Overview</CardTitle>
+              </CardHeader>
+              <CardContent className="grid gap-8">
                 <ChartContainer config={chartConfig}>
-                <ChartContainer config={chartConfig}>
-              <BarChart accessibilityLayer data={chartData}>
-                <CartesianGrid vertical={false} />
-                <XAxis
-                  dataKey="month"
-                  tickLine={false}
-                  tickMargin={10}
-                  axisLine={false}
-                  tickFormatter={(value) => value.slice(0, 3)}
-                />
-                <ChartTooltip
-                  cursor={false}
-                  content={<ChartTooltipContent indicator="dashed" />}
-                />
-                <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
-                <Bar dataKey="mobile" fill="var(--color-mobile)" radius={4} />
-              </BarChart>
-            </ChartContainer>
-          </ChartContainer>
-
-
-
-
-                </CardContent>
+                  <BarChart accessibilityLayer data={chartData}>
+                    <CartesianGrid vertical={false} />
+                    <XAxis
+                      dataKey="month"
+                      tickLine={false}
+                      tickMargin={10}
+                      axisLine={false}
+                      tickFormatter={(value) => value.slice(0, 3)}
+                    />
+                    <ChartTooltip
+                      cursor={false}
+                      content={<ChartTooltipContent indicator="dashed" />}
+                    />
+                    <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
+                    <Bar dataKey="mobile" fill="var(--color-mobile)" radius={4} />
+                  </BarChart>
+                </ChartContainer>
+              </CardContent>
             </Card>
-
+          </div>
         </div>
-        
-      </div>
-    </main>
-      
+      </main>
     </div>
-  )
-  
+  );
 }
