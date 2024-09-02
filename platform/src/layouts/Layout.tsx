@@ -2,7 +2,7 @@ import Header, { HeaderMobile } from "@/components/Header";
 import { Outlet } from "react-router-dom";
 
 export default function Layout() {
-  return <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
+  return <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]  ">
     <Header />
     <div className="flex flex-col">
       <HeaderMobile />

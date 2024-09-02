@@ -73,15 +73,12 @@ export default function Products() {
 
     <br></br>
 
-    <div>   
+  
        <DataTable
       data = {mockData}
       columns = {columns}
       event_id = {1}
     />
-    </div>
-
-      
       
     </div>
   ) 
