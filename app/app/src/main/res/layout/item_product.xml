@@ -25,7 +25,7 @@
         app:layout_constraintEnd_toEndOf="@id/ivProduct" />
 
     <TextView
-        android:id="@+id/ivProductName"
+        android:id="@+id/tvProductName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         tools:text="AYNII Toalla Femenina Reutilizable"
@@ -36,35 +36,35 @@
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <TextView
-        android:id="@+id/ivProductType"
+        android:id="@+id/tvProductType"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textSize="12sp"
         tools:text="Nocturna"
-        app:layout_constraintTop_toBottomOf="@id/ivProductName"
+        app:layout_constraintTop_toBottomOf="@id/tvProductName"
         app:layout_constraintStart_toStartOf="parent"/>
 
     <TextView
-        android:id="@+id/ivProductPrice"
+        android:id="@+id/tvProductPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         tools:text="$ 150"
-        app:layout_constraintTop_toBottomOf="@id/ivProductType"
+        app:layout_constraintTop_toBottomOf="@id/tvProductType"
         app:layout_constraintStart_toStartOf="parent"/>
 
     <TextView
-        android:id="@+id/ivProductDiscountPrice"
+        android:id="@+id/tvProductDiscountPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:textColor="@android:color/darker_gray"
-        app:layout_constraintStart_toEndOf="@id/ivProductPrice"
-        app:layout_constraintTop_toTopOf="@id/ivProductPrice"
+        app:layout_constraintStart_toEndOf="@id/tvProductPrice"
+        app:layout_constraintTop_toTopOf="@id/tvProductPrice"
         tools:text="Discount Price" />
 
     <TextView
-        android:id="@+id/ivProductDiscountPercentage"
+        android:id="@+id/tvProductDiscountPercentage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
