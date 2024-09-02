@@ -21,7 +21,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Preview(showBackground = true, widthDp = 320, heightDp = 640)
+@Preview(showBackground = true, widthDp = 390, heightDp = 840)
 @Composable
 fun GreetingPreview() {
     TodasBrillamosTheme {
