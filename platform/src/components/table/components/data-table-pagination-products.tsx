@@ -22,7 +22,7 @@ import {
     table,
   }: DataTablePaginationProps<TData>) {
     return (
-      <div className="flex items-center justify-between px-2">
+      <div className="flex items-center justify-between px-2 ">
         <div></div>
         <div className="flex items-center space-x-6git lg:space-x-8">
           <div className="flex items-center space-x-2">
