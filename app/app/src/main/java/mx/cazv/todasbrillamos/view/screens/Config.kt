@@ -1,8 +1,6 @@
 package mx.cazv.todasbrillamos.view.screens
 
-import androidx.compose.material3.*
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,15 +13,6 @@ import androidx.compose.material.icons.automirrored.filled.ExitToApp
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.automirrored.outlined.InsertDriveFile
 import androidx.compose.material.icons.filled.CreditCard
-import androidx.compose.material.icons.filled.ExitToApp
-import androidx.compose.material.icons.filled.FilePresent
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.InsertDriveFile
-import androidx.compose.material.icons.filled.KeyboardArrowRight
-import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material.icons.filled.QuestionMark
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material.icons.outlined.Notifications
@@ -37,20 +26,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import mx.cazv.todasbrillamos.ui.theme.BackgroundColor
 import mx.cazv.todasbrillamos.view.components.BottomBar
-import mx.cazv.todasbrillamos.view.components.CustomBottomBar
 import mx.cazv.todasbrillamos.view.components.CustomTopBar
-import mx.cazv.todasbrillamos.view.layouts.BasicLayout
 import mx.cazv.todasbrillamos.view.layouts.CustomLayout
-import mx.cazv.todasbrillamos.view.layouts.MainLayout
 
 @Composable
 fun Option(title: String, icon: ImageVector) {
@@ -81,7 +65,7 @@ fun Option(title: String, icon: ImageVector) {
             ) {
                 Icon(
                     icon,
-                    contentDescription = "Settings",
+                    contentDescription = "Icon",
                     modifier = Modifier
                         .size(22.dp)
                         .align(Alignment.Center)
