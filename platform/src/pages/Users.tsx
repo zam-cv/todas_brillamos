@@ -18,7 +18,7 @@ export default function Users(){
           <br></br>  
             <div className="flex items-center justify-between space-y-2">
             </div>
-            <div className = "overflow-x-auto">
+            <div>
               <DataTable
                 data = {mockParticipants}
                 columns={columns}
