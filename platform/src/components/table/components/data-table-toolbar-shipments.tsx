@@ -30,7 +30,7 @@ export function DataTableToolbar<TData>({
     <div className="flex items-center justify-between">
       <div className="flex flex-1 items-center space-x-2">
         <Input
-          placeholder="Filrtar Envios"
+          placeholder="Filtrar Envios"
           value={
             (table.getColumn("username")?.getFilterValue() as string) ?? ""
           }

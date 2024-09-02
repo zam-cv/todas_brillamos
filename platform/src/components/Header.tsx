@@ -40,15 +40,16 @@ const LINKS = [
     to: "/shipments",
   },
   {
-    title: "Agregar",
-    icon: IoIosAddCircleOutline,
-    to: "/specialists",
-  },
-  {
     title: "Usuarios",
     icon: User,
     to: "/users",
+  },
+  {
+    title: "Agregar",
+    icon: IoIosAddCircleOutline,
+    to: "/specialists",
   }
+ 
 ]
 
 export default function Header() {
