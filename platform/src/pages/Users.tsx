@@ -6,7 +6,38 @@ import { DataTable } from "@/components/table/components/data-table-users";
 export default function Users(){
 
   const mockParticipants = [
-    { idUsuario: '1', nombre: 'John', apellido: 'Doe', personal_email: 'john.doe@example.com', phone: '123-456-7890', curp: '2132818181', street: 'Calle #1', ZIP: '1213213'}
+    { idUsuario: '1', 
+      nombre: 'John', 
+      apellido: 'Doe', 
+      personal_email: 'john.doe@example.com', 
+      phone: '123-456-7890', 
+      curp: '2132818181', 
+      street: 'Calle #1', 
+      ZIP: '1213213'},
+      { idUsuario: '1', 
+        nombre: 'John', 
+        apellido: 'Doe', 
+        personal_email: 'john.doe@example.com', 
+        phone: '123-456-7890', 
+        curp: '2132818181', 
+        street: 'Calle #1', 
+        ZIP: '1213213'},
+        { idUsuario: '1', 
+          nombre: 'John', 
+          apellido: 'Doe', 
+          personal_email: 'john.doe@example.com', 
+          phone: '123-456-7890', 
+          curp: '2132818181', 
+          street: 'Calle #1', 
+          ZIP: '1213213'},
+          { idUsuario: '1', 
+            nombre: 'John', 
+            apellido: 'Doe', 
+            personal_email: 'john.doe@example.com', 
+            phone: '123-456-7890', 
+            curp: '2132818181', 
+            street: 'Calle #1', 
+            ZIP: '1213213'},
     // Add more mock participants as needed
   ];
 

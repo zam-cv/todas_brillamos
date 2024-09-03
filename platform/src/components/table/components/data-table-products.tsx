@@ -1,4 +1,4 @@
-import * as React from "react"
+import * as React from "react";
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -12,7 +12,7 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
-} from "@tanstack/react-table"
+} from "@tanstack/react-table";
 
 import {
   Table,
@@ -21,29 +21,29 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
+} from "@/components/ui/table";
 
-import { DataTablePagination } from "./data-table-pagination-products"
-import { DataTableToolbar } from "./data-table-toolbar-products"
+import { DataTablePagination } from "./data-table-pagination-products";
+import { DataTableToolbar } from "./data-table-toolbar-products";
 
 interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[]
-  data: TData[]
-  event_id: number
+  columns: ColumnDef<TData, TValue>[];
+  data: TData[];
+  event_id: number;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
-  event_id
+  event_id,
 }: DataTableProps<TData, TValue>) {
-  const [rowSelection, setRowSelection] = React.useState({})
+  const [rowSelection, setRowSelection] = React.useState({});
   const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({})
+    React.useState<VisibilityState>({});
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
-  )
-  const [sorting, setSorting] = React.useState<SortingState>([])
+  );
+  const [sorting, setSorting] = React.useState<SortingState>([]);
 
   const table = useReactTable({
     data,
@@ -65,12 +65,12 @@ export function DataTable<TData, TValue>({
     getSortedRowModel: getSortedRowModel(),
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
-  })
+  });
 
   return (
     <div className="space-y-4 relative overflow-auto w-full h-full">
       <DataTableToolbar table={table} event_id={event_id} />
-      <div className="rounded-md border w-full absolute h-full">
+      <div className="rounded-md border w-full absolute">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -81,11 +81,11 @@ export function DataTable<TData, TValue>({
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
                     </TableHead>
-                  )
+                  );
                 })}
               </TableRow>
             ))}
@@ -120,11 +120,8 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      
-      
-      <DataTablePagination table={table} />
 
-
+      {/* <DataTablePagination table={table} /> */}
     </div>
-  )
+  );
 }
