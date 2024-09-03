@@ -47,9 +47,8 @@ export default function Users(){
               Usuarios
           </h2>
           <br></br>  
-            <div className="flex items-center justify-between space-y-2">
-            </div>
-            <div>
+           
+          <div>
               <DataTable
                 data = {mockParticipants}
                 columns={columns}
