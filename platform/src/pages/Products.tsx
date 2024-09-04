@@ -2,7 +2,6 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { columns } from "@/components/table/components/columns-products";
 import { DataTable } from "@/components/table/components/data-table-products";
-import { IoIosAdd, IoIosAddCircleOutline } from "react-icons/io";
 import { Textarea } from "@/components/ui/textarea"
 
 import {
