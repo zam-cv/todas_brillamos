@@ -2,12 +2,10 @@ import { Link, useLocation } from "react-router-dom";
 import {
   CircleUser,
   Menu,
-  Package2,
   Search,
   ChartArea,
   ShoppingBasket,
   Truck,
-  GraduationCap,
   User,
 } from "lucide-react";
 import {
