@@ -31,8 +31,6 @@ import { ChartConfig, ChartContainer } from "@/components/ui/chart";
 
 import { ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 
-export const description = "A radial chart with text";
-
 const chartData = [
   { month: "January", desktop: 186, mobile: 80 },
   { month: "February", desktop: 305, mobile: 200 },
@@ -41,11 +39,6 @@ const chartData = [
   { month: "May", desktop: 209, mobile: 130 },
   { month: "June", desktop: 214, mobile: 140 },
 ];
-
-const chartDataRueda = [
-  { browser: "safari", visitors: 200, fill: "var(--color-safari)" },
-];
-
 const chartConfig = {
   desktop: {
     label: "Desktop",
@@ -57,8 +50,14 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-const chartConfigRueda = {
-  visitors: {
+export const description = "A radial chart with text";
+
+const radialChartVisitorData = [
+  { browserType: "safari", visitorCount: 200, fill: "var(--color-safari)" },
+];
+
+const radialChartConfig = {
+  visitorCount: {
     label: "Visitors",
   },
   safari: {
@@ -143,7 +142,7 @@ export default function Dashboard() {
           </div>
         </div>
 
-        <div className="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
+        <div className="grid gap-2 md:gap-1 lg:grid-cols-3 xl:grid-cols-3">
           <div>
             <Card x-chunk="dashboard-01-chunk-5">
               <CardHeader>
@@ -270,17 +269,18 @@ export default function Dashboard() {
           </div>
 
           <div>
-            <Card x-chunk="dashboard-01-chunk-6">
-              <CardHeader>
-                <CardTitle>Gráfica de usuarios</CardTitle>
+            <Card className="flex flex-col">
+              <CardHeader className="items-center pb-0">
+                <CardTitle>Radial Chart - Text</CardTitle>
+                <CardDescription>January - June 2024</CardDescription>
               </CardHeader>
-              <CardContent className="grid gap-8">
+              <CardContent className="flex-1 pb-0">
                 <ChartContainer
-                  config={chartConfigRueda}
+                  config={radialChartConfig}
                   className="mx-auto aspect-square max-h-[250px]"
                 >
                   <RadialBarChart
-                    data={chartDataRueda}
+                    data={radialChartVisitorData}
                     startAngle={0}
                     endAngle={250}
                     innerRadius={80}
@@ -294,7 +294,7 @@ export default function Dashboard() {
                       polarRadius={[86, 74]}
                     />
                     <RadialBar
-                      dataKey="visitors"
+                      dataKey="visitorCount"
                       background
                       cornerRadius={10}
                     />
@@ -318,7 +318,7 @@ export default function Dashboard() {
                                   y={viewBox.cy}
                                   className="fill-foreground text-4xl font-bold"
                                 >
-                                  {chartDataRueda[0].visitors.toLocaleString()}
+                                  {radialChartVisitorData[0].visitorCount.toLocaleString()}
                                 </tspan>
                                 <tspan
                                   x={viewBox.cx}
