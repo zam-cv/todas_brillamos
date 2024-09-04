@@ -61,7 +61,7 @@ export default function Header() {
         <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
           <Link
             to="/"
-            className="grid grid-cols-[4rem_1fr] gap-2 font-semibold w-full h-full"
+            className="grid grid-cols-[4rem_1fr]  font-semibold w-full h-full"
           >
             <div className="w-full h-full relative p-3">
               <div className="w-full h-full ">
