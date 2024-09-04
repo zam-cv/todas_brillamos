@@ -59,9 +59,13 @@ export default function Header() {
   return <div className="hidden border-r bg-muted/40 md:block">
     <div className="flex h-full max-h-screen flex-col gap-2">
       <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
-        <Link to="/" className="flex items-center gap-2 font-semibold">
-          <img src="./logo.png"></img>
-          <span className="">Todas Brillamos</span>
+        <Link to="/" className="grid grid-cols-[4rem_1fr] gap-2 font-semibold w-full h-full">
+          <div className="w-full h-full relative p-3">
+            <div className="w-full h-full ">
+            <img src="/logo_todasBrillamosHeader.png" className="object-contain w-full h-full "></img>
+            </div>
+          </div>
+          <div className="flex justify-left items-center">Todas Brillamos</div>
         </Link>
       </div>
       <div className="flex-1">
