@@ -1,18 +1,10 @@
 import {
-  Menubar,
-  MenubarCheckboxItem,
-  MenubarContent,
-  MenubarItem,
-  MenubarMenu,
-  MenubarRadioGroup,
-  MenubarRadioItem,
-  MenubarSeparator,
-  MenubarShortcut,
-  MenubarSub,
-  MenubarSubContent,
-  MenubarSubTrigger,
-  MenubarTrigger,
-} from "@/components/ui/menubar";
+  Label,
+  PolarGrid,
+  PolarRadiusAxis,
+  RadialBar,
+  RadialBarChart,
+} from "recharts";
 import {
   Card,
   CardContent,
@@ -32,21 +24,14 @@ import {
   Search,
   Users,
 } from "lucide-react";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-import { TrendingUp } from "lucide-react";
 import { Bar, BarChart, CartesianGrid, Cell, LabelList, XAxis } from "recharts";
+import { ChartConfig, ChartContainer } from "@/components/ui/chart";
 
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
+import { ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
+
+export const description = "A radial chart with text";
 
 const chartData = [
   { month: "January", desktop: 186, mobile: 80 },
@@ -57,6 +42,10 @@ const chartData = [
   { month: "June", desktop: 214, mobile: 140 },
 ];
 
+const chartDataRueda = [
+  { browser: "safari", visitors: 200, fill: "var(--color-safari)" },
+];
+
 const chartConfig = {
   desktop: {
     label: "Desktop",
@@ -64,6 +53,16 @@ const chartConfig = {
   },
   mobile: {
     label: "Mobile",
+    color: "hsl(var(--chart-2))",
+  },
+} satisfies ChartConfig;
+
+const chartConfigRueda = {
+  visitors: {
+    label: "Visitors",
+  },
+  safari: {
+    label: "Safari",
     color: "hsl(var(--chart-2))",
   },
 } satisfies ChartConfig;
@@ -97,7 +96,9 @@ export default function Dashboard() {
           <div>
             <Card x-chunk="dashboard-01-chunk-0">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
+                <CardTitle className="text-sm font-medium">
+                  Total Revenue
+                </CardTitle>
                 <DollarSign className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
@@ -127,7 +128,9 @@ export default function Dashboard() {
           <div>
             <Card x-chunk="dashboard-01-chunk-3">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Active Now</CardTitle>
+                <CardTitle className="text-sm font-medium">
+                  Active Now
+                </CardTitle>
                 <Activity className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
@@ -250,9 +253,87 @@ export default function Dashboard() {
                       cursor={false}
                       content={<ChartTooltipContent indicator="dashed" />}
                     />
-                    <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
-                    <Bar dataKey="mobile" fill="var(--color-mobile)" radius={4} />
+                    <Bar
+                      dataKey="desktop"
+                      fill="var(--color-desktop)"
+                      radius={4}
+                    />
+                    <Bar
+                      dataKey="mobile"
+                      fill="var(--color-mobile)"
+                      radius={4}
+                    />
                   </BarChart>
+                </ChartContainer>
+              </CardContent>
+            </Card>
+          </div>
+
+          <div>
+            <Card x-chunk="dashboard-01-chunk-6">
+              <CardHeader>
+                <CardTitle>Gráfica de usuarios</CardTitle>
+              </CardHeader>
+              <CardContent className="grid gap-8">
+                <ChartContainer
+                  config={chartConfigRueda}
+                  className="mx-auto aspect-square max-h-[250px]"
+                >
+                  <RadialBarChart
+                    data={chartDataRueda}
+                    startAngle={0}
+                    endAngle={250}
+                    innerRadius={80}
+                    outerRadius={110}
+                  >
+                    <PolarGrid
+                      gridType="circle"
+                      radialLines={false}
+                      stroke="none"
+                      className="first:fill-muted last:fill-background"
+                      polarRadius={[86, 74]}
+                    />
+                    <RadialBar
+                      dataKey="visitors"
+                      background
+                      cornerRadius={10}
+                    />
+                    <PolarRadiusAxis
+                      tick={false}
+                      tickLine={false}
+                      axisLine={false}
+                    >
+                      <Label
+                        content={({ viewBox }) => {
+                          if (viewBox && "cx" in viewBox && "cy" in viewBox) {
+                            return (
+                              <text
+                                x={viewBox.cx}
+                                y={viewBox.cy}
+                                textAnchor="middle"
+                                dominantBaseline="middle"
+                              >
+                                <tspan
+                                  x={viewBox.cx}
+                                  y={viewBox.cy}
+                                  className="fill-foreground text-4xl font-bold"
+                                >
+                                  {chartDataRueda[0].visitors.toLocaleString()}
+                                </tspan>
+                                <tspan
+                                  x={viewBox.cx}
+                                  y={(viewBox.cy || 0) + 24}
+                                  className="fill-muted-foreground"
+                                >
+                                  Visitors
+                                </tspan>
+                              </text>
+                            );
+                          }
+                        }}
+                      />
+                    </PolarRadiusAxis>
+                  </RadialBarChart>
                 </ChartContainer>
               </CardContent>
             </Card>
