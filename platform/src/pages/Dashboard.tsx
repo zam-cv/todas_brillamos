@@ -11,8 +11,9 @@ export default function Dashboard() {
       </h2>
       <br />
       <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
-        <CardsDashboard />
-
+        <div>
+          <CardsDashboard />
+        </div>
         <div className="grid gap-2 md:gap-1 lg:grid-cols-3 xl:grid-cols-3">
           <div>
             <RecentSalesChart />
