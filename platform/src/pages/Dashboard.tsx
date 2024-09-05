@@ -1,5 +1,5 @@
-import UsersRadialChart from "@/components/usersRadialChart";
-import BarChartDashboard from "@/components/barChartDashboard";
+import UsersRadialChart from "@/components/UsersRadialChart";
+import BarChartDashboard from "@/components/BarChartDashboard";
 import RecentSalesChart from "@/components/RecentSalesChart";
 import CardsDashboard from "@/components/CardsDashboard";
 
