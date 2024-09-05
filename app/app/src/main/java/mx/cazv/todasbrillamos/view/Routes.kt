@@ -3,6 +3,7 @@ package mx.cazv.todasbrillamos.view
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.ui.graphics.vector.ImageVector
 
 sealed class Routes (
@@ -11,7 +12,7 @@ sealed class Routes (
     val icon: ImageVector
 ) {
     companion object {
-        var screens = listOf(Home, Calendar, Store, Chat, Config)
+        var screens = listOf(Home, Calendar, Store, Chat, Config, Cart)
         const val ROUTE_LOGIN = "Login"
         const val ROUTE_REGISTER = "Register"
         const val ROUTE_STORE = "Store"
@@ -22,6 +23,7 @@ sealed class Routes (
         const val ROUTE_FAVORITES = "Favorites"
         const val ROUTE_NOTIFICATIONS = "Notifications"
         const val ROUTE_CONFIG = "Config"
+        const val ROUTE_CART = "Cart"
     }
 
     private data object Login: Routes(ROUTE_LOGIN, "Login", Icons.Default.Home)
@@ -34,4 +36,5 @@ sealed class Routes (
     private data object Favorites: Routes(ROUTE_FAVORITES, "Favorites", Icons.Default.Person)
     private data object Notifications: Routes(ROUTE_NOTIFICATIONS, "Notifications", Icons.Default.Person)
     private data object Config: Routes(ROUTE_CONFIG, "Config", Icons.Default.Person)
+    private data object Cart: Routes(ROUTE_CART, "Cart", Icons.Default.ShoppingCart)
 }

@@ -19,6 +19,8 @@ import mx.cazv.todasbrillamos.view.screens.Login
 import mx.cazv.todasbrillamos.view.screens.Notifications
 import mx.cazv.todasbrillamos.view.screens.Register
 import mx.cazv.todasbrillamos.view.screens.Calendar
+//import mx.cazv.todasbrillamos.view.screens.Car
+import mx.cazv.todasbrillamos.view.screens.Cart
 import mx.cazv.todasbrillamos.view.screens.Config
 import mx.cazv.todasbrillamos.view.screens.Store
 
@@ -41,6 +43,10 @@ fun Nav(navController: NavHostController, modifier: Modifier = Modifier) {
 
         composable(Routes.ROUTE_REGISTER) {
             Register(navController)
+        }
+
+        composable(Routes.ROUTE_CART) {
+            Cart(navController)
         }
 
         composable(Routes.ROUTE_FORGOT_PASSWORD) {
@@ -74,5 +80,11 @@ fun Nav(navController: NavHostController, modifier: Modifier = Modifier) {
         composable(Routes.ROUTE_NOTIFICATIONS) {
             Notifications(navController)
         }
+
+        /*
+        composable(Routes.ROUTE_CART) {
+            Cart(navController)
+        }
+         */
     }
 }

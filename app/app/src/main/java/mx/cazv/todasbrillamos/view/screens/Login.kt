@@ -19,6 +19,10 @@ fun Login(navController: NavHostController) {
             TextButton(onClick = { navController.navigate(Routes.ROUTE_REGISTER) }) {
                 Text(text = "Go to Register")
             }
+
+            TextButton(onClick = { navController.navigate(Routes.ROUTE_CART) }) {
+                Text(text = "Go to Shopping Cart")
+            }
         }
     }
 }
