@@ -15,12 +15,12 @@ import {
 import { ChartConfig, ChartContainer } from "@/components/ui/chart";
 
 const radialChartVisitorData = [
-  { browserType: "safari", visitorCount: 200, fill: "var(--color-safari)" },
+  { browserType: "safari", visitorCount: 450, fill: "var(--color-safari)" },
 ];
 
 const radialChartConfig = {
   visitorCount: {
-    label: "Visitors",
+    label: "Usuarios",
   },
   safari: {
     label: "Safari",
@@ -33,8 +33,8 @@ export default function UsersRadialChart() {
     <div>
       <Card className="flex flex-col">
         <CardHeader className="items-center pb-0">
-          <CardTitle>Radial Chart - Text</CardTitle>
-          <CardDescription>January - June 2024</CardDescription>
+          <CardTitle>Total de usuarios</CardTitle>
+          <CardDescription>Agosto - Septiembre 2024</CardDescription>
         </CardHeader>
         <CardContent className="flex-1 pb-0">
           <ChartContainer
@@ -79,7 +79,7 @@ export default function UsersRadialChart() {
                             y={(viewBox.cy || 0) + 24}
                             className="fill-muted-foreground"
                           >
-                            Visitors
+                            Usuarios
                           </tspan>
                         </text>
                       );

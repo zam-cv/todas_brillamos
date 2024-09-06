@@ -6,20 +6,20 @@ import { ChartConfig, ChartContainer } from "@/components/ui/chart";
 import { ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 
 const chartData = [
-  { month: "January", desktop: 186, mobile: 80 },
-  { month: "February", desktop: 305, mobile: 200 },
-  { month: "March", desktop: 237, mobile: 120 },
-  { month: "April", desktop: 73, mobile: 190 },
-  { month: "May", desktop: 209, mobile: 130 },
-  { month: "June", desktop: 214, mobile: 140 },
+  { month: "Enero", desktop: 186, mobile: 80 },
+  { month: "Febrero", desktop: 305, mobile: 200 },
+  { month: "Marzp", desktop: 237, mobile: 120 },
+  { month: "Abril", desktop: 73, mobile: 190 },
+  { month: "Mayo", desktop: 209, mobile: 130 },
+  { month: "Junio", desktop: 214, mobile: 140 },
 ];
 const chartConfig = {
   desktop: {
-    label: "Desktop",
+    label: "Producto #1",
     color: "hsl(var(--chart-1))",
   },
   mobile: {
-    label: "Mobile",
+    label: "Producto #2",
     color: "hsl(var(--chart-2))",
   },
 } satisfies ChartConfig;
@@ -29,7 +29,7 @@ export default function BarChartDashboard() {
     <div>
       <Card x-chunk="dashboard-01-chunk-5">
         <CardHeader>
-          <CardTitle>Overview</CardTitle>
+          <CardTitle>Productos más vendidos por mes</CardTitle>
         </CardHeader>
         <CardContent className="grid gap-8">
           <ChartContainer config={chartConfig}>
