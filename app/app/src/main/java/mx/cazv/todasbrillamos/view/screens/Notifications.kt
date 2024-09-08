@@ -31,17 +31,8 @@ import mx.cazv.todasbrillamos.ui.theme.BackgroundColor
 import mx.cazv.todasbrillamos.ui.theme.BadgeColor
 import mx.cazv.todasbrillamos.view.components.BottomBar
 import mx.cazv.todasbrillamos.view.components.CustomTopBar
+import mx.cazv.todasbrillamos.view.components.Line
 import mx.cazv.todasbrillamos.view.layouts.CustomLayout
-
-@Composable
-fun Line(height: Dp = 1.5.dp) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth(1f)
-            .height(height)
-            .background(Color.Gray)
-    )
-}
 
 @Composable
 fun Date(value: String) {

@@ -24,6 +24,7 @@ sealed class Routes (
         const val ROUTE_NOTIFICATIONS = "Notifications"
         const val ROUTE_CONFIG = "Config"
         const val ROUTE_CART = "Cart"
+        const val ROUTE_PRODUCT_DETAILS = "ProductDetails"
     }
 
     private data object Login: Routes(ROUTE_LOGIN, "Login", Icons.Default.Home)
@@ -37,4 +38,5 @@ sealed class Routes (
     private data object Notifications: Routes(ROUTE_NOTIFICATIONS, "Notifications", Icons.Default.Person)
     private data object Config: Routes(ROUTE_CONFIG, "Config", Icons.Default.Person)
     private data object Cart: Routes(ROUTE_CART, "Cart", Icons.Default.ShoppingCart)
+    private data object ProductDetails: Routes(ROUTE_PRODUCT_DETAILS, "ProductDetails", Icons.Default.Person)
 }
