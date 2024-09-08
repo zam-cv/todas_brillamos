@@ -16,9 +16,14 @@ import mx.cazv.todasbrillamos.view.screens.Notifications
 import mx.cazv.todasbrillamos.view.screens.Register
 import mx.cazv.todasbrillamos.view.screens.Calendar
 import mx.cazv.todasbrillamos.view.screens.Cart
-import mx.cazv.todasbrillamos.view.screens.Config
+import mx.cazv.todasbrillamos.view.screens.config.Config
 import mx.cazv.todasbrillamos.view.screens.ProductDetails
 import mx.cazv.todasbrillamos.view.screens.Store
+import mx.cazv.todasbrillamos.view.screens.config.About
+import mx.cazv.todasbrillamos.view.screens.config.ChangePassword
+import mx.cazv.todasbrillamos.view.screens.config.EditProfile
+import mx.cazv.todasbrillamos.view.screens.config.SocialNetworks
+import mx.cazv.todasbrillamos.view.screens.config.TermsAndPolicies
 
 @Composable
 fun App() {
@@ -29,7 +34,7 @@ fun App() {
 @Composable
 fun Nav(navController: NavHostController, modifier: Modifier = Modifier) {
     NavHost(navController = navController,
-        startDestination = Routes.ROUTE_LOGIN,
+        startDestination = Routes.ROUTE_CHANGE_PASSWORD,
         modifier = modifier.fillMaxSize()) {
 
         // Screens
@@ -61,10 +66,6 @@ fun Nav(navController: NavHostController, modifier: Modifier = Modifier) {
             Home(navController)
         }
 
-        composable(Routes.ROUTE_CONFIG) {
-            Config(navController)
-        }
-
         composable(Routes.ROUTE_CHAT) {
             Chat(navController)
         }
@@ -83,6 +84,31 @@ fun Nav(navController: NavHostController, modifier: Modifier = Modifier) {
 
         composable(Routes.ROUTE_PRODUCT_DETAILS) {
             ProductDetails(navController)
+        }
+
+        // Config
+        composable(Routes.ROUTE_CONFIG) {
+            Config(navController)
+        }
+
+        composable(Routes.ROUTE_EDIT_PROFILE) {
+            EditProfile(navController)
+        }
+
+        composable(Routes.ROUTE_CHANGE_PASSWORD) {
+            ChangePassword(navController)
+        }
+
+        composable(Routes.ROUTE_SOCIAL_NETWORKS) {
+            SocialNetworks(navController)
+        }
+
+        composable(Routes.ROUTE_TERMS_AND_POLICIES) {
+            TermsAndPolicies(navController)
+        }
+
+        composable(Routes.ROUTE_ABOUT) {
+            About(navController)
         }
     }
 }

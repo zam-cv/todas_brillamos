@@ -13,6 +13,7 @@ sealed class Routes (
 ) {
     companion object {
         var screens = listOf(Home, Calendar, Store, Chat, Config, Cart)
+
         const val ROUTE_LOGIN = "Login"
         const val ROUTE_REGISTER = "Register"
         const val ROUTE_STORE = "Store"
@@ -22,21 +23,23 @@ sealed class Routes (
         const val ROUTE_CHAT = "Chat"
         const val ROUTE_FAVORITES = "Favorites"
         const val ROUTE_NOTIFICATIONS = "Notifications"
-        const val ROUTE_CONFIG = "Config"
         const val ROUTE_CART = "Cart"
         const val ROUTE_PRODUCT_DETAILS = "ProductDetails"
+
+        // Config
+        const val ROUTE_CONFIG = "Config"
+        const val ROUTE_EDIT_PROFILE = "EditProfile"
+        const val ROUTE_CHANGE_PASSWORD = "ChangePassword"
+        const val ROUTE_SOCIAL_NETWORKS = "SocialNetworks"
+        const val ROUTE_TERMS_AND_POLICIES = "TermsAndPolicies"
+        const val ROUTE_ABOUT = "About"
     }
 
-    private data object Login: Routes(ROUTE_LOGIN, "Login", Icons.Default.Home)
-    private data object Register: Routes(ROUTE_REGISTER, "Register", Icons.Default.Person)
+    // Bottom bar routes
     private data object Store: Routes(ROUTE_STORE, "Store", Icons.Default.Person)
     private data object Home: Routes(ROUTE_HOME, "Home", Icons.Default.Home)
     private data object Calendar: Routes(ROUTE_CALENDAR, "Calendar", Icons.Default.Person)
-    private data object ForgotPassword: Routes(ROUTE_FORGOT_PASSWORD, "ForgotPassword", Icons.Default.Person)
     private data object Chat: Routes(ROUTE_CHAT, "Chat", Icons.Default.Person)
-    private data object Favorites: Routes(ROUTE_FAVORITES, "Favorites", Icons.Default.Person)
-    private data object Notifications: Routes(ROUTE_NOTIFICATIONS, "Notifications", Icons.Default.Person)
     private data object Config: Routes(ROUTE_CONFIG, "Config", Icons.Default.Person)
     private data object Cart: Routes(ROUTE_CART, "Cart", Icons.Default.ShoppingCart)
-    private data object ProductDetails: Routes(ROUTE_PRODUCT_DETAILS, "ProductDetails", Icons.Default.Person)
 }

@@ -413,7 +413,7 @@ fun ProductDetails(navController: NavHostController) {
                             ) {
                                 Icon(
                                     Icons.Outlined.Bookmark,
-                                    contentDescription = "Notification",
+                                    contentDescription = "Bookmark",
                                     tint = AccentColor,
                                     modifier = Modifier
                                         .size(32.dp)
