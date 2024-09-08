@@ -17,7 +17,6 @@ import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CardElevation
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -30,6 +29,8 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import mx.cazv.todasbrillamos.R
@@ -56,8 +57,8 @@ fun ProductGridItem(product: Product) {
             Box(modifier = Modifier.fillMaxWidth()) {
                 Image(
                     modifier = Modifier
-                        .size(180.dp)
-                        .clip(RoundedCornerShape(5.dp)),
+                        .clip(RoundedCornerShape(5.dp))
+                        .fillMaxSize(),
                     painter = painterResource(id = product.imagen),
                     contentDescription = product.producto,
                     contentScale = ContentScale.Crop
@@ -71,32 +72,40 @@ fun ProductGridItem(product: Product) {
                     contentDescription = "favorito"
                 )
             }
+
             Box (modifier = Modifier.height(150.dp)){
-                Column (modifier = Modifier.align(Alignment.Center)
-                    .padding(10.dp)){
+                Column (modifier = Modifier
+                            .align(Alignment.Center)
+                            .padding(10.dp)
+                ){
                     if (product.descuento != null) {
-                        Row{
-                            Text(
-                                text = "-$formattedDC% ",
-                                style = TextStyle(
-                                    fontSize = 13.sp,
-                                    fontWeight = FontWeight.Bold,
-                                    textAlign = TextAlign.Left
-                                ),
-                                modifier = Modifier
-                                    .padding(top = 10.dp)
-                                    .clip(RoundedCornerShape(4.dp))
-                                    .background(Color(0xFFF4D0CB))
-                                    .padding(7.dp)
-                            )
+                        Row (modifier = Modifier.weight(0.8f)){
+                            Box (modifier = Modifier
+                                .align(Alignment.CenterVertically)
+                                .clip(RoundedCornerShape(4.dp))
+                                .background(Color(0xFFF4D0CB))
+                                .size(50.dp)
+                            ) {
+                                Text(
+                                    text = "-$formattedDC% ",
+                                    style = TextStyle(
+                                        fontSize = 13.sp,
+                                        fontWeight = FontWeight.Bold,
+                                        textAlign = TextAlign.Center ),
+                                    modifier = Modifier
+                                        .align(Alignment.Center)
+                                )
+                            }
+
 
                             Text(
                                 text = "Promoción",
                                 color = Color(0xFFD5507C),
+                                fontSize = 13.sp,
                                 modifier = Modifier
-                                    .align(Alignment.Bottom)
-                                    .padding(top = 10.dp)
-                                    .padding(7.dp)
+                                    .align(Alignment.CenterVertically)
+                                    .padding(start = 10.dp)
+                                    .weight(2.8f)
                             )
                         }
 
@@ -112,7 +121,11 @@ fun ProductGridItem(product: Product) {
                             fontWeight = FontWeight.SemiBold,
                             textAlign = TextAlign.Left
                         ),
-                        modifier = Modifier.wrapContentSize()
+                        modifier = Modifier
+                            .weight(1f)
+                            .wrapContentSize(),
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis
                     )
 
                     Text(
@@ -122,7 +135,9 @@ fun ProductGridItem(product: Product) {
                             fontWeight = FontWeight.W300,
                             textAlign = TextAlign.Left
                         ),
-                        modifier = Modifier.wrapContentSize()
+                        modifier = Modifier
+                            .weight(1f)
+                            .wrapContentSize()
                     )
 
                     if (product.descuento != null) {
@@ -158,7 +173,10 @@ fun ProductGridItem(product: Product) {
                                 fontSize = 20.sp,
                                 fontWeight = FontWeight.Bold,
                                 textAlign = TextAlign.Left
-                            )
+                            ),
+                            modifier = Modifier
+                                .weight(1f)
+                                .wrapContentSize()
                         )
                     }
                 }
@@ -168,3 +186,11 @@ fun ProductGridItem(product: Product) {
     }
 
 }
+
+/*
+@Preview(showBackground = true)
+@Composable
+fun GridViewPreview() {
+    ViewProducts("grid")
+}
+*/

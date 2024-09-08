@@ -16,7 +16,7 @@ import mx.cazv.todasbrillamos.model.ProductProvider
 
 
 @Composable
-fun ViewProducts(type: String, modifier: Modifier = Modifier) {
+fun ViewProducts(type: String) {
     if (type == "grid") {
         LazyVerticalGrid(
             // columns = GridCells.Adaptive(160.dp),
@@ -24,7 +24,7 @@ fun ViewProducts(type: String, modifier: Modifier = Modifier) {
             modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(vertical = 16.dp),
         ) {
-            itemsIndexed(ProductProvider.productList) { index, product ->
+            itemsIndexed(ProductProvider.productList) { _, product ->
                 ProductGridItem(product = product)
                 Spacer(modifier = Modifier.height(8.dp))
             }
@@ -35,7 +35,7 @@ fun ViewProducts(type: String, modifier: Modifier = Modifier) {
             modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(vertical = 16.dp),
         ) {
-            itemsIndexed(ProductProvider.productList) { index, product ->
+            itemsIndexed(ProductProvider.productList) { _, product ->
                 ProductColumnItem(product = product)
                 Spacer(modifier = Modifier.height(8.dp))
             }

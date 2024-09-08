@@ -9,7 +9,7 @@ import mx.cazv.todasbrillamos.R
 
 class ProductProvider {
     companion object{
-        val productList = listOf<Product>(
+        val productList = listOf(
             Product(
                 R.drawable.temp_img,
                 "Ana Toalla Femenina Reutilizable",
@@ -18,7 +18,7 @@ class ProductProvider {
             ),
             Product(
                 R.drawable.temp_img,
-                "MARGARITA Toalla Femenina  Reutilizable",
+                "MARGARITA Toalla Femenina Reutilizable",
                 "Teen",
                 130.00
             ),
