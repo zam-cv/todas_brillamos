@@ -13,6 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import mx.cazv.todasbrillamos.view.layouts.MainLayout
+import mx.cazv.todasbrillamos.view.screens.store.CategoryFilter
 import mx.cazv.todasbrillamos.view.screens.store.ToggleView
 import mx.cazv.todasbrillamos.view.screens.store.ViewProducts
 
@@ -27,12 +28,11 @@ fun Store(navController: NavHostController) {
                 selectedType = viewType,
                 onSelectionChange = { newType -> viewType = newType }
             )
+            CategoryFilter()
             ViewProducts(type = viewType)
         }
     }
 }
-
-
 
 @Preview(showBackground = true)
 @Composable
