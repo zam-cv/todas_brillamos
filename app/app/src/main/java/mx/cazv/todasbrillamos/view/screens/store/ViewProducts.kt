@@ -14,6 +14,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import mx.cazv.todasbrillamos.model.ProductProvider
 
+/**
+ * Ver los productos dependiendo de la vista
+ * @author: Min Che Kim
+ */
 
 @Composable
 fun ViewProducts(type: String) {

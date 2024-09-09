@@ -3,8 +3,10 @@ package mx.cazv.todasbrillamos.view.screens.store
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
@@ -21,6 +23,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import mx.cazv.todasbrillamos.R
 
+/**
+ * Cambiar vista de los productos
+ * @author: Min Che Kim
+ */
 
 @Composable
 fun ToggleView(selectedType: String, onSelectionChange: (String) -> Unit) {
@@ -57,6 +63,7 @@ fun ToggleView(selectedType: String, onSelectionChange: (String) -> Unit) {
                 modifier = Modifier
                     .clickable { onSelectionChange("grid") }
                     .padding(end = 5.dp)
+                    .size(28.dp)
             )
 
             // List Icon
@@ -68,6 +75,7 @@ fun ToggleView(selectedType: String, onSelectionChange: (String) -> Unit) {
                 modifier = Modifier
                     .clickable { onSelectionChange("list") }
                     .padding(end = 12.dp)
+                    .size(28.dp)
             )
         }
     }

@@ -15,8 +15,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -36,6 +39,10 @@ import androidx.compose.ui.unit.sp
 import mx.cazv.todasbrillamos.R
 import mx.cazv.todasbrillamos.model.Product
 
+/**
+ * Vista cuadricula de los productos
+ * @author: Min Che Kim
+ */
 
 @Composable
 fun ProductGridItem(product: Product) {
@@ -63,14 +70,30 @@ fun ProductGridItem(product: Product) {
                     contentDescription = product.producto,
                     contentScale = ContentScale.Crop
                 )
-                Image(
+
+                Box(
                     modifier = Modifier
-                        .size(30.dp)
+                        .align(Alignment.BottomEnd)
                         .offset(x = (-10).dp, y = (-10).dp)
-                        .align(Alignment.BottomEnd),
-                    painter = painterResource(id = R.drawable.ic_favorite),
-                    contentDescription = "favorito"
-                )
+                ) {
+                    // Background with independent offset
+                    Box(
+                        modifier = Modifier
+                            .size(35.dp)
+                            .align(Alignment.BottomEnd)
+                            .background(Color.White, shape = RoundedCornerShape(24.dp))
+                             // This only moves the background
+                    )
+
+                    Icon (
+                        imageVector = Icons.Outlined.FavoriteBorder,
+                        contentDescription = "favorito",
+                        modifier = Modifier
+                            .size(25.dp)
+                            .align(Alignment.Center)
+                            .offset(y = 2.dp)
+                    )
+                }
             }
 
             Box (modifier = Modifier.height(150.dp)){
