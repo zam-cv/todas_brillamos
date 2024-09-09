@@ -34,7 +34,7 @@ fun App() {
 @Composable
 fun Nav(navController: NavHostController, modifier: Modifier = Modifier) {
     NavHost(navController = navController,
-        startDestination = Routes.ROUTE_CHANGE_PASSWORD,
+        startDestination = Routes.ROUTE_SOCIAL_NETWORKS,
         modifier = modifier.fillMaxSize()) {
 
         // Screens
