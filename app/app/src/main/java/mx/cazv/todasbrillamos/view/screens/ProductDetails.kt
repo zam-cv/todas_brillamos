@@ -49,6 +49,7 @@ import mx.cazv.todasbrillamos.ui.theme.ImageBackgroundColor
 import mx.cazv.todasbrillamos.ui.theme.SelectorsBackgroundColor
 import mx.cazv.todasbrillamos.view.components.BottomBar
 import mx.cazv.todasbrillamos.view.components.CustomTopBar
+import mx.cazv.todasbrillamos.view.components.Description
 import mx.cazv.todasbrillamos.view.components.Line
 import mx.cazv.todasbrillamos.view.layouts.CustomLayout
 
@@ -126,22 +127,6 @@ fun Detail(name: String, text: String) {
         }
 
         Line(height = 0.5.dp)
-    }
-}
-
-@Composable
-fun Description(text: String) {
-    Row {
-        Text(
-            text = "•",
-            fontSize = 20.sp,
-            modifier = Modifier.padding(start = 20.dp, end = 10.dp)
-        )
-
-        Text(
-            text = text,
-            fontSize = 13.sp,
-        )
     }
 }
 
