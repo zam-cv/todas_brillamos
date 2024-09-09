@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button"
 import { columns } from "@/components/table/components/columns-products";
 import { DataTable } from "@/components/table/components/data-table-products";
 import { Textarea } from "@/components/ui/textarea"
+import {useState} from 'react'
 
 import {
   Accordion,
@@ -10,11 +11,13 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
+import { set } from "zod";
 
 
 export default function Products() {
-  const mockData = [
-    { idProducto: 'XDcaw1', 
+  const[products, setProducts] = useState([
+    {
+      idProducto: 'XDcaw1', 
       nombreProd: 'Producto #1', 
       cantidad: '12' , 
       precio: '12.00', 
@@ -24,44 +27,60 @@ export default function Products() {
       absorbencia: '12', 
       cuidadoPiel: 'Cuidado #1', 
       color: 'Color #1', 
-      descripcion: 'Descripcion #1' },
-      { idProducto: 'XDcaw1', 
-        nombreProd: 'Producto #1', 
-        cantidad: '12' , 
-        precio: '12.00', 
-        marca: 'Marca #1', 
-        tamano: '12x12', 
-        material: 'Material #1', 
-        absorbencia: '12', 
-        cuidadoPiel: 'Cuidado #1', 
-        color: 'Color #1', 
-        descripcion: 'Descripcion #1' },
-        { idProducto: 'XDcaw1', 
-          nombreProd: 'Producto #1', 
-          cantidad: '12' , 
-          precio: '12.00', 
-          marca: 'Marca #1', 
-          tamano: '12x12', 
-          material: 'Material #1', 
-          absorbencia: '12', 
-          cuidadoPiel: 'Cuidado #1', 
-          color: 'Color #1', 
-          descripcion: 'Descripcion #1' },
-          { idProducto: 'XDcaw1', 
-            nombreProd: 'Producto #1', 
-            cantidad: '12' , 
-            precio: '12.00', 
-            marca: 'Marca #1', 
-            tamano: '12x12', 
-            material: 'Material #1', 
-            absorbencia: '12', 
-            cuidadoPiel: 'Cuidado #1', 
-            color: 'Color #1', 
-            descripcion: 'Descripcion #1' },
-  ];
+      descripcion: 'Descripcion #1'
+    }
+  ]);
+
+  const[formData, setFormData] = useState({
+    nombreProd: '',
+    cantidad: '',
+    precio: '',
+    marca: '',
+    tamano: '',
+    material: '',
+    absorbencia: '',
+    cuidadoPiel: '',
+    color: '',
+    descripcion: ''
+  });
+
+  const handleInputs = (e) => {
+    const {name, value} = e.target;
+    setFormData({...formData, [name]: value});
+  }
 
 
-  return(
+  const handleAddProduct = () => {
+    // Verificar si todos los campos están llenos
+    if (Object.values(formData).every(field => field.trim() !== '')) {
+      // Generar un ID único para el nuevo producto
+      const newProduct = {
+        idProducto: `ID${Math.random().toString(36).substr(2, 9)}`,
+        ...formData,
+      };
+      setProducts([...products, newProduct]);
+
+      // Limpiar el formulario
+      setFormData({
+        nombreProd: '',
+        cantidad: '',
+        precio: '',
+        marca: '',
+        tamano: '',
+        material: '',
+        absorbencia: '',
+        cuidadoPiel: '',
+        color: '',
+        descripcion: ''
+      });
+    } else {
+      alert('Por favor, completa todos los campos.');
+    }
+  };
+
+
+
+return(
     <div>
       <h2 className="scroll-m-20  text-3xl font-semibold tracking-tight first:mt-0">
           Productos
@@ -73,28 +92,28 @@ export default function Products() {
             <AccordionContent>
               <div className = "flex flex-nowrap flex-col">
                   <div className="flex flex-row space-x-2 px-2 pt-2">
-                    <Input className="w-4/5" placeholder="Nombre del producto"></Input>
-                    <Input className="w-3/4 " placeholder="Cantidad"></Input>
+                    <Input name="nombreProd" value={formData.nombreProd} onChange={handleInputs} className="w-4/5" placeholder="Nombre del producto"></Input>
+                    <Input name="cantidad" value={formData.cantidad} onChange={handleInputs} className="w-3/4 " placeholder="Cantidad"></Input>
                   </div>
                   <div className="flex flex-row space-x-2 px-2 pt-2">
-                    <Input placeholder="Precio"></Input>
-                    <Input placeholder="Marca"></Input>
+                    <Input name="precio" value={formData.precio} onChange={handleInputs} placeholder="Precio"></Input>
+                    <Input name="marca" value={formData.marca} onChange={handleInputs} placeholder="Marca"></Input>
                   </div>
                   <div className="flex flex-row space-x-2 px-2 pt-2">
-                    <Input placeholder="Tamaño"></Input>
-                    <Input placeholder="Precio"></Input>
-                    <Input placeholder="Material"></Input>
+                    <Input name= "tamano" value={formData.tamano} onChange={handleInputs} placeholder="Tamaño"></Input>
+                    <Input name="precio" value={formData.precio} onChange={handleInputs} placeholder="Precio"></Input>
+                    <Input name="material" value={formData.material} onChange={handleInputs} placeholder="Material"></Input>
                   </div>
                   <div className="flex flex-row space-x-2 px-2 pt-2">
-                    <Input placeholder="Absorbencia"></Input>
-                    <Input placeholder="Cuidado de la piel"></Input>
-                    <Input placeholder="Color"></Input>
+                    <Input name= "absorbencia" value={formData.absorbencia} onChange={handleInputs} placeholder="Absorbencia"></Input>
+                    <Input name="cuidadoPiel" value={formData.cuidadoPiel} onChange={handleInputs} placeholder="Cuidado de la piel"></Input>
+                    <Input name= "color" value={formData.color} onChange= {handleInputs}placeholder="Color"></Input>
                   </div>
                   <div className="flex flex-row space-x-2 px-2 pt-2">
-                      <Textarea placeholder="Descripción.."/>
+                      <Textarea name="descripcion" value={formData.descripcion} onChange={handleInputs} placeholder="Descripción.."/>
                   </div>
                   <div className="flex flex-row space-x-2 px-2 pt-2">
-                      <Button>Agregar</Button>
+                      <Button onClick={handleAddProduct}>Agregar</Button>
                   </div>
               </div>
             </AccordionContent>
@@ -106,14 +125,14 @@ export default function Products() {
     <br></br>
 
   
-       <DataTable
-      data = {mockData}
+    <DataTable
+      data = {products}
       columns = {columns}
       event_id = {1}
     />
       
     </div>
-  ) 
+  );
         
   
   
