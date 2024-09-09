@@ -19,6 +19,7 @@ import mx.cazv.todasbrillamos.view.screens.Cart
 import mx.cazv.todasbrillamos.view.screens.config.Config
 import mx.cazv.todasbrillamos.view.screens.ProductDetails
 import mx.cazv.todasbrillamos.view.screens.Store
+import mx.cazv.todasbrillamos.view.screens.YourCycle
 import mx.cazv.todasbrillamos.view.screens.config.About
 import mx.cazv.todasbrillamos.view.screens.config.ChangePassword
 import mx.cazv.todasbrillamos.view.screens.config.EditProfile
@@ -34,7 +35,7 @@ fun App() {
 @Composable
 fun Nav(navController: NavHostController, modifier: Modifier = Modifier) {
     NavHost(navController = navController,
-        startDestination = Routes.ROUTE_ABOUT,
+        startDestination = Routes.ROUTE_LOGIN,
         modifier = modifier.fillMaxSize()) {
 
         // Screens
@@ -84,6 +85,10 @@ fun Nav(navController: NavHostController, modifier: Modifier = Modifier) {
 
         composable(Routes.ROUTE_PRODUCT_DETAILS) {
             ProductDetails(navController)
+        }
+
+        composable(Routes.ROUTE_YOUR_CYCLE) {
+            YourCycle(navController)
         }
 
         // Config

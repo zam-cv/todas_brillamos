@@ -12,26 +12,26 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import mx.cazv.todasbrillamos.ui.theme.ButtonColor
+import mx.cazv.todasbrillamos.ui.theme.Pink
 
 @Composable
-fun Button(text: String) {
+fun PinkButton(text: String) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .background(ButtonColor, shape = RoundedCornerShape(30.dp))
+            .background(Pink, shape = RoundedCornerShape(10.dp))
     ) {
         OutlinedButton(
             onClick = {},
             border = null,
             modifier = Modifier
                 .fillMaxWidth(),
-            shape = RoundedCornerShape(30.dp),
+            shape = RoundedCornerShape(10.dp),
         ) {
             Text(
                 text = text,
-                color = Color.White,
-                fontWeight = FontWeight.W400,
+                color = Color.Black,
+                fontWeight = FontWeight.W600,
                 fontSize = 17.sp
             )
         }
