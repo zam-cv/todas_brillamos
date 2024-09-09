@@ -11,7 +11,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
-import { set } from "zod";
 
 
 export default function Products() {
@@ -44,9 +43,14 @@ export default function Products() {
     descripcion: ''
   });
 
-  const handleInputs = (e) => {
-    const {name, value} = e.target;
-    setFormData({...formData, [name]: value});
+  const handleInputs = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  }
+  
+  const handleInputTextArea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
   }
 
 
@@ -110,7 +114,7 @@ return(
                     <Input name= "color" value={formData.color} onChange= {handleInputs}placeholder="Color"></Input>
                   </div>
                   <div className="flex flex-row space-x-2 px-2 pt-2">
-                      <Textarea name="descripcion" value={formData.descripcion} onChange={handleInputs} placeholder="Descripción.."/>
+                      <Textarea name="descripcion" value={formData.descripcion} onChange={handleInputTextArea} placeholder="Descripción.."/>
                   </div>
                   <div className="flex flex-row space-x-2 px-2 pt-2">
                       <Button onClick={handleAddProduct}>Agregar</Button>
