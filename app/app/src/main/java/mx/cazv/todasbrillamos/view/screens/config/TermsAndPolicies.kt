@@ -30,40 +30,8 @@ import mx.cazv.todasbrillamos.view.components.CustomTopBar
 import mx.cazv.todasbrillamos.view.components.Description
 import mx.cazv.todasbrillamos.view.components.Input
 import mx.cazv.todasbrillamos.view.components.Line
+import mx.cazv.todasbrillamos.view.components.Section
 import mx.cazv.todasbrillamos.view.layouts.CustomLayout
-
-@Composable
-fun Section(title: String, element: @Composable () -> Unit) {
-    Column (
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 35.dp)
-    ) {
-        Line(height = 0.5.dp)
-
-        Box (
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(Color.White)
-                .padding(top = 0.dp, bottom = 0.dp, start = 10.dp, end = 10.dp)
-        ) {
-            Text(
-                text = title,
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier
-                    .padding(10.dp)
-            )
-        }
-
-        Line(height = 0.5.dp)
-
-        element()
-
-        Line(height = 0.5.dp)
-    }
-}
 
 @Composable
 fun SectionWithContent(title: String, content: String) {
