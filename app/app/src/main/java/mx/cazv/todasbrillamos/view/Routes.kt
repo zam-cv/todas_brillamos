@@ -26,6 +26,7 @@ sealed class Routes (
         const val ROUTE_CART = "Cart"
         const val ROUTE_PRODUCT_DETAILS = "ProductDetails"
         const val ROUTE_YOUR_CYCLE = "YourCycle"
+        const val ROUTE_TRACK_ORDER = "TrackOrder"
 
         // Config
         const val ROUTE_CONFIG = "Config"
