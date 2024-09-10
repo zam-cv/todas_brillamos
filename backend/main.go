@@ -1,7 +1,7 @@
 package main
 
 import (
-	"backend/routes"
+	"backend/src/routes"
 )
 
 func main() {
