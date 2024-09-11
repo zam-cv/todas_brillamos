@@ -1,4 +1,4 @@
-package utils
+package main
 
 import (
 	"fmt"
@@ -41,8 +41,4 @@ func GetMyIp() (string, error) {
 		}
 	}
 	return "", fmt.Errorf("no IP found")
-}
-
-func main() {
-	// Your main function implementation
 }
