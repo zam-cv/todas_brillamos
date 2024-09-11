@@ -19,6 +19,8 @@ import mx.cazv.todasbrillamos.view.screens.Cart
 import mx.cazv.todasbrillamos.view.screens.TrackOrder
 import mx.cazv.todasbrillamos.view.screens.config.Config
 import mx.cazv.todasbrillamos.view.screens.ProductDetails
+import mx.cazv.todasbrillamos.view.screens.ShippInfo
+import mx.cazv.todasbrillamos.view.screens.ShippingInfo
 import mx.cazv.todasbrillamos.view.screens.Store
 import mx.cazv.todasbrillamos.view.screens.YourCycle
 import mx.cazv.todasbrillamos.view.screens.config.About
@@ -119,6 +121,10 @@ fun Nav(navController: NavHostController, modifier: Modifier = Modifier) {
 
         composable(Routes.ROUTE_ABOUT) {
             About(navController)
+        }
+
+        composable(Routes.ROUTE_SHIPPING_INFO) {
+            ShippingInfo(navController)
         }
 
 

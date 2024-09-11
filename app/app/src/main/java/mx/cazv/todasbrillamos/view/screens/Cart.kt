@@ -114,7 +114,7 @@ fun Prod() {
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween){
 
-                IconButton(onClick = { if (num > 0) num -= 1 },
+                IconButton(onClick = {},
                     modifier = Modifier
                         .weight(1f)
                         .aspectRatio(1f)
@@ -141,7 +141,7 @@ fun Prod() {
 
                 Spacer(modifier = Modifier.width(10.dp))
 
-                IconButton(onClick = { if (num >= 0) num += 1},
+                IconButton(onClick = {},
                     modifier = Modifier
                         .weight(1f)
                         .aspectRatio(1f)
