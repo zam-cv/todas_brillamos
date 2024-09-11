@@ -123,10 +123,5 @@ fun Nav(navController: NavHostController, modifier: Modifier = Modifier) {
             About(navController)
         }
 
-        composable(Routes.ROUTE_SHIPPING_INFO) {
-            ShippingInfo(navController)
-        }
-
-
     }
 }
