@@ -1,4 +1,4 @@
-package main
+package utils
 
 import (
 	"fmt"
@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/rs/cors"
 	"github.com/shirou/gopsutil/host"
 )
 
@@ -41,4 +42,12 @@ func GetMyIp() (string, error) {
 		}
 	}
 	return "", fmt.Errorf("no IP found")
+}
+
+func GetCORS() *cors.Cors {
+	return cors.New(cors.Options{
+		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE"},
+		AllowedHeaders:   []string{"Authorization", "Content-Type"},
+		AllowCredentials: true,
+	})
 }
