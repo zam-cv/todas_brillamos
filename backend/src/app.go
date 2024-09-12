@@ -107,6 +107,37 @@ func register(c *gin.Context) {
 
 }
 
+func login(c *gin.Context) {
+	var json struct {
+		Username string `json:"username"`
+		Password string `json:"password"`
+	}
+
+	if err := c.ShouldBindJSON(&json); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid input"})
+		return
+	}
+
+	// Get user from dummy database
+	users.Lock()
+	hashedPassword, exists := users.store[json.Username]
+	users.Unlock()
+
+	if !exists || verifyPassword(hashedPassword, json.Password) != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid credentials"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "Login successful"})
+}
+
+// WebSocket handling
+var upgrader = websocket.Upgrader{
+	CheckOrigin: func(r *http.Request) bool {
+		return true
+	},
+}
+
 func handleWebSocket(w http.ResponseWriter, r *http.Request) {
 	conn, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
@@ -123,9 +154,21 @@ func handleWebSocket(w http.ResponseWriter, r *http.Request) {
 		}
 		log.Printf("Message received: %s", msg)
 
-		if err := conn.WriterMessage(websocket.TextMessage, msg); err != nil {
+		if err := conn.WriteMessage(websocket.TextMessage, msg); err != nil {
 			log.Printf("Failed to write message: %v", err)
 			break
 		}
+	}
+}
+
+func startServerWithSSL(router *gin.Engine) {
+	server := &http.Server{
+		Addr:    ":443",
+		Handler: router,
+	}
+
+	log.Println("Saerver running on port 443")
+	if err := server.ListenAndServeTLS("cert.pem", "key.pem"); err != nil {
+		log.Fatalf("could not start server: %v", err)
 	}
 }
