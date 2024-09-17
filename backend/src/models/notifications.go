@@ -18,3 +18,14 @@ type Notifications struct {
 }
 
 // Pendiente de conectar con la base de datos
+func createNotification(clientID uint, title, message, notifyType, priority string) error {
+	notifications := models.Notifications{
+		Title:    title,
+		Message:  message,
+		ClientID: clientID,
+		Type:     notifyType,
+		Priority: priority,
+		IsRead:   false,
+	}
+	return nil
+}
