@@ -1,6 +1,10 @@
 package models
 
-import "gorm.io/gorm"
+import (
+	"time"
+
+	"gorm.io/gorm"
+)
 
 type Notifications struct {
 	gorm.Model
@@ -8,4 +12,9 @@ type Notifications struct {
 	Message  string
 	ClientID uint
 	IsRead   bool
+	Type     string
+	Priority string
+	ReadAt   *time.Time
 }
+
+// Pendiente de conectar con la base de datos

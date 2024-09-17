@@ -9,9 +9,10 @@ import (
 
 type Client struct {
 	gorm.Model
-	FirstName string
-	LastName  string
-	UserID    uint
+	FirstName     string
+	LastName      string
+	UserID        uint
+	Notifications []Notifications
 }
 
 // Función para validar nombre y apellido
