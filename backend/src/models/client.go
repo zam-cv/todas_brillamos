@@ -1,6 +1,8 @@
 package models
 
-import "gorm.io/gorm"
+import (
+	"gorm.io/gorm"
+)
 
 type Client struct {
 	gorm.Model
@@ -8,3 +10,6 @@ type Client struct {
 	LastName  string
 	UserID    uint
 }
+
+
+func Validatre
