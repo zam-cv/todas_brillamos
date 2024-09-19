@@ -1,9 +1,7 @@
 package models
 
-import "gorm.io/gorm"
-
 type Favorites struct {
-	gorm.Model
+	ID        uint `json:"-" gorm:"primarykey"`
 	ClientID  uint
 	ProductID uint
 }

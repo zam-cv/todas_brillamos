@@ -1,9 +1,7 @@
 package models
 
-import "gorm.io/gorm"
-
 type Orders struct {
-	gorm.Model
+	ID           uint `json:"-" gorm:"primarykey"`
 	Quantity     uint
 	DeliveryDate string
 	Status       string

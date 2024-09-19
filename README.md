@@ -46,14 +46,37 @@ git clone https://github.com/zam-cv/todas_brillamos
 code todas_brillamos
 ```
 
-4. Install the project dependencies
+4. Create a `.env` file in the `backend` directory with the following content
+
+```bash
+PORT=8000
+
+DB_HOST=localhost
+DB_USER=admin
+DB_PASSWORD=awdrqwer12
+DB_NAME=todasbrillamos
+
+ADMIN_EMAIL=admin@todasbrillamos.com
+ADMIN_PASSWORD=awdrqwer12
+
+ADMIN_SECRET_KEY=secret_admin
+ADMIN_TOKEN_COOKIE_NAME=token_admin
+CLIENT_SECRET_KEY=secret
+CLIENT_TOKEN_COOKIE_NAME=token
+```
+
+5. Install the project dependencies
 
 ```bash
 cd platform
 npm install
 ```
 
-7. Start the project
+6. Start the project
+
+```bash
+docker run --name todasbrillamos-postgres -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=awdrqwer12 -e POSTGRES_DB=todasbrillamos -p 5432:5432 -d postgres
+```
 
 ```bash
 cd platform

@@ -1,9 +1,7 @@
 package models
 
-import "gorm.io/gorm"
-
 type Other struct {
-	gorm.Model
+	ID         uint `json:"-" gorm:"primarykey"`
 	CardNumber string
 	CardType   string
 	Expiration string

@@ -1,9 +1,7 @@
 package models
 
-import "gorm.io/gorm"
-
 type Card struct {
-	gorm.Model
+	ID        uint `json:"-" gorm:"primarykey"`
 	Quantity  uint
 	ProductID uint
 	ClientID  uint

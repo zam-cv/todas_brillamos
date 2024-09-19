@@ -1,8 +1,6 @@
 package models
 
-import "gorm.io/gorm"
-
 type Admin struct {
-	gorm.Model
+	ID     uint `json:"-" gorm:"primarykey"`
 	UserID uint
 }

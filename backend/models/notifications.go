@@ -1,9 +1,7 @@
 package models
 
-import "gorm.io/gorm"
-
 type Notifications struct {
-	gorm.Model
+	ID       uint `json:"-" gorm:"primarykey"`
 	Title    string
 	Message  string
 	ClientID uint
