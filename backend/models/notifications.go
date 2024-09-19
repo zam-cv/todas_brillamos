@@ -1,14 +1,11 @@
 package models
 
-<<<<<<< HEAD:backend/models/notifications.go
-=======
 import (
 	"time"
 
 	"gorm.io/gorm"
 )
 
->>>>>>> a62c38aa4bcb8405ccf67ec866bb7fbbf4d37497:backend/src/models/notifications.go
 type Notifications struct {
 	ID       uint `json:"-" gorm:"primarykey"`
 	Title    string
