@@ -18,3 +18,4 @@ fun Home(navController: NavHostController) {
         Text(text = "Home")
     }
 }
+

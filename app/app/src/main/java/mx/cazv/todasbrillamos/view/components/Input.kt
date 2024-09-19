@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import mx.cazv.todasbrillamos.ui.theme.Stroke
@@ -26,8 +27,15 @@ import mx.cazv.todasbrillamos.ui.theme.Stroke
 fun Input(
     placeholder: String,
     initialValue: String = "",
-    suffixIcon : @Composable (() -> Unit)? = null
+    suffixIcon : @Composable (() -> Unit)? = null,
+    //topStart: Dp = 10.dp,
+    topStart: Dp = 10.dp,
+    topEnd: Dp = 10.dp,
+    bottomEnd: Dp = 10.dp,
+    bottomStart: Dp = 10.dp
 ) {
+    val shape = RoundedCornerShape(topStart,topEnd,bottomEnd,bottomStart)
+
     var textState by remember { mutableStateOf(initialValue) }
 
     BasicTextField(
@@ -41,7 +49,7 @@ fun Input(
             .border(
                 width = 1.dp,
                 color = Stroke,
-                shape = RoundedCornerShape(10.dp)
+                shape = shape
             )
             .padding(start = 10.dp, end = 10.dp, bottom = 20.dp, top = 20.dp),
         decorationBox = { innerTextField ->
