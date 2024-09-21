@@ -18,6 +18,7 @@ func Migrate() {
 	db.AutoMigrate(&models.Product{})
 	db.AutoMigrate(&models.Post{})
 	db.AutoMigrate(&models.Cart{})
+	db.AutoMigrate(&models.Notifications{})
 }
 
 func CreateDefaultAdmin() {

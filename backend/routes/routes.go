@@ -30,4 +30,5 @@ func getRoutes() {
 	addBlogRoutes(api)
 	addCategoriesRoutes(api)
 	addPostRoutes(api)
+	addNotificationsRoutes(api)
 }
