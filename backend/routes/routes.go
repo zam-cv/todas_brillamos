@@ -29,4 +29,5 @@ func getRoutes() {
 	addConfigRoutes(api)
 	addBlogRoutes(api)
 	addCategoriesRoutes(api)
+	addPostRoutes(api)
 }
