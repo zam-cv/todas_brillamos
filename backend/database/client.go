@@ -7,6 +7,12 @@ import (
 	"gorm.io/gorm"
 )
 
+func GetClientByID(id int) (*models.Client, error) {
+	var client models.Client
+	err := GetDatabase().First(&client, id).Error
+	return &client, err
+}
+
 func GetUserByClientID(id int) (*models.User, error) {
 	var user models.User
 	err := GetDatabase().
