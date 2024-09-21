@@ -16,6 +16,7 @@ func Migrate() {
 	db.AutoMigrate(&models.Admin{})
 	db.AutoMigrate(&models.Category{})
 	db.AutoMigrate(&models.Product{})
+	db.AutoMigrate(&models.Post{})
 }
 
 func CreateDefaultAdmin() {

@@ -1,6 +1,6 @@
 package models
 
-type Car struct {
+type Cart struct {
 	ID        uint `json:"-" gorm:"primarykey"`
 	Quantity  uint
 	ProductID uint

@@ -9,6 +9,7 @@ func addBlogRoutes(rg *gin.RouterGroup) {
 
 	blog.GET("/", func(c *gin.Context) {
 		c.JSON(200, gin.H{
+
 			"message": "Get all blog posts",
 		})
 	})
@@ -19,7 +20,7 @@ func addBlogRoutes(rg *gin.RouterGroup) {
 		})
 	})
 
-	blog.POST("/", func(c *gin.Context) {
+	blog.POST("/:id", func(c *gin.Context) {
 		c.JSON(200, gin.H{
 			"message": "Create blog post",
 		})
