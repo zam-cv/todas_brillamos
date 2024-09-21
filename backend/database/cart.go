@@ -18,6 +18,11 @@ func GetCartByClientID(clientID uint) ([]models.Cart, error) {
 	return cars, err
 }
 
+func DeleteProductFromCart(productID, clientID uint) error {
+	err := db.Where("product_id = ? AND client_id = ?", productID, clientID).Delete(&models.Cart{}).Error
+	return err
+}
+
 // func GetCarByCarIDAndProductID(carID, productID uint) (*models.Cart, *models.Product, error) {
 // 	car := &models.Cart{}
 // 	product := &models.Product{}

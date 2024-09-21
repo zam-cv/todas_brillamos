@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "ae882d4d-0676-45b7-824a-659435335271",
+		"_postman_id": "fbedee8b-867c-4218-b49e-ac47d60f0b92",
 		"name": "Todas Brillamos",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "33538908"
+		"_exporter_id": "34049463"
 	},
 	"item": [
 		{
@@ -171,7 +171,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjgyMzQ3MTgsImlkIjoiMiJ9.LvYJF6uZAbn5Mq2ThJWe0ikbh0YWvH8hV-7-5pytoJ0",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjgyMzgxNDEsImlkIjoiMSJ9.qHc3ZIqkL1MMY8Q65t67f7MVbP3Ne-IZgGrMgSBmjR0",
 							"type": "string"
 						}
 					]
@@ -356,7 +356,7 @@
 						{
 							"key": "file",
 							"type": "file",
-							"src": "/C:/Users/naost/Downloads/The-product-of-you-810x810.png"
+							"src": "/C:/Users/Min/Downloads/ImgProduct.png"
 						},
 						{
 							"key": "metadata",
@@ -626,6 +626,47 @@
 					"path": [
 						"api",
 						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Product to Cart",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjgyMzgxNDEsImlkIjoiMiJ9.Y4yyVZYnmmk64SSi4XO8Io9QhUMeD6HdamA-QouxwgU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"test2\",\n    \"author\": \"yo\",\n    \"date\": \"21-09-2024\",\n    \"content\": \"si\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/cart/1/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"cart",
+						"1",
+						"5"
 					]
 				}
 			},

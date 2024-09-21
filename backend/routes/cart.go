@@ -3,6 +3,7 @@ package routes
 import (
 	"backend/database"
 	"backend/middlewares"
+	"backend/models"
 	"backend/resources/auth"
 	"strconv"
 
@@ -43,13 +44,20 @@ func addCartRoutes(rg *gin.RouterGroup) {
 			return
 		}
 
-		productIDStr := c.Param("product_id")
+		// productIDStr := c.Param("product_id")
 
-		productID, err := strconv.Atoi(productIDStr)
-		if err != nil {
-			c.JSON(500, gin.H{"error": "Invalid user product ID"})
+		// productID, err := strconv.Atoi(productIDStr)
+		// if err != nil {
+		// 	c.JSON(500, gin.H{"error": "Invalid user product ID"})
+		// 	return
+		// }
+
+		productValue, exists := c.Get("product")
+		if !exists {
+			c.JSON(500, gin.H{"error": "Product not found"})
 			return
 		}
+		product := productValue.(*models.Product)
 
 		quantityStr := c.Param("quantity")
 
@@ -59,7 +67,7 @@ func addCartRoutes(rg *gin.RouterGroup) {
 			return
 		}
 
-		err = database.AddProduct(uint(id), uint(productID), uint(quantity))
+		err = database.AddProduct(uint(id), product.ID, uint(quantity))
 		if err != nil {
 			c.JSON(500, gin.H{"error": err.Error()})
 			return
@@ -70,7 +78,32 @@ func addCartRoutes(rg *gin.RouterGroup) {
 		})
 	})
 
-	cart.DELETE("/:id", func(c *gin.Context) {
+	cart.DELETE("/:product_id", auth.GetMiddleware(ClientAuth), middlewares.ExistsProductMiddleware(), func(c *gin.Context) {
+		idStr, exists := c.Get("userID")
+		if !exists {
+			c.JSON(500, gin.H{"error": "User ID not found"})
+			return
+		}
+
+		id, err := strconv.Atoi(idStr.(string))
+		if err != nil {
+			c.JSON(500, gin.H{"error": "Invalid user ID"})
+			return
+		}
+
+		productIDStr := c.Param("product_id")
+		productID, err := strconv.Atoi(productIDStr)
+		if err != nil {
+			c.JSON(500, gin.H{"error": "Invalid product ID"})
+			return
+		}
+
+		err = database.DeleteProductFromCart(uint(productID), uint(id))
+		if err != nil {
+			c.JSON(500, gin.H{"error": err.Error()})
+			return
+		}
+
 		c.JSON(200, gin.H{
 			"message": "Delete cart item",
 		})
