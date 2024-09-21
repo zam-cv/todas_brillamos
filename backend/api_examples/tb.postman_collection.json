@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "00a33aaf-9baa-409d-9ea5-f9d2a5445fde",
+		"_postman_id": "ae882d4d-0676-45b7-824a-659435335271",
 		"name": "Todas Brillamos",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "15473377"
+		"_exporter_id": "33538908"
 	},
 	"item": [
 		{
@@ -139,7 +139,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjgwMjE3ODYsImlkIjoiMiJ9.azCDiSIB6X2MmCLdla8V8klIn9mHDeEzEJrCxBzDmGc",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjgyMzQ3MTgsImlkIjoiMiJ9.LvYJF6uZAbn5Mq2ThJWe0ikbh0YWvH8hV-7-5pytoJ0",
 							"type": "string"
 						}
 					]
@@ -171,7 +171,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjgwNTQ3MzcsImlkIjoiMSJ9.3NrhZJKrqlgUk_qOMsIFXTysLZxX7viydtfs8aQXB-w",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjgyMzQ3MTgsImlkIjoiMiJ9.LvYJF6uZAbn5Mq2ThJWe0ikbh0YWvH8hV-7-5pytoJ0",
 							"type": "string"
 						}
 					]
@@ -180,7 +180,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"name\": \"test\"\n}",
+					"raw": "{\n    \"name\": \"nose2\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -288,6 +288,48 @@
 			"response": []
 		},
 		{
+			"name": "Get Posts",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjgwNTQ3MzcsImlkIjoiMSJ9.3NrhZJKrqlgUk_qOMsIFXTysLZxX7viydtfs8aQXB-w",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"test\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/posts",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Set Product",
 			"request": {
 				"auth": {
@@ -314,11 +356,11 @@
 						{
 							"key": "file",
 							"type": "file",
-							"src": "/Users/albertovelazquez/Documents/Galeria/hackmx5_1.jpg"
+							"src": "/C:/Users/naost/Downloads/The-product-of-you-810x810.png"
 						},
 						{
 							"key": "metadata",
-							"value": "{\n  \"name\": \"toalla\",\n  \"description\": \"description\",\n  \"price\": 10.4,\n  \"stock\": 4,\n  \"category_id\": 1\n}",
+							"value": "{\n  \"name\": \"si\",\n  \"description\": \"nose\",\n  \"price\": 20,\n  \"stock\": 4,\n  \"category_id\": 1\n}",
 							"type": "text"
 						}
 					]
@@ -535,7 +577,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/uploads/products/29dd6a34b184a6431b04e6d7ea23ef13ad08deb9c1937ccc26e69a98110121e4.jpg",
+					"raw": "http://localhost:8000/uploads/products/3156367b9ddf5c663082fd53ab6d66910d647739cf74e623e6bf1af3fbd27934.png",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -544,7 +586,87 @@
 					"path": [
 						"uploads",
 						"products",
-						"29dd6a34b184a6431b04e6d7ea23ef13ad08deb9c1937ccc26e69a98110121e4.jpg"
+						"3156367b9ddf5c663082fd53ab6d66910d647739cf74e623e6bf1af3fbd27934.png"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Set Post",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjgwNTQ3MzcsImlkIjoiMSJ9.3NrhZJKrqlgUk_qOMsIFXTysLZxX7viydtfs8aQXB-w",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"test2\",\n    \"author\": \"yo\",\n    \"date\": \"21-09-2024\",\n    \"content\": \"si\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/posts",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Post",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjgwNTgyMDMsImlkIjoiMSJ9.d4OmXj5cWBuI-qmqyA5G5bSNy_nkGyv3YIwXauaKgPw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/posts/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"posts",
+						"2"
 					]
 				}
 			},
