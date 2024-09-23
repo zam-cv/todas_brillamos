@@ -67,7 +67,7 @@ func addCartRoutes(rg *gin.RouterGroup) {
 			return
 		}
 
-		err = database.AddProduct(uint(id), product.ID, uint(quantity))
+		err = database.AddProduct(product.ID, uint(id), uint(quantity))
 		if err != nil {
 			c.JSON(500, gin.H{"error": err.Error()})
 			return
