@@ -32,4 +32,3 @@ func DeleteProductFromCart(productID, clientID uint) error {
 // 		First(&car).Error
 // 	return car, product, err
 // }
-

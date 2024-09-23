@@ -16,3 +16,8 @@ func GetNotificationsByClientID(clientID uint) ([]models.Notifications, error) {
 	err := db.Where("client_id = ?", clientID).Find(&notifications).Error
 	return notifications, err
 }
+
+func DeleteNotificationByID(id uint) error {
+	err := db.Where("id = ?", id).Delete(&models.Notifications{}).Error
+	return err
+}
