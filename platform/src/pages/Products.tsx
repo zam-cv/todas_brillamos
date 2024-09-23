@@ -105,7 +105,6 @@ return(
                   </div>
                   <div className="flex flex-row space-x-2 px-2 pt-2">
                     <Input name= "tamano" value={formData.tamano} onChange={handleInputs} placeholder="Tamaño"></Input>
-                    <Input name="precio" value={formData.precio} onChange={handleInputs} placeholder="Precio"></Input>
                     <Input name="material" value={formData.material} onChange={handleInputs} placeholder="Material"></Input>
                   </div>
                   <div className="flex flex-row space-x-2 px-2 pt-2">
