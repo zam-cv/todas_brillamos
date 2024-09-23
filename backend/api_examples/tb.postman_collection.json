@@ -171,7 +171,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjgyMzgxNDEsImlkIjoiMSJ9.qHc3ZIqkL1MMY8Q65t67f7MVbP3Ne-IZgGrMgSBmjR0",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjgzNTUyNzAsImlkIjoiMSJ9.9JaGEd7YG4rPsEVsUsvvh92Fjg8kgulsiY1-IDS1_O4",
 							"type": "string"
 						}
 					]
@@ -337,7 +337,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjgwNTgyMDMsImlkIjoiMSJ9.d4OmXj5cWBuI-qmqyA5G5bSNy_nkGyv3YIwXauaKgPw",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjgzNTUyNzAsImlkIjoiMSJ9.9JaGEd7YG4rPsEVsUsvvh92Fjg8kgulsiY1-IDS1_O4",
 							"type": "string"
 						}
 					]
@@ -639,7 +639,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjgyMzgxNDEsImlkIjoiMiJ9.Y4yyVZYnmmk64SSi4XO8Io9QhUMeD6HdamA-QouxwgU",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjgzNDQ3OTIsImlkIjoiMiJ9.nTPY3d1T5ASr4X0YwwR5Rysg7riAEnYkTM7-3mmLHAA",
 							"type": "string"
 						}
 					]
@@ -656,7 +656,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/api/cart/1/5",
+					"raw": "http://localhost:8000/api/cart/2/5",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -665,8 +665,48 @@
 					"path": [
 						"api",
 						"cart",
-						"1",
+						"2",
 						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Product to Favorites",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjgzNTUyNzAsImlkIjoiMiJ9.CO7prEYMLAktSXBgSLGeMJ55bBPas4_XP_MrUkgCn_4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"test2\",\n    \"author\": \"yo\",\n    \"date\": \"21-09-2024\",\n    \"content\": \"si\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/favorites/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"favorites",
+						"1"
 					]
 				}
 			},
@@ -708,6 +748,47 @@
 						"api",
 						"posts",
 						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Product from Favorites",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjgzNTUyNzAsImlkIjoiMiJ9.CO7prEYMLAktSXBgSLGeMJ55bBPas4_XP_MrUkgCn_4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/favorites/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"favorites",
+						"1"
 					]
 				}
 			},
