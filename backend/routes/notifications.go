@@ -31,8 +31,13 @@ func addNotificationsRoutes(rg *gin.RouterGroup) {
 		notification.Date = now
 
 		for _, user := range users {
-			notification.ClientID = user.ID
-			err := database.CreateNotification(&notification)
+			newNotification := models.Notifications{
+				Title:       notification.Title,
+				Description: notification.Description,
+				Date:        now,
+				ClientID:    user.ID,
+			}
+			err := database.CreateNotification(&newNotification)
 			if err != nil {
 				c.Status(http.StatusInternalServerError)
 				return
