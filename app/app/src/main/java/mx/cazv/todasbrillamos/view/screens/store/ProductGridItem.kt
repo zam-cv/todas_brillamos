@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -38,6 +39,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import mx.cazv.todasbrillamos.R
 import mx.cazv.todasbrillamos.model.Product
+import mx.cazv.todasbrillamos.ui.theme.AccentColor
 
 /**
  * Vista cuadricula de los productos
@@ -86,8 +88,9 @@ fun ProductGridItem(product: Product) {
                     )
 
                     Icon (
-                        imageVector = Icons.Outlined.FavoriteBorder,
+                        imageVector = (if (product.favorito) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder),
                         contentDescription = "favorito",
+                        tint = (if (product.favorito) AccentColor else Color.Black),
                         modifier = Modifier
                             .size(25.dp)
                             .align(Alignment.Center)

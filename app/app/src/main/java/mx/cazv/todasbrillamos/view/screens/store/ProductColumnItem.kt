@@ -42,6 +42,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import mx.cazv.todasbrillamos.R
 import mx.cazv.todasbrillamos.model.Product
+import mx.cazv.todasbrillamos.ui.theme.AccentColor
 
 /**
  * Vista de lista de los productos
@@ -89,8 +90,9 @@ fun ProductColumnItem(product: Product) {
                 )
 
                 Icon (
-                    imageVector = Icons.Outlined.FavoriteBorder,
+                    imageVector = (if (product.favorito) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder),
                     contentDescription = "favorito",
+                    tint = (if (product.favorito) AccentColor else Color.Black),
                     modifier = Modifier
                         .size(25.dp)
                         .align(Alignment.Center)

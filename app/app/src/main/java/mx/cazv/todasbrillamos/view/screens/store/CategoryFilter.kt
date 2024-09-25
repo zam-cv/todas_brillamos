@@ -1,5 +1,6 @@
 package mx.cazv.todasbrillamos.view.screens.store
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -29,6 +30,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import mx.cazv.todasbrillamos.R
+import mx.cazv.todasbrillamos.ui.theme.BackgroundColor
 
 /**
  * Barra de categorias
@@ -59,9 +61,12 @@ fun CategoryFilter() {
         modifier = Modifier
             .wrapContentSize()
             .padding(top = 15.dp)
+            .background(BackgroundColor)
+
     ) {
         Row ( modifier = Modifier
             .clip(shape = RoundedCornerShape(24.dp))
+            .background(BackgroundColor)
         ) {
             Box(modifier = Modifier
                 .padding(

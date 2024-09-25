@@ -14,26 +14,33 @@ class ProductProvider {
                 R.drawable.temp_img,
                 "Ana Toalla Femenina Reutilizable",
                 "Nocturna",
-                180.00
+                180.00,
+                null,
+                true
             ),
             Product(
                 R.drawable.temp_img,
                 "MARGARITA Toalla Femenina Reutilizable",
                 "Teen",
-                130.00
+                130.00,
+                null,
+                true
             ),
             Product(
                 R.drawable.temp_img,
                 "VIOLETA Toalla Femenina Reutilizable",
                 "Regular",
-                150.00
+                150.00,
+                null,
+                true
             ),
             Product(
                 R.drawable.temp_img,
                 "KIT ZAZIL 2 AYNII",
                 "",
                 460.00,
-                15.00
+                15.00,
+                true
             ),
             Product(
                 R.drawable.temp_img,
@@ -50,5 +57,44 @@ class ProductProvider {
             )
 
         )
+
+        val favProductList = listOf(
+            Product(
+                R.drawable.temp_img,
+                "Ana Toalla Femenina Reutilizable",
+                "Nocturna",
+                180.00,
+                null,
+                true
+            ),
+            Product(
+                R.drawable.temp_img,
+                "MARGARITA Toalla Femenina Reutilizable",
+                "Teen",
+                130.00,
+                null,
+                true
+            ),
+            Product(
+                R.drawable.temp_img,
+                "VIOLETA Toalla Femenina Reutilizable",
+                "Regular",
+                150.00,
+                null,
+                true
+            ),
+            Product(
+                R.drawable.temp_img,
+                "KIT ZAZIL 2 AYNII",
+                "",
+                460.00,
+                15.00,
+                true
+            )
+
+        )
+
     }
+
+
 }

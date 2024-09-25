@@ -12,5 +12,6 @@ data class Product(
     val producto: String,
     val tipo: String,
     val precio: Double,
-    val descuento: Double? = null
+    val descuento: Double? = null,
+    val favorito: Boolean = false
 )
