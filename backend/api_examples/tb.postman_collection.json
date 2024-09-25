@@ -164,6 +164,126 @@
 			"response": []
 		},
 		{
+			"name": "Get Cart",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mjg1ODU5ODIsImlkIjoiMiJ9.YwzMyY-0LZ3YN4CSp43j85frLIbwYN0gvq11KqZT9mg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/api/cart",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"cart"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Favorites",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mjg1ODU5ODIsImlkIjoiMiJ9.YwzMyY-0LZ3YN4CSp43j85frLIbwYN0gvq11KqZT9mg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/api/cart",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"cart"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Product from Cart",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mjg1ODU5ODIsImlkIjoiMiJ9.YwzMyY-0LZ3YN4CSp43j85frLIbwYN0gvq11KqZT9mg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/api/cart",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"cart"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Product from Favorites",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mjg1ODU5ODIsImlkIjoiMiJ9.YwzMyY-0LZ3YN4CSp43j85frLIbwYN0gvq11KqZT9mg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/api/cart",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"cart"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Set Category",
 			"request": {
 				"auth": {
@@ -171,7 +291,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjgzNTUyNzAsImlkIjoiMSJ9.9JaGEd7YG4rPsEVsUsvvh92Fjg8kgulsiY1-IDS1_O4",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mjg1MTA5MTcsImlkIjoiMiJ9.krMoFZbC6tJTb4coRpZ6jFhXApP97xH49RnjHTYsGfo",
 							"type": "string"
 						}
 					]
@@ -337,7 +457,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjgzNTUyNzAsImlkIjoiMSJ9.9JaGEd7YG4rPsEVsUsvvh92Fjg8kgulsiY1-IDS1_O4",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mjg1ODEyMTUsImlkIjoiMSJ9.dK-LmlX0tih8EwRBp-fErzN7ssoQFAu2inRBgg-iBf8",
 							"type": "string"
 						}
 					]
@@ -427,6 +547,59 @@
 					"path": [
 						"api",
 						"products",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Product Quantity in Cart",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mjg1MTA5MTcsImlkIjoiMiJ9.krMoFZbC6tJTb4coRpZ6jFhXApP97xH49RnjHTYsGfo",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/Users/albertovelazquez/Documents/Galeria/hackmx5_2.jpg"
+						},
+						{
+							"key": "metadata",
+							"value": "{\n  \"name\": \"toalla\",\n  \"description\": \"description\",\n  \"price\": 10.4,\n  \"stock\": 5,\n  \"category_id\": 1\n}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/cart/1/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"cart",
+						"1",
 						"1"
 					]
 				}
@@ -534,7 +707,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/api/products/1/metadata",
+					"raw": "http://localhost:8000/api/products/2/metadata",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -543,7 +716,7 @@
 					"path": [
 						"api",
 						"products",
-						"1",
+						"2",
 						"metadata"
 					]
 				}
@@ -639,7 +812,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjgzNDQ3OTIsImlkIjoiMiJ9.nTPY3d1T5ASr4X0YwwR5Rysg7riAEnYkTM7-3mmLHAA",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mjg1ODU5ODIsImlkIjoiMiJ9.YwzMyY-0LZ3YN4CSp43j85frLIbwYN0gvq11KqZT9mg",
 							"type": "string"
 						}
 					]
@@ -656,7 +829,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/api/cart/2/5",
+					"raw": "http://localhost:8000/api/cart/2/3",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -666,7 +839,7 @@
 						"api",
 						"cart",
 						"2",
-						"5"
+						"3"
 					]
 				}
 			},
@@ -788,6 +961,47 @@
 					"path": [
 						"api",
 						"favorites",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Product from Cart",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mjg1MTA5MTcsImlkIjoiMiJ9.krMoFZbC6tJTb4coRpZ6jFhXApP97xH49RnjHTYsGfo",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/cart/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"cart",
 						"1"
 					]
 				}

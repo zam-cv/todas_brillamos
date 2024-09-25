@@ -13,9 +13,21 @@ func AddProduct(productID, clientID, quantity uint) error {
 }
 
 func GetCartByClientID(clientID uint) ([]models.Cart, error) {
-	cars := []models.Cart{}
-	err := db.Where("client_id = ?", clientID).Find(&cars).Error
-	return cars, err
+	carts := []models.Cart{}
+	err := db.Where("client_id = ?", clientID).Find(&carts).Error
+	return carts, err
+}
+
+func GetProductFromCartByProductIDClientID(productID, clientID uint) (*models.Cart, error) {
+	cart := &models.Cart{}
+	err := db.Where("product_id = ? AND client_id = ?", productID, clientID).First(cart).Error
+	return cart, err
+}
+
+func UpdateProductQuantity(productID, clientID, quantity uint) error {
+	cart := &models.Cart{}
+	err := db.Model(cart).Where("product_id = ? AND client_id = ?", productID, clientID).Update("quantity", quantity).Error
+	return err
 }
 
 func DeleteProductFromCart(productID, clientID uint) error {
