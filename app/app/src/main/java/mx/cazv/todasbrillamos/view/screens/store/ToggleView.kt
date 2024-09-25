@@ -1,5 +1,6 @@
 package mx.cazv.todasbrillamos.view.screens.store
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -22,6 +23,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import mx.cazv.todasbrillamos.R
+import mx.cazv.todasbrillamos.ui.theme.BackgroundColor
 
 /**
  * Cambiar vista de los productos
@@ -40,7 +42,8 @@ fun ToggleView(selectedType: String, onSelectionChange: (String) -> Unit) {
         modifier = Modifier.wrapContentSize()
     ) {
         Row (modifier = Modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .background(BackgroundColor),
             verticalAlignment = Alignment.CenterVertically
         )
         {

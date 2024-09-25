@@ -1,5 +1,6 @@
 package mx.cazv.todasbrillamos.view.screens.store
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,6 +12,7 @@ import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import mx.cazv.todasbrillamos.model.ProductProvider
 
@@ -43,6 +45,22 @@ fun ViewProducts(type: String) {
                 ProductColumnItem(product = product)
                 Spacer(modifier = Modifier.height(8.dp))
             }
+        }
+    }
+
+}
+
+@Composable
+fun ViewFavorites() {
+    LazyVerticalGrid(
+        // columns = GridCells.Adaptive(160.dp),
+        columns = GridCells.Fixed(2),
+        modifier = Modifier.fillMaxSize(),
+        contentPadding = PaddingValues(vertical = 16.dp),
+    ) {
+        itemsIndexed(ProductProvider.favProductList) { _, product ->
+            ProductGridItem(product = product)
+            Spacer(modifier = Modifier.height(8.dp))
         }
     }
 
