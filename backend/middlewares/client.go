@@ -53,7 +53,7 @@ func GetClientID() gin.HandlerFunc {
 			return
 		}
 
-		ctx.Set("clientID", id)
+		ctx.Set("clientID", uint(id))
 		ctx.Next()
 	}
 }
