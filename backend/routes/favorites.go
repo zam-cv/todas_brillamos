@@ -5,6 +5,7 @@ import (
 	"backend/middlewares"
 	"backend/models"
 	"backend/resources/auth"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -26,14 +27,31 @@ func addFavoritesRoutes(rg *gin.RouterGroup) {
 		})
 	})
 
+	favorites.GET("/exists/:product_id", auth.GetMiddleware(ClientAuth), middlewares.GetClientID(), func(c *gin.Context) {
+		id, _ := c.MustGet("clientID").(uint)
+
+		productIDStr := c.Param("product_id")
+		productID, err := strconv.Atoi(productIDStr)
+		if err != nil {
+			c.JSON(500, gin.H{"error": "Invalid product ID"})
+			return
+		}
+
+		_, err = database.GetProductFromFavoritesByProductIDClientID(uint(productID), id)
+		if err != nil {
+			c.JSON(500, gin.H{"error": "Product not found in favorites"})
+			return
+		}
+
+		c.JSON(200, gin.H{
+			"exists": true,
+		})
+	})
+
 	favorites.POST("/:product_id", auth.GetMiddleware(ClientAuth), middlewares.ExistsProductMiddleware(), middlewares.GetClientID(), func(c *gin.Context) {
 		id, _ := c.MustGet("clientID").(uint)
 
-		productValue, exists := c.Get("product")
-		if !exists {
-			c.JSON(500, gin.H{"error": "Product not found"})
-			return
-		}
+		productValue, _ := c.Get("product")
 		product := productValue.(*models.Product)
 
 		err := database.AddProductToFavorites(product.ID, id)

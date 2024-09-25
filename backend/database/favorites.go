@@ -18,6 +18,12 @@ func GetFavoritesByClientID(clientID uint) ([]models.Favorites, error) {
 	return favorites, err
 }
 
+func GetProductFromFavoritesByProductIDClientID(productID, clientID uint) (*models.Favorites, error) {
+	favorite := &models.Favorites{}
+	err := db.Where("product_id = ? AND client_id = ?", productID, clientID).First(favorite).Error
+	return favorite, err
+}
+
 func DeleteProductFromFavorites(productID, clientID uint) error {
 	err := db.Where("product_id = ? AND client_id = ?", productID, clientID).Delete(&models.Favorites{}).Error
 	return err
