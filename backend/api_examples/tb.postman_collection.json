@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "fbedee8b-867c-4218-b49e-ac47d60f0b92",
+		"_postman_id": "342f2449-f005-44f9-b1ec-4a75771d49ce",
 		"name": "Todas Brillamos",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "34049463"
+		"_exporter_id": "15473377"
 	},
 	"item": [
 		{
@@ -76,7 +76,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"email\": \"juan@gmail.com\",\n    \"password\": \"awdrqwer12\",\n    \"first_name\": \"juan\",\n    \"last_name\": \"martinez\"\n}",
+					"raw": "{\n    \"email\": \"juan10@gmail.com\",\n    \"password\": \"awdrqwer12\",\n    \"first_name\": \"juan\",\n    \"last_name\": \"martinez\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -107,7 +107,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"email\": \"juan@gmail.com\",\n    \"password\": \"awdrqwer12\"\n}",
+					"raw": "{\n    \"email\": \"juan10@gmail.com\",\n    \"password\": \"awdrqwer12\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -812,7 +812,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mjg1ODU5ODIsImlkIjoiMiJ9.YwzMyY-0LZ3YN4CSp43j85frLIbwYN0gvq11KqZT9mg",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mjg1OTAzNTgsImlkIjoiMyJ9.3rGp8Pin8ItJCQWeO-p8gWhg5dKKUZMEtTRbL3xvZVY",
 							"type": "string"
 						}
 					]
@@ -829,7 +829,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/api/cart/2/3",
+					"raw": "http://localhost:8000/api/cart/:product_id/:quantity",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -838,8 +838,18 @@
 					"path": [
 						"api",
 						"cart",
-						"2",
-						"3"
+						":product_id",
+						":quantity"
+					],
+					"variable": [
+						{
+							"key": "product_id",
+							"value": "1"
+						},
+						{
+							"key": "quantity",
+							"value": "10"
+						}
 					]
 				}
 			},

@@ -46,14 +46,14 @@ func GetClientID() gin.HandlerFunc {
 			return
 		}
 
-		_, err = database.GetClientByUserID(id)
+		client, err := database.GetClientByUserID(id)
 		if err != nil {
 			ctx.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
 			ctx.Abort()
 			return
 		}
 
-		ctx.Set("clientID", uint(id))
+		ctx.Set("clientID", uint(client.ID))
 		ctx.Next()
 	}
 }

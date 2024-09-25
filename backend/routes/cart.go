@@ -71,14 +71,6 @@ func addCartRoutes(rg *gin.RouterGroup) {
 	cart.POST("/:product_id/:quantity", auth.GetMiddleware(ClientAuth), middlewares.ExistsProductMiddleware(), middlewares.GetClientID(), func(c *gin.Context) {
 		id, _ := c.MustGet("clientID").(uint)
 
-		// productIDStr := c.Param("product_id")
-
-		// productID, err := strconv.Atoi(productIDStr)
-		// if err != nil {
-		// 	c.JSON(500, gin.H{"error": "Invalid user product ID"})
-		// 	return
-		// }
-
 		productValue, _ := c.Get("product")
 		product := productValue.(*models.Product)
 
