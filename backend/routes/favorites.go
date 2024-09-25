@@ -14,13 +14,19 @@ func addFavoritesRoutes(rg *gin.RouterGroup) {
 	favorites := rg.Group("/favorites")
 
 	favorites.GET("/", auth.GetMiddleware(ClientAuth), func(c *gin.Context) {
-		id, exists := c.Get("userID")
+		idStr, exists := c.Get("userID")
 		if !exists {
 			c.JSON(500, gin.H{"error": "User ID not found"})
 			return
 		}
 
-		favorites, err := database.GetFavoritesByClientID(id.(uint))
+		id, err := strconv.Atoi(idStr.(string))
+		if err != nil {
+			c.JSON(500, gin.H{"error": "Invalid user ID"})
+			return
+		}
+
+		favorites, err := database.GetFavoritesByClientID(uint(id))
 		if err != nil {
 			c.JSON(500, gin.H{"error": err.Error()})
 			return
@@ -30,6 +36,38 @@ func addFavoritesRoutes(rg *gin.RouterGroup) {
 			"favorites": favorites,
 		})
 	})
+
+	favorites.GET("/exists/:product_id", auth.GetMiddleware(ClientAuth), func(c *gin.Context) {
+		idStr, exists := c.Get("userID")
+		if !exists {
+			c.JSON(500, gin.H{"error": "User ID not found"})
+			return
+		}
+
+		id, err := strconv.Atoi(idStr.(string))
+		if err != nil {
+			c.JSON(500, gin.H{"error": "Invalid user ID"})
+			return
+		}
+
+		productIDStr := c.Param("product_id")
+		productID, err := strconv.Atoi(productIDStr)
+		if err != nil {
+			c.JSON(500, gin.H{"error": "Invalid product ID"})
+			return
+		}
+
+		_, err = database.GetProductFromFavoritesByProductIDClientID(uint(productID), uint(id))
+		if err != nil {
+			c.JSON(500, gin.H{"error": "Product not found in favorites"})
+			return
+		}
+
+		c.JSON(200, gin.H{
+			"exists": true,
+		})
+	})
+
 
 	favorites.POST("/:product_id", auth.GetMiddleware(ClientAuth), middlewares.ExistsProductMiddleware(), func(c *gin.Context) {
 		idStr, exists := c.Get("userID")
@@ -44,11 +82,7 @@ func addFavoritesRoutes(rg *gin.RouterGroup) {
 			return
 		}
 
-		productValue, exists := c.Get("product")
-		if !exists {
-			c.JSON(500, gin.H{"error": "Product not found"})
-			return
-		}
+		productValue, _ := c.Get("product")
 		product := productValue.(*models.Product)
 
 		err = database.AddProductToFavorites(product.ID, uint(id))
