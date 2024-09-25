@@ -21,3 +21,10 @@ func DeleteNotificationByID(id uint) error {
 	err := db.Where("id = ?", id).Delete(&models.Notifications{}).Error
 	return err
 }
+
+func CreateNotificationByClientID(notification *models.Notifications) error {
+	if err := db.Create(notification).Error; err != nil {
+		return err
+	}
+	return nil
+}
