@@ -38,7 +38,7 @@ fun App() {
 @Composable
 fun Nav(navController: NavHostController, modifier: Modifier = Modifier) {
     NavHost(navController = navController,
-        startDestination = Routes.ROUTE_REGISTER,
+        startDestination = Routes.ROUTE_TRACK_ORDER,
         modifier = modifier.fillMaxSize()) {
 
         // Screens

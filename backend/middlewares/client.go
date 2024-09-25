@@ -17,7 +17,7 @@ func ExistsClientMiddleware() gin.HandlerFunc {
 			c.Abort()
 			return
 		}
-		
+
 		client, err := database.GetClientByID(id)
 		if err != nil {
 			c.JSON(http.StatusNotFound, gin.H{"error": "Client not found"})
@@ -27,5 +27,33 @@ func ExistsClientMiddleware() gin.HandlerFunc {
 
 		c.Set("client", client)
 		c.Next()
+	}
+}
+
+func GetClientID() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		idStr, exists := ctx.Get("userID")
+		if !exists {
+			ctx.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
+			ctx.Abort()
+			return
+		}
+
+		id, err := strconv.Atoi(idStr.(string))
+		if err != nil {
+			ctx.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
+			ctx.Abort()
+			return
+		}
+
+		_, err = database.GetClientByUserID(id)
+		if err != nil {
+			ctx.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
+			ctx.Abort()
+			return
+		}
+
+		ctx.Set("clientID", id)
+		ctx.Next()
 	}
 }

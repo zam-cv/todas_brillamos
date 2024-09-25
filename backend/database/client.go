@@ -13,6 +13,12 @@ func GetClientByID(id int) (*models.Client, error) {
 	return &client, err
 }
 
+func GetClientByUserID(id int) (*models.Client, error) {
+	var client models.Client
+	err := GetDatabase().Where("user_id = ?", id).First(&client).Error
+	return &client, err
+}
+
 func GetUserByClientID(id int) (*models.User, error) {
 	var user models.User
 	err := GetDatabase().
