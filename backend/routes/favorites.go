@@ -3,9 +3,8 @@ package routes
 import (
 	"backend/database"
 	"backend/middlewares"
-	"backend/resources/auth"
 	"backend/models"
-	"strconv"
+	"backend/resources/auth"
 
 	"github.com/gin-gonic/gin"
 )
@@ -13,14 +12,10 @@ import (
 func addFavoritesRoutes(rg *gin.RouterGroup) {
 	favorites := rg.Group("/favorites")
 
-	favorites.GET("/", auth.GetMiddleware(ClientAuth), func(c *gin.Context) {
-		id, exists := c.Get("userID")
-		if !exists {
-			c.JSON(500, gin.H{"error": "User ID not found"})
-			return
-		}
+	favorites.GET("/", auth.GetMiddleware(ClientAuth), middlewares.GetClientID(), func(c *gin.Context) {
+		id, _ := c.MustGet("clientID").(uint)
 
-		favorites, err := database.GetFavoritesByClientID(id.(uint))
+		favorites, err := database.GetFavoritesByClientID(id)
 		if err != nil {
 			c.JSON(500, gin.H{"error": err.Error()})
 			return
@@ -31,18 +26,8 @@ func addFavoritesRoutes(rg *gin.RouterGroup) {
 		})
 	})
 
-	favorites.POST("/:product_id", auth.GetMiddleware(ClientAuth), middlewares.ExistsProductMiddleware(), func(c *gin.Context) {
-		idStr, exists := c.Get("userID")
-		if !exists {
-			c.JSON(500, gin.H{"error": "User ID not found"})
-			return
-		}
-
-		id, err := strconv.Atoi(idStr.(string))
-		if err != nil {
-			c.JSON(500, gin.H{"error": "Invalid user ID"})
-			return
-		}
+	favorites.POST("/:product_id", auth.GetMiddleware(ClientAuth), middlewares.ExistsProductMiddleware(), middlewares.GetClientID(), func(c *gin.Context) {
+		id, _ := c.MustGet("clientID").(uint)
 
 		productValue, exists := c.Get("product")
 		if !exists {
@@ -51,7 +36,7 @@ func addFavoritesRoutes(rg *gin.RouterGroup) {
 		}
 		product := productValue.(*models.Product)
 
-		err = database.AddProductToFavorites(product.ID, uint(id))
+		err := database.AddProductToFavorites(product.ID, id)
 		if err != nil {
 			c.JSON(500, gin.H{"error": err.Error()})
 			return
@@ -62,18 +47,8 @@ func addFavoritesRoutes(rg *gin.RouterGroup) {
 		})
 	})
 
-	favorites.DELETE("/:product_id", auth.GetMiddleware(ClientAuth), middlewares.ExistsProductMiddleware(), func(c *gin.Context) {
-		idStr, exists := c.Get("userID")
-		if !exists {
-			c.JSON(500, gin.H{"error": "User ID not found"})
-			return
-		}
-
-		id, err := strconv.Atoi(idStr.(string))
-		if err != nil {
-			c.JSON(500, gin.H{"error": "Invalid user ID"})
-			return
-		}
+	favorites.DELETE("/:product_id", auth.GetMiddleware(ClientAuth), middlewares.ExistsProductMiddleware(), middlewares.GetClientID(), func(c *gin.Context) {
+		id, _ := c.MustGet("clientID").(uint)
 
 		productValue, exists := c.Get("product")
 		if !exists {
@@ -82,7 +57,7 @@ func addFavoritesRoutes(rg *gin.RouterGroup) {
 		}
 		product := productValue.(*models.Product)
 
-		err = database.DeleteProductFromFavorites(product.ID, uint(id))
+		err := database.DeleteProductFromFavorites(product.ID, id)
 		if err != nil {
 			c.JSON(500, gin.H{"error": err.Error()})
 			return

@@ -13,20 +13,10 @@ import (
 func addCartRoutes(rg *gin.RouterGroup) {
 	cart := rg.Group("/cart")
 
-	cart.GET("", auth.GetMiddleware(ClientAuth), func(c *gin.Context) {
-		idStr, exists := c.Get("userID")
-		if !exists {
-			c.JSON(500, gin.H{"error": "User ID not found"})
-			return
-		}
+	cart.GET("", auth.GetMiddleware(ClientAuth), middlewares.GetClientID(), func(c *gin.Context) {
+		id, _ := c.MustGet("clientID").(uint)
 
-		id, err := strconv.Atoi(idStr.(string))
-		if err != nil {
-			c.JSON(500, gin.H{"error": "Invalid user ID"})
-			return
-		}
-
-		products, err := database.GetCartByClientID(uint(id))
+		products, err := database.GetCartByClientID(id)
 		if err != nil {
 			c.JSON(500, gin.H{"error": err.Error()})
 			return
@@ -37,18 +27,8 @@ func addCartRoutes(rg *gin.RouterGroup) {
 		})
 	})
 
-	cart.GET("/cart/:product_id", auth.GetMiddleware(ClientAuth), func(c *gin.Context) {
-		idStr, exists := c.Get("userID")
-		if !exists {
-			c.JSON(500, gin.H{"error": "User ID not found"})
-			return
-		}
-
-		id, err := strconv.Atoi(idStr.(string))
-		if err != nil {
-			c.JSON(500, gin.H{"error": "Invalid user ID"})
-			return
-		}
+	cart.GET("/cart/:product_id", auth.GetMiddleware(ClientAuth), middlewares.GetClientID(), func(c *gin.Context) {
+		id, _ := c.MustGet("clientID").(uint)
 
 		productIDStr := c.Param("product_id")
 		productID, err := strconv.Atoi(productIDStr)
@@ -57,7 +37,7 @@ func addCartRoutes(rg *gin.RouterGroup) {
 			return
 		}
 
-		product, err := database.GetProductFromCartByProductIDClientID(uint(productID), uint(id))
+		product, err := database.GetProductFromCartByProductIDClientID(uint(productID), id)
 		if err != nil {
 			c.JSON(500, gin.H{"error": err.Error()})
 			return
@@ -93,18 +73,8 @@ func addCartRoutes(rg *gin.RouterGroup) {
 		})
 	})
 
-	cart.PUT("/:product_id/:quantity", auth.GetMiddleware(ClientAuth), middlewares.ExistsProductMiddleware(), func(c *gin.Context) {
-		idStr, exists := c.Get("userID")
-		if !exists {
-			c.JSON(500, gin.H{"error": "User ID not found"})
-			return
-		}
-
-		id, err := strconv.Atoi(idStr.(string))
-		if err != nil {
-			c.JSON(500, gin.H{"error": "Invalid user ID"})
-			return
-		}
+	cart.PUT("/:product_id/:quantity", auth.GetMiddleware(ClientAuth), middlewares.ExistsProductMiddleware(), middlewares.GetClientID(), func(c *gin.Context) {
+		id, _ := c.MustGet("clientID").(uint)
 
 		productValue, exists := c.Get("product")
 		if !exists {
@@ -120,7 +90,7 @@ func addCartRoutes(rg *gin.RouterGroup) {
 			return
 		}
 
-		err = database.UpdateProductQuantity(product.ID, uint(id), uint(quantity))
+		err = database.UpdateProductQuantity(product.ID, id, uint(quantity))
 		if err != nil {
 			c.JSON(500, gin.H{"error": err.Error()})
 			return
@@ -131,18 +101,8 @@ func addCartRoutes(rg *gin.RouterGroup) {
 		})
 	})
 
-	cart.DELETE("/:product_id", auth.GetMiddleware(ClientAuth), middlewares.ExistsProductMiddleware(), func(c *gin.Context) {
-		idStr, exists := c.Get("userID")
-		if !exists {
-			c.JSON(500, gin.H{"error": "User ID not found"})
-			return
-		}
-
-		id, err := strconv.Atoi(idStr.(string))
-		if err != nil {
-			c.JSON(500, gin.H{"error": "Invalid user ID"})
-			return
-		}
+	cart.DELETE("/:product_id", auth.GetMiddleware(ClientAuth), middlewares.ExistsProductMiddleware(), middlewares.GetClientID(), func(c *gin.Context) {
+		id, _ := c.MustGet("clientID").(uint)
 
 		productIDStr := c.Param("product_id")
 		productID, err := strconv.Atoi(productIDStr)

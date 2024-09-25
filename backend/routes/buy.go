@@ -2,9 +2,9 @@ package routes
 
 import (
 	"backend/database"
+	"backend/middlewares"
 	"backend/models"
 	"backend/resources/auth"
-	"strconv"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -13,20 +13,10 @@ import (
 func addBuyRoutes(rg *gin.RouterGroup) {
 	buy := rg.Group("/buy")
 
-	buy.POST("/", auth.GetMiddleware(ClientAuth), func(c *gin.Context) {
-		idStr, exists := c.Get("userID")
-		if !exists {
-			c.JSON(500, gin.H{"error": "User ID not found"})
-			return
-		}
+	buy.POST("/", auth.GetMiddleware(ClientAuth), middlewares.GetClientID(), func(c *gin.Context) {
+		id, _ := c.MustGet("clientID").(uint)
 
-		id, err := strconv.Atoi(idStr.(string))
-		if err != nil {
-			c.JSON(500, gin.H{"error": "Invalid user ID"})	
-			return
-		}
-		
-		cart, err := database.GetCartByClientID(uint(id))
+		cart, err := database.GetCartByClientID(id)
 		if err != nil {
 			c.JSON(500, gin.H{"error": err.Error()})
 			return
@@ -38,11 +28,11 @@ func addBuyRoutes(rg *gin.RouterGroup) {
 
 		for _, product := range cart {
 			order := models.Orders{
-				ProductID: product.ProductID, 
-				ClientID: product.ClientID, 
-				Quantity: product.Quantity,
+				ProductID:    product.ProductID,
+				ClientID:     product.ClientID,
+				Quantity:     product.Quantity,
 				DeliveryDate: deliveryDate,
-				Status: status,
+				Status:       status,
 			}
 			orders = append(orders, &order)
 		}
@@ -53,7 +43,7 @@ func addBuyRoutes(rg *gin.RouterGroup) {
 			return
 		}
 
-		err = database.DeleteAllProductsFromCart(uint(id))
+		err = database.DeleteAllProductsFromCart(id)
 		if err != nil {
 			c.JSON(500, gin.H{"error": err.Error()})
 			return
