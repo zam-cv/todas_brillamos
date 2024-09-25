@@ -12,3 +12,13 @@ func GetOrdersByIDandClientID(id int, clientId int) (*models.Orders, error) {
 		First(&orders).Error
 	return &orders, err
 }
+
+func CreateOrders(orders []*models.Orders) error {
+	db := GetDatabase()
+
+	if err := db.Create(&orders).Error; err != nil {
+		return err
+	}
+	return nil
+}
+

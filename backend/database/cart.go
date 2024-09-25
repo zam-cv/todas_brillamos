@@ -35,6 +35,11 @@ func DeleteProductFromCart(productID, clientID uint) error {
 	return err
 }
 
+func DeleteAllProductsFromCart(clientID uint) error {
+	err := db.Where("client_id = ?", clientID).Delete(&models.Cart{}).Error
+	return err
+}
+
 // func GetCarByCarIDAndProductID(carID, productID uint) (*models.Cart, *models.Product, error) {
 // 	car := &models.Cart{}
 // 	product := &models.Product{}
