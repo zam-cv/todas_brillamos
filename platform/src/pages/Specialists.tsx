@@ -64,6 +64,9 @@ export default function Specialists() {
                       className="col-span-2 h-8"
                     />
                   </div>
+                  <div className="grid grid-cols-3 items-center gap-4">
+                    <Button>Añadir</Button>
+                  </div>
                 </div>
               </div>
             </PopoverContent>
