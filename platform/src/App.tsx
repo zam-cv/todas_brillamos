@@ -16,6 +16,7 @@ import Products from "./pages/Products";
 import Shipments from "./pages/Shipments";
 import Specialists from "./pages/Specialists";
 import Users from "./pages/Users";
+import Notifications from "./pages/Notifications";
 
 function App() {
   return (
@@ -55,6 +56,10 @@ function App() {
 
         <Route path="/users" element={<Layout />}>
           <Route index element={<Users />} />
+        </Route>
+
+        <Route path="/notifications" element={<Layout />}>
+          <Route index element={<Notifications />} />
         </Route>
         
       </Routes>

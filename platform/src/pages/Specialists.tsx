@@ -16,7 +16,6 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-import { IoIosAddCircleOutline } from "react-icons/io";
 
 export default function Specialists() {
   return (

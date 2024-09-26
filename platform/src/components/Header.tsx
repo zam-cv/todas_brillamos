@@ -7,6 +7,7 @@ import {
   ShoppingBasket,
   Truck,
   User,
+  Bell
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -46,6 +47,11 @@ const LINKS = [
     title: "Agregar",
     icon: IoIosAddCircleOutline,
     to: "/specialists",
+  },
+  {
+    title: "Notificaciones",
+    icon: Bell,
+    to: "/notifications",
   },
 ];
 
