@@ -85,3 +85,9 @@ func CreateClient(clientUser *models.ClientUser) (uint, error) {
 
 	return client.ID, nil
 }
+
+func GetAllClientsIDs() []uint {
+	var clients []uint
+	GetDatabase().Model(&models.Client{}).Pluck("id", &clients)
+	return clients
+}

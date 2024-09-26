@@ -23,7 +23,6 @@ func getRoutes() {
 	addAdminAuthRoutes(api)
 	addProductRoutes(api)
 	addCartRoutes(api)
-	addUserRoutes(api)
 	addBuyRoutes(api)
 	addTrackingRoutes(api)
 	addConfigRoutes(api)
