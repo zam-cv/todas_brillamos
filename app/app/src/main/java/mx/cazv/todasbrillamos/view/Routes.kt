@@ -27,7 +27,8 @@ sealed class Routes (
         const val ROUTE_PRODUCT_DETAILS = "ProductDetails"
         const val ROUTE_YOUR_CYCLE = "YourCycle"
         const val ROUTE_TRACK_ORDER = "TrackOrder"
-        //const val ROUTE_SHIPPING_INFO = "ShippingInfo"
+        const val ROUTE_SHIPPING_INFO = "ShippingInfo"
+        const val ROUTE_PAYMENTS = "Payments"
 
         // Config
         const val ROUTE_CONFIG = "Config"
@@ -36,7 +37,7 @@ sealed class Routes (
         const val ROUTE_SOCIAL_NETWORKS = "SocialNetworks"
         const val ROUTE_TERMS_AND_POLICIES = "TermsAndPolicies"
         const val ROUTE_ABOUT = "About"
-        //const val ROUTE_SHIPPING_INFO = "ShippingInfo"
+
     }
 
     // Bottom bar routes

@@ -22,22 +22,17 @@ func addNotificationsRoutes(rg *gin.RouterGroup) {
 			return
 		}
 
-		users, err := database.GetAllUsers()
-
-		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-			return
-		}
+		idClients := database.GetAllClientsIDs()
 
 		now := time.Now()
 		notification.Date = now
 
-		for _, user := range users {
+		for _, id := range idClients {
 			newNotification := models.Notifications{
 				Title:       notification.Title,
 				Description: notification.Description,
 				Date:        now,
-				ClientID:    user.ID,
+				ClientID:    id,
 			}
 			err := database.CreateNotification(&newNotification)
 			if err != nil {
