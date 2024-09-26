@@ -25,12 +25,11 @@ export async function upload<T>(path: string, file: File, metadata?: Object, wit
   formData.append("file", file);
   if (metadata) {
     const jsonBlob = new Blob([JSON.stringify(metadata)], { type: 'application/json' });
-    formData.append("json", jsonBlob);
+    formData.append("metadata", jsonBlob);
   };
 
   const config = withConfig ? getConfig() : undefined;
 
- 
 
   return axios
     .post(`${API_URL}${path}`, formData, config)
