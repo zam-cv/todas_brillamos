@@ -24,6 +24,21 @@ export default {
 
         ): Promise<void> => {
             return upload("admin/products/upload", file, product, false);
+        },
+
+        getProducts: (): Promise<void> => {
+            return get("admin/products")
+        },
+
+        getProductImage: (): Promise<void> => {
+            return get("admin/products/{image}")
+        },
+
+        getProductFromCart: (): Promise<void> => {
+            return get("admin/products/{cart}")
         }
+
+
+
     }
 }
