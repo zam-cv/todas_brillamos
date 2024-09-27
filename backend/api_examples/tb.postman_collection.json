@@ -164,6 +164,126 @@
 			"response": []
 		},
 		{
+			"name": "Set Others",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mjg3MDc1NjAsImlkIjoiMyJ9.D7rm3AWWWIaAhHsEjtmpmg_0g0dwYeNGgpGHvqpCaNc",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"CURP\": \"FHEM060926MMCSHNA2\",\n    \"Street\": \"Calle1\",\n    \"Interior\": \"1\",\n    \"Exterior\": \"2\",\n    \"City\": \"Ciudad\",\n    \"State\": \"Estado\",\n    \"ZIP\": \"00000\",\n    \"Reference\": \"Referencia\",\n    \"ClientID\": null\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/others",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"others"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Others",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mjg3MDc1NjAsImlkIjoiMyJ9.D7rm3AWWWIaAhHsEjtmpmg_0g0dwYeNGgpGHvqpCaNc",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"test\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/others",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"others"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Others",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mjg3MDc1NjAsImlkIjoiMyJ9.D7rm3AWWWIaAhHsEjtmpmg_0g0dwYeNGgpGHvqpCaNc",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"CURP\": \"FHEM060926MMCSHNA2\",\r\n    \"Street\": \"Calle1\",\r\n    \"Interior\": \"12\",\r\n    \"Exterior\": \"21\",\r\n    \"City\": \"ABC\",\r\n    \"ZIP\": \"00000\",\r\n    \"State\": \"Estado\",\r\n    \"Reference\": \"Referencia\",\r\n    \"ClientID\": null\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/others",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"others"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Set Category",
 			"request": {
 				"auth": {
@@ -180,7 +300,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"name\": \"nose2\"\n}",
+					"raw": "{\n    \"name\": \"Regular\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -440,7 +560,7 @@
 						},
 						{
 							"key": "metadata",
-							"value": "{\n  \"model\": \"0017\",\n  \"name\": \"si\",\n  \"description\": \"nose\",\n  \"price\": 20,\n  \"stock\": 4,\n  \"size\": \"21 x 7 cm\",\n  \"color\": \"rojo\",\n  \"maintenance\": \"Lavable y reutilizable\",\n  \"material\": \"Algodón\",\n  \"absorbency\": \"Alta\",\n  \"skin_care\": \"Hipoalergénica, transpirableHipoalergénica, transpirable\",\n  \"category_id\": 1\n}",
+							"value": "{\n  \"model\": \"0019\",\n  \"name\": \"toalla\",\n  \"description\": \"xdxd\",\n  \"price\": 20,\n  \"stock\": 4,\n  \"size\": \"21 x 7 cm\",\n  \"color\": \"negro\",\n  \"maintenance\": \"Lavable y reutilizable\",\n  \"material\": \"Algodón\",\n  \"absorbency\": \"Alta\",\n  \"skin_care\": \"Hipoalergénica, transpirableHipoalergénica, transpirable\",\n  \"category_id\": 2\n}",
 							"type": "text"
 						}
 					]
@@ -462,14 +582,14 @@
 			"response": []
 		},
 		{
-			"name": "Update Metadata Product",
+			"name": "Set Product Copy",
 			"request": {
 				"auth": {
 					"type": "bearer",
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mjg2NzE2MzEsImlkIjoiMSJ9.6vSE1jULBRq_IE15IToIsSzgrbex3n6bVzTDf2fP8is",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mjg2NzQ0MzAsImlkIjoiMSJ9.Xu2DoqCky-vKilEJ3iZoGdtr14TyiyFsqHzlKh0x2fY",
 							"type": "string"
 						}
 					]
@@ -483,16 +603,22 @@
 					}
 				],
 				"body": {
-					"mode": "raw",
-					"raw": "{\n  \"model\": \"0018\",\n  \"name\": \"toalla\",\n  \"description\": \"description\",\n  \"price\": 10.4,\n  \"stock\": 10,\n  \"size\": \"21 x 7 cm\",\n  \"color\": \"azul\",\n  \"maintenance\": \"Lavable y reutilizable\",\n  \"material\": \"Algodón\",\n  \"absorbency\": \"Alta\",\n  \"skin_care\": \"Hipoalergénica, transpirableHipoalergénica, transpirable\",\n  \"category_id\": 1\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/C:/Users/Min/Downloads/ImgProduct.png"
+						},
+						{
+							"key": "metadata",
+							"value": "{\n  \"model\": \"0017\",\n  \"name\": \"si\",\n  \"description\": \"nose\",\n  \"price\": 20,\n  \"stock\": 4,\n  \"size\": \"21 x 7 cm\",\n  \"color\": \"rojo\",\n  \"maintenance\": \"Lavable y reutilizable\",\n  \"material\": \"Algodón\",\n  \"absorbency\": \"Alta\",\n  \"skin_care\": \"Hipoalergénica, transpirableHipoalergénica, transpirable\",\n  \"category_id\": 1\n}",
+							"type": "text"
 						}
-					}
+					]
 				},
 				"url": {
-					"raw": "http://localhost:8000/api/products/2/metadata",
+					"raw": "http://localhost:8000/api/products/upload",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -501,8 +627,7 @@
 					"path": [
 						"api",
 						"products",
-						"2",
-						"metadata"
+						"upload"
 					]
 				}
 			},
@@ -590,7 +715,36 @@
 			"response": []
 		},
 		{
-			"name": "Get Product Image",
+			"name": "Get Products Copy",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8000/api/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Random Products",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -616,16 +770,16 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/uploads/products/3156367b9ddf5c663082fd53ab6d66910d647739cf74e623e6bf1af3fbd27934.png",
+					"raw": "http://localhost:8000/api/products/random",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8000",
 					"path": [
-						"uploads",
+						"api",
 						"products",
-						"3156367b9ddf5c663082fd53ab6d66910d647739cf74e623e6bf1af3fbd27934.png"
+						"random"
 					]
 				}
 			},

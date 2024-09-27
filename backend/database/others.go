@@ -12,18 +12,13 @@ func CreateOtherByClientID(other *models.Other) (uint, error) {
 	return other.ID, nil
 }
 
-func UpdateDataOnOtherByClientID(other *models.Other) error {
-	if err := db.Model(&models.Other{}).Where("id = ?", other.ID).Updates(other).Error; err != nil {
-		return err
-	}
-
-	return nil
+func GetOthersByClientID(clientID uint) (*models.Other, error) {
+	others := &models.Other{}
+	err := db.Where("client_id = ?", clientID).Find(&others).Error
+	return others, err
 }
 
-func GetDataOnOtherByClientID(other *models.Other) error {
-	if err := db.Find(&other).Error; err != nil {
-		return err
-	}
-
-	return nil
+func UpdateOthersByClientID(other *models.Other) error {
+	err := db.Model(&models.Other{}).Where("client_id = ?", other.ClientID).Updates(other).Error
+	return err
 }
