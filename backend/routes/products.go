@@ -73,6 +73,19 @@ func addProductRoutes(rg *gin.RouterGroup) {
 		})
 	})
 
+	group.GET("/random", func(c *gin.Context) {
+		products, err := database.GetRandomProducts()
+		if err != nil {
+			c.JSON(500, gin.H{"error": err.Error()})
+			return
+		}
+		
+		c.JSON(200, gin.H{
+			"folder":   files.GetURL(product),
+			"products": products,
+		})
+	})
+
 	files.UploadFile(product, group, auth.GetMiddleware(AdminAuth))
 	files.UpdateFile(product, group, auth.GetMiddleware(AdminAuth))
 	files.DeleteFile(product, group, auth.GetMiddleware(AdminAuth))
