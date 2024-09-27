@@ -56,8 +56,9 @@ func (i *Product) GetFileByHashDB(hash string) (*models.Product, error) {
 	return database.GetFileByHashDB(hash)
 }
 
+var ProductArchive files.Files[models.ProductMetadata, *models.Product] = &Product{}
+
 func addProductRoutes(rg *gin.RouterGroup) {
-	var product files.Files[models.ProductMetadata, *models.Product] = &Product{}
 	group := rg.Group("/products")
 
 	group.GET("", func(c *gin.Context) {
@@ -68,7 +69,7 @@ func addProductRoutes(rg *gin.RouterGroup) {
 		}
 
 		c.JSON(200, gin.H{
-			"folder":   files.GetURL(product),
+			"folder":   files.GetURL(ProductArchive),
 			"products": products,
 		})
 	})
@@ -81,15 +82,15 @@ func addProductRoutes(rg *gin.RouterGroup) {
 		}
 		
 		c.JSON(200, gin.H{
-			"folder":   files.GetURL(product),
+			"folder":   files.GetURL(ProductArchive),
 			"products": products,
 		})
 	})
 
-	files.UploadFile(product, group, auth.GetMiddleware(AdminAuth))
-	files.UpdateFile(product, group, auth.GetMiddleware(AdminAuth))
-	files.DeleteFile(product, group, auth.GetMiddleware(AdminAuth))
-	files.UpdateMetadata(product, group, auth.GetMiddleware(AdminAuth))
+	files.UploadFile(ProductArchive, group, auth.GetMiddleware(AdminAuth))
+	files.UpdateFile(ProductArchive, group, auth.GetMiddleware(AdminAuth))
+	files.DeleteFile(ProductArchive, group, auth.GetMiddleware(AdminAuth))
+	files.UpdateMetadata(ProductArchive, group, auth.GetMiddleware(AdminAuth))
 
 	// group.GET("/recommended", func(c *gin.Context) {
 	// 	c.JSON(200, gin.H{
@@ -98,5 +99,5 @@ func addProductRoutes(rg *gin.RouterGroup) {
 	// })
 
 	// Serve static files
-	files.ServeStaticFiles(product, router)
+	files.ServeStaticFiles(ProductArchive, router)
 }

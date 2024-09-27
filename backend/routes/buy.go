@@ -13,7 +13,7 @@ import (
 func addBuyRoutes(rg *gin.RouterGroup) {
 	buy := rg.Group("/buy")
 
-	buy.POST("/", auth.GetMiddleware(ClientAuth), middlewares.GetClientID(), func(c *gin.Context) {
+	buy.POST("", auth.GetMiddleware(ClientAuth), middlewares.GetClientID(), func(c *gin.Context) {
 		id, _ := c.MustGet("clientID").(uint)
 
 		cart, err := database.GetCartByClientID(id)
@@ -51,13 +51,6 @@ func addBuyRoutes(rg *gin.RouterGroup) {
 
 		c.JSON(200, gin.H{
 			"message": "Purchase completed",
-		})
-
-	})
-
-	buy.DELETE("/:id", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "Cancel purchase",
 		})
 	})
 }
