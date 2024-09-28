@@ -26,6 +26,7 @@ export default {
             return upload("admin/products/upload", file, product, false);
         },
 
+        
         updateMetadataProduct : (
             file: File,
             product: Product
