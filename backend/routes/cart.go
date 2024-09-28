@@ -27,7 +27,7 @@ func addCartRoutes(rg *gin.RouterGroup) {
 		})
 	})
 
-	cart.GET("/cart/:product_id", auth.GetMiddleware(ClientAuth), middlewares.GetClientID(), func(c *gin.Context) {
+	cart.GET("/exists/:product_id", auth.GetMiddleware(ClientAuth), middlewares.GetClientID(), func(c *gin.Context) {
 		id, _ := c.MustGet("clientID").(uint)
 
 		productIDStr := c.Param("product_id")
@@ -37,14 +37,14 @@ func addCartRoutes(rg *gin.RouterGroup) {
 			return
 		}
 
-		product, err := database.GetProductFromCartByProductIDClientID(uint(productID), id)
+		_, err = database.GetProductFromCartByProductIDClientID(uint(productID), id)
 		if err != nil {
-			c.JSON(500, gin.H{"error": err.Error()})
+			c.JSON(500, gin.H{"error": "Product not found in cart"})
 			return
 		}
 
 		c.JSON(200, gin.H{
-			"product": product,
+			"exists": true,
 		})
 	})
 
@@ -76,11 +76,7 @@ func addCartRoutes(rg *gin.RouterGroup) {
 	cart.PUT("/:product_id/:quantity", auth.GetMiddleware(ClientAuth), middlewares.ExistsProductMiddleware(), middlewares.GetClientID(), func(c *gin.Context) {
 		id, _ := c.MustGet("clientID").(uint)
 
-		productValue, exists := c.Get("product")
-		if !exists {
-			c.JSON(500, gin.H{"error": "Product not found"})
-			return
-		}
+		productValue, _ := c.Get("product")
 		product := productValue.(*models.Product)
 
 		quantityStr := c.Param("quantity")

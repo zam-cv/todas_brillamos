@@ -44,7 +44,7 @@ export default function Notifications() {
                       name="descripcion"
                       value=""
                       placeholder="Descripción..."
-                    ></Textarea>
+                    ></Textarea> 
                   </div>
                   <div className="flex flex-row space-x-2 px-2 pt-2">
                     <Button>Agregar</Button>

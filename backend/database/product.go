@@ -20,6 +20,15 @@ func GetProductById(id uint) (*models.Product, error) {
 	return product, nil
 }
 
+func GetRandomProducts() ([]models.Product, error) {
+	products := []models.Product{}
+	if err := db.Order("RANDOM()").Limit(8).Find(&products).Error; err != nil {
+		return nil, err
+	}
+
+	return products, nil
+}
+
 func RegisterProduct(product *models.Product) (uint, error) {
 	if err := db.Create(product).Error; err != nil {
 		return 0, err
