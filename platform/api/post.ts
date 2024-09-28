@@ -7,6 +7,7 @@ export interface Posts {
     content: string
 }
 
+
 export default {
     posts: {
         setPost: (

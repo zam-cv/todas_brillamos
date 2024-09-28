@@ -17,6 +17,7 @@ export default {
             return get("admin/categories")
         },
 
+
         getCategory: (id: number): Promise<void> => {
             return get(`admin/categories/${id}`)
         }

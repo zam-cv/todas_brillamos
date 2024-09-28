@@ -13,6 +13,7 @@ export interface Others{
 
 }
 
+
 export default {
     others: {
         setOthers: (
