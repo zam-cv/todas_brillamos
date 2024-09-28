@@ -91,3 +91,20 @@ func GetAllClientsIDs() []uint {
 	GetDatabase().Model(&models.Client{}).Pluck("id", &clients)
 	return clients
 }
+
+func GetClientDetails(clientID uint) (*models.ClientDetails, error) {
+	db := GetDatabase()
+	result := models.ClientDetails{}
+
+	err := db.Model(&models.Client{}).
+		Select("clients.first_name, clients.last_name, users.email").
+		Joins("LEFT JOIN users ON users.id = clients.user_id").
+		Where("clients.id = ?", clientID).
+		First(&result).Error
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &result, nil
+}

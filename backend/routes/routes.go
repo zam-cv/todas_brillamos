@@ -33,4 +33,5 @@ func getRoutes() {
 	addFavoritesRoutes(api)
 	addOthersRoutes(api)
 	addOrdersRoutes(api)
+	addClientsRoutes(api)
 }
