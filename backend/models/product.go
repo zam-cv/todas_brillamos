@@ -20,7 +20,7 @@ type Product struct {
 	Maintenance string `json:"maintenance"`
 	Material    string `json:"material"`
 	Absorbency  string `json:"absorbency"`
-	SkinCare    string `json:"skin_care"`
+	MatFeature  string `json:"material_feature"`
 
 	// Relationships
 	CategoryID uint `json:"category_id"`
@@ -40,7 +40,7 @@ type ProductMetadata struct {
 	Maintenance string  `json:"maintenance" validate:"required"`
 	Material    string  `json:"material" validate:"required"`
 	Absorbency  string  `json:"absorbency" validate:"required"`
-	SkinCare    string  `json:"skin_care" validate:"required"`
+	MatFeature  string `json:"material_feature" validate:"required"`
 
 	// Relationships
 	CategoryID  uint    `json:"category_id" validate:"required,min=0"`
@@ -73,6 +73,6 @@ func (p *Product) SetMetadata(metadata *ProductMetadata) {
 	p.Maintenance = metadata.Maintenance
 	p.Material = metadata.Material
 	p.Absorbency = metadata.Absorbency
-	p.SkinCare = metadata.SkinCare
+	p.MatFeature = metadata.MatFeature
 	p.CategoryID = metadata.CategoryID	
 }
