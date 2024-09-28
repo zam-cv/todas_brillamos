@@ -29,23 +29,27 @@ export default {
         
         updateMetadataProduct : (
             file: File,
-            product: Product
+            product: Product,
+            id:number
         ): Promise<void> => {
-            return upload("admin/products/1/metadata", file, product, false);
+            return upload(`admin/products/${id}/metadata`, file, product, false);
         },
 
         addProductToCart: (
             file:File,
-            product: Product
+            product: Product,
+            id:number,
+            id_cart:number
         ): Promise<void> => {
-            return upload("admin/cart/2/3", file, product, false)
+            return upload(`admin/cart/${id}/${id_cart}`, file, product, false)
         },
 
         addProductToFavorites: (
             file: File,
-            product: Product
+            product: Product,
+            id: number
         ): Promise<void> => {
-            return upload("admin/favorites/1", file, product, false)
+            return upload(`admin/favorites/${id}`, file, product, false)
         },
         
         //GET
@@ -54,11 +58,11 @@ export default {
         },
 
         getProductImage: (): Promise<void> => {
-            return get("admin/products/{image}")
+            return get("uploads/products")
         },
 
-        getProductFromCart: (): Promise<void> => {
-            return get("admin/products/{cart}")
+        getProductFromCart: (id:number): Promise<void> => {
+            return get(`admin/products/${id}`)
         },
 
         getProductFromFavorites: (): Promise<void> => {
@@ -68,29 +72,32 @@ export default {
         //PUT
         updateProduct: (
             file: File,
-            product: Product
+            product: Product,
+            id:number
         ): Promise<void> => {
-            return upload("admin/products/1", file, product, false);
+            return upload(`admin/products/${id}`, file, product, false);
         },
 
         updateProdQuantityInCart: (
             file: File,
-            product: Product
+            product: Product,
+            quantity: number,
+            id:number
         ): Promise<void> => {
-            return upload("admin/cart/1/1", file, product, false)
+            return upload(`admin/cart/${id}/${quantity}`, file, product, false)
         },
 
         //DEL
-        deleteProduct: (): Promise<void> => {
-            return del("admin/products/2")
+        deleteProduct: (id: number): Promise<void> => {
+            return del(`admin/products/${id}`)
         },
 
-        deleteProductFromCart: (): Promise<void> => {
-            return del("admin/cart/2")
+        deleteProductFromCart: (id:number): Promise<void> => {
+            return del(`admin/cart/${id}`)
         },
 
-        deleteProductFromFavorites: (): Promise<void> => {
-            return del("admin/favorites/1")
+        deleteProductFromFavorites: (id:number): Promise<void> => {
+            return del(`admin/favorites/${id}`)
         }
 
     }
