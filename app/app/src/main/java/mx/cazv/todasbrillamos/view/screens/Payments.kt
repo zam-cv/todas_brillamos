@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
@@ -21,12 +23,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import mx.cazv.todasbrillamos.R
+import mx.cazv.todasbrillamos.ui.theme.Stroke
 import mx.cazv.todasbrillamos.view.components.CustomButton
 import mx.cazv.todasbrillamos.view.components.Input
 import mx.cazv.todasbrillamos.view.layouts.MainLayout
@@ -106,7 +110,8 @@ fun Pay(){
         Spacer(modifier = Modifier.size(20.dp))
         NormalText(text = "País o región", sizeT = 15, colT = Color.Gray)
         Spacer(modifier = Modifier.size(8.dp))
-        Input(placeholder = "México")
+        //Input(placeholder = "México")
+        CustomButton(text = "México", col = Color.White, colT = Color.Gray, height = 65, borderColor = Stroke, alignTextLeft = true, trailingIcon = Icons.Default.KeyboardArrowDown)
         Spacer(modifier = Modifier.size(14.dp))
         //CustomButton(text = "México", col = Color.White, colT = Color.Gray)
         Row(
