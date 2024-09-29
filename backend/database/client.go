@@ -108,3 +108,36 @@ func GetClientDetails(clientID uint) (*models.ClientDetails, error) {
 
 	return &result, nil
 }
+
+func UpdateClientDetails(clientID uint, details *models.ClientDetails) error {
+	db := GetDatabase()
+	tx := db.Begin()
+
+	if err := tx.Model(&models.Client{}).
+		Where("id = ?", clientID).
+		Updates(map[string]interface{}{
+			"first_name": details.FirstName,
+			"last_name":  details.LastName,
+		}).Error; err != nil {
+		tx.Rollback()
+		return err
+	}
+
+	var userID uint
+	if err := tx.Model(&models.Client{}).
+		Select("user_id").
+		Where("id = ?", clientID).
+		First(&userID).Error; err != nil {
+		tx.Rollback()
+		return err
+	}
+
+	if err := tx.Model(&models.User{}).
+		Where("id = ?", userID).
+		Update("email", details.Email).Error; err != nil {
+		tx.Rollback()
+		return err
+	}
+
+	return tx.Commit().Error
+}

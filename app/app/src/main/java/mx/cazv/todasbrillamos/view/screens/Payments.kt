@@ -44,7 +44,7 @@ fun Payments(navController: NavHostController) {
 
 @Composable
 fun Pay(){
-    val image = painterResource(id = R.drawable.cards)
+
     Column {
         Spacer(modifier = Modifier.size(8.dp))
         CustomButton("Pay", Color.Black, imageId = R.drawable.google)
