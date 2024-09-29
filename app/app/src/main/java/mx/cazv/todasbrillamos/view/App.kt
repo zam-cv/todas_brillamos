@@ -20,7 +20,6 @@ import mx.cazv.todasbrillamos.view.screens.Payment
 import mx.cazv.todasbrillamos.view.screens.TrackOrder
 import mx.cazv.todasbrillamos.view.screens.config.Config
 import mx.cazv.todasbrillamos.view.screens.ProductDetails
-import mx.cazv.todasbrillamos.view.screens.ShippInfo
 import mx.cazv.todasbrillamos.view.screens.ShippingInfo
 import mx.cazv.todasbrillamos.view.screens.Store
 import mx.cazv.todasbrillamos.view.screens.YourCycle
@@ -39,7 +38,7 @@ fun App() {
 @Composable
 fun Nav(navController: NavHostController, modifier: Modifier = Modifier) {
     NavHost(navController = navController,
-        startDestination = Routes.ROUTE_LOGIN,
+        startDestination = Routes.ROUTE_REGISTER,
         modifier = modifier.fillMaxSize()) {
 
         // Screens
@@ -129,7 +128,7 @@ fun Nav(navController: NavHostController, modifier: Modifier = Modifier) {
         }
 
         composable(Routes.ROUTE_PAYMENTS){
-            Payment()
+            Payment(navController)
         }
 
     }

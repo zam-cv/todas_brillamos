@@ -1,11 +1,14 @@
 package mx.cazv.todasbrillamos.view.components
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Text
@@ -16,7 +19,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -28,16 +33,20 @@ fun Input(
     placeholder: String,
     initialValue: String = "",
     suffixIcon : @Composable (() -> Unit)? = null,
+    imageId: Int? = null,
+    height: Int? = null,
+    padding: Dp = 20.dp,
+    imageSize: Dp = 24.dp,
     //topStart: Dp = 10.dp,
     topStart: Dp = 10.dp,
     topEnd: Dp = 10.dp,
     bottomEnd: Dp = 10.dp,
-    bottomStart: Dp = 10.dp
+    bottomStart: Dp = 10.dp,
+
 ) {
     val shape = RoundedCornerShape(topStart,topEnd,bottomEnd,bottomStart)
 
     var textState by remember { mutableStateOf(initialValue) }
-
     BasicTextField(
         value = textState,
         onValueChange = { textState = it },
@@ -45,13 +54,21 @@ fun Input(
         textStyle = TextStyle(fontSize = 18.sp),
         modifier = Modifier
             .fillMaxWidth()
+            .let { modifier ->
+                if (height != null) {
+                    modifier.height(height.dp)
+                } else {
+                    modifier
+                }
+            }
             .background(Color.White)
             .border(
                 width = 1.dp,
                 color = Stroke,
                 shape = shape
             )
-            .padding(start = 10.dp, end = 10.dp, bottom = 20.dp, top = 20.dp),
+            .padding(start = 10.dp, end = 10.dp, bottom = padding, top = padding),
+
         decorationBox = { innerTextField ->
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -78,6 +95,13 @@ fun Input(
                     ) {
                         suffixIcon()
                     }
+                }
+                if (imageId != null) {
+                    val image = painterResource(id = imageId)
+                    Image(
+                        painter = image,
+                        contentDescription = null,
+                        modifier = Modifier.size(imageSize))
                 }
             }
         }

@@ -1,5 +1,6 @@
 package mx.cazv.todasbrillamos.view.screens
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,15 +19,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import mx.cazv.todasbrillamos.view.components.Button
+import mx.cazv.todasbrillamos.R
 import mx.cazv.todasbrillamos.view.components.CustomButton
 import mx.cazv.todasbrillamos.view.components.Input
 import mx.cazv.todasbrillamos.view.layouts.MainLayout
@@ -44,8 +44,10 @@ fun Payments(navController: NavHostController) {
 
 @Composable
 fun Pay(){
+    val image = painterResource(id = R.drawable.cards)
     Column {
-        CustomButton("Pay", Color.Black)
+        Spacer(modifier = Modifier.size(8.dp))
+        CustomButton("Pay", Color.Black, imageId = R.drawable.google)
         Spacer(modifier = Modifier.size(20.dp))
         PrettyPrint()
         Spacer(modifier = Modifier.size(20.dp))
@@ -59,7 +61,11 @@ fun Pay(){
             topStart = 10.dp,
             topEnd = 10.dp,
             bottomEnd = 0.dp,
-            bottomStart = 0.dp)
+            bottomStart = 0.dp,
+            imageId = R.drawable.cards,
+            imageSize = 150.dp,
+            padding = 1.dp,
+            height = 65)
         Row (
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -71,7 +77,8 @@ fun Pay(){
                     topStart = 0.dp,
                     topEnd = 0.dp,
                     bottomEnd = 0.dp,
-                    bottomStart = 10.dp)
+                    bottomStart = 10.dp,
+                    height = 65)
             }
 
             Box (
@@ -82,7 +89,11 @@ fun Pay(){
                     topStart = 0.dp,
                     topEnd = 0.dp,
                     bottomEnd = 10.dp,
-                    bottomStart = 0.dp)
+                    bottomStart = 0.dp,
+                    imageId = R.drawable.cvc,
+                    imageSize = 40.dp,
+                    padding = 1.dp,
+                    height = 65)
             }
         }
 
@@ -165,7 +176,7 @@ fun NormalText(text: String, sizeT: Int, colT: Color){
 }
 @Preview
 @Composable
-fun Payment(){
+fun Payment(navController: NavHostController) {
     val navController = rememberNavController()
     Payments(navController = navController)
 }
