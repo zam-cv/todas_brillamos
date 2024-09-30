@@ -4,6 +4,7 @@ import { columns } from "@/components/table/components/columns-products";
 import { DataTable } from "@/components/table/components/data-table-products";
 import { Textarea } from "@/components/ui/textarea"
 import {useState} from 'react'
+import { Product } from "../utils/api/products";
 
 import {
   Accordion,
