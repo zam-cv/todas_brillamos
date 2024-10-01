@@ -65,7 +65,15 @@ CLIENT_SECRET_KEY=secret
 CLIENT_TOKEN_COOKIE_NAME=token
 ```
 
-5. Install the project dependencies
+5. Create a `.env` file in the `platform` directory with the following content
+```bash
+VITE_APP_SERVER_PROTOCOL = "http"
+VITE_APP_SERVER_PORT = "8000"
+VITE_APP_SERVER_HOST = "localhost"
+VITE_APP_API_ROUTE = "api"
+```
+
+6. Install the project dependencies
 
 ```bash
 cd platform
