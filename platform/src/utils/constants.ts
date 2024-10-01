@@ -1,5 +1,5 @@
 const SERVER_PROTOCOL = import.meta.env.VITE_APP_SERVER_PROTOCOL || "http";
-const SERVER_PORT = import.meta.env.VITE_APP_SERVER_PORT || "8080";
+const SERVER_PORT = import.meta.env.VITE_APP_SERVER_PORT || "8000";
 const SERVER_HOSTNAME = import.meta.env.VITE_APP_SERVER_HOST || "localhost";
 let SERVER_HOST = `${SERVER_HOSTNAME}:${SERVER_PORT}`;
 

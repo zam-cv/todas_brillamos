@@ -11,19 +11,18 @@ export interface Product {
     manteinance: string;
     material: string;
     absorbency: string;
-    skin_care: string;
+    material_feature: string;
     category_id: number;
-
 }
 
 export default {
-    products: {
+    product: {
         setProduct: (
             file: File,
             product: Product
 
         ): Promise<void> => {
-            return upload("admin/products/upload", file, product, false);
+            return upload("/products/upload", file, product, false);
         },
 
         
@@ -32,7 +31,7 @@ export default {
             product: Product,
             id:number
         ): Promise<void> => {
-            return upload(`admin/products/${id}/metadata`, file, product, false);
+            return upload(`/products/${id}/metadata`, file, product, false);
         },
 
         addProductToCart: (
@@ -41,7 +40,7 @@ export default {
             id:number,
             id_cart:number
         ): Promise<void> => {
-            return upload(`admin/cart/${id}/${id_cart}`, file, product, false)
+            return upload(`/cart/${id}/${id_cart}`, file, product, false)
         },
 
         addProductToFavorites: (
@@ -49,12 +48,12 @@ export default {
             product: Product,
             id: number
         ): Promise<void> => {
-            return upload(`admin/favorites/${id}`, file, product, false)
+            return upload(`/favorites/${id}`, file, product, false)
         },
         
         //GET
         getProducts: (): Promise<void> => {
-            return get("admin/products")
+            return get("/products", false)
         },
 
         getProductImage: (): Promise<void> => {
@@ -62,11 +61,11 @@ export default {
         },
 
         getProductFromCart: (id:number): Promise<void> => {
-            return get(`admin/products/${id}`)
+            return get(`/products/${id}`)
         },
 
         getProductFromFavorites: (): Promise<void> => {
-            return get("admin/favorites")
+            return get("/favorites")
         },
 
         //PUT
@@ -75,7 +74,7 @@ export default {
             product: Product,
             id:number
         ): Promise<void> => {
-            return upload(`admin/products/${id}`, file, product, false);
+            return upload(`/products/${id}`, file, product, false);
         },
 
         updateProdQuantityInCart: (
@@ -84,20 +83,20 @@ export default {
             quantity: number,
             id:number
         ): Promise<void> => {
-            return upload(`admin/cart/${id}/${quantity}`, file, product, false)
+            return upload(`/cart/${id}/${quantity}`, file, product, false)
         },
 
         //DEL
         deleteProduct: (id: number): Promise<void> => {
-            return del(`admin/products/${id}`)
+            return del(`/products/${id}`)
         },
 
         deleteProductFromCart: (id:number): Promise<void> => {
-            return del(`admin/cart/${id}`)
+            return del(`/cart/${id}`)
         },
 
         deleteProductFromFavorites: (id:number): Promise<void> => {
-            return del(`admin/favorites/${id}`)
+            return del(`/favorites/${id}`)
         }
 
     }
