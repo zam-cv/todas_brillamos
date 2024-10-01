@@ -1,22 +1,21 @@
-import {get, post, del, upload} from "../src/utils/methods";
+import {get, post, del, upload} from "@/utils/methods";
 
 export interface Admin {
-    email: string; 
+    email: string;
     password: string;
 }
 
 export default {
     admin: {
         loginAdmin: (
-            admin: Admin
+            email: string ,
+            password: string
         ): Promise<void> => {
-            return post("admin/auth/login", admin)
+            return post("/auth/admin/signin", {email, password}, false);
         },
 
-        verifyAdmin: (
-            admin: Admin
-        ): Promise<void> => {
-            return get(`admin/auth/${admin}/verify`)
+        verifyAdmin: (): Promise<Admin> => {
+            return get("/auth/admin/verify");
         }
         
     }
