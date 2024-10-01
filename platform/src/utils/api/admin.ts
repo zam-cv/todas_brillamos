@@ -1,4 +1,4 @@
-import {get, post, del, upload} from "@/utils/methods";
+import {get, post} from "@/utils/methods";
 
 export interface Admin {
     email: string;
