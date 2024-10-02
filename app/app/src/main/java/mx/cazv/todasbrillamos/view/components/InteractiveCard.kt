@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -17,6 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -40,7 +42,9 @@ fun InteractiveCard(
     backgroundColor: Color,
     textColor: Color = Color.Black,
     imageSize: Int,
-    imageAlignment: Alignment
+    imageAlignment: Alignment,
+    valx: Dp = 0.dp,
+    valy: Dp = 0.dp
     )
 {
     Card(
@@ -60,6 +64,7 @@ fun InteractiveCard(
                 modifier = Modifier
                     .size(imageSize.dp)
                     .align(imageAlignment)
+                    .offset(x = valx, y = valy)
             )
 
             //Spacer(modifier = Modifier.height(50.dp))

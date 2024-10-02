@@ -144,7 +144,7 @@ fun About(navController: NavHostController) {
                 .fillMaxHeight()
                 .fillMaxWidth()
                 .background(BackgroundColor)
-                .verticalScroll(rememberScrollState())
+                //.verticalScroll(rememberScrollState())
         ) {
             Section("Todas brillamos") {
                 TextAroundImage(
