@@ -22,13 +22,17 @@ fun MainLayout(navController: NavHostController, content: @Composable () -> Unit
         topBar = { TopBar() },
         bottomBar = { BottomBar(navController) },
         floatingActionButtonPosition = FabPosition.Center,
-        floatingActionButton = { StoreButton(navController) }
+        floatingActionButton = { StoreButton(navController) },
+        modifier = Modifier
+            .background(BackgroundColor)
+            .fillMaxSize()
     ) { innerPadding ->
         Box(modifier = Modifier
             .padding(innerPadding)
-            .background(BackgroundColor)
             .verticalScroll(rememberScrollState())
-            .fillMaxSize()) {
+            .fillMaxSize()
+            .background(BackgroundColor)
+        ) {
             content()
         }
     }
