@@ -1,6 +1,8 @@
-import {get, del, post, upload } from "../methods";
+import {get, del, upload } from "../methods";
+import { SERVER } from "../constants";
 
 export interface Product {
+    id: number;
     model: string;
     name: string;
     description: string;
@@ -13,6 +15,19 @@ export interface Product {
     absorbency: string;
     material_feature: string;
     category_id: number;
+}
+
+export interface ProductsInfo {
+    folder: string;
+    products: ProductRaw[];
+}
+
+export interface ProductRaw extends Product {
+    hash: string;
+    type: string;
+}
+export interface processedProduct extends Product {
+    url: string;
 }
 
 export default {
@@ -52,14 +67,16 @@ export default {
         },
         
         //GET
-        getProducts: (): Promise<Product[]> => {
-            return get("/products", false)
+        getProducts: async (): Promise<Product[]> => {
+            const prodInfo = await get<ProductsInfo>("/products")
+            return prodInfo.products.map((prod) => ({
+                ...prod,
+                url: `${SERVER}/${prodInfo.folder}/${prod.hash}.${prod.type}`
+            }))
+        
         },
 
-        getProductImage: (): Promise<void> => {
-            return get("uploads/products")
-        },
-
+    
         getProductFromCart: (id:number): Promise<void> => {
             return get(`/products/${id}`)
         },

@@ -1,7 +1,7 @@
 package models
 
 type Product struct {
-	ID uint `json:"-" gorm:"primarykey"`
+	ID uint `json:"id" gorm:"primarykey" validate:"required,eq=0"`
 
 	// Image
 	Hash string `json:"hash"`
@@ -35,15 +35,15 @@ type ProductMetadata struct {
 	Stock       int     `json:"stock" validate:"required,min=0"`
 
 	// Specific
-	Size        string  `json:"size" validate:"required"`
-	Color       string  `json:"color" validate:"required"`
-	Maintenance string  `json:"maintenance" validate:"required"`
-	Material    string  `json:"material" validate:"required"`
-	Absorbency  string  `json:"absorbency" validate:"required"`
+	Size        string `json:"size" validate:"required"`
+	Color       string `json:"color" validate:"required"`
+	Maintenance string `json:"maintenance" validate:"required"`
+	Material    string `json:"material" validate:"required"`
+	Absorbency  string `json:"absorbency" validate:"required"`
 	MatFeature  string `json:"material_feature" validate:"required"`
 
 	// Relationships
-	CategoryID  uint    `json:"category_id" validate:"required,min=0"`
+	CategoryID uint `json:"category_id" validate:"required,min=0"`
 }
 
 func (p *Product) SetID(id uint) {
@@ -74,5 +74,5 @@ func (p *Product) SetMetadata(metadata *ProductMetadata) {
 	p.Material = metadata.Material
 	p.Absorbency = metadata.Absorbency
 	p.MatFeature = metadata.MatFeature
-	p.CategoryID = metadata.CategoryID	
+	p.CategoryID = metadata.CategoryID
 }

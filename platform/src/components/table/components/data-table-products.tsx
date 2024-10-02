@@ -29,13 +29,13 @@ import { DataTableToolbar } from "./data-table-toolbar-products";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  event_id: number;
+  setId: (id: number) => void;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
-  event_id,
+  setId,
 }: DataTableProps<TData, TValue>) {
   const [rowSelection, setRowSelection] = React.useState({});
   const [columnVisibility, setColumnVisibility] =
@@ -96,6 +96,7 @@ export function DataTable<TData, TValue>({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
+                  onClick={() => setId((row.original as any).id)}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>

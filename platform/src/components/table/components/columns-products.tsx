@@ -3,23 +3,21 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Task } from "../data/schema_products";
 import { DataTableColumnHeader } from "./data-table-column-header-users";
+import { Button } from "@/components/ui/button";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+
 
 export const columns: ColumnDef<Task>[] = [
-    {
-        accessorKey: "idProducto",
-        header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="ID" />
-        ),
-        cell: ({ row }) => {
-          return (
-            <div className="flex space-x-2">
-              <span className="max-w-[500px] truncate font-medium">
-                {row.getValue("idProducto")}
-              </span>
-            </div>
-          );
-        },
-      },
     {
       accessorKey: "name",
       header: ({ column }) => (
@@ -167,6 +165,33 @@ export const columns: ColumnDef<Task>[] = [
               {row.getValue("description")}
             </span>
           </div>
+        );
+      },
+    },
+    {
+      accessorKey: "imagen",
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="Imagen" />
+      ),
+      cell: ({ row }) => {
+        return (
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button variant="outline"
+              >Ver Imagen</Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Imagen</AlertDialogTitle>
+                <AlertDialogDescription>
+                  <img src={(row.original as any).url} alt="imagen" />
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cerrar</AlertDialogCancel>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         );
       },
     },
