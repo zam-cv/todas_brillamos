@@ -31,8 +31,11 @@ func addBuyRoutes(rg *gin.RouterGroup) {
 				ProductID:    product.ProductID,
 				ClientID:     product.ClientID,
 				Quantity:     product.Quantity,
+				OrderReceivedDate: time.Now(),
 				DeliveryDate: deliveryDate,
 				Status:       status,
+				PreparingOrderDate: nil,
+				ShippedDate: nil,
 			}
 			orders = append(orders, &order)
 		}

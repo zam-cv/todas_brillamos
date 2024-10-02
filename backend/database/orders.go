@@ -1,43 +1,44 @@
 package database
 
 import (
-    "backend/models"
+	"backend/models"
+	"time"
 )
 
 func GetOrdersByIDandClientID(id int, clientId int) (*models.Orders, error) {
-    var orders models.Orders
-    err := GetDatabase().
-        Joins("JOIN clients ON clients.id = orders.client_id").
-        Where("orders.id = ? AND orders.client_id = ?", id, clientId).
-        First(&orders).Error
-    return &orders, err
+	var orders models.Orders
+	err := GetDatabase().
+		Joins("JOIN clients ON clients.id = orders.client_id").
+		Where("orders.id = ? AND orders.client_id = ?", id, clientId).
+		First(&orders).Error
+	return &orders, err
 }
 
 func CreateOrders(orders []*models.Orders) error {
-    db := GetDatabase()
+	db := GetDatabase()
 
-    if err := db.Create(&orders).Error; err != nil {
-        return err
-    }
-    return nil
+	if err := db.Create(&orders).Error; err != nil {
+		return err
+	}
+	return nil
 }
 
 type ProductImage struct {
-    Hash string `json:"hash"`
-    Type string `json:"type"`
+	Hash string `json:"hash"`
+	Type string `json:"type"`
 }
 
 type OrderSummary struct {
-    DeliveryDate  string         `json:"delivery_date"`
-    TotalProducts int            `json:"total_products"`
-    TotalAmount   float64        `json:"total_amount"`
-    ProductImages []ProductImage `json:"product_images" gorm:"-"`
+	DeliveryDate  string         `json:"delivery_date"`
+	TotalProducts int            `json:"total_products"`
+	TotalAmount   float64        `json:"total_amount"`
+	ProductImages []ProductImage `json:"product_images" gorm:"-"`
 }
 
 func GetOrdersClientID(clientID uint) ([]OrderSummary, error) {
-    var results []OrderSummary
+	var results []OrderSummary
 
-    err := GetDatabase().Raw(`
+	err := GetDatabase().Raw(`
         SELECT 
             DATE(o.delivery_date) as delivery_date,
             SUM(o.quantity) as total_products,
@@ -49,25 +50,50 @@ func GetOrdersClientID(clientID uint) ([]OrderSummary, error) {
         ORDER BY DATE(o.delivery_date)
     `, clientID).Scan(&results).Error
 
-    if err != nil {
-        return nil, err
-    }
+	if err != nil {
+		return nil, err
+	}
 
-    for i := range results {
-        var productImages []ProductImage
-        err := GetDatabase().Raw(`
+	for i := range results {
+		var productImages []ProductImage
+		err := GetDatabase().Raw(`
             SELECT p.hash, p.type
             FROM orders o
             JOIN products p ON o.product_id = p.id
             WHERE o.client_id = ? AND DATE(o.delivery_date) = ?
         `, clientID, results[i].DeliveryDate).Scan(&productImages).Error
 
-        if err != nil {
-            return nil, err
-        }
+		if err != nil {
+			return nil, err
+		}
 
-        results[i].ProductImages = productImages
+		results[i].ProductImages = productImages
 	}
 
 	return results, nil
+}
+
+func UpdateStatusOrders(id uint, status string) error {
+    db := GetDatabase()
+
+    var orders models.Orders
+    if err := db.Where("id = ?", id).First(&orders).Error; err != nil {
+        return err
+    }
+
+    orders.Status = status
+    now := time.Now()
+
+    switch status {
+    case "Preparando pedido":
+        orders.PreparingOrderDate = &now
+    case "Enviado":
+        orders.ShippedDate = &now
+    }
+
+    if err := db.Save(&orders).Error; err != nil {
+        return err
+    }
+
+    return nil
 }
