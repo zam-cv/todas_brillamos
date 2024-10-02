@@ -46,22 +46,29 @@ export default function UploadProducts() {
   const [category_id, setCategory_id] = useState<number>(0);
 
   function uploadProduct() {
-    api.product.setProduct(imageInput as any, {
-      model,
-      name,
-      description,
-      price,
-      stock,
-      size,
-      color,
-      maintenance,
-      material,
-      absorbency,
-      material_feature,
-      category_id,
-    }).then(() => {
-      alert("Producto agregado");
-    })
+    if (imageInput.current) {
+      const file = imageInput.current.files?.[0];
+      if (!file) {
+        return;
+      }
+
+      api.product.setProduct(file, {
+        model,
+        name,
+        description,
+        price,
+        stock,
+        size,
+        color,
+        maintenance,
+        material,
+        absorbency,
+        material_feature,
+        category_id,
+      }).then(() => {
+        // alert("Producto agregado");
+      })
+    }
   }
   return (
     <div>

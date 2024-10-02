@@ -1,4 +1,3 @@
-import { any } from "zod";
 import { getConfig } from "./auth";
 import { API_URL } from "./constants";
 import axios from "axios";
@@ -25,15 +24,10 @@ export async function upload<T>(path: string, file: File, metadata?: Object, wit
   const formData = new FormData();
   formData.append("file", file);
   if (metadata) {
-    const jsonBlob = new Blob([JSON.stringify(metadata)], { type: 'application/json' });
-    formData.append("metadata", jsonBlob);
-  };
+    formData.append("metadata", JSON.stringify(metadata));
+  }
 
   const config: any = withConfig ? getConfig() : undefined;
-
-  if(config){
-    config.headers["Content-Type"] = "multipart/form-data";
-  }
 
   return axios
     .post(`${API_URL}${path}`, formData, config)
