@@ -23,3 +23,6 @@ val AccentBlue = Color(0xFF5884C4)
 val PeriodColor = Color(0xFFD5507C)
 val ColorOfMostFertilePeriod = Color(0xFFB9C65F)
 val OvulationColor = Color(0xFFFFE085)
+
+val UnselectedScreen = Color(0xFF678da2)
+val SelectedScreen = Color(0xFF034165)

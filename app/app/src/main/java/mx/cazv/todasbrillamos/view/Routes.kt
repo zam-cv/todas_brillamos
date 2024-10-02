@@ -1,18 +1,23 @@
 package mx.cazv.todasbrillamos.view
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CalendarToday
+import androidx.compose.material.icons.filled.ChatBubble
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material.icons.filled.Store
 import androidx.compose.ui.graphics.vector.ImageVector
+import mx.cazv.todasbrillamos.R
 
 sealed class Routes (
     val route: String,
     val tag: String,
-    val icon: ImageVector
+    val icon: Icon
 ) {
     companion object {
-        var screens = listOf(Home, Calendar, Store, Chat, Config, Cart)
+        var screens = listOf(Home, Calendar, Chat, Config)
 
         const val ROUTE_LOGIN = "Login"
         const val ROUTE_REGISTER = "Register"
@@ -41,11 +46,16 @@ sealed class Routes (
     }
 
     // Bottom bar routes
-    private data object Store: Routes(ROUTE_STORE, "Store", Icons.Default.Person)
-    private data object Home: Routes(ROUTE_HOME, "Home", Icons.Default.Home)
-    private data object Calendar: Routes(ROUTE_CALENDAR, "Calendar", Icons.Default.Person)
-    private data object Chat: Routes(ROUTE_CHAT, "Chat", Icons.Default.Person)
-    private data object Config: Routes(ROUTE_CONFIG, "Config", Icons.Default.Person)
-    private data object Cart: Routes(ROUTE_CART, "Cart", Icons.Default.ShoppingCart)
+    private data object Home: Routes(ROUTE_HOME, "Inicio", Icon.ResourceIcon(R.drawable.home_icon))
+    private data object Calendar: Routes(ROUTE_CALENDAR, "Calendario", Icon.VectorIcon(Icons.Default.CalendarToday))
+    private data object Store: Routes(ROUTE_STORE, "Store", Icon.VectorIcon(Icons.Default.Store))
+    private data object Chat: Routes(ROUTE_CHAT, "Chat", Icon.ResourceIcon(R.drawable.chat_icon))
+    private data object Config: Routes(ROUTE_CONFIG, "Config", Icon.VectorIcon(Icons.Default.Settings))
+    // private data object Cart: Routes(ROUTE_CART, "Cart", Icons.Default.ShoppingCart)
 
+}
+
+sealed class Icon {
+    data class VectorIcon(val imageVector: ImageVector) : Icon()
+    data class ResourceIcon(val resId: Int) : Icon()
 }
