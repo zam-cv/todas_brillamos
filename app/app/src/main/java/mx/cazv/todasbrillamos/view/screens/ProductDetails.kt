@@ -321,10 +321,10 @@ fun Product() {
 }
 
 @Composable
-fun MoreProducts(text: String) {
+fun MoreProducts(text: String, modifier: Modifier) {
     Column (
-        modifier = Modifier
-            .padding(top = 60.dp, bottom = 10.dp)
+        modifier = modifier
+//            .padding(top = 50.dp, bottom = 10.dp)
     ) {
         Text(
             text = text,
@@ -451,7 +451,7 @@ fun ProductDetails(navController: NavHostController) {
                         ProductDetails()
                     }
 
-                    MoreProducts(text = "Más productos")
+                    MoreProducts(text = "Más productos", modifier = Modifier.padding(top = 60.dp))
                 }
             }
         }

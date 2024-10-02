@@ -16,6 +16,7 @@ import mx.cazv.todasbrillamos.view.screens.Notifications
 import mx.cazv.todasbrillamos.view.screens.Register
 import mx.cazv.todasbrillamos.view.screens.Calendar
 import mx.cazv.todasbrillamos.view.screens.Cart
+import mx.cazv.todasbrillamos.view.screens.Orders
 import mx.cazv.todasbrillamos.view.screens.Payment
 import mx.cazv.todasbrillamos.view.screens.TrackOrder
 import mx.cazv.todasbrillamos.view.screens.config.Config
@@ -38,7 +39,7 @@ fun App() {
 @Composable
 fun Nav(navController: NavHostController, modifier: Modifier = Modifier) {
     NavHost(navController = navController,
-        startDestination = Routes.ROUTE_HOME,
+        startDestination = Routes.ROUTE_ORDERS,
         modifier = modifier.fillMaxSize()) {
 
         // Screens
@@ -96,6 +97,10 @@ fun Nav(navController: NavHostController, modifier: Modifier = Modifier) {
 
         composable(Routes.ROUTE_TRACK_ORDER) {
             TrackOrder(navController)
+        }
+
+        composable(Routes.ROUTE_ORDERS) {
+            Orders(navController)
         }
 
         // Config
