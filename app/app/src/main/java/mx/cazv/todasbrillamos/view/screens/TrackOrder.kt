@@ -10,13 +10,16 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -43,15 +46,11 @@ fun TrackOrder(navController: NavHostController) {
             BottomBar(navController = navController)
         }
     ) {
-        Column(modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-            .padding(10.dp)
-        ){
+        Column{
             Text(text = "Entrega: ## ago - ## sep",
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color.Magenta,
+                color = Color(0xffd5507c),
                 modifier = Modifier
                     .fillMaxWidth(),
                 textAlign = TextAlign.Center
@@ -61,14 +60,19 @@ fun TrackOrder(navController: NavHostController) {
 
             Column(modifier = Modifier
                 .fillMaxWidth()
+                //.padding(horizontal = 16.dp)
                 .background(Color.White)
             ){
-                Text(text = "Información del paquete",
+
+                Text(text = "Enviar a Fernanda Herrera, Calle ##### No. # Colonia",
                     fontSize = 14.sp,
-                    fontWeight = FontWeight.Bold,
+                    //fontWeight = FontWeight.Bold,
                     modifier = Modifier
                         .fillMaxWidth()
+                        .padding(start = 16.dp, end = 16.dp, top = 10.dp, bottom = 10.dp)
                 )
+
+                OrderStatus(status = "Pedido recibido")
 
                 Row(modifier = Modifier
                     .fillMaxWidth()
@@ -86,6 +90,43 @@ fun TrackOrder(navController: NavHostController) {
                 Spacer(modifier = Modifier.height(16.dp))
 
 
+            }
+        }
+    }
+}
+
+@Composable
+fun OrderStatus(status: String) {
+    val statusList = listOf("Entregado", "En camino", "Preparando pedido", "Pedido recibido")
+    val currentStatus = statusList.indexOf(status)
+
+    Column {
+        statusList.forEachIndexed { index, s ->
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .padding(start = 16.dp, end = 16.dp, top = 10.dp, bottom = 10.dp)
+                    .fillMaxWidth()
+            ){
+                Box(
+                    modifier = Modifier
+                        .size(10.dp)
+                        .clip(CircleShape)
+                        .background(
+                            if(index >= currentStatus){
+                                Color(0xffd5507c)
+                            } else {
+                                Color.LightGray
+                            }
+                        ),
+                ){}
+
+                Spacer(modifier = Modifier.width(4.dp))
+
+                Text(text = s,
+                    fontSize = 14.sp,
+                    color = if(index >= currentStatus) Color(0xffd5507c) else Color.LightGray
+                )
             }
         }
     }

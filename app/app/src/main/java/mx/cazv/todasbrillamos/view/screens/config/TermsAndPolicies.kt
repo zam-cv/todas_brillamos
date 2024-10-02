@@ -90,7 +90,7 @@ fun TermsAndPolicies(navController: NavHostController) {
                 .fillMaxHeight()
                 .fillMaxWidth()
                 .background(BackgroundColor)
-                .verticalScroll(rememberScrollState())
+                //.verticalScroll(rememberScrollState())
         ) {
             SectionWithContent(
                 title = "AVISO DE PRIVACIDAD",
