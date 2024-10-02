@@ -22,6 +22,7 @@ func Migrate() {
 	db.AutoMigrate(&models.Favorites{})
 	db.AutoMigrate(&models.Orders{})
 	db.AutoMigrate(&models.Other{})
+	db.AutoMigrate(&models.Donation{})
 }
 
 func CreateDefaultAdmin() {
