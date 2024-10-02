@@ -321,14 +321,14 @@ fun Product() {
 }
 
 @Composable
-fun MoreProducts() {
+fun MoreProducts(text: String) {
     Column (
         modifier = Modifier
             .padding(top = 60.dp, bottom = 10.dp)
     ) {
         Text(
-            text = "Más productos",
-            fontSize = 14.sp,
+            text = text,
+            fontSize = 18.sp,
             fontWeight = FontWeight.Bold
         )
 
@@ -451,7 +451,7 @@ fun ProductDetails(navController: NavHostController) {
                         ProductDetails()
                     }
 
-                    MoreProducts()
+                    MoreProducts(text = "Más productos")
                 }
             }
         }

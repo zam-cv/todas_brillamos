@@ -10,7 +10,7 @@ import androidx.navigation.compose.rememberNavController
 import mx.cazv.todasbrillamos.view.screens.Chat
 import mx.cazv.todasbrillamos.view.screens.Favorites
 import mx.cazv.todasbrillamos.view.screens.ForgotPassword
-import mx.cazv.todasbrillamos.view.screens.Home
+import mx.cazv.todasbrillamos.view.screens.home.Home
 import mx.cazv.todasbrillamos.view.screens.Login
 import mx.cazv.todasbrillamos.view.screens.Notifications
 import mx.cazv.todasbrillamos.view.screens.Register
@@ -38,7 +38,7 @@ fun App() {
 @Composable
 fun Nav(navController: NavHostController, modifier: Modifier = Modifier) {
     NavHost(navController = navController,
-        startDestination = Routes.ROUTE_STORE,
+        startDestination = Routes.ROUTE_HOME,
         modifier = modifier.fillMaxSize()) {
 
         // Screens
