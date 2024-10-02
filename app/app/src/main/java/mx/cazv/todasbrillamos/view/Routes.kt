@@ -31,6 +31,7 @@ sealed class Routes (
         const val ROUTE_CART = "Cart"
         const val ROUTE_PRODUCT_DETAILS = "ProductDetails"
         const val ROUTE_YOUR_CYCLE = "YourCycle"
+        const val ROUTE_ORDERS = "Orders"
         const val ROUTE_TRACK_ORDER = "TrackOrder"
         const val ROUTE_SHIPPING_INFO = "ShippingInfo"
         const val ROUTE_PAYMENTS = "Payments"
