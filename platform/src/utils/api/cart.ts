@@ -1,4 +1,4 @@
-import {get, del, post, upload} from "../src/utils/methods";
+import {get, del, post, upload} from "@/utils/methods";
 
 export interface Cart {
     quantity: number;

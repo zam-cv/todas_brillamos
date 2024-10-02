@@ -1,4 +1,4 @@
-import {get, del, post, upload } from "../src/utils/methods";
+import {get, del, post, upload } from "@/utils/methods";
 
 export interface Posts {
     title: string;
@@ -13,15 +13,15 @@ export default {
         setPost: (
             posts: Posts
         ): Promise<void> => {
-            return post("admin/posts", posts)
+            return post("/posts", posts)
         },
 
         getPosts: (): Promise<void> =>{
-            return get("admin/posts")
+            return get("/posts")
         },
 
         deletePost: (id: number): Promise<void> => {
-            return del(`admin/posts7${id}`)
+            return del(`/posts/${id}`)
         }
 
     }

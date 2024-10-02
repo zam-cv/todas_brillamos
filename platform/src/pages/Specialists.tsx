@@ -25,6 +25,37 @@ export default function Specialists() {
       </h2>
       <br></br>
       <div className="overflow-auto gap-20 bg-#943370">
+      <div>
+        <Popover>
+            <PopoverTrigger asChild>
+              <Button>Agregar Categoría</Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-80">
+              <div className="grid gap-4">
+                <div className="space-y-2">
+                  <h4 className="font-medium leading-none">Añadir categoría</h4>
+                  <p className="text-sm text-muted-foreground">
+                    Complete los siguientes datos
+                  </p>
+                </div>
+                <div className="grid gap-2">
+                  <div className="grid grid-cols-3 items-center gap-4">
+                    <Label htmlFor="nombre">Nombre</Label>
+                    <Input
+                      id="nombre"
+                      defaultValue=""
+                      className="col-span-2 h-8"
+                    />
+                  </div>
+                  <div className="grid grid-cols-3 items-center gap-4">
+                    <Button>Añadir</Button>
+                  </div>
+                </div>
+              </div>
+            </PopoverContent>
+          </Popover>
+        </div>
+        <br></br>
         <div>
           <Popover>
             <PopoverTrigger asChild>
@@ -104,6 +135,7 @@ export default function Specialists() {
             </AccordionItem>
           </Accordion>
         </div>
+        
       </div>
     </div>
   );

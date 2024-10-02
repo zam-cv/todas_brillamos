@@ -8,7 +8,7 @@ export interface Product {
     stock: number;
     size: string;
     color: string;
-    manteinance: string;
+    maintenance: string;
     material: string;
     absorbency: string;
     material_feature: string;
@@ -22,7 +22,7 @@ export default {
             product: Product
 
         ): Promise<void> => {
-            return upload("/products/upload", file, product, false);
+            return upload("/products/upload", file, product);
         },
 
         
@@ -52,7 +52,7 @@ export default {
         },
         
         //GET
-        getProducts: (): Promise<void> => {
+        getProducts: (): Promise<Product[]> => {
             return get("/products", false)
         },
 

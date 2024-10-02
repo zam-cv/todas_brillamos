@@ -1,156 +1,200 @@
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { columns } from "@/components/table/components/columns-products";
 import { DataTable } from "@/components/table/components/data-table-products";
-import { Textarea } from "@/components/ui/textarea"
-import {useEffect, useState} from 'react'
-import productAPI, {Product as ISProducts} from "@/utils/api/products";
+import { Textarea } from "@/components/ui/textarea";
+import { useEffect, useState, useRef } from "react";
+import api from "@/utils/api/products";
 
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion"
+} from "@/components/ui/accordion";
 
 
 
-export default function Products() {
-  const[products, setProducts] = useState<ISProducts[]>([]);
-  const[formData, setFormData] = useState({
-    model: '',
-    name: '',
-    description: '',
-    price: '',
-    stock: '',
-    size: '',
-    color: '',
-    manteinance: '',
-    material: '',
-    absorbency: '',
-    material_feature: '',
-    category_id: ''
-  });
+  // {
+  //   "model": "0017",
+  //   "name": "prod23",
+  //   "description": "descripcion",
+  //   "price": 20,
+  //   "stock": 4,
+  //   "size": "21 x 7 cm",
+  //   "color": "negro",
+  //   "maintenance": "Lavable y reutilizable",
+  //   "material": "Algodón",
+  //   "absorbency": "Alta",
+  //   "material_feature": "Hipoalergénica, transpirable",
+  //   "category_id": 1
+  // }
 
-  
-  useEffect(() => {
-    productAPI.product
-    .getProducts()
-    .then((data: any) => {
-        setProducts(data);
+export default function UploadProducts() {
+  const imageInput = useRef<HTMLInputElement>(null);
+  const [model, setModel] = useState<string>("");
+  const [name, setName] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+  const [price, setPrice] = useState<number>(0);
+  const [stock, setStock] = useState<number>(0);
+  const [size, setSize] = useState<string>("");
+  const [color, setColor] = useState<string>("");
+  const [maintenance, setMaintenance] = useState<string>("");
+  const [material, setMaterial] = useState<string>("");
+  const [absorbency, setAbsorbency] = useState<string>("");
+  const [material_feature, setMaterial_feature] = useState<string>("");
+  const [category_id, setCategory_id] = useState<number>(0);
+
+  function uploadProduct() {
+    api.product.setProduct(imageInput as any, {
+      model,
+      name,
+      description,
+      price,
+      stock,
+      size,
+      color,
+      maintenance,
+      material,
+      absorbency,
+      material_feature,
+      category_id,
+    }).then(() => {
+      alert("Producto agregado");
     })
-    .catch((error) => console.error("Error al obtener productos:", error))
-  }, ([]));
-
-
-
-  const handleInputs = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
   }
-  
-  const handleInputTextArea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  }
-
-
-  const handleAddProduct = () => {
-      // Generar un ID único para el nuevo producto
-      const newProduct: ISProducts = {
-        model: formData.model,
-        name: formData.name,
-        description: formData.description,
-        price: parseFloat(formData.price),
-        stock: parseInt(formData.stock),
-        size: formData.size,
-        color: formData.color,
-        manteinance: formData.manteinance,
-        material: formData.material,
-        absorbency: formData.absorbency,
-        material_feature: formData.material_feature,
-        category_id: parseInt(formData.category_id),
-      };
-
-      productAPI.product
-        .setProduct(new File([], ""), newProduct)
-        .then(() => {
-          setProducts([...products, newProduct]);
-           // Limpiar el formulario
-          setFormData({
-            model: '',
-            name: '',
-            description: '',
-            price: '',
-            stock: '',
-            size: '',
-            color: '',
-            manteinance: '',
-            material: '',
-            absorbency: '',
-            material_feature: '',
-            category_id: ''
-          });
-        })
-        .catch((error) => console.error("Error al agregar producto:", error));
-    
-  };
-
-
-
-return(
+  return (
     <div>
-      <h2 className="scroll-m-20  text-3xl font-semibold tracking-tight first:mt-0">
+      <div className="flex justify-between items-center">
+        <h2 className="scroll-m-20 text-3xl font-semibold tracking-tight first:mt-0">
           Productos
-      </h2>
-    <br></br>
-    <Accordion type="single" collapsible className="w-3/4">
+        </h2>
+        {/* <Button
+          onClick={fetchProducts}
+          disabled={loading}
+          variant="outline"
+          className="flex items-center gap-2"
+        >
+          <RefreshCw className={`h-4 w-4 ${loading ? "animate-spin" : ""}`} />
+          Actualizar
+        </Button> */}
+      </div>
+      <br />
+      <Accordion type="single" collapsible className="w-3/4">
         <AccordionItem value="item-1">
           <AccordionTrigger className="font-semibold">Agregar</AccordionTrigger>
-            <AccordionContent>
-              <div className = "flex flex-nowrap flex-col">
-                  <div className="flex flex-row space-x-2 px-2 pt-2">
-                    <Input name="name" value={formData.name} onChange={handleInputs} className="w-4/5" placeholder="Nombre del producto"></Input>
-                    <Input name="stock" value={formData.stock} onChange={handleInputs} className="w-3/4 " placeholder="Cantidad"></Input>
-                  </div>
-                  <div className="flex flex-row space-x-2 px-2 pt-2">
-                    <Input name="price" value={formData.price} onChange={handleInputs} placeholder="Precio"></Input>
-                    <Input name="model" value={formData.model} onChange={handleInputs} placeholder="Modelo"></Input>
-                  </div>
-                  <div className="flex flex-row space-x-2 px-2 pt-2">
-                    <Input name= "size" value={formData.size} onChange={handleInputs} placeholder="Tamaño"></Input>
-                    <Input name="material" value={formData.material} onChange={handleInputs} placeholder="Material"></Input>
-                  </div>
-                  <div className="flex flex-row space-x-2 px-2 pt-2">
-                    <Input name= "absorbency" value={formData.absorbency} onChange={handleInputs} placeholder="Absorbencia"></Input>
-                    <Input name="material_feature" value={formData.material_feature} onChange={handleInputs} placeholder="Cuidado de la piel"></Input>
-                    <Input name= "color" value={formData.color} onChange= {handleInputs}placeholder="Color"></Input>
-                  </div>
-                  <div className="flex flex-row space-x-2 px-2 pt-2">
-                      <Textarea name="description" value={formData.description} onChange={handleInputTextArea} placeholder="Descripción.."/>
-                  </div>
-                  <div className="flex flex-row space-x-2 px-2 pt-2">
-                      <Button onClick={handleAddProduct}>Agregar</Button>
-                  </div>
+          <AccordionContent>
+            <div className="flex flex-nowrap flex-col">
+              <div className="flex flex-row space-x-2 px-2 pt-2">
+                <Input
+                  name="name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="w-4/5"
+                  placeholder="Nombre del producto"
+                  required
+                />
+                <Input
+                  name="stock"
+                  value={stock}
+                  onChange={(e) => setStock(Number(e.target.value))}
+                  className="w-3/4"
+                  placeholder="Cantidad"
+                  type="number"
+                  required
+                />
               </div>
-            </AccordionContent>
+              <div className="flex flex-row space-x-2 px-2 pt-2">
+                <Input
+                  name="price"
+                  value={price}
+                  onChange={(e) => setPrice(Number(e.target.value))}
+                  placeholder="Precio"
+                  type="number"
+                  required
+                />
+                <Input
+                  name="model"
+                  value={model}
+                  onChange={(e) => setModel(e.target.value)}
+                  placeholder="Modelo"
+                  required
+                />
+              </div>
+              <div className="flex flex-row space-x-2 px-2 pt-2">
+                <Input
+                  name="size"
+                  value={size}
+                  onChange={(e) => setSize(e.target.value)}
+                  placeholder="Tamaño"
+                />
+                <Input
+                  name="material"
+                  value={material}
+                  onChange={(e) => setMaterial(e.target.value)}
+                  placeholder="Material"
+                />
+              </div>
+              <div className="flex flex-row space-x-2 px-2 pt-2">
+                <Input
+                  name="absorbency"
+                  value={absorbency}
+                  onChange={(e) => setAbsorbency(e.target.value)}
+                  placeholder="Absorbencia"
+                />
+                <Input
+                  name="material_feature"
+                  value={material_feature}
+                  onChange={(e) => setMaterial_feature(e.target.value)}
+                  placeholder="Cuidado de la piel"
+                />
+                <Input
+                  name="color"
+                  value={color}
+                  onChange={(e) => setColor(e.target.value)}
+                  placeholder="Color"
+                />
+                <Input
+                  name="maintenance"
+                  value={maintenance}
+                  onChange={(e) => setMaintenance(e.target.value)}
+                  placeholder="Manteinance"
+                />
+              </div>
+              <div className="flex flex-row space-x-2 px-2 pt-2">
+                <Textarea
+                  name="description"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  placeholder="Descripción.."
+                />
+              </div>
+              <div className="flex flex-row space-x-2 px-2 pt-2">
+                <Input
+                  name="category_id"
+                  value={category_id}
+                  onChange={(e) => setCategory_id(Number(e.target.value))}
+                  placeholder="ID de categoría"
+                  type="number"
+                  required
+                />
+              </div>
+              <div className="flex flex-row space-x-2 px-2 pt-2">
+                <Input ref={imageInput} type="file" onChange={() => {}} required />
+              </div>
+              <div className="flex flex-row space-x-2 px-2 pt-2">
+                <Button onClick={uploadProduct}>
+                </Button>
+              </div>
+            </div>
+          </AccordionContent>
         </AccordionItem>
-    </Accordion>
-    
+      </Accordion>
 
+      <br />
 
-    <br></br>
-
-  
-    <DataTable
-      data={products}
-      columns = {columns}
-      event_id = {1}
-    />
-      
+      {/* <DataTable data={} columns={columns} event_id={1} /> */}
     </div>
   );
-        
-  
-  
 }
+

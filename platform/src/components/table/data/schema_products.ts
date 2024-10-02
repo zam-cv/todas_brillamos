@@ -8,7 +8,7 @@ export const taskSchema = z.object({
     stock: z.number(),
     size: z.string(),
     color: z.string(),
-    manteinance: z.string(),
+    maintenance: z.string(),
     material: z.string(),
     absorbency: z.string(),
     material_feature: z.string(),
