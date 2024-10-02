@@ -43,17 +43,17 @@ func addNotificationsRoutes(rg *gin.RouterGroup) {
 		c.Status(http.StatusCreated)
 	})
 
-	notifications.GET("", auth.GetMiddleware(ClientAuth), middlewares.GetClientID(), func(c *gin.Context) {
-		id, _ := c.MustGet("clientID").(uint)
+	// notifications.GET("", auth.GetMiddleware(ClientAuth), middlewares.GetClientID(), func(c *gin.Context) {
+	// 	id, _ := c.MustGet("clientID").(uint)
 
-		notifications, err := database.GetNotificationsByClientID(id)
-		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-			return
-		}
+	// 	notifications, err := database.GetNotificationsByClientID(id)
+	// 	if err != nil {
+	// 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+	// 		return
+	// 	}
 
-		c.JSON(http.StatusOK, notifications)
-	})
+	// 	c.JSON(http.StatusOK, notifications)
+	// })
 
 	notifications.POST("/:clientID", auth.GetMiddleware(AdminAuth), func(c *gin.Context) {
 		userId := c.Param("clientID")
@@ -84,9 +84,26 @@ func addNotificationsRoutes(rg *gin.RouterGroup) {
 	})
 
 	notifications.GET("/:clientID", auth.GetMiddleware(ClientAuth), middlewares.GetClientID(), func(c *gin.Context) {
-		id, _ := c.MustGet("clientID").(uint)
+		//id, _ := c.MustGet("clientID").(uint)
+		clientIDParam := c.Param("clientID")
 
-		notifications, err := database.GetNotificationsByClientID(id)
+		clientID, err := strconv.ParseUint(clientIDParam, 10, 32)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid client ID"})
+			return
+		}
+
+		notifications, err := database.GetNotificationsByClientID(uint(clientID))
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+
+		c.JSON(http.StatusOK, notifications)
+	})
+
+	notifications.GET("", auth.GetMiddleware(AdminAuth), func(c *gin.Context) {
+		notifications, err := database.GetAllNotifications()
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return

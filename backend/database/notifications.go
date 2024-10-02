@@ -28,3 +28,9 @@ func CreateNotificationByClientID(notification *models.Notifications) error {
 	}
 	return nil
 }
+
+func GetAllNotifications() ([]models.Notifications, error) {
+	var notifications []models.Notifications
+	err := db.Find(&notifications).Error
+	return notifications, err
+}
