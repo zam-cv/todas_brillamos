@@ -321,11 +321,11 @@ fun YourCycle(navController: NavHostController) {
         }
     ) {
         Column (
-            modifier = Modifier
-                .fillMaxHeight()
-                .fillMaxWidth()
-                .background(BackgroundColor)
-                .verticalScroll(rememberScrollState())
+//            modifier = Modifier
+//                .fillMaxHeight()
+//                .fillMaxWidth()
+//                .background(BackgroundColor)
+//                .verticalScroll(rememberScrollState())
         ) {
             Text(
                 text = "Tu ciclo",
