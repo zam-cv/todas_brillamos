@@ -4,7 +4,8 @@ import { columns } from "@/components/table/components/columns-products";
 import { DataTable } from "@/components/table/components/data-table-products";
 import { Textarea } from "@/components/ui/textarea";
 import { useEffect, useState, useRef } from "react";
-import api from "@/utils/api/products";
+import api, {Product} from "@/utils/api/products";
+import { RefreshCw } from "lucide-react";
 
 import {
   Accordion,
@@ -12,9 +13,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-
-
-
   // {
   //   "model": "0017",
   //   "name": "prod23",
@@ -44,6 +42,8 @@ export default function UploadProducts() {
   const [absorbency, setAbsorbency] = useState<string>("");
   const [material_feature, setMaterial_feature] = useState<string>("");
   const [category_id, setCategory_id] = useState<number>(0);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [id, setId] = useState<number | null>(null);
 
   function uploadProduct() {
     if (imageInput.current) {
@@ -65,26 +65,29 @@ export default function UploadProducts() {
         absorbency,
         material_feature,
         category_id,
-      }).then(() => {
+      } as any).then(() => {
         // alert("Producto agregado");
       })
-    }
-  }
+    }  
+}
+
+  useEffect(() => {
+    api.product.getProducts().then((products) => {
+      setProducts(products);
+    }); 
+  },[])
+
+  useEffect(() => {
+    console.log(id);
+  }, [id])
+
   return (
     <div>
       <div className="flex justify-between items-center">
         <h2 className="scroll-m-20 text-3xl font-semibold tracking-tight first:mt-0">
           Productos
         </h2>
-        {/* <Button
-          onClick={fetchProducts}
-          disabled={loading}
-          variant="outline"
-          className="flex items-center gap-2"
-        >
-          <RefreshCw className={`h-4 w-4 ${loading ? "animate-spin" : ""}`} />
-          Actualizar
-        </Button> */}
+  
       </div>
       <br />
       <Accordion type="single" collapsible className="w-3/4">
@@ -191,6 +194,7 @@ export default function UploadProducts() {
               </div>
               <div className="flex flex-row space-x-2 px-2 pt-2">
                 <Button onClick={uploadProduct}>
+                  Agregar Producto
                 </Button>
               </div>
             </div>
@@ -200,7 +204,7 @@ export default function UploadProducts() {
 
       <br />
 
-      {/* <DataTable data={} columns={columns} event_id={1} /> */}
+      <DataTable data={products} columns={columns} setId={setId} />
     </div>
   );
 }
