@@ -22,8 +22,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import mx.cazv.todasbrillamos.ui.theme.BackgroundColor
-import mx.cazv.todasbrillamos.view.components.BottomBar
-import mx.cazv.todasbrillamos.view.components.CustomTopBar
+import mx.cazv.todasbrillamos.view.components.footer.BottomBar
+import mx.cazv.todasbrillamos.view.components.header.CustomTopBar
 import mx.cazv.todasbrillamos.view.components.Line
 import mx.cazv.todasbrillamos.view.layouts.CustomLayout
 

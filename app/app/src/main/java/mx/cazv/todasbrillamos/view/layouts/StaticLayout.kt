@@ -10,9 +10,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import mx.cazv.todasbrillamos.ui.theme.BackgroundColor
-import mx.cazv.todasbrillamos.view.components.BottomBar
+import mx.cazv.todasbrillamos.view.components.footer.BottomBar
 import mx.cazv.todasbrillamos.view.components.StoreButton
-import mx.cazv.todasbrillamos.view.components.TopBar
+import mx.cazv.todasbrillamos.view.components.header.TopBar
 
 @Composable
 fun StaticLayout(navController: NavHostController, content: @Composable () -> Unit) {

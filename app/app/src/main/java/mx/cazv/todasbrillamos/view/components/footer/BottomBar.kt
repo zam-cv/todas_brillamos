@@ -1,4 +1,4 @@
-package mx.cazv.todasbrillamos.view.components
+package mx.cazv.todasbrillamos.view.components.footer
 
 import android.util.Log
 import androidx.compose.foundation.Image

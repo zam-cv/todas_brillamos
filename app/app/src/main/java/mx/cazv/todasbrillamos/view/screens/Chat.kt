@@ -3,46 +3,30 @@ package mx.cazv.todasbrillamos.view.screens
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-//import androidx.compose.foundation.layout.FlowColumnScopeInstance.weight
-//import androidx.compose.foundation.layout.FlowRowScopeInstance.weight
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import mx.cazv.todasbrillamos.view.Routes
-import mx.cazv.todasbrillamos.view.components.CustomBottomBar
-import mx.cazv.todasbrillamos.view.components.CustomTopBar
-import mx.cazv.todasbrillamos.view.layouts.BasicLayout
 import mx.cazv.todasbrillamos.view.layouts.CustomLayout
-import mx.cazv.todasbrillamos.view.layouts.MainLayout
-import androidx.compose.foundation.lazy.items
-import mx.cazv.todasbrillamos.view.components.ChatBottomBar
-
+import mx.cazv.todasbrillamos.view.components.footer.ChatBottomBar
+import mx.cazv.todasbrillamos.view.components.header.BasicTopBar
 
 @Composable
 fun Chat(navController: NavHostController) {
     CustomLayout(
         navController = navController,
         topBar = {
-            CustomTopBar {
-                Text(text = "Custom Top Bar")
-            }
+            BasicTopBar(title = "Chat", navController = navController)
         },
         bottomBar = {
             ChatBottomBar()
@@ -60,6 +44,7 @@ fun Chat(navController: NavHostController) {
                     MessageType.CHAT -> MessageChat(message.descrip)
                 }
             }
+            Spacer(modifier = Modifier.height(16.dp))
         }
     }
 }

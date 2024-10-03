@@ -19,9 +19,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Bookmark
-import androidx.compose.material.icons.outlined.HeartBroken
-import androidx.compose.material.icons.outlined.MonitorHeart
-import androidx.compose.material.icons.outlined.NotificationsActive
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -47,8 +44,8 @@ import mx.cazv.todasbrillamos.ui.theme.BackgroundColor
 import mx.cazv.todasbrillamos.ui.theme.BadgePink
 import mx.cazv.todasbrillamos.ui.theme.ImageBackgroundColor
 import mx.cazv.todasbrillamos.ui.theme.SelectorsBackgroundColor
-import mx.cazv.todasbrillamos.view.components.BottomBar
-import mx.cazv.todasbrillamos.view.components.CustomTopBar
+import mx.cazv.todasbrillamos.view.components.footer.BottomBar
+import mx.cazv.todasbrillamos.view.components.header.CustomTopBar
 import mx.cazv.todasbrillamos.view.components.Description
 import mx.cazv.todasbrillamos.view.components.Line
 import mx.cazv.todasbrillamos.view.layouts.CustomLayout

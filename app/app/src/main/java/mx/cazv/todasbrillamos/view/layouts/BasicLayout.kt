@@ -8,8 +8,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import mx.cazv.todasbrillamos.ui.theme.BackgroundColor
-import mx.cazv.todasbrillamos.view.components.BottomBar
-import mx.cazv.todasbrillamos.view.components.TopBar
 
 @Composable
 fun BasicLayout(navController: NavHostController, content: @Composable () -> Unit) {

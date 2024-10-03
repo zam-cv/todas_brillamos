@@ -12,8 +12,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -31,8 +29,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import mx.cazv.todasbrillamos.ui.theme.BackgroundColor
-import mx.cazv.todasbrillamos.view.components.BottomBar
-import mx.cazv.todasbrillamos.view.components.CustomTopBar
+import mx.cazv.todasbrillamos.view.components.footer.BottomBar
+import mx.cazv.todasbrillamos.view.components.header.CustomTopBar
 import mx.cazv.todasbrillamos.view.components.Section
 import mx.cazv.todasbrillamos.view.layouts.CustomLayout
 

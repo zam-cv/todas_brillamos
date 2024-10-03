@@ -32,8 +32,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import mx.cazv.todasbrillamos.ui.theme.BackgroundColor
-import mx.cazv.todasbrillamos.view.components.BottomBar
-import mx.cazv.todasbrillamos.view.components.CustomTopBar
+import mx.cazv.todasbrillamos.view.components.footer.BottomBar
+import mx.cazv.todasbrillamos.view.components.header.BasicTopBar
+import mx.cazv.todasbrillamos.view.components.header.CustomTopBar
 import mx.cazv.todasbrillamos.view.layouts.CustomLayout
 
 @Composable
@@ -117,9 +118,7 @@ fun Config(navController: NavHostController) {
         navController = navController,
         withStoreButton = true,
         topBar = {
-            CustomTopBar {
-                Text(text = "Custom Top Bar")
-            }
+            BasicTopBar(title = "Configuración", navController = navController)
         },
         bottomBar = {
             BottomBar(navController = navController)
