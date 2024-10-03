@@ -155,7 +155,6 @@ fun Notifications(navController: NavHostController) {
                 .fillMaxHeight()
                 .background(BackgroundColor)
                 .padding(top = 15.dp, start = 15.dp, end = 15.dp, bottom = 25.dp)
-                .verticalScroll(rememberScrollState())
         ) {
             Date("Hoy")
 

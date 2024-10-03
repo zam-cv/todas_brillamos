@@ -1,315 +1,52 @@
 package mx.cazv.todasbrillamos.view.screens
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.outlined.ArrowBackIos
-import androidx.compose.material.icons.automirrored.outlined.ArrowForwardIos
-import androidx.compose.material3.Icon
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.unit.times
-import androidx.compose.ui.zIndex
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import mx.cazv.todasbrillamos.R
 import mx.cazv.todasbrillamos.ui.theme.BackgroundColor
-import mx.cazv.todasbrillamos.ui.theme.ColorOfMostFertilePeriod
-import mx.cazv.todasbrillamos.ui.theme.OvulationColor
-import mx.cazv.todasbrillamos.ui.theme.PeriodColor
-import mx.cazv.todasbrillamos.view.components.PinkButton
 import mx.cazv.todasbrillamos.view.components.footer.BottomBar
 import mx.cazv.todasbrillamos.view.components.header.CustomTopBar
+import mx.cazv.todasbrillamos.view.layouts.BasicLayout
 import mx.cazv.todasbrillamos.view.layouts.CustomLayout
+import mx.cazv.todasbrillamos.view.layouts.MainLayout
 
 @Composable
-fun DaysLabel(
-    list: List<String>,
-) {
-    Row (
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        for (day in list) {
-            Text(
-                text = day,
-                fontSize = 11.sp,
-                color = Color.Gray,
-                fontWeight = FontWeight.W500,
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f)
-            )
-        }
-    }
-}
+fun TrackOrder(navController: NavHostController) {
+    val configuration = LocalConfiguration.current
+    val screenWidth = configuration.screenWidthDp.dp
+    val screenHeight = configuration.screenHeightDp.dp
 
-@Composable
-fun DaysOfTheWeek(
-    list: List<String>,
-    periodRange: Pair<Int, Int>? = null,
-    fertileRange: Pair<Int, Int>? = null,
-    ovulationDay: Int? = null
-) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
-            .fillMaxWidth()
-    ) {
-        list.forEachIndexed { index, day ->
-            // Verificar si el día actual está dentro del rango del periodo o del periodo fértil
-            val isInPeriodRange = periodRange != null && index in periodRange.first..periodRange.second
-            val isInFertileRange = fertileRange != null && index in fertileRange.first..fertileRange.second
-            val isOvulationDay = ovulationDay != null && index == ovulationDay
-
-            // Si estamos en el primer día del rango del periodo, crear un único Box con borde que abarque todo el rango
-            if (periodRange != null && index == periodRange.first) {
-                Box(
-                    modifier = Modifier
-                        .weight((periodRange.second - periodRange.first + 1).toFloat())
-                        .padding(horizontal = 4.dp)
-                        .border(2.dp, PeriodColor, RoundedCornerShape(8.dp))
-                ) {
-                    Row(modifier = Modifier.fillMaxWidth()) {
-                        list.subList(periodRange.first, periodRange.second + 1).forEachIndexed { subIndex, periodDay ->
-                            val currentIndex = periodRange.first + subIndex
-                            val isOvulationWithinPeriod = ovulationDay != null && currentIndex == ovulationDay
-
-                            Box(
-                                modifier = Modifier
-                                    .weight(1f)
-                                    .padding(8.dp),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                if (isOvulationWithinPeriod) {
-                                    Box(
-                                        modifier = Modifier
-                                            .size(24.dp)
-                                            .background(
-                                                color = OvulationColor.copy(alpha = 0.5f),
-                                                shape = CircleShape
-                                            )
-                                    )
-                                }
-
-                                Text(
-                                    text = periodDay,
-                                    fontSize = 14.sp,
-                                    color = Color.Black,
-                                    fontWeight = FontWeight.W500,
-                                    textAlign = TextAlign.Center
-                                )
-                            }
-                        }
-                    }
-                }
-            }
-
-            // Si estamos en el primer día del rango fértil, crear un único Box con borde que abarque todo el rango
-            if (fertileRange != null && index == fertileRange.first) {
-                Box(
-                    modifier = Modifier
-                        .weight((fertileRange.second - fertileRange.first + 1).toFloat())
-                        .padding(horizontal = 4.dp)
-                        .border(2.dp, ColorOfMostFertilePeriod, RoundedCornerShape(8.dp))
-                ) {
-                    Row(modifier = Modifier.fillMaxWidth()) {
-                        list.subList(fertileRange.first, fertileRange.second + 1).forEachIndexed { subIndex, fertileDay ->
-                            val currentIndex = fertileRange.first + subIndex
-                            val isOvulationWithinFertile = ovulationDay != null && currentIndex == ovulationDay
-
-                            Box(
-                                modifier = Modifier
-                                    .weight(1f)
-                                    .padding(8.dp),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                if (isOvulationWithinFertile) {
-                                    Box(
-                                        modifier = Modifier
-                                            .size(24.dp)
-                                            .background(
-                                                color = OvulationColor.copy(alpha = 0.5f),
-                                                shape = CircleShape
-                                            )
-                                    )
-                                }
-
-                                Text(
-                                    text = fertileDay,
-                                    fontSize = 14.sp,
-                                    color = Color.Black,
-                                    fontWeight = FontWeight.W500,
-                                    textAlign = TextAlign.Center
-                                )
-                            }
-                        }
-                    }
-                }
-            }
-
-            // Mostrar el resto de los días, si no están en un rango
-            if (!isInPeriodRange && !isInFertileRange) {
-                Box(
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(horizontal = 4.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    if (isOvulationDay) {
-                        Box(
-                            modifier = Modifier
-                                .size(24.dp)
-                                .background(
-                                    color = OvulationColor.copy(alpha = 0.5f),
-                                    shape = CircleShape
-                                )
-                        )
-                    }
-
-                    Text(
-                        text = day,
-                        fontSize = 14.sp,
-                        color = Color.Black,
-                        fontWeight = FontWeight.W500,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(8.dp)
-                    )
-                }
-            }
-        }
-    }
-}
-
-@Composable
-fun Calendar() {
-    Box (
-        modifier = Modifier
-            .padding(start = 20.dp, end = 20.dp)
-    ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .offset(y = 10.dp)
-                .shadow(10.dp, shape = RoundedCornerShape(8.dp))
-                .background(Color.White, shape = RoundedCornerShape(8.dp))
-                .padding(start = 15.dp, end = 15.dp, top = 15.dp, bottom = 20.dp)
-        ) {
-            Column {
-                Row (
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier
-                        .padding(bottom = 15.dp)
-                ) {
-                    Icon(
-                        Icons.AutoMirrored.Outlined.ArrowBackIos,
-                        tint = Color.Gray,
-                        contentDescription = "Row",
-                        modifier = Modifier
-                            .size(12.dp)
-                    )
-
-                    Text("Septiembre 2024",
-                        fontSize = 14.sp,
-                        color = Color.Black,
-                        fontWeight = FontWeight.W500,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .weight(1f)
-                    )
-
-                    Icon(
-                        Icons.AutoMirrored.Outlined.ArrowForwardIos,
-                        tint = Color.Gray,
-                        contentDescription = "Row",
-                        modifier = Modifier
-                            .size(12.dp)
-                    )
-                }
-
-                DaysLabel(list = listOf("DOM", "LUN", "MAR", "MIE", "JUE", "VIE", "SAB"))
-
-                Spacer(modifier = Modifier.height(5.dp))
-
-                DaysOfTheWeek(list = listOf("1", "2", "3", "4", "5", "6", "7"), periodRange = Pair(1, 5))
-
-                Spacer(modifier = Modifier.height(5.dp))
-
-                DaysOfTheWeek(list = listOf("8", "9", "10", "11", "12", "13", "14"), fertileRange = Pair(6, 6))
-
-                Spacer(modifier = Modifier.height(5.dp))
-
-                DaysOfTheWeek(list = listOf("15", "16", "17", "18", "19", "20", "21"), fertileRange = Pair(0, 5), ovulationDay = 2)
-
-                Spacer(modifier = Modifier.height(5.dp))
-
-                DaysOfTheWeek(list = listOf("22", "23", "24", "25", "26", "27", "28"))
-
-                Spacer(modifier = Modifier.height(5.dp))
-
-                DaysOfTheWeek(list = listOf("29", "30", "31", "", "", "", ""))
-            }
-        }
-    }
-}
-
-@Composable
-fun Group(color: Color, name: String) {
-    Row (
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
-            .padding(bottom = 5.dp)
-    ) {
-        Box(
-            modifier = Modifier
-                .size(15.dp)
-                .clip(CircleShape)
-                .background(color)
-        )
-
-        Spacer(modifier = Modifier.width(10.dp))
-
-        Text(
-            text = name,
-            fontSize = 15.sp,
-            color = Color.Black,
-            fontWeight = FontWeight.W400,
-        )
-    }
-}
-
-@Composable
-fun YourCycle(navController: NavHostController) {
-    CustomLayout (
+    CustomLayout(
         navController = navController,
         topBar = {
             CustomTopBar {
@@ -320,48 +57,200 @@ fun YourCycle(navController: NavHostController) {
             BottomBar(navController = navController)
         }
     ) {
-        Column (
-//            modifier = Modifier
-//                .fillMaxHeight()
-//                .fillMaxWidth()
-//                .background(BackgroundColor)
-//                .verticalScroll(rememberScrollState())
-        ) {
-            Text(
-                text = "Tu ciclo",
-                fontSize = 29.sp,
-                textAlign = TextAlign.Center,
-                fontStyle = FontStyle.Italic,
-                fontWeight = FontWeight.W600,
+        Column(modifier = Modifier
+            .fillMaxSize()) {
+            Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(BackgroundColor)
-                    .padding(top = 30.dp, start = 10.dp, end = 10.dp, bottom = 30.dp)
-            )
-
-            Calendar()
-
-            Spacer(modifier = Modifier.height(20.dp))
-
-            Column (
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(30.dp)
+                    .padding(top = 25.dp)
+                    .background(Color.White)
             ) {
-                Group(color = PeriodColor, name = "Periodo")
-                Group(color = ColorOfMostFertilePeriod, name = "Periodo más fértil")
-                Group(color = OvulationColor, name = "Ovulación")
+                Divider(
+                    color = Color.LightGray,
+                    thickness = 1.dp,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 15.dp, bottom = 15.dp)
+                )
+
+                Text(
+                    text = "Entrega: ## ago ####",
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color(0xffd5507c),
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    textAlign = TextAlign.Center,
+
+                    )
+
+                Divider(
+                    color = Color.LightGray,
+                    thickness = 1.dp,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 15.dp, bottom = 15.dp)
+                )
+
+                Column {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .horizontalScroll(rememberScrollState())
+                            .padding(top = 10.dp, bottom = 10.dp, start = 10.dp, end = 10.dp)
+                    ) {
+
+                        Text(
+                            text = "Enviar a Fernanda Herrera, Calle ##### No. # Colonia wfhuqwhfiUHIOQ",
+                            fontSize = 14.sp,
+                            //fontWeight = FontWeight.Bold
+                            //.padding(start = 16.dp, end = 16.dp, top = 10.dp, bottom = 10.dp),
+                            maxLines = 1
+                        )
+                    }
+
+                    OrderStatus(status = "Pedido recibido")
+
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    Divider(
+                        color = Color.LightGray,
+                        thickness = 1.dp,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 15.dp)
+                    )
+                }
             }
 
-            Spacer(modifier = Modifier.height(15.dp))
-
-            Box (
+            Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = 20.dp, end = 20.dp)
+                    .padding(top = 50.dp)
+                    .background(Color.White)
+                //.weight(1f)
             ) {
-                PinkButton("Volver a calcular")
+                Text(text = "Detalles del pedido",
+                    color = Color(0xffd5507c),
+                    modifier = Modifier
+                        .padding(start = 15.dp, top = 18.dp, bottom = 12.dp)
+                        .fillMaxWidth(),
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold)
+
+                Divider(
+                    color = Color.LightGray,
+                    thickness = 1.dp,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 5.dp, bottom = 5.dp))
+
+                OrderProducts(lenProducts = 3)
             }
         }
     }
+}
+
+@Composable
+fun OrderProducts(lenProducts: Int) {
+    for (i in 1..lenProducts) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 10.dp, end = 10.dp, top = 10.dp, bottom = 10.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Image(painter = painterResource(id = R.drawable.temp_img),
+                contentDescription = "Producto",
+                modifier = Modifier
+                    .size(80.dp)
+            )
+
+            Column(modifier = Modifier.padding(start = 8.dp)) {
+                Row {
+                    Text(text = "Producto",
+                        fontSize = 16.sp,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(1f))
+                    Text(
+                        text = "$000.00",
+                        fontSize = 14.sp,
+                        textAlign = TextAlign.Right,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(1f)
+                    )
+                }
+                Spacer(modifier = Modifier.height(30.dp))
+                Text(text = "x2",
+                    fontSize = 14.sp,
+                    textAlign = TextAlign.Right,
+                    modifier = Modifier.fillMaxWidth())
+            }
+        }
+        Divider(
+            color = Color.LightGray,
+            thickness = 1.dp,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 5.dp, bottom = 5.dp)
+        )
+    }
+}
+
+@Composable
+fun OrderStatus(status: String) {
+    val statusList = listOf("Entregado", "En camino", "Preparando pedido", "Pedido recibido")
+    val currentStatus = statusList.indexOf(status)
+
+    Column {
+        statusList.forEachIndexed { index, s ->
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 16.dp)
+                    .fillMaxWidth()
+            ){
+                Box(
+                    modifier = Modifier
+                        .size(15.dp)
+                        .clip(CircleShape)
+                        .background(
+                            if (index >= currentStatus) {
+                                Color(0xffd5507c)
+                            } else {
+                                Color.LightGray
+                            }
+                        ),
+                ){}
+
+                Spacer(modifier = Modifier.width(4.dp))
+
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(start = 6.dp)
+                ) {
+                    Text(
+                        text = s,
+                        fontSize = 16.sp,
+                        color = if (index >= currentStatus) Color(0xffd5507c) else Color.LightGray
+                    )
+
+                    Text(
+                        text = "Agosto xx, xxxx, hh:mm am",
+                        modifier = Modifier.padding(top = 2.dp))
+                }
+            }
+        }
+    }
+}
+
+@Preview
+@Composable
+fun TOPreview() {
+    val navController = rememberNavController()
+    TrackOrder(navController)
 }

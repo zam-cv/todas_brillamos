@@ -34,10 +34,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import mx.cazv.todasbrillamos.R
 import mx.cazv.todasbrillamos.model.Product
 import mx.cazv.todasbrillamos.ui.theme.AccentColor
 

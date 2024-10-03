@@ -17,7 +17,7 @@ import mx.cazv.todasbrillamos.view.components.header.TopBar
 @Composable
 fun StaticLayout(navController: NavHostController, content: @Composable () -> Unit) {
     Scaffold(
-        topBar = { TopBar() },
+        topBar = { TopBar(navController) },
         bottomBar = { BottomBar(navController) },
         floatingActionButtonPosition = FabPosition.Center,
         floatingActionButton = { StoreButton(navController) }

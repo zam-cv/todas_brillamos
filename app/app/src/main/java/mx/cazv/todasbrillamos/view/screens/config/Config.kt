@@ -34,7 +34,6 @@ import androidx.navigation.NavHostController
 import mx.cazv.todasbrillamos.ui.theme.BackgroundColor
 import mx.cazv.todasbrillamos.view.components.footer.BottomBar
 import mx.cazv.todasbrillamos.view.components.header.BasicTopBar
-import mx.cazv.todasbrillamos.view.components.header.CustomTopBar
 import mx.cazv.todasbrillamos.view.layouts.CustomLayout
 
 @Composable

@@ -21,9 +21,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import mx.cazv.todasbrillamos.view.Routes
 
 @Composable
-fun TopBar() {
+fun TopBar(navController: NavHostController) {
     Surface(
         modifier = Modifier
             .fillMaxWidth()
@@ -36,7 +38,7 @@ fun TopBar() {
                 .padding(vertical = 8.dp)
         ) {
             IconButton(
-                onClick = { /* Handle notification */ },
+                onClick = { navController.navigate(Routes.ROUTE_NOTIFICATIONS) },
                 modifier = Modifier.align(Alignment.CenterStart)
             ) {
                 Icon(
@@ -58,19 +60,19 @@ fun TopBar() {
                     .padding(end = 8.dp),
                 horizontalArrangement = Arrangement.spacedBy(-8.dp)
             ) {
-                IconButton(onClick = { /* Handle shipping */ }) {
+                IconButton(onClick = { navController.navigate(Routes.ROUTE_ORDERS) }) {
                     Icon(
                         imageVector = Icons.Outlined.LocalShipping,
                         contentDescription = "Shipping"
                     )
                 }
-                IconButton(onClick = { /* Handle favorites */ }) {
+                IconButton(onClick = { navController.navigate(Routes.ROUTE_FAVORITES) }) {
                     Icon(
                         imageVector = Icons.Outlined.Favorite,
                         contentDescription = "Favorites"
                     )
                 }
-                IconButton(onClick = { /* Handle cart */ }) {
+                IconButton(onClick = { navController.navigate(Routes.ROUTE_CART) }) {
                     Icon(
                         imageVector = Icons.Outlined.ShoppingCart,
                         contentDescription = "Shopping Cart"
