@@ -1,7 +1,7 @@
 package models
 
 type Product struct {
-	ID uint `json:"id" gorm:"primarykey" validate:"required,eq=0"`
+	ID uint `json:"id" gorm:"primarykey" validate:"omitempty,eq=0"`
 
 	// Image
 	Hash string `json:"hash"`

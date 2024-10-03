@@ -2,6 +2,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { useState, useEffect } from "react";
+import api, { Category} from "@/utils/api/category";
+import apiPost, { Posts } from "@/utils/api/post";  
+
 
 import {
   Popover,
@@ -18,6 +22,43 @@ import {
 
 
 export default function Specialists() {
+  const [name, setName] = useState<string>("");
+  const [category, setCategory] = useState<Category[]>([]);
+  
+  const[title, setTitle] = useState<string>("");
+  const [author, setAuthor] = useState<string>("");  
+  const [content, setContent] = useState<string>("");
+  const [date, setDate] = useState<string>("");
+
+  function uploadCategory() {
+    api.category.setCategory({
+      name,
+    } as any).then(() => {
+      console.log("Category added")
+    })
+  }
+
+  function uploadPost() {
+    apiPost.posts.setPost({
+      title,
+      author,
+      date,
+      content
+    } as any).then(() => {
+      console.log("Post added")
+    })
+  }
+
+  
+
+  useEffect(() => {
+    api.category.getCategories().then((category) => {
+      setCategory(category);
+    });
+  }, [])
+
+
+
   return (
     <div>
       <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
@@ -43,12 +84,14 @@ export default function Specialists() {
                     <Label htmlFor="nombre">Nombre</Label>
                     <Input
                       id="nombre"
-                      defaultValue=""
+                      value={name}
+                      onChange = {(e) => setName(e.target.value)}
                       className="col-span-2 h-8"
+                      placeholder="Nombre de la categoría"
                     />
                   </div>
                   <div className="grid grid-cols-3 items-center gap-4">
-                    <Button>Añadir</Button>
+                    <Button onClick={uploadCategory}>Añadir</Button>
                   </div>
                 </div>
               </div>

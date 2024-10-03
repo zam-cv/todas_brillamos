@@ -1,12 +1,9 @@
-import { useState } from "react";
 import { ColumnDef } from "@tanstack/react-table";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Task } from "../data/schema_products";
 import { DataTableColumnHeader } from "./data-table-column-header-users";
 import { Button } from "@/components/ui/button";
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,

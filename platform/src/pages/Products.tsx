@@ -5,7 +5,7 @@ import { DataTable } from "@/components/table/components/data-table-products";
 import { Textarea } from "@/components/ui/textarea";
 import { useEffect, useState, useRef } from "react";
 import api, {Product} from "@/utils/api/products";
-import { RefreshCw } from "lucide-react";
+import apiCategory, { Category } from "@/utils/api/category";
 
 import {
   Accordion,
@@ -13,6 +13,16 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import { SelectGroup, SelectLabel } from "@radix-ui/react-select";
+
   // {
   //   "model": "0017",
   //   "name": "prod23",
@@ -44,6 +54,7 @@ export default function UploadProducts() {
   const [category_id, setCategory_id] = useState<number>(0);
   const [products, setProducts] = useState<Product[]>([]);
   const [id, setId] = useState<number | null>(null);
+  
 
   function uploadProduct() {
     if (imageInput.current) {
@@ -70,6 +81,17 @@ export default function UploadProducts() {
       })
     }  
 }
+
+const[categories, setCategories] = useState<Category[]>([]);
+
+
+  useEffect(() => {
+      apiCategory.category.getCategories().then((categories) => {
+        console.log(categories);
+        setCategories(categories);
+      });
+  }, [])
+  
 
   useEffect(() => {
     api.product.getProducts().then((products) => {
@@ -180,6 +202,22 @@ export default function UploadProducts() {
                 />
               </div>
               <div className="flex flex-row space-x-2 px-2 pt-2">
+              <Select>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Categoría" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Categorías</SelectLabel>
+                  {categories.map((category) => (
+                    <SelectItem key={category.id} value={category.id.toString()}
+                        >
+                      {category.name}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
                 <Input
                   name="category_id"
                   value={category_id}

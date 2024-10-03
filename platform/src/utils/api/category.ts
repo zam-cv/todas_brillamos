@@ -1,25 +1,25 @@
-import {get, del, post, upload } from "../src/utils/methods";
+import {get, post } from "@/utils/methods";
 
 export interface Category {
+    id: number;
     name: string;
 }
 
 export default {
     category: {
         setCategory: (
-            file: File,
             category: Category
         ): Promise<void> => {
-            return post("admin/categories", category)
+            return post("/categories", category)
         },
 
-        getCategories: (): Promise<void> => {
-            return get("admin/categories")
+        getCategories: (): Promise<Category[]> => {
+            return get("/categories")
         },
 
 
         getCategory: (id: number): Promise<void> => {
-            return get(`admin/categories/${id}`)
+            return get(`/categories/${id}`)
         }
     }
 }
