@@ -63,7 +63,7 @@ fun TopBar(navController: NavHostController) {
                 IconButton(onClick = { navController.navigate(Routes.ROUTE_ORDERS) }) {
                     Icon(
                         imageVector = Icons.Outlined.LocalShipping,
-                        contentDescription = "Shipping"
+                        contentDescription = "Orders"
                     )
                 }
                 IconButton(onClick = { navController.navigate(Routes.ROUTE_FAVORITES) }) {

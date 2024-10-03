@@ -30,8 +30,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import mx.cazv.todasbrillamos.ui.theme.BackgroundColor
 import mx.cazv.todasbrillamos.view.components.footer.BottomBar
-import mx.cazv.todasbrillamos.view.components.header.CustomTopBar
 import mx.cazv.todasbrillamos.view.components.Section
+import mx.cazv.todasbrillamos.view.components.header.BasicTopBar
 import mx.cazv.todasbrillamos.view.layouts.CustomLayout
 
 @Composable
@@ -126,16 +126,15 @@ fun TextAroundImage(text: String, image: Int) {
 
 @Composable
 fun About(navController: NavHostController) {
-    CustomLayout (
+    CustomLayout(
         navController = navController,
+        withStoreButton = true,
         topBar = {
-            CustomTopBar {
-                Text(text = "Custom Top Bar")
-            }
+            BasicTopBar(title = "Quiénes somos", navController = navController)
         },
         bottomBar = {
             BottomBar(navController = navController)
-        }
+        },
     ) {
         Column (
             modifier = Modifier

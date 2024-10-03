@@ -37,12 +37,22 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import mx.cazv.todasbrillamos.view.layouts.MainLayout
 import mx.cazv.todasbrillamos.R
+import mx.cazv.todasbrillamos.view.components.footer.ButtonBottomBar
+import mx.cazv.todasbrillamos.view.components.header.BasicTopBar
+import mx.cazv.todasbrillamos.view.layouts.CustomLayout
 
 @Composable
 fun Cart(navController: NavHostController) {
-    MainLayout(navController = navController) {
+    CustomLayout (
+        navController = navController,
+        topBar = {
+            BasicTopBar(title = "Mi carrito", navController = navController)
+        },
+        bottomBar = {
+            ButtonBottomBar(buttonText = "Comprar", onClick = {})
+        }
+    ) {
         Column(
             modifier = Modifier
                 .padding(start = 16.dp, end = 16.dp)
