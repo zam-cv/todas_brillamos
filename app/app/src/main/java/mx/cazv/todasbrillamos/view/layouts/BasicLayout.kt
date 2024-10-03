@@ -13,7 +13,9 @@ import mx.cazv.todasbrillamos.view.components.TopBar
 
 @Composable
 fun BasicLayout(navController: NavHostController, content: @Composable () -> Unit) {
-    Scaffold { innerPadding ->
+    Scaffold (
+        containerColor = BackgroundColor,
+    ) { innerPadding ->
         Box(modifier = Modifier.padding(innerPadding)
             .background(BackgroundColor)) {
             content()

@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
@@ -22,14 +24,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Canvas
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import mx.cazv.todasbrillamos.R
 import mx.cazv.todasbrillamos.ui.theme.BackgroundColor
 import mx.cazv.todasbrillamos.view.Routes
@@ -47,39 +52,49 @@ fun ForgotPassword(navController: NavHostController) {
         ) {
             Box(
                 modifier = Modifier
-                    .fillMaxHeight(0.25f)
-                    .background(Color.Transparent),
+                    //.fillMaxHeight(0.25f)
+                    //.background(Color.Transparent),
+                    .fillMaxWidth()
+                    .offset(y = (-200).dp),
                 contentAlignment = Alignment.Center
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.vector3),
+                Image(painter = painterResource(id = R.drawable.degradado3),
                     contentDescription = "Background",
                     modifier = Modifier
-                        .fillMaxSize()
-                        .alpha(0.7f),
-                    alignment = Alignment.CenterEnd
-                )
-
-                Image(
-                    painter = painterResource(id = R.drawable.vector2),
-                    contentDescription = "Background",
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .alpha(0.9f)
-                )
-
-                Image(
-                    painter = painterResource(id = R.drawable.vector1),
-                    contentDescription = "Background",
-                    modifier = Modifier.fillMaxSize()
-                    //alignment = Alignment.CenterEnd
-                )
+                        .fillMaxWidth(),
+                    contentScale = ContentScale.FillHeight)
+//                Image(
+//                    painter = painterResource(id = R.drawable.vector3),
+//                    contentDescription = "Background",
+//                    modifier = Modifier
+//                        .fillMaxSize()
+//                        .alpha(0.7f),
+//                    alignment = Alignment.CenterEnd
+//                )
+//
+//                Image(
+//                    painter = painterResource(id = R.drawable.vector2),
+//                    contentDescription = "Background",
+//                    modifier = Modifier
+//                        .fillMaxSize()
+//                        .alpha(0.9f)
+//                )
+//
+//                Image(
+//                    painter = painterResource(id = R.drawable.vector1),
+//                    contentDescription = "Background",
+//                    modifier = Modifier.fillMaxSize()
+//                    //alignment = Alignment.CenterEnd
+//                )
 
                 // Logo
                 Image(
-                    painter = painterResource(id = R.drawable.logo_todas_brillamos),
+                    painter = painterResource(id = R.drawable.logo_tb),
                     contentDescription = "Logo",
-                    modifier = Modifier.size(120.dp)
+                    modifier = Modifier
+                        .size(140.dp)
+                        .align(Alignment.Center)
+                        .offset(y = 80.dp)
                 )
 
             }
@@ -87,7 +102,8 @@ fun ForgotPassword(navController: NavHostController) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(start = 10.dp, end = 10.dp, top = 80.dp),
+                    .padding(start = 10.dp, end = 10.dp),
+                    //.offset(y = (-130).dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ){
@@ -116,4 +132,12 @@ fun ForgotPassword(navController: NavHostController) {
             }
         }
     }
+}
+
+
+@Preview
+@Composable
+fun FGPreview() {
+    val navController = rememberNavController()
+    ForgotPassword(navController)
 }

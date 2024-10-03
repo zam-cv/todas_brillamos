@@ -10,8 +10,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.RemoveRedEye
 import androidx.compose.material3.Icon
@@ -23,15 +25,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import mx.cazv.todasbrillamos.R
 import mx.cazv.todasbrillamos.ui.theme.BackgroundColor
 import mx.cazv.todasbrillamos.view.Routes
@@ -42,62 +47,69 @@ import mx.cazv.todasbrillamos.view.layouts.BasicLayout
 @Composable
 fun Login(navController: NavHostController) {
     BasicLayout(navController = navController) {
-        Box(
+        Column(
             modifier = Modifier
                 .fillMaxSize()
                 .background(BackgroundColor)
         ) {
             Box(
                 modifier = Modifier
-                    .fillMaxHeight(0.25f)
-                    .background(Color.Transparent),
+                    //.fillMaxHeight(0.25f)
+                    //.background(Color.Transparent)
+                    .fillMaxWidth()
+                    .offset(y = (-200).dp),
                 contentAlignment = Alignment.Center
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.vector3),
+                Image(painter = painterResource(id = R.drawable.degradado3),
                     contentDescription = "Background",
                     modifier = Modifier
-                        .fillMaxSize()
-                        .alpha(0.7f),
-                    alignment = Alignment.CenterEnd
-                )
-
-                Image(
-                    painter = painterResource(id = R.drawable.vector2),
-                    contentDescription = "Background",
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .alpha(0.9f)
-                )
-
-                Image(
-                    painter = painterResource(id = R.drawable.vector1),
-                    contentDescription = "Background",
-                    modifier = Modifier.fillMaxSize()
-                    //alignment = Alignment.CenterEnd
-                )
+                        .fillMaxWidth(),
+                    contentScale = ContentScale.FillHeight)
+                    //alignment = Alignment.Center,)
+//                Image(
+//                    painter = painterResource(id = R.drawable.vector3),
+//                    contentDescription = "Background",
+//                    modifier = Modifier
+//                        .fillMaxSize()
+//                        .alpha(0.7f),
+//                    alignment = Alignment.CenterEnd
+//                )
+//
+//                Image(
+//                    painter = painterResource(id = R.drawable.vector2),
+//                    contentDescription = "Background",
+//                    modifier = Modifier
+//                        .fillMaxSize()
+//                        .alpha(0.9f)
+//                )
+//
+//                Image(
+//                    painter = painterResource(id = R.drawable.vector1),
+//                    contentDescription = "Background",
+//                    modifier = Modifier.fillMaxSize()
+//                    //alignment = Alignment.CenterEnd
+//                )
 
                 // Logo
                 Image(
-                    painter = painterResource(id = R.drawable.logo_todas_brillamos),
+                    painter = painterResource(id = R.drawable.logo_tb),
                     contentDescription = "Logo",
-                    modifier = Modifier.size(120.dp)
+                    modifier = Modifier
+                        .size(140.dp)
+                        .align(Alignment.Center)
+                        .offset(y = 80.dp)
                 )
 
             }
 
-
             Column(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .padding(start = 10.dp, end = 10.dp, top = 80.dp),
+                    .fillMaxWidth()
+                    .padding(start = 10.dp, end = 10.dp)
+                    .offset(y = (-130).dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-
-
-                Spacer(modifier = Modifier.size(16.dp))
-
                 Text(
                     text = "Inicio de sesión",
                     fontSize = 35.sp,
@@ -106,6 +118,7 @@ fun Login(navController: NavHostController) {
                 )
 
                 Spacer(modifier = Modifier.size(12.dp))
+
                 TextButton(onClick = { navController.navigate(Routes.ROUTE_REGISTER) }) {
                     Row {
                         Text(text = "¿No tienes una cuenta? ")
@@ -135,10 +148,12 @@ fun Login(navController: NavHostController) {
 
                 Spacer(modifier = Modifier.size(16.dp))
 
-                TextButton(onClick = { navController.navigate(Routes.ROUTE_FORGOT_PASSWORD) }) {
+                TextButton(onClick = { navController.navigate(Routes.ROUTE_FORGOT_PASSWORD) },
+                    modifier = Modifier.fillMaxWidth()) {
                     Text(
                         text = "¿Olvidaste tu contraseña?",
-                        style = TextStyle(textDecoration = TextDecoration.Underline)
+                        style = TextStyle(textDecoration = TextDecoration.Underline),
+                        fontSize = 15.sp
                     )
                 }
                 /**
@@ -157,4 +172,11 @@ fun Login(navController: NavHostController) {
             }
         }
     }
+}
+
+@Preview
+@Composable
+fun LoginPreview() {
+    val navController = rememberNavController()
+    Login(navController)
 }

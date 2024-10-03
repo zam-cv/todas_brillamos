@@ -10,34 +10,24 @@ import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import mx.cazv.todasbrillamos.ui.theme.BackgroundColor
 import mx.cazv.todasbrillamos.view.components.BottomBar
 import mx.cazv.todasbrillamos.view.components.StoreButton
+import mx.cazv.todasbrillamos.view.components.TopBar
 
 @Composable
-fun CustomLayout(
-    navController: NavHostController,
-    topBar: @Composable () -> Unit = {},
-    bottomBar: @Composable () -> Unit = {},
-    content: @Composable () -> Unit
-) {
-    Scaffold (
-        topBar = { topBar() },
-        bottomBar = { bottomBar() },
+fun StaticLayout(navController: NavHostController, content: @Composable () -> Unit) {
+    Scaffold(
+        topBar = { TopBar() },
+        bottomBar = { BottomBar(navController) },
         floatingActionButtonPosition = FabPosition.Center,
-        floatingActionButton = { StoreButton(navController) },
-        containerColor = BackgroundColor,
-        modifier = Modifier
-            .background(BackgroundColor)
-            .fillMaxSize()
-            .background(BackgroundColor)
+        floatingActionButton = { StoreButton(navController) }
     ) { innerPadding ->
         Box(modifier = Modifier
-            .padding(innerPadding)
-            .background(BackgroundColor)
-            .verticalScroll(rememberScrollState())
             .fillMaxSize()
+            .padding(innerPadding)
             .background(BackgroundColor)
         ) {
             content()
