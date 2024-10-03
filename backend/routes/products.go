@@ -5,6 +5,7 @@ import (
 	"backend/models"
 	"backend/resources/auth"
 	"backend/resources/files"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -74,13 +75,16 @@ func addProductRoutes(rg *gin.RouterGroup) {
 		})
 	})
 
-	group.GET("/random", func(c *gin.Context) {
-		products, err := database.GetRandomProducts()
+	group.GET("/random/:clientID", func(c *gin.Context) {
+		clientID := c.Param("clientID")
+		clientIDuint, err := strconv.ParseUint(clientID, 10, 32)
+		//clientIDuint, err := strconv.Atoi(clientID)
+		products, err := database.GetRandomProducts(uint(clientIDuint))
 		if err != nil {
 			c.JSON(500, gin.H{"error": err.Error()})
 			return
 		}
-		
+
 		c.JSON(200, gin.H{
 			"folder":   files.GetURL(ProductArchive),
 			"products": products,
