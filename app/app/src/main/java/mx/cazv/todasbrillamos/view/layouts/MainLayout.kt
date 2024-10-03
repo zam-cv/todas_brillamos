@@ -28,7 +28,7 @@ fun MainLayout(navController: NavHostController, content: @Composable () -> Unit
             .padding(innerPadding)
             .background(BackgroundColor)
             .verticalScroll(rememberScrollState())
-            .fillMaxSize()) {
+            ) {
             content()
         }
     }
