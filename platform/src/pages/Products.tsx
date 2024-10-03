@@ -7,6 +7,7 @@ import { useEffect, useState, useRef } from "react";
 import api, {Product} from "@/utils/api/products";
 import apiCategory, { Category } from "@/utils/api/category";
 import { useNavigate } from 'react-router-dom';
+import { SERVER } from "@/utils/constants";
 
 import {
   Accordion,
@@ -57,6 +58,7 @@ export default function UploadProducts() {
   const [id, setId] = useState<number | null>(null);
   const [isFormValid, setIsFormValid] = useState(false);
   const navigate = useNavigate();
+  const [folder, setFolder] = useState<string>("");
   
   useEffect(() => {
     const formValid = model !== "" && name !== "" && description !== "" && price > 0 && stock > 0 
@@ -84,7 +86,29 @@ export default function UploadProducts() {
         absorbency,
         material_feature,
         category_id,
-      } as any).then(() => {
+      } as any).then((data) => {
+        const id = data.id;
+
+        setProducts([
+          ...products,
+          {
+            id,
+            model,
+            name,
+            description,
+            price,
+            stock,
+            size,
+            color,
+            maintenance,
+            material,
+            absorbency,
+            material_feature,
+            category_id,
+            url:`${SERVER}/${folder}/${data.name}`
+          } as any,
+        ])
+
         // alert("Producto agregado");
         setModel("");
         setName("");
@@ -117,8 +141,9 @@ const[categories, setCategories] = useState<Category[]>([]);
   
 
   useEffect(() => {
-    api.product.getProducts().then((products) => {
+    api.product.getProducts().then(([products, folder]) => {
       setProducts(products);
+      setFolder(folder);
     }); 
   },[])
 
@@ -252,14 +277,14 @@ const[categories, setCategories] = useState<Category[]>([]);
                 </SelectGroup>
               </SelectContent>
             </Select>
-                  {/* <Input
+                  <Input
                     name="category_id"
                     value={category_id}
                     onChange={(e) => setCategory_id(Number(e.target.value))}
                     placeholder="ID de categoría"
                     type="number"
                     required
-                  /> */}
+                  />
               </div>
               <div className="flex flex-row space-x-2 px-2 pt-2">
                 <Input ref={imageInput} type="file" onChange={() => {}} required />

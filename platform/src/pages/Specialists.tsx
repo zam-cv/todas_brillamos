@@ -5,6 +5,19 @@ import { Label } from "@/components/ui/label";
 import { useState, useEffect } from "react";
 import api, { Category} from "@/utils/api/category";
 import apiPost, { Posts } from "@/utils/api/post";  
+import { Badge } from "@/components/ui/badge"
+
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer"
+
 
 
 import {
@@ -19,6 +32,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { set } from "zod";
 
 
 export default function Specialists() {
@@ -48,6 +62,7 @@ export default function Specialists() {
       name,
     } as any).then(() => {
       console.log("Category added")
+      setName("");
     })
   }
 
@@ -59,6 +74,9 @@ export default function Specialists() {
       content
     } as any).then(() => {
       console.log("Post added")
+      setTitle("");
+      setAuthor("");
+      setContent("");
     })
   }
 
@@ -111,6 +129,14 @@ export default function Specialists() {
             </PopoverContent>
           </Popover>
         </div>
+        {
+          category.map((category) => (
+            <Drawer key={category.id}>
+              <Badge key={category.id} variant="outline" className="cursor-pointer">{category.name}</Badge>
+            </Drawer>
+          ))
+        }
+        <br></br>
         <br></br>
         <div>
           <Popover>
@@ -158,6 +184,7 @@ export default function Specialists() {
             </PopoverContent>
           </Popover>
         </div>
+        <br></br>
         <div>
           <Accordion type="single" collapsible className="w-3/4">
             <AccordionItem value="item-4">
