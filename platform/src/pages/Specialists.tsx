@@ -30,6 +30,19 @@ export default function Specialists() {
   const [content, setContent] = useState<string>("");
   const [date, setDate] = useState<string>("");
 
+  const[isCategoryValid, setIsCategoryValid] = useState(false);
+  useEffect(() => {
+    const categoryValid = name !== "";
+    setIsCategoryValid(categoryValid);
+  }, [name]);
+
+  const[isPostValid, setIsPostValid] = useState(false); 
+  useEffect(() => {
+    const postValid = title !== "" && author !== "" && content !== "";
+    setIsPostValid(postValid);
+  }, [title, author, content]);
+  
+
   function uploadCategory() {
     api.category.setCategory({
       name,
@@ -42,7 +55,7 @@ export default function Specialists() {
     apiPost.posts.setPost({
       title,
       author,
-      date,
+      date: "2021-10-10",
       content
     } as any).then(() => {
       console.log("Post added")
@@ -91,7 +104,7 @@ export default function Specialists() {
                     />
                   </div>
                   <div className="grid grid-cols-3 items-center gap-4">
-                    <Button onClick={uploadCategory}>Añadir</Button>
+                    <Button onClick={uploadCategory} disabled={!isCategoryValid}>Añadir</Button>
                   </div>
                 </div>
               </div>
@@ -156,22 +169,28 @@ export default function Specialists() {
                   <div className="flex flex-row space-x-2 px-2 pt-2">
                     <Input
                       name="nombreArt"
-                      value=""
+                      value={title}
                       placeholder="Nombre del artículo"
+                      onChange={(e) => setTitle(e.target.value)}
                     ></Input>
                   </div>
                   <div className="flex flex-row space-x-2 px-2 pt-2">
-                    <Input name="author" value="" placeholder="Autor"></Input>
+                    <Input 
+                      name="author" 
+                      value={author} 
+                      onChange={(e) => setAuthor(e.target.value)}
+                      placeholder="Autor"></Input>
                   </div>
                   <div className="flex flex-row space-x-2 px-2 pt-2">
                     <Textarea
                       name="articulo"
-                      value=""
+                      value={content}
+                      onChange={(e) => setContent(e.target.value)}
                       placeholder="Artículo..."
                     ></Textarea>
                   </div>
                   <div className="flex flex-row space-x-2 px-2 pt-2">
-                    <Button>Agregar</Button>
+                    <Button onClick={uploadPost} disabled={!isPostValid}>Agregar</Button>
                   </div>
                 </div>
               </AccordionContent>
