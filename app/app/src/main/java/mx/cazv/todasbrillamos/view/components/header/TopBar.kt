@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Favorite
+import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.LocalShipping
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.ShoppingCart
@@ -68,7 +69,7 @@ fun TopBar(navController: NavHostController) {
                 }
                 IconButton(onClick = { navController.navigate(Routes.ROUTE_FAVORITES) }) {
                     Icon(
-                        imageVector = Icons.Outlined.Favorite,
+                        imageVector = Icons.Outlined.FavoriteBorder,
                         contentDescription = "Favorites"
                     )
                 }
