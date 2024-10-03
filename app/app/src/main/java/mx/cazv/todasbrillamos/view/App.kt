@@ -39,9 +39,9 @@ fun App() {
 @Composable
 fun Nav(navController: NavHostController, modifier: Modifier = Modifier) {
     NavHost(navController = navController,
-        startDestination = Routes.ROUTE_CART,
-        modifier = modifier.fillMaxSize()) {
-
+        startDestination = Routes.ROUTE_HOME,
+        modifier = modifier.fillMaxSize()
+    ) {
         // Screens
         composable(Routes.ROUTE_LOGIN) {
             Login(navController)
@@ -135,6 +135,5 @@ fun Nav(navController: NavHostController, modifier: Modifier = Modifier) {
         composable(Routes.ROUTE_PAYMENTS){
             Payment(navController)
         }
-
     }
 }

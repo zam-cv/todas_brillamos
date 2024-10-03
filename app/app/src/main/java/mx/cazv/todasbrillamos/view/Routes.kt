@@ -17,7 +17,7 @@ sealed class Routes (
     val icon: Icon
 ) {
     companion object {
-        var screens = listOf(Home, Calendar, Chat, Config)
+        var screens = listOf(Home, Calendar, Store, Chat, Config)
 
         const val ROUTE_LOGIN = "Login"
         const val ROUTE_REGISTER = "Register"
@@ -43,7 +43,6 @@ sealed class Routes (
         const val ROUTE_SOCIAL_NETWORKS = "SocialNetworks"
         const val ROUTE_TERMS_AND_POLICIES = "TermsAndPolicies"
         const val ROUTE_ABOUT = "About"
-
     }
 
     // Bottom bar routes
@@ -52,8 +51,6 @@ sealed class Routes (
     private data object Store: Routes(ROUTE_STORE, "Store", Icon.VectorIcon(Icons.Default.Store))
     private data object Chat: Routes(ROUTE_CHAT, "Chat", Icon.ResourceIcon(R.drawable.chat_icon))
     private data object Config: Routes(ROUTE_CONFIG, "Config", Icon.VectorIcon(Icons.Default.Settings))
-    // private data object Cart: Routes(ROUTE_CART, "Cart", Icons.Default.ShoppingCart)
-
 }
 
 sealed class Icon {

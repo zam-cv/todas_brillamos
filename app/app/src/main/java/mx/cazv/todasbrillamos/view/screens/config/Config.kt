@@ -115,6 +115,7 @@ fun OptionsSection(options: List<Pair<String, ImageVector>>) {
 fun Config(navController: NavHostController) {
     CustomLayout(
         navController = navController,
+        withStoreButton = true,
         topBar = {
             CustomTopBar {
                 Text(text = "Custom Top Bar")
@@ -122,7 +123,7 @@ fun Config(navController: NavHostController) {
         },
         bottomBar = {
             BottomBar(navController = navController)
-        }
+        },
     ) {
         Column (
             modifier = Modifier

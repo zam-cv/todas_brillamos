@@ -12,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import mx.cazv.todasbrillamos.ui.theme.BackgroundColor
-import mx.cazv.todasbrillamos.view.components.BottomBar
 import mx.cazv.todasbrillamos.view.components.StoreButton
 
 @Composable
@@ -20,13 +19,14 @@ fun CustomLayout(
     navController: NavHostController,
     topBar: @Composable () -> Unit = {},
     bottomBar: @Composable () -> Unit = {},
+    withStoreButton: Boolean = false,
     content: @Composable () -> Unit
 ) {
     Scaffold (
         topBar = { topBar() },
         bottomBar = { bottomBar() },
         floatingActionButtonPosition = FabPosition.Center,
-        floatingActionButton = { StoreButton(navController) },
+        floatingActionButton = { if (withStoreButton) StoreButton(navController) },
         containerColor = BackgroundColor,
         modifier = Modifier
             .background(BackgroundColor)

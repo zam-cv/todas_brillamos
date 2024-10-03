@@ -32,6 +32,7 @@ import mx.cazv.todasbrillamos.view.layouts.BasicLayout
 import mx.cazv.todasbrillamos.view.layouts.CustomLayout
 import mx.cazv.todasbrillamos.view.layouts.MainLayout
 import androidx.compose.foundation.lazy.items
+import mx.cazv.todasbrillamos.view.components.ChatBottomBar
 
 
 @Composable
@@ -44,18 +45,9 @@ fun Chat(navController: NavHostController) {
             }
         },
         bottomBar = {
-            CustomBottomBar {
-                Text(text = "Custom Bottom Bar")
-            }
+            ChatBottomBar()
         }
     ) {
-//        Column (
-//            //modifier = Modifier
-//            //.fillMaxSize()
-//            //.background(Color(0xFFFCFAF2))){
-//
-//        }
-
         Column(
             modifier = Modifier
                 .padding(start = 16.dp, end = 16.dp)

@@ -27,32 +27,38 @@ import mx.cazv.todasbrillamos.ui.theme.BackgroundColor
 import mx.cazv.todasbrillamos.ui.theme.SelectedScreen
 import mx.cazv.todasbrillamos.view.Routes.Companion.ROUTE_STORE
 
-
 @Composable
 fun StoreButton(navController: NavHostController, modifier: Modifier = Modifier) {
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
-
     val isInStoreScreen = currentBackStackEntry?.destination?.route == ROUTE_STORE
 
-    Box(modifier = Modifier
-        .size(95.dp) // Tamaño del botón
-        .offset(y = 80.dp) // Offset para colocar el botón
-        .padding(4.dp) // Padding alrededor del botón
+    Box(modifier = modifier
+        .size(95.dp)
+        .offset(y = 80.dp)
+        .padding(4.dp)
     ) {
-
-        if (isInStoreScreen)
-        {
-        Image(
-            painter = painterResource(id = R.drawable.store_selected),
-            contentDescription = null,
-            modifier = Modifier
-                .fillMaxSize()
-                .clip(CircleShape)
-        )
-            }
+        if (isInStoreScreen) {
+            Image(
+                painter = painterResource(id = R.drawable.store_selected),
+                contentDescription = null,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .clip(CircleShape)
+            )
+        }
 
         FloatingActionButton(
-            onClick = { navController.navigate(ROUTE_STORE) },
+            onClick = {
+                if (!isInStoreScreen) {
+                    navController.navigate(ROUTE_STORE) {
+                        popUpTo(navController.graph.startDestinationId) {
+                            saveState = true
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
+                }
+            },
             shape = CircleShape,
             containerColor = Color(0xFFE7F4FA),
             elevation = FloatingActionButtonDefaults.elevation(
