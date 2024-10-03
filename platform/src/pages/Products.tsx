@@ -231,22 +231,26 @@ const[categories, setCategories] = useState<Category[]>([]);
                 <SelectGroup>
                   <SelectLabel>Categorías</SelectLabel>
                   {categories.map((category) => (
-                    <SelectItem key={category.id} value={category.id.toString()}
-                        >
+                    <SelectItem 
+                      key={category.id} 
+                      value={category.id.toString()}
+                      onChange={() => setCategory_id(category.id)}
+                    >
                       {category.name}
                     </SelectItem>
+                   
                   ))}
                 </SelectGroup>
               </SelectContent>
             </Select>
-                <Input
-                  name="category_id"
-                  value={category_id}
-                  onChange={(e) => setCategory_id(Number(e.target.value))}
-                  placeholder="ID de categoría"
-                  type="number"
-                  required
-                />
+                  {/* <Input
+                    name="category_id"
+                    value={category_id}
+                    onChange={(e) => setCategory_id(Number(e.target.value))}
+                    placeholder="ID de categoría"
+                    type="number"
+                    required
+                  /> */}
               </div>
               <div className="flex flex-row space-x-2 px-2 pt-2">
                 <Input ref={imageInput} type="file" onChange={() => {}} required />
