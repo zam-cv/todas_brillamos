@@ -14,7 +14,6 @@ import mx.cazv.todasbrillamos.view.screens.home.Home
 import mx.cazv.todasbrillamos.view.screens.Login
 import mx.cazv.todasbrillamos.view.screens.Notifications
 import mx.cazv.todasbrillamos.view.screens.Register
-import mx.cazv.todasbrillamos.view.screens.Calendar
 import mx.cazv.todasbrillamos.view.screens.Cart
 import mx.cazv.todasbrillamos.view.screens.Orders
 import mx.cazv.todasbrillamos.view.screens.Payment
@@ -23,7 +22,8 @@ import mx.cazv.todasbrillamos.view.screens.config.Config
 import mx.cazv.todasbrillamos.view.screens.ProductDetails
 import mx.cazv.todasbrillamos.view.screens.ShippingInfo
 import mx.cazv.todasbrillamos.view.screens.Store
-import mx.cazv.todasbrillamos.view.screens.YourCycle
+import mx.cazv.todasbrillamos.view.screens.calendar.Calendar
+import mx.cazv.todasbrillamos.view.screens.calendar.YourCycle
 import mx.cazv.todasbrillamos.view.screens.config.About
 import mx.cazv.todasbrillamos.view.screens.config.ChangePassword
 import mx.cazv.todasbrillamos.view.screens.config.EditProfile

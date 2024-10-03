@@ -1,15 +1,20 @@
-package mx.cazv.todasbrillamos.view.screens
+package mx.cazv.todasbrillamos.view.screens.calendar
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material3.Card
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -27,8 +32,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.Popup
 import mx.cazv.todasbrillamos.R
 import mx.cazv.todasbrillamos.ui.theme.AccentColor
@@ -38,7 +45,7 @@ import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DatePickerDocked() {
+fun DatePickerDocked(text: String = "") {
     var showDatePicker by remember { mutableStateOf(false) }
     val datePickerState = rememberDatePickerState()
     val selectedDate = datePickerState.selectedDateMillis?.let {
@@ -46,18 +53,9 @@ fun DatePickerDocked() {
     } ?: ""
 
     Row (modifier = Modifier) {
-        Column(
-            modifier = Modifier
-                .weight(0.5f)
-                .align(Alignment.CenterVertically)
-                .offset(x = 15.dp)
-        ) {
-            Icon(
-                painterResource(id = R.drawable.info_icon),
-                contentDescription = "more info",
-                tint = GrayB3
-            )
-        }
+
+        MinimalDialog(text, Modifier.weight(0.5f).align(Alignment.CenterVertically))
+
         Column(
             modifier = Modifier
                 .weight(10f)
@@ -73,7 +71,7 @@ fun DatePickerDocked() {
                     label = {
                         Text(
                             "¿Cuándo comenzó tu último periodo?",
-                            fontSize = 15.6.sp
+                            fontSize = 14.sp
                         )
                     },
                     readOnly = true,

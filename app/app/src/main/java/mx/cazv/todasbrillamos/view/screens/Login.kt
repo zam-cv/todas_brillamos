@@ -57,7 +57,8 @@ fun Login(navController: NavHostController) {
                     //.fillMaxHeight(0.25f)
                     //.background(Color.Transparent)
                     .fillMaxWidth()
-                    .offset(y = (-200).dp),
+                    .offset(y = (-210).dp)
+                    .weight(1f),
                 contentAlignment = Alignment.Center
             ) {
                 Image(painter = painterResource(id = R.drawable.degradado3),
@@ -106,7 +107,8 @@ fun Login(navController: NavHostController) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 10.dp, end = 10.dp)
-                    .offset(y = (-130).dp),
+                    .offset(y = (-130).dp)
+                    .weight(1f),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
