@@ -52,13 +52,13 @@ import mx.cazv.todasbrillamos.view.layouts.BasicLayout
 @Composable
 fun Cart(navController: NavHostController) {
     MainLayout(navController = navController) {
-        LazyColumn(
+        Column(
             modifier = Modifier
                 .padding(start = 16.dp, end = 16.dp)
                 .fillMaxSize()
                 .background(Color(0xFFFCFAF2))
         ) {
-            item{
+
                 Prod()
                 Prod()
                 Prod()
@@ -70,7 +70,6 @@ fun Cart(navController: NavHostController) {
                 Prod()
                 Prod()
 
-            }
         }
     }
 }

@@ -49,21 +49,20 @@ fun Chat(navController: NavHostController) {
             }
         }
     ) {
-        Column (modifier = Modifier
-            .fillMaxSize()
-            .background(Color(0xFFFCFAF2))){
+//        Column (
+//            //modifier = Modifier
+//            //.fillMaxSize()
+//            //.background(Color(0xFFFCFAF2))){
+//
+//        }
 
-        }
-
-        LazyColumn(
+        Column(
             modifier = Modifier
                 .padding(start = 16.dp, end = 16.dp)
                 .fillMaxSize()
         ) {
-            item{
-                Warning()
-            }
-            items(messages) { message ->
+            Warning()
+            messages.forEach { message ->
                 when (message.type) {
                     MessageType.USER -> MessageUser(message.descrip)
                     MessageType.CHAT -> MessageChat(message.descrip)
