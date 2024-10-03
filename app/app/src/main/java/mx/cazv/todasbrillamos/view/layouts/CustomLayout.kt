@@ -20,6 +20,7 @@ fun CustomLayout(
     topBar: @Composable () -> Unit = {},
     bottomBar: @Composable () -> Unit = {},
     withStoreButton: Boolean = false,
+    withScroll: Boolean = true,
     content: @Composable () -> Unit
 ) {
     Scaffold (
@@ -33,14 +34,25 @@ fun CustomLayout(
             .fillMaxSize()
             .background(BackgroundColor)
     ) { innerPadding ->
-        Box(modifier = Modifier
-            .padding(innerPadding)
-            .background(BackgroundColor)
-            .verticalScroll(rememberScrollState())
-            .fillMaxSize()
-            .background(BackgroundColor)
-        ) {
-            content()
+        if (withScroll) {
+            Box(modifier = Modifier
+                .padding(innerPadding)
+                .background(BackgroundColor)
+                .verticalScroll(rememberScrollState())
+                .fillMaxSize()
+                .background(BackgroundColor)
+            ) {
+                content()
+            }
+        } else {
+            Box(modifier = Modifier
+                .padding(innerPadding)
+                .background(BackgroundColor)
+                .fillMaxSize()
+                .background(BackgroundColor)
+            ) {
+                content()
+            }
         }
     }
 }

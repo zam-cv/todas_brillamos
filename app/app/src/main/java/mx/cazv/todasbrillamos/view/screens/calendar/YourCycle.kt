@@ -35,8 +35,8 @@ import mx.cazv.todasbrillamos.ui.theme.BackgroundColor
 import mx.cazv.todasbrillamos.ui.theme.ColorOfMostFertilePeriod
 import mx.cazv.todasbrillamos.ui.theme.OvulationColor
 import mx.cazv.todasbrillamos.ui.theme.PeriodColor
-import mx.cazv.todasbrillamos.view.components.BottomBar
-import mx.cazv.todasbrillamos.view.components.CustomTopBar
+import mx.cazv.todasbrillamos.view.components.footer.BottomBar
+import mx.cazv.todasbrillamos.view.components.header.CustomTopBar
 import mx.cazv.todasbrillamos.view.components.PinkButton
 import mx.cazv.todasbrillamos.view.layouts.CustomLayout
 

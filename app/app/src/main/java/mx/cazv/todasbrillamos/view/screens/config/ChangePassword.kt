@@ -6,32 +6,30 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import mx.cazv.todasbrillamos.ui.theme.BackgroundColor
-import mx.cazv.todasbrillamos.view.components.BottomBar
+import mx.cazv.todasbrillamos.view.components.footer.BottomBar
 import mx.cazv.todasbrillamos.view.components.Button
-import mx.cazv.todasbrillamos.view.components.CustomTopBar
 import mx.cazv.todasbrillamos.view.components.Eye
 import mx.cazv.todasbrillamos.view.components.Input
+import mx.cazv.todasbrillamos.view.components.header.BasicTopBar
 import mx.cazv.todasbrillamos.view.layouts.CustomLayout
 
 @Composable
 fun ChangePassword(navController: NavHostController) {
-    CustomLayout (
+    CustomLayout(
         navController = navController,
+        withStoreButton = true,
         topBar = {
-            CustomTopBar {
-                Text(text = "Custom Top Bar")
-            }
+            BasicTopBar(title = "Cambiar contraseña", navController = navController)
         },
         bottomBar = {
             BottomBar(navController = navController)
-        }
+        },
     ) {
         Column (
             horizontalAlignment = Alignment.CenterHorizontally,

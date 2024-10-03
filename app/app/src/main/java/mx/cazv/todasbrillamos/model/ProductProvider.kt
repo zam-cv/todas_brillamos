@@ -6,7 +6,6 @@ import mx.cazv.todasbrillamos.R
  * Lista para generar productos
  * @author: Min Che Kim
  */
-
 class ProductProvider {
     companion object{
         val productList = listOf(
