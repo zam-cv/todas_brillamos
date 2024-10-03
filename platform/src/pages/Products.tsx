@@ -54,7 +54,13 @@ export default function UploadProducts() {
   const [category_id, setCategory_id] = useState<number>(0);
   const [products, setProducts] = useState<Product[]>([]);
   const [id, setId] = useState<number | null>(null);
+  const [isFormValid, setIsFormValid] = useState(false);
   
+  useEffect(() => {
+    const formValid = model !== "" && name !== "" && description !== "" && price > 0 && stock > 0 
+    && category_id > 0 && size !== "" && color !== "" && maintenance !== "" && material !== "" && absorbency !== "" && material_feature !== "";
+    setIsFormValid(formValid);
+  }, [model, name, description, price, stock, color,maintenance, material, absorbency,material_feature,category_id]);
 
   function uploadProduct() {
     if (imageInput.current) {
@@ -78,6 +84,21 @@ export default function UploadProducts() {
         category_id,
       } as any).then(() => {
         // alert("Producto agregado");
+        setModel("");
+        setName("");
+        setDescription("");
+        setPrice(0);
+        setStock(0);
+        setSize("");
+        setColor("");
+        setMaintenance("");
+        setMaterial("");
+        setAbsorbency("");
+        setMaterial_feature("");
+        setCategory_id(0);
+        if (imageInput.current) {
+          imageInput.current.value = "";
+        }
       })
     }  
 }
@@ -210,28 +231,32 @@ const[categories, setCategories] = useState<Category[]>([]);
                 <SelectGroup>
                   <SelectLabel>Categorías</SelectLabel>
                   {categories.map((category) => (
-                    <SelectItem key={category.id} value={category.id.toString()}
-                        >
+                    <SelectItem 
+                      key={category.id} 
+                      value={category.id.toString()}
+                      onChange={() => setCategory_id(category.id)}
+                    >
                       {category.name}
                     </SelectItem>
+                   
                   ))}
                 </SelectGroup>
               </SelectContent>
             </Select>
-                <Input
-                  name="category_id"
-                  value={category_id}
-                  onChange={(e) => setCategory_id(Number(e.target.value))}
-                  placeholder="ID de categoría"
-                  type="number"
-                  required
-                />
+                  {/* <Input
+                    name="category_id"
+                    value={category_id}
+                    onChange={(e) => setCategory_id(Number(e.target.value))}
+                    placeholder="ID de categoría"
+                    type="number"
+                    required
+                  /> */}
               </div>
               <div className="flex flex-row space-x-2 px-2 pt-2">
                 <Input ref={imageInput} type="file" onChange={() => {}} required />
               </div>
               <div className="flex flex-row space-x-2 px-2 pt-2">
-                <Button onClick={uploadProduct}>
+                <Button onClick={uploadProduct} disabled={!isFormValid}>
                   Agregar Producto
                 </Button>
               </div>

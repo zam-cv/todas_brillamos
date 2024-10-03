@@ -5,15 +5,19 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material3.Card
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
@@ -31,16 +35,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.toSize
+import androidx.compose.ui.window.Dialog
 import mx.cazv.todasbrillamos.R
 import mx.cazv.todasbrillamos.ui.theme.AccentColor
 import mx.cazv.todasbrillamos.ui.theme.GrayB3
+import mx.cazv.todasbrillamos.view.screens.calendar.MinimalDialog
 
 @Composable
-fun DropDownMenu(suggestions: List<String>, type: String) {
-
+fun DropDownMenu(suggestions: List<String>, type: String, text: String = "") {
     var expanded by remember { mutableStateOf(false) }
     var selectedText by remember { mutableStateOf("") }
 
@@ -54,14 +61,9 @@ fun DropDownMenu(suggestions: List<String>, type: String) {
     val maxHeight = 200.dp
 
     Row (modifier = Modifier) {
-        Column (modifier = Modifier
-            .weight(0.5f)
-            .align(Alignment.CenterVertically)
-            .offset(x = 15.dp)){
-            Icon(painterResource(id = R.drawable.info_icon),
-                contentDescription = "more info",
-                tint = GrayB3)
-        }
+
+        MinimalDialog(text, Modifier.weight(0.5f).align(Alignment.CenterVertically))
+
         Column(modifier = Modifier
             .weight(10f)
             .padding(start =20.dp, end = 20.dp),
@@ -75,7 +77,15 @@ fun DropDownMenu(suggestions: List<String>, type: String) {
                         //This value is used to assign to the DropDown the same width
                         textfieldSize = coordinates.size.toSize()
                     },
-                label = {Text(if (type == "period") "¿Cuánto suele durar tu periodo?" else if (type == "cycle") "¿Cuánto dura tu ciclo?" else "")},
+                label = { Text(
+                    when (type) {
+                        "period" -> "¿Cuánto suele durar tu periodo?"
+                        "cycle" -> "¿Cuánto dura tu ciclo?"
+                        else -> ""
+                    },
+                    fontSize = 14.sp
+                ) },
+                readOnly = true,
                 trailingIcon = {
                     Icon(icon,"contentDescription",
                         Modifier.clickable { expanded = !expanded },
@@ -101,7 +111,6 @@ fun DropDownMenu(suggestions: List<String>, type: String) {
             }
         }
     }
-
 
 }
 

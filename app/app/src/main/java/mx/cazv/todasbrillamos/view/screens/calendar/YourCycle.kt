@@ -1,4 +1,4 @@
-package mx.cazv.todasbrillamos.view.screens
+package mx.cazv.todasbrillamos.view.screens.calendar
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border

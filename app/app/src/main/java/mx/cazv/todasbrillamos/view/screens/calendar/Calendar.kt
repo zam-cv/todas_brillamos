@@ -1,34 +1,18 @@
-package mx.cazv.todasbrillamos.view.screens
+package mx.cazv.todasbrillamos.view.screens.calendar
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Info
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
@@ -37,14 +21,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.unit.toSize
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import mx.cazv.todasbrillamos.R
-import mx.cazv.todasbrillamos.ui.theme.GrayB3
 import mx.cazv.todasbrillamos.view.components.DropDownMenu
 import mx.cazv.todasbrillamos.view.components.PinkButton
-import mx.cazv.todasbrillamos.view.layouts.BasicLayout
 import mx.cazv.todasbrillamos.view.layouts.MainLayout
 
 @Composable
@@ -76,22 +57,24 @@ fun Calendar(navController: NavHostController) {
 
             Spacer(modifier = Modifier.height(40.dp))
 
-            DatePickerDocked()
+            DatePickerDocked("La fecha en que comenzaste tu último periodo y seguiste sangrando (en vez de solo manchar)")
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            DropDownMenu(period.map { it.toString() }, "period")
+            DropDownMenu(period.map { it.toString() }, "period",
+                "Saca un promedio aproximado de cuánto tiempo a durado tu periodo durante los últimos 3 meses.")
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            DropDownMenu(cycle.map { it.toString() }, "cycle")
+            DropDownMenu(cycle.map { it.toString() }, "cycle",
+                "Se trata del tiempo entre el comienzo de un periodo y el comienzo del siguiente. Toma un promedio aproximado.")
 
             Spacer(modifier = Modifier.height(40.dp))
 
             Box(modifier = Modifier.padding(start = 20.dp, end = 20.dp)){
-                PinkButton(text = "Calcular mi periodo")
+                PinkButton(text = "Calcular mi periodo" )
             }
-            
+
             Spacer(modifier = Modifier.height(20.dp))
 
             Text(text = "Los resultados de esta calculadora de periodos pueden no ser 100% precisos y eso se debe a que cada cuerpo y cada ciclo es diferente.",
@@ -114,3 +97,7 @@ fun CalendarPreview() {
     val navController = rememberNavController()
     Calendar(navController)
 }
+
+//fun CalculatePeriod(period: Int, cycle: Int): Int {
+//
+//}
