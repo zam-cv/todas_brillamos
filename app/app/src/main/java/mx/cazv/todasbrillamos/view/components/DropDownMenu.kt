@@ -35,6 +35,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import mx.cazv.todasbrillamos.R
+import mx.cazv.todasbrillamos.ui.theme.AccentColor
+import mx.cazv.todasbrillamos.ui.theme.GrayB3
 
 @Composable
 fun DropDownMenu(suggestions: List<String>, type: String) {
@@ -56,7 +58,9 @@ fun DropDownMenu(suggestions: List<String>, type: String) {
             .weight(0.5f)
             .align(Alignment.CenterVertically)
             .offset(x = 15.dp)){
-            Icon(painterResource(id = R.drawable.info_icon), contentDescription = "more info")
+            Icon(painterResource(id = R.drawable.info_icon),
+                contentDescription = "more info",
+                tint = GrayB3)
         }
         Column(modifier = Modifier
             .weight(10f)
@@ -74,7 +78,8 @@ fun DropDownMenu(suggestions: List<String>, type: String) {
                 label = {Text(if (type == "period") "¿Cuánto suele durar tu periodo?" else if (type == "cycle") "¿Cuánto dura tu ciclo?" else "")},
                 trailingIcon = {
                     Icon(icon,"contentDescription",
-                        Modifier.clickable { expanded = !expanded })
+                        Modifier.clickable { expanded = !expanded },
+                        tint = AccentColor)
                 }
             )
             DropdownMenu(

@@ -22,7 +22,8 @@ fun MainLayout(navController: NavHostController, content: @Composable () -> Unit
         topBar = { TopBar() },
         bottomBar = { BottomBar(navController) },
         floatingActionButtonPosition = FabPosition.Center,
-        floatingActionButton = { StoreButton(navController) }
+        floatingActionButton = { StoreButton(navController) },
+        containerColor = BackgroundColor,
     ) { innerPadding ->
         Box(modifier = Modifier
             .padding(innerPadding)

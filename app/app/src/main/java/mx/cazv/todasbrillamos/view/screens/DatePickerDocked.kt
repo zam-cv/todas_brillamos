@@ -2,6 +2,8 @@ package mx.cazv.todasbrillamos.view.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
@@ -24,9 +26,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
+import mx.cazv.todasbrillamos.R
+import mx.cazv.todasbrillamos.ui.theme.AccentColor
+import mx.cazv.todasbrillamos.ui.theme.GrayB3
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -39,45 +45,71 @@ fun DatePickerDocked() {
         convertMillisToDate(it)
     } ?: ""
 
-    Box(
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        OutlinedTextField(
-            value = selectedDate,
-            onValueChange = { },
-            label = { Text("¿Cuándo comenzó tu último periodo?",
-                fontSize = 15.6.sp) },
-            readOnly = true,
-            trailingIcon = {
-                IconButton(onClick = { showDatePicker = !showDatePicker }) {
-                    Icon(
-                        imageVector = Icons.Default.DateRange,
-                        contentDescription = "Select date"
-                    )
-                }
-            },
+    Row (modifier = Modifier) {
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .height(64.dp)
-        )
-
-        if (showDatePicker) {
-            Popup(
-                onDismissRequest = { showDatePicker = false },
-                alignment = Alignment.TopStart
+                .weight(0.5f)
+                .align(Alignment.CenterVertically)
+                .offset(x = 15.dp)
+        ) {
+            Icon(
+                painterResource(id = R.drawable.info_icon),
+                contentDescription = "more info",
+                tint = GrayB3
+            )
+        }
+        Column(
+            modifier = Modifier
+                .weight(10f)
+                .padding(start = 20.dp, end = 20.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Box(
+                modifier = Modifier.fillMaxWidth()
             ) {
-                Box(
+                OutlinedTextField(
+                    value = selectedDate,
+                    onValueChange = { },
+                    label = {
+                        Text(
+                            "¿Cuándo comenzó tu último periodo?",
+                            fontSize = 15.6.sp
+                        )
+                    },
+                    readOnly = true,
+                    trailingIcon = {
+                        IconButton(onClick = { showDatePicker = !showDatePicker }) {
+                            Icon(
+                                imageVector = Icons.Default.DateRange,
+                                contentDescription = "Select date",
+                                tint = AccentColor
+                            )
+                        }
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .offset(y = 64.dp)
-                        .shadow(elevation = 4.dp)
-                        .background(MaterialTheme.colorScheme.surface)
-                        .padding(16.dp)
-                ) {
-                    DatePicker(
-                        state = datePickerState,
-                        showModeToggle = false
-                    )
+                        .height(64.dp)
+                )
+
+                if (showDatePicker) {
+                    Popup(
+                        onDismissRequest = { showDatePicker = false },
+                        alignment = Alignment.TopStart
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .offset(y = 64.dp)
+                                .shadow(elevation = 4.dp)
+                                .background(MaterialTheme.colorScheme.surface)
+                                .padding(16.dp)
+                        ) {
+                            DatePicker(
+                                state = datePickerState,
+                                showModeToggle = false
+                            )
+                        }
+                    }
                 }
             }
         }

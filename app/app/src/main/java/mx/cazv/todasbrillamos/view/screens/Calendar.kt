@@ -30,6 +30,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -40,6 +41,7 @@ import androidx.compose.ui.unit.toSize
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import mx.cazv.todasbrillamos.R
+import mx.cazv.todasbrillamos.ui.theme.GrayB3
 import mx.cazv.todasbrillamos.view.components.DropDownMenu
 import mx.cazv.todasbrillamos.view.components.PinkButton
 import mx.cazv.todasbrillamos.view.layouts.BasicLayout
@@ -66,26 +68,15 @@ fun Calendar(navController: NavHostController) {
                     fontStyle = FontStyle.Italic,
                     fontSize = 22.sp,
                     textAlign = TextAlign.Center,
-                    modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 25.dp)
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter)
+                        .padding(bottom = 25.dp)
                 )
             }
 
             Spacer(modifier = Modifier.height(40.dp))
 
-            Row (modifier = Modifier) {
-                Column (modifier = Modifier
-                    .weight(0.5f)
-                    .align(Alignment.CenterVertically)
-                    .offset(x = 15.dp)){
-                    Icon(painterResource(id = R.drawable.info_icon), contentDescription = "more info")
-                }
-                Column(modifier = Modifier
-                    .weight(10f)
-                    .padding(start =20.dp, end = 20.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally) {
-                    DatePickerDocked()
-                }
-            }
+            DatePickerDocked()
 
             Spacer(modifier = Modifier.height(20.dp))
 
@@ -95,11 +86,24 @@ fun Calendar(navController: NavHostController) {
 
             DropDownMenu(cycle.map { it.toString() }, "cycle")
 
-            Spacer(modifier = Modifier.height(60.dp))
+            Spacer(modifier = Modifier.height(40.dp))
 
             Box(modifier = Modifier.padding(start = 20.dp, end = 20.dp)){
                 PinkButton(text = "Calcular mi periodo")
             }
+            
+            Spacer(modifier = Modifier.height(20.dp))
+
+            Text(text = "Los resultados de esta calculadora de periodos pueden no ser 100% precisos y eso se debe a que cada cuerpo y cada ciclo es diferente.",
+                maxLines = 3,
+                style = TextStyle(
+                    lineHeight = 15.sp,
+                    textAlign = TextAlign.Center,
+                    fontSize = 14.sp,
+                ),
+                modifier = Modifier.padding(start = 20.dp, end = 20.dp))
+
+            Spacer(modifier = Modifier.height(40.dp))
         }
     }
 }
