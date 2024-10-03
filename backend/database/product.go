@@ -20,11 +20,18 @@ func GetProductById(id uint) (*models.Product, error) {
 	return product, nil
 }
 
-func GetRandomProducts() ([]models.Product, error) {
+func GetRandomProducts(clientID uint) ([]models.Product, error) {
 	products := []models.Product{}
-	if err := db.Order("RANDOM()").Limit(8).Find(&products).Error; err != nil {
+	// Límite de 8 productos que cumplan con esta condición
+	// if err := db.Joins("LEFT JOIN carts ON carts.product_id = products.id AND carts.client_id = ?", clientID).Where("carts.id IS NULL").Order("RANDOM()").Limit(8).Find(&products).Error; err != nil {
+	// 	return nil, err
+	// }
+	if err := db.Joins("LEFT JOIN carts ON carts.product_id = products.id AND carts.client_id = ?", clientID).Where("carts.id IS NULL").Order("RANDOM()").Find(&products).Error; err != nil {
 		return nil, err
 	}
+	// if err := db.Order("RANDOM()").Limit(8).Find(&products).Error; err != nil {
+	// 	return nil, err
+	// }
 
 	return products, nil
 }

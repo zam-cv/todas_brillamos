@@ -1,10 +1,12 @@
 package mx.cazv.todasbrillamos.view.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
@@ -35,13 +37,17 @@ import mx.cazv.todasbrillamos.view.Routes
 @Composable
 fun BottomBar(navController: NavHostController) {
     Box {
-        Image(
-            painter = painterResource(id = R.drawable.bottom_bar),
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .fillMaxWidth()
-        )
+        Box(
+            modifier = Modifier.matchParentSize()
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.bottom_bar_full),
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.fillMaxSize()
+            )
+        }
+
         BottomAppBar (containerColor = Color.Transparent) {
             val stack by navController.currentBackStackEntryAsState()
             val currentPage = stack?.destination

@@ -26,13 +26,20 @@ fun CustomLayout(
         topBar = { topBar() },
         bottomBar = { bottomBar() },
         floatingActionButtonPosition = FabPosition.Center,
-        floatingActionButton = { StoreButton(navController) }
+        floatingActionButton = { StoreButton(navController) },
+        containerColor = BackgroundColor,
+        modifier = Modifier
+            .background(BackgroundColor)
+            .fillMaxSize()
+            .background(BackgroundColor)
     ) { innerPadding ->
         Box(modifier = Modifier
             .padding(innerPadding)
             .background(BackgroundColor)
             .verticalScroll(rememberScrollState())
-            .fillMaxSize()) {
+            .fillMaxSize()
+            .background(BackgroundColor)
+        ) {
             content()
         }
     }
