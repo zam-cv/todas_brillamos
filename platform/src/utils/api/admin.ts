@@ -1,5 +1,9 @@
 import {get, post} from "@/utils/methods";
 
+export interface Credentials {
+    token: string;
+}
+
 export interface Admin {
     email: string;
     password: string;
@@ -10,7 +14,7 @@ export default {
         loginAdmin: (
             email: string ,
             password: string
-        ): Promise<void> => {
+        ): Promise<Credentials> => {
             return post("/auth/admin/signin", {email, password}, false);
         },
 

@@ -6,6 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useEffect, useState, useRef } from "react";
 import api, {Product} from "@/utils/api/products";
 import apiCategory, { Category } from "@/utils/api/category";
+import { useNavigate } from 'react-router-dom';
 
 import {
   Accordion,
@@ -55,6 +56,7 @@ export default function UploadProducts() {
   const [products, setProducts] = useState<Product[]>([]);
   const [id, setId] = useState<number | null>(null);
   const [isFormValid, setIsFormValid] = useState(false);
+  const navigate = useNavigate();
   
   useEffect(() => {
     const formValid = model !== "" && name !== "" && description !== "" && price > 0 && stock > 0 
@@ -123,6 +125,13 @@ const[categories, setCategories] = useState<Category[]>([]);
   useEffect(() => {
     console.log(id);
   }, [id])
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      window.location.href = "/login";
+    }
+  },[navigate]);
 
   return (
     <div>
