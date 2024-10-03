@@ -35,6 +35,7 @@ import androidx.navigation.compose.rememberNavController
 import mx.cazv.todasbrillamos.R
 import mx.cazv.todasbrillamos.ui.theme.BackgroundColor
 import mx.cazv.todasbrillamos.view.components.footer.BottomBar
+import mx.cazv.todasbrillamos.view.components.header.BasicTopBar
 import mx.cazv.todasbrillamos.view.components.header.CustomTopBar
 import mx.cazv.todasbrillamos.view.layouts.BasicLayout
 import mx.cazv.todasbrillamos.view.layouts.CustomLayout
@@ -47,11 +48,10 @@ fun TrackOrder(navController: NavHostController) {
     val screenHeight = configuration.screenHeightDp.dp
 
     CustomLayout(
+        withStoreButton = true,
         navController = navController,
         topBar = {
-            CustomTopBar {
-                Text(text = "Custom Top Bar")
-            }
+            BasicTopBar(title = "Rastreo pedido", navController = navController)
         },
         bottomBar = {
             BottomBar(navController = navController)
