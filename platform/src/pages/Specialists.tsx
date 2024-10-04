@@ -8,6 +8,7 @@ import apiPost, { Posts } from "@/utils/api/post";
 import { Badge } from "@/components/ui/badge";
 import { DataTable } from "@/components/table/components/tablePosts/data-table-posts";
 import { createColumns } from "@/components/table/components/tablePosts/columns-posts";
+import Delete, { DeleteWrapper } from '@/components/Delete';
 
 import {
   Drawer,
@@ -98,6 +99,10 @@ export default function Specialists() {
     console.log(idPost);
   }, [idPost]);
 
+  function deleteCategory(){
+
+  }
+
   const columns = createColumns(handleDelete);
 
   return (
@@ -140,13 +145,14 @@ export default function Specialists() {
             </PopoverContent>
           </Popover>
         </div>
-
-        {category.map((category) => (
-          <Drawer key={category.id}>
-            <Badge key={category.id} variant="outline" className="cursor-pointer">{category.name}</Badge>
-          </Drawer>
-        ))}
-
+          {category.map((category) => (
+            <Drawer key={category.id}>
+              <DeleteWrapper message="Mensaje" key={1} del={() => deleteCategory()}>
+              <Badge key={category.id} variant="outline" className="cursor-pointer">{category.name}</Badge>
+              </DeleteWrapper>
+            </Drawer>
+          ))}
+       
         <br></br>
         <br></br>
 

@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/alert-dialog"
 
 
-export const columns: ColumnDef<Task>[] = [
+export const createColumns = (handleDelete: (id: number) => void): ColumnDef<Task>[] => [
     {
       accessorKey: "name",
       header: ({ column }) => (
@@ -189,6 +189,22 @@ export const columns: ColumnDef<Task>[] = [
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>
+        );
+      },
+    },
+    {
+      id: "actions",
+      header: "Acciones",
+      cell: ({ row }) => {
+        return (
+          <div className="flex justify-end">
+            <Button 
+              variant="destructive" 
+              onClick={() => handleDelete((row.original as any).id)}
+            >
+              Eliminar
+            </Button>
+          </div>
         );
       },
     },

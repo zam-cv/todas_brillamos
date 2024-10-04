@@ -1,6 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { columns } from "@/components/table/components/columns-products";
+import { createColumns } from "@/components/table/components/columns-products";
 import { DataTable } from "@/components/table/components/data-table-products";
 import { Textarea } from "@/components/ui/textarea";
 import { useEffect, useState, useRef } from "react";
@@ -181,6 +181,19 @@ export default function UploadProducts() {
     }
   }, [navigate]);
 
+
+  function handleDelete(productId: number) {
+    api.product.deleteProduct(productId)
+    .then(() => {
+      setProducts(products.filter(product => product.id !== productId));
+      console.log("Producto eliminado");
+    })
+    .catch(error => {
+      console.error("Error al eliminar el producto:", error);
+    });
+  } 
+
+  const columns = createColumns(handleDelete);
   return (
     <div>
       <div className="flex justify-between items-center">
