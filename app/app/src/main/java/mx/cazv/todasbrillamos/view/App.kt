@@ -1,5 +1,6 @@
 package mx.cazv.todasbrillamos.view
 
+import android.app.Application
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -39,7 +40,7 @@ fun App() {
 @Composable
 fun Nav(navController: NavHostController, modifier: Modifier = Modifier) {
     NavHost(navController = navController,
-        startDestination = Routes.ROUTE_HOME,
+        startDestination = Routes.ROUTE_LOGIN,
         modifier = modifier.fillMaxSize()
     ) {
         // Screens

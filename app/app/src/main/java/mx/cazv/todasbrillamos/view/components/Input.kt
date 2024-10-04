@@ -11,12 +11,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -30,25 +27,23 @@ import mx.cazv.todasbrillamos.ui.theme.Stroke
 @Composable
 fun Input(
     placeholder: String,
-    initialValue: String = "",
     suffixIcon : @Composable (() -> Unit)? = null,
     imageId: Int? = null,
     height: Int? = null,
     padding: Dp = 20.dp,
     imageSize: Dp = 24.dp,
-    //topStart: Dp = 10.dp,
     topStart: Dp = 10.dp,
     topEnd: Dp = 10.dp,
     bottomEnd: Dp = 10.dp,
     bottomStart: Dp = 10.dp,
-
+    value: String = "",
+    onValueChange: (String) -> Unit = {}
 ) {
     val shape = RoundedCornerShape(topStart,topEnd,bottomEnd,bottomStart)
 
-    var textState by remember { mutableStateOf(initialValue) }
     BasicTextField(
-        value = textState,
-        onValueChange = { textState = it },
+        value = value,
+        onValueChange = onValueChange,
         singleLine = true,
         textStyle = TextStyle(fontSize = 18.sp),
         modifier = Modifier
@@ -76,7 +71,7 @@ fun Input(
                 Box(
                     modifier = Modifier.weight(1f)
                 ) {
-                    if (textState.isEmpty()) {
+                    if (value.isEmpty()) {
                         Text(
                             text = placeholder,
                             color = Color.Gray,

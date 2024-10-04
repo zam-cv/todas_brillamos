@@ -1,4 +1,4 @@
-package mx.cazv.todasbrillamos.model
+package mx.cazv.todasbrillamos.model.models
 
 import androidx.annotation.DrawableRes
 
