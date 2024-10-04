@@ -6,6 +6,8 @@ import { useState, useEffect } from "react";
 import api, { Category} from "@/utils/api/category";
 import apiPost, { Posts } from "@/utils/api/post";  
 import { Badge } from "@/components/ui/badge"
+import { DataTable } from "@/components/table/components/tablePosts/data-table-posts"
+import { columns as postColumns } from "@/components/table/components/tablePosts/columns-posts"
 
 import {
   Drawer,
@@ -33,6 +35,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { set } from "zod";
+import { columns } from "@/components/table/components/columns-products";
 
 
 export default function Specialists() {
@@ -43,8 +46,10 @@ export default function Specialists() {
   const [author, setAuthor] = useState<string>("");  
   const [content, setContent] = useState<string>("");
   const [date, setDate] = useState<string>("");
-  const [post, setPost] = useState<Posts[]>([]);
+  const [post, setPosts] = useState<Posts[]>([]);
+  const [idPost, setIdPost] = useState<number | null>(null);
   const[isCategoryValid, setIsCategoryValid] = useState(false);
+
   useEffect(() => {
     const categoryValid = name !== "";
     setIsCategoryValid(categoryValid);
@@ -82,7 +87,7 @@ export default function Specialists() {
       content
     } as any).then((data) => {
       const id = data.id;
-      setPost([
+      setPosts([
         ...post,
         {
           id
@@ -96,12 +101,23 @@ export default function Specialists() {
   }
 
   
-
+  //Get categories
   useEffect(() => {
     api.category.getCategories().then((category) => {
       setCategory(category);
     });
   }, [])
+
+  //Get posts
+  useEffect(() => {
+    apiPost.posts.getPosts().then((post) => {
+      setPosts(post);
+    });
+  }, [])
+
+  useEffect(() => {
+    console.log(idPost);
+  }, [idPost])
 
 
 
@@ -239,7 +255,10 @@ export default function Specialists() {
             </AccordionItem>
           </Accordion>
         </div>
-        
+        <br></br>
+        <div>
+          <DataTable data={post} columns={postColumns} setId={setIdPost}/>
+          </div>
       </div>
     </div>
   );

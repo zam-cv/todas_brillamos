@@ -1,26 +1,26 @@
-import {get, del, post, upload } from "@/utils/methods";
+import {get, del, post } from "@/utils/methods";
 
 export interface Posts {
+    id: number;
     title: string;
     author: string;
     date: string;
     content: string
 }
 
-export interface PostID{
-    id: number;
-}
+
+   
 
 
 export default {
     posts: {
         setPost: (
             posts: Posts
-        ): Promise<PostID> => {
+        ): Promise<Posts> => {
             return post("/posts", posts)
         },
 
-        getPosts: (): Promise<void> =>{
+        getPosts: (): Promise<Posts[]> =>{
             return get("/posts")
         },
 
