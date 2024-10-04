@@ -22,7 +22,7 @@ suspend fun <T> apiCall(call: suspend () -> T): Result<T> = withContext(Dispatch
 }
 
 class AuthService {
-    private val retrofitCovid by lazy {
+    private val retrofitApi by lazy {
         Retrofit.Builder()
             .baseUrl(ApiConfig.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
@@ -30,7 +30,7 @@ class AuthService {
     }
 
     private val apiService by lazy {
-        retrofitCovid.create(API::class.java)
+        retrofitApi.create(API::class.java)
     }
 
     suspend fun signin(request: SignInRequest): Credentials? {
@@ -39,5 +39,9 @@ class AuthService {
 
     suspend fun register(request: UserInfo): Boolean {
         return apiCall { apiService.register(request) }.isSuccess
+    }
+
+    suspend fun verify(token: String): Boolean {
+        return apiCall { apiService.verify("Bearer $token") }.isSuccess
     }
 }

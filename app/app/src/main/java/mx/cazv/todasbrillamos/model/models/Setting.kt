@@ -7,5 +7,6 @@ data class Setting (
     val title: String,
     val icon: ImageVector,
     val route: String,
-    val navController: NavController
+    val navController: NavController,
+    val action: (() -> Unit)? = null
 )
