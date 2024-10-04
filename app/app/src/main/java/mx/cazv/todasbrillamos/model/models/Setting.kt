@@ -1,4 +1,4 @@
-package mx.cazv.todasbrillamos.model
+package mx.cazv.todasbrillamos.model.models
 
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavController

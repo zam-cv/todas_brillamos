@@ -33,7 +33,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import mx.cazv.todasbrillamos.model.Product
+import mx.cazv.todasbrillamos.model.models.Product
 import mx.cazv.todasbrillamos.ui.theme.AccentColor
 
 /**

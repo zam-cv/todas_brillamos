@@ -1,5 +1,6 @@
 package mx.cazv.todasbrillamos.view.screens
 
+import android.app.Application
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -13,11 +14,19 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.RemoveRedEye
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -28,6 +37,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import mx.cazv.todasbrillamos.R
@@ -36,9 +46,31 @@ import mx.cazv.todasbrillamos.view.Routes
 import mx.cazv.todasbrillamos.view.components.Button
 import mx.cazv.todasbrillamos.view.components.Input
 import mx.cazv.todasbrillamos.view.layouts.BasicLayout
+import mx.cazv.todasbrillamos.viewmodel.AuthState
+import mx.cazv.todasbrillamos.viewmodel.AuthViewModel
 
 @Composable
-fun Login(navController: NavHostController) {
+fun Login(navController: NavHostController, viewModel: AuthViewModel = viewModel()) {
+    val authState by viewModel.authState.collectAsState()
+
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+    var isPasswordVisible by remember { mutableStateOf(false) }
+
+    LaunchedEffect(authState) {
+        when (authState) {
+            is AuthState.SignInSuccess -> {
+                navController.navigate(Routes.ROUTE_HOME) {
+                    popUpTo(Routes.ROUTE_LOGIN) { inclusive = true }
+                }
+            }
+            is AuthState.Error -> {
+                // TODO: Mostrar mensaje de error
+            }
+            else -> {}
+        }
+    }
+
     BasicLayout(navController = navController) {
         Column(
             modifier = Modifier
@@ -47,8 +79,6 @@ fun Login(navController: NavHostController) {
         ) {
             Box(
                 modifier = Modifier
-                    //.fillMaxHeight(0.25f)
-                    //.background(Color.Transparent)
                     .fillMaxWidth()
                     .offset(y = (-210).dp)
                     .weight(1f),
@@ -59,32 +89,7 @@ fun Login(navController: NavHostController) {
                     modifier = Modifier
                         .fillMaxWidth(),
                     contentScale = ContentScale.FillHeight)
-                    //alignment = Alignment.Center,)
-//                Image(
-//                    painter = painterResource(id = R.drawable.vector3),
-//                    contentDescription = "Background",
-//                    modifier = Modifier
-//                        .fillMaxSize()
-//                        .alpha(0.7f),
-//                    alignment = Alignment.CenterEnd
-//                )
-//
-//                Image(
-//                    painter = painterResource(id = R.drawable.vector2),
-//                    contentDescription = "Background",
-//                    modifier = Modifier
-//                        .fillMaxSize()
-//                        .alpha(0.9f)
-//                )
-//
-//                Image(
-//                    painter = painterResource(id = R.drawable.vector1),
-//                    contentDescription = "Background",
-//                    modifier = Modifier.fillMaxSize()
-//                    //alignment = Alignment.CenterEnd
-//                )
 
-                // Logo
                 Image(
                     painter = painterResource(id = R.drawable.logo_tb),
                     contentDescription = "Logo",
@@ -93,7 +98,6 @@ fun Login(navController: NavHostController) {
                         .align(Alignment.Center)
                         .offset(y = 80.dp)
                 )
-
             }
 
             Column(
@@ -108,8 +112,7 @@ fun Login(navController: NavHostController) {
                 Text(
                     text = "Inicio de sesión",
                     fontSize = 35.sp,
-                    fontWeight = FontWeight.Bold,
-//                    color = Color.DarkGray
+                    fontWeight = FontWeight.Bold
                 )
 
                 Spacer(modifier = Modifier.size(12.dp))
@@ -126,20 +129,33 @@ fun Login(navController: NavHostController) {
 
                 Spacer(modifier = Modifier.size(12.dp))
 
-                Input(placeholder = "Correo electrónico")
+                Input(
+                    placeholder = "Correo electrónico",
+                    value = email,
+                    onValueChange = { email = it }
+                )
+
                 Spacer(modifier = Modifier.size(16.dp))
 
-                Input(placeholder = "Contraseña",
+                Input(
+                    placeholder = "Contraseña",
+                    value = password,
+                    onValueChange = { password = it },
                     suffixIcon = {
-                        Icon(
-                            Icons.Outlined.RemoveRedEye,
-                            contentDescription = "Mostrar/Ocultar contraseña"
-                        )
+                        IconButton(onClick = { isPasswordVisible = !isPasswordVisible }) {
+                            Icon(
+                                if (isPasswordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
+                                contentDescription = "Toggle password visibility"
+                            )
+                        }
                     }
                 )
 
                 Spacer(modifier = Modifier.size(16.dp))
-                Button(text = "Iniciar sesión")
+                Button(
+                    text = "Iniciar sesión",
+                    onClick = { viewModel.signIn(email, password) }
+                )
 
                 Spacer(modifier = Modifier.size(16.dp))
 
@@ -151,27 +167,7 @@ fun Login(navController: NavHostController) {
                         fontSize = 15.sp
                     )
                 }
-                /**
-                Text(text = "Login")
-                TextButton(onClick = { navController.navigate(Routes.ROUTE_HOME) }) {
-                Text(text = "Go to Home")
-                }
-                TextButton(onClick = { navController.navigate(Routes.ROUTE_REGISTER) }) {
-                Text(text = "Go to Register")
-                }
-
-                TextButton(onClick = { navController.navigate(Routes.ROUTE_CART) }) {
-                Text(text = "Go to Shopping Cart")
-                }
-                 */
             }
         }
     }
-}
-
-@Preview
-@Composable
-fun LoginPreview() {
-    val navController = rememberNavController()
-    Login(navController)
 }

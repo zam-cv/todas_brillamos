@@ -16,7 +16,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import mx.cazv.todasbrillamos.model.ProductProvider
+import mx.cazv.todasbrillamos.model.models.ProductProvider
 
 /**
  * Ver los productos dependiendo de la vista

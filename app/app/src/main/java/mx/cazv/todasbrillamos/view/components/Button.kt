@@ -15,14 +15,14 @@ import androidx.compose.ui.unit.sp
 import mx.cazv.todasbrillamos.ui.theme.ButtonColor
 
 @Composable
-fun Button(text: String) {
+fun Button(text: String, onClick: () -> Unit = {}) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .background(ButtonColor, shape = RoundedCornerShape(30.dp))
     ) {
         OutlinedButton(
-            onClick = {},
+            onClick = onClick,
             border = null,
             modifier = Modifier
                 .fillMaxWidth(),
