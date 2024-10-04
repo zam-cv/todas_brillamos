@@ -43,7 +43,7 @@ export default function Specialists() {
   const [author, setAuthor] = useState<string>("");  
   const [content, setContent] = useState<string>("");
   const [date, setDate] = useState<string>("");
-
+  const [post, setPost] = useState<Posts[]>([]);
   const[isCategoryValid, setIsCategoryValid] = useState(false);
   useEffect(() => {
     const categoryValid = name !== "";
@@ -60,7 +60,15 @@ export default function Specialists() {
   function uploadCategory() {
     api.category.setCategory({
       name,
-    } as any).then(() => {
+    } as any).then((data) => {
+      const id = data.id;
+      setCategory([
+        ...category,
+        {
+          id,
+          name
+        } as any,
+      ])
       console.log("Category added")
       setName("");
     })
@@ -72,7 +80,14 @@ export default function Specialists() {
       author,
       date: "2021-10-10",
       content
-    } as any).then(() => {
+    } as any).then((data) => {
+      const id = data.id;
+      setPost([
+        ...post,
+        {
+          id
+        } as any,
+      ])
       console.log("Post added")
       setTitle("");
       setAuthor("");
