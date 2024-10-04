@@ -5,6 +5,19 @@ import { Label } from "@/components/ui/label";
 import { useState, useEffect } from "react";
 import api, { Category} from "@/utils/api/category";
 import apiPost, { Posts } from "@/utils/api/post";  
+import { Badge } from "@/components/ui/badge"
+
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer"
+
 
 
 import {
@@ -19,6 +32,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { set } from "zod";
 
 
 export default function Specialists() {
@@ -29,7 +43,7 @@ export default function Specialists() {
   const [author, setAuthor] = useState<string>("");  
   const [content, setContent] = useState<string>("");
   const [date, setDate] = useState<string>("");
-
+  const [post, setPost] = useState<Posts[]>([]);
   const[isCategoryValid, setIsCategoryValid] = useState(false);
   useEffect(() => {
     const categoryValid = name !== "";
@@ -46,8 +60,17 @@ export default function Specialists() {
   function uploadCategory() {
     api.category.setCategory({
       name,
-    } as any).then(() => {
+    } as any).then((data) => {
+      const id = data.id;
+      setCategory([
+        ...category,
+        {
+          id,
+          name
+        } as any,
+      ])
       console.log("Category added")
+      setName("");
     })
   }
 
@@ -57,8 +80,18 @@ export default function Specialists() {
       author,
       date: "2021-10-10",
       content
-    } as any).then(() => {
+    } as any).then((data) => {
+      const id = data.id;
+      setPost([
+        ...post,
+        {
+          id
+        } as any,
+      ])
       console.log("Post added")
+      setTitle("");
+      setAuthor("");
+      setContent("");
     })
   }
 
@@ -111,6 +144,14 @@ export default function Specialists() {
             </PopoverContent>
           </Popover>
         </div>
+        {
+          category.map((category) => (
+            <Drawer key={category.id}>
+              <Badge key={category.id} variant="outline" className="cursor-pointer">{category.name}</Badge>
+            </Drawer>
+          ))
+        }
+        <br></br>
         <br></br>
         <div>
           <Popover>
@@ -158,6 +199,7 @@ export default function Specialists() {
             </PopoverContent>
           </Popover>
         </div>
+        <br></br>
         <div>
           <Accordion type="single" collapsible className="w-3/4">
             <AccordionItem value="item-4">

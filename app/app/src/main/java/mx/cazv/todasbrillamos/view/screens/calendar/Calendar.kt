@@ -21,17 +21,33 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import mx.cazv.todasbrillamos.R
 import mx.cazv.todasbrillamos.view.components.DropDownMenu
 import mx.cazv.todasbrillamos.view.components.PinkButton
 import mx.cazv.todasbrillamos.view.layouts.MainLayout
+import mx.cazv.todasbrillamos.viewmodel.CalendarVM
 
 @Composable
-fun Calendar(navController: NavHostController) {
+fun Calendar(navController: NavHostController, calendarVM: CalendarVM = viewModel()) {
+
     val period = (1..10).toList()
     val cycle = (21..40).toList()
+
+//    val estado = calendarVM.estado.collectAsState()
+//
+//    val model = CalculatePeriod()
+//
+//    val nextPeriodStartDate = model.convertMillisToDate(estado.value.nextPeriodStartDate)
+//    val nextPeriodEndDate = model.convertMillisToDate(estado.value.nextPeriodEndDate)
+//    val ovulationDate = model.convertMillisToDate(estado.value.ovulationDate)
+//    val fertileDayStart = model.convertMillisToDate(estado.value.fertileDayStart)
+//    val fertileDayEnd = model.convertMillisToDate(estado.value.fertileDayEnd)
+
+
+
     MainLayout(navController = navController) {
         Column (modifier = Modifier){
             Box (modifier = Modifier.fillMaxWidth()){
@@ -61,18 +77,33 @@ fun Calendar(navController: NavHostController) {
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            DropDownMenu(period.map { it.toString() }, "period",
+            DropDownMenu(period.map { it.toString() },
+                "period",
                 "Saca un promedio aproximado de cuánto tiempo a durado tu periodo durante los últimos 3 meses.")
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            DropDownMenu(cycle.map { it.toString() }, "cycle",
+            DropDownMenu(cycle.map { it.toString() },
+                "cycle",
                 "Se trata del tiempo entre el comienzo de un periodo y el comienzo del siguiente. Toma un promedio aproximado.")
 
             Spacer(modifier = Modifier.height(40.dp))
 
             Box(modifier = Modifier.padding(start = 20.dp, end = 20.dp)){
-                PinkButton(text = "Calcular mi periodo" )
+                PinkButton(text = "Calcular mi periodo", onClick = {
+                        // Pasar los datos al ViewModel para hacer los cálculos
+                    if (calendarVM.state.value.date != 0L &&
+                        calendarVM.state.value.period != "0" &&
+                        calendarVM.state.value.cycle != "0") {
+
+                        calendarVM.calculateCycle()
+                    }
+
+                        // Imprime los resultados en la consola
+                        // Navegar a la pantalla YourCycle
+                        //navController.navigate("your_cycle")
+
+                })
             }
 
             Spacer(modifier = Modifier.height(20.dp))
@@ -87,6 +118,11 @@ fun Calendar(navController: NavHostController) {
                 modifier = Modifier.padding(start = 20.dp, end = 20.dp))
 
             Spacer(modifier = Modifier.height(40.dp))
+//            Text("Siguiente menstruación: $nextPeriodStartDate a $nextPeriodEndDate")
+//            Text("Fecha de ovulación: $ovulationDate")
+//            Text("Días fértiles: $fertileDayStart a $fertileDayEnd")
+//
+//            Spacer(modifier = Modifier.height(40.dp))
         }
     }
 }

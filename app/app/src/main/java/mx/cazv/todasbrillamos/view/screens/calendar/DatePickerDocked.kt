@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
-
 package mx.cazv.todasbrillamos.view.screens.calendar
 
 import androidx.compose.foundation.layout.Box
@@ -28,17 +26,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import mx.cazv.todasbrillamos.model.CalculatePeriod
 import mx.cazv.todasbrillamos.ui.theme.AccentColor
-import java.text.SimpleDateFormat
-import java.util.Locale
+import mx.cazv.todasbrillamos.viewmodel.CalendarVM
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DatePickerDocked(text: String = "") {
+fun DatePickerDocked(text: String = "", calendarVM: CalendarVM = viewModel()) {
     var showDatePicker by remember { mutableStateOf(false) }
     val datePickerState = rememberDatePickerState()
     val selectedDate = datePickerState.selectedDateMillis?.let {
-        convertMillisToDate(it)
+        CalculatePeriod().convertMillisToDate(it)
     } ?: ""
 
     Row (modifier = Modifier) {
@@ -106,7 +105,8 @@ fun DatePickerDocked(text: String = "") {
                         onDismissRequest = { showDatePicker = false },
                         confirmButton = {
                             TextButton(onClick = { datePickerState.selectedDateMillis?.let {
-                                convertMillisToDate(it) } ?: ""
+                                CalculatePeriod().convertMillisToDate(it)
+                                calendarVM.updateSelectedDate(it) } ?: ""
                                 showDatePicker = false
                             }) {
                                 Text("Seleccionar")
@@ -116,8 +116,7 @@ fun DatePickerDocked(text: String = "") {
                             TextButton(onClick = { showDatePicker = false } ) {
                                 Text("Cancelar")
                             }
-                        },
-//                        colors = datePickerColors(BackgroundColor, AccentColor)
+                        }
                     ) {
                         DatePicker(
                             state = datePickerState,
@@ -128,9 +127,4 @@ fun DatePickerDocked(text: String = "") {
             }
         }
     }
-}
-
-fun convertMillisToDate(millis: Long): String {
-    val formatter = SimpleDateFormat("MM/dd/yyyy", Locale.getDefault())
-    return formatter.format(java.util.Date(millis))
 }

@@ -30,13 +30,18 @@ export interface processedProduct extends Product {
     url: string;
 }
 
+export interface ProductoCreado{
+    id: number;
+    name: string;
+}
+
 export default {
     product: {
         setProduct: (
             file: File,
             product: Product
 
-        ): Promise<void> => {
+        ): Promise<ProductoCreado> => {
             return upload("/products/upload", file, product);
         },
 
@@ -67,12 +72,12 @@ export default {
         },
         
         //GET
-        getProducts: async (): Promise<Product[]> => {
+        getProducts: async (): Promise<[Product[], string]> => {
             const prodInfo = await get<ProductsInfo>("/products")
-            return prodInfo.products.map((prod) => ({
+            return [prodInfo.products.map((prod) => ({
                 ...prod,
                 url: `${SERVER}/${prodInfo.folder}/${prod.hash}.${prod.type}`
-            }))
+            })), prodInfo.folder]
         
         },
 

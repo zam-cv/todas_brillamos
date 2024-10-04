@@ -5,11 +5,12 @@ export interface Category {
     name: string;
 }
 
+
 export default {
     category: {
         setCategory: (
             category: Category
-        ): Promise<void> => {
+        ): Promise<Category> => {
             return post("/categories", category)
         },
 

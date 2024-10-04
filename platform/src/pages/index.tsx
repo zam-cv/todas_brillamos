@@ -4,24 +4,21 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
-import api from "@/utils/api/admin"; // Asegúrate de ajustar la ruta de importación
+import api from "@/utils/api/admin";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function Home() {
   const navigate = useNavigate();
-  
+  const { signIn } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    try {
-      await api.admin.loginAdmin(email, password);
-      navigate("/dashboard"); // Redirigir al dashboard después de iniciar sesión
-    } catch (err) {
-      setError("Error al iniciar sesión. Verifica tus credenciales."); // Manejo de errores
-    }
-  };
+  function handleLogin(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault(); // Prevenir la recarga
+    signIn(email, password, navigate);
+  }
+
 
   return (
     <div className="container h-full min-h-screen items-center justify-center grid lg:max-w-none lg:grid-cols-2 lg:px-0">
@@ -33,7 +30,8 @@ export default function Home() {
         <div className="relative z-20 mt-auto">
           <blockquote className="space-y-2">
             <p className="text-lg">
-              &ldquo;Nosotras queremos que todas las mujeres brillen, que todas las mujeres sean&rdquo;
+              &ldquo;Nosotras queremos que todas las mujeres brillen, que todas
+              las mujeres sean&rdquo;
             </p>
             <footer className="text-sm">Todas Brillamos</footer>
           </blockquote>
@@ -49,9 +47,12 @@ export default function Home() {
               Introduce tu usuario y contraseña para iniciar sesión
             </p>
           </div>
-          {error && <p className="text-red-500 text-center">{error}</p>} {/* Mostrar errores */}
+          {error && <p className="text-red-500 text-center">{error}</p>}{" "}
+          {/* Mostrar errores */}
           <div className={cn("grid gap-6")}>
-            <form onSubmit={handleSubmit}> {/* Manejar envío de formulario */}
+            <form onSubmit={handleLogin}>
+              {" "}
+              {/* Manejar envío de formulario */}
               <div className="grid gap-2">
                 <div className="grid gap-1">
                   <Label className="card" htmlFor="email">
@@ -66,7 +67,8 @@ export default function Home() {
                       autoComplete="email"
                       autoCorrect="off"
                       value={email}
-                      onChange={(e) => setEmail(e.target.value)} // Manejar cambios en email
+                      onChange={(e) => setEmail(e.target.value)}
+                      // Manejar cambios en email
                     />
                     <Input
                       id="password" // Cambiar id a password
@@ -79,9 +81,7 @@ export default function Home() {
                     />
                   </div>
                 </div>
-                <Button type="submit">
-                  Continue
-                </Button>
+                <Button type="submit">Continue</Button>
               </div>
             </form>
           </div>

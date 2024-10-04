@@ -7,12 +7,16 @@ export interface Posts {
     content: string
 }
 
+export interface PostID{
+    id: number;
+}
+
 
 export default {
     posts: {
         setPost: (
             posts: Posts
-        ): Promise<void> => {
+        ): Promise<PostID> => {
             return post("/posts", posts)
         },
 

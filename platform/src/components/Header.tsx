@@ -21,6 +21,7 @@ import { IoIosAddCircleOutline } from "react-icons/io";
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/hooks/useAuth";
 
 const LINKS = [
   {
@@ -58,6 +59,7 @@ const LINKS = [
 export default function Header() {
   const { pathname } = useLocation();
   const route = pathname.split("/")[1];
+  
 
   return (
     <div className="hidden border-r bg-muted/40 md:block">
@@ -106,6 +108,11 @@ export default function Header() {
 export function HeaderMobile() {
   const { pathname } = useLocation();
   const route = pathname.split("/")[1];
+  const { signOut } = useAuth();
+
+  function handleSignOut(){
+    signOut();
+  }
 
   return (
     <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
@@ -160,7 +167,7 @@ export function HeaderMobile() {
           <DropdownMenuItem>Settings</DropdownMenuItem>
           <DropdownMenuItem>Support</DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>Logout</DropdownMenuItem>
+          <DropdownMenuItem onClick={handleSignOut}>Logout</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </header>

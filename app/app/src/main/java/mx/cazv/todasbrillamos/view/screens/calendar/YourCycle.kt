@@ -35,6 +35,7 @@ import mx.cazv.todasbrillamos.ui.theme.BackgroundColor
 import mx.cazv.todasbrillamos.ui.theme.ColorOfMostFertilePeriod
 import mx.cazv.todasbrillamos.ui.theme.OvulationColor
 import mx.cazv.todasbrillamos.ui.theme.PeriodColor
+import mx.cazv.todasbrillamos.view.Routes
 import mx.cazv.todasbrillamos.view.components.footer.BottomBar
 import mx.cazv.todasbrillamos.view.components.header.CustomTopBar
 import mx.cazv.todasbrillamos.view.components.PinkButton
@@ -320,7 +321,7 @@ fun YourCycle(navController: NavHostController) {
 //                .verticalScroll(rememberScrollState())
         ) {
             Text(
-                text = "Tu ciclo",
+                text = "Tu siguiente ciclo",
                 fontSize = 29.sp,
                 textAlign = TextAlign.Center,
                 fontStyle = FontStyle.Italic,
@@ -352,7 +353,7 @@ fun YourCycle(navController: NavHostController) {
                     .fillMaxWidth()
                     .padding(start = 20.dp, end = 20.dp)
             ) {
-                PinkButton("Volver a calcular")
+                PinkButton("Volver a calcular", onClick = { navController.navigate(Routes.ROUTE_CALENDAR) })
             }
         }
     }
