@@ -6,6 +6,8 @@ import { useState, useEffect } from "react";
 import api, { Category} from "@/utils/api/category";
 import apiPost, { Posts } from "@/utils/api/post";  
 import { Badge } from "@/components/ui/badge"
+import { DataTable } from "@/components/table/components/tablePosts/data-table-posts"
+import { columns as postColumns } from "@/components/table/components/tablePosts/columns-posts"
 
 import {
   Drawer,
@@ -33,6 +35,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { set } from "zod";
+import { columns } from "@/components/table/components/columns-products";
 
 
 export default function Specialists() {
@@ -239,7 +242,10 @@ export default function Specialists() {
             </AccordionItem>
           </Accordion>
         </div>
-        
+        <br></br>
+        <div>
+          <DataTable data={[]} columns={postColumns} event_id={1}/>
+          </div>
       </div>
     </div>
   );

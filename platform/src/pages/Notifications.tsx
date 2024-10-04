@@ -2,6 +2,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { DataTable } from "@/components/table/components/tableNotifications/data-table-notifications";
+import { columns as notificationColumns } from "@/components/table/components/tableNotifications/columns-notifications";  
 
 import {
   Popover,
@@ -54,6 +56,9 @@ export default function Notifications() {
             </AccordionItem>
           </Accordion>
         </div>
+      </div>
+      <div>
+        <DataTable data={[]} columns={notificationColumns} event_id={1}/>
       </div>
     </div>
   );
