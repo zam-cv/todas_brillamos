@@ -15,14 +15,14 @@ import androidx.compose.ui.unit.sp
 import mx.cazv.todasbrillamos.ui.theme.Pink
 
 @Composable
-fun PinkButton(text: String) {
+fun PinkButton(text: String, onClick: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .background(Pink, shape = RoundedCornerShape(10.dp))
     ) {
         OutlinedButton(
-            onClick = {},
+            onClick = { onClick()},
             border = null,
             modifier = Modifier
                 .fillMaxWidth(),

@@ -27,15 +27,21 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.toSize
+import androidx.lifecycle.viewmodel.compose.viewModel
 import mx.cazv.todasbrillamos.ui.theme.AccentColor
 import mx.cazv.todasbrillamos.view.screens.calendar.MinimalDialog
+import mx.cazv.todasbrillamos.viewmodel.CalendarVM
 
 @Composable
-fun DropDownMenu(suggestions: List<String>, type: String, text: String = "") {
+fun DropDownMenu(
+    suggestions: List<String>,
+    type: String,
+    text: String = "",
+    calendarVM: CalendarVM = viewModel()
+){
     var expanded by remember { mutableStateOf(false) }
     var selectedText by remember { mutableStateOf("") }
 
@@ -50,11 +56,14 @@ fun DropDownMenu(suggestions: List<String>, type: String, text: String = "") {
 
     Row (modifier = Modifier) {
 
-        MinimalDialog(text, Modifier.weight(0.5f).align(Alignment.CenterVertically))
+        MinimalDialog(text,
+            Modifier
+                .weight(0.5f)
+                .align(Alignment.CenterVertically))
 
         Column(modifier = Modifier
             .weight(10f)
-            .padding(start =20.dp, end = 20.dp),
+            .padding(start = 20.dp, end = 20.dp),
             horizontalAlignment = Alignment.CenterHorizontally) {
             OutlinedTextField(
                 value = selectedText,
@@ -92,6 +101,7 @@ fun DropDownMenu(suggestions: List<String>, type: String, text: String = "") {
                     DropdownMenuItem(text = { Text(text = label) }, onClick = {
                         selectedText = label
                         expanded = false
+                        calendarVM.updateSelectedNumber(selectedText, type)
                     },
                         modifier = Modifier.background(Color.White)
                     )
@@ -100,12 +110,4 @@ fun DropDownMenu(suggestions: List<String>, type: String, text: String = "") {
         }
     }
 
-}
-
-
-@Preview(showBackground = true)
-@Composable
-fun DropDownMenuPreview() {
-    val options = listOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "10")
-    DropDownMenu(options, "period")
 }
