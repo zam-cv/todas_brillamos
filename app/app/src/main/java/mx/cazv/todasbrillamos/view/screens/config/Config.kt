@@ -36,13 +36,20 @@ import mx.cazv.todasbrillamos.view.Routes
 import mx.cazv.todasbrillamos.view.components.footer.BottomBar
 import mx.cazv.todasbrillamos.view.components.header.BasicTopBar
 import mx.cazv.todasbrillamos.view.layouts.CustomLayout
+import mx.cazv.todasbrillamos.viewmodel.AuthViewModel
 
 @Composable
 fun Option(setting: Setting) {
     Column (
         modifier = Modifier
             .padding()
-            .clickable { setting.navController.navigate(setting.route) }
+            .clickable {
+                if (setting.action != null) {
+                    setting.action?.invoke()
+                } else {
+                    setting.navController.navigate(setting.route)
+                }
+            }
             .background(Color.White)
             .drawBehind {
                 val strokeWidth = 0.5.dp.toPx()
@@ -114,7 +121,7 @@ fun OptionsSection(options: List<Setting>) {
 }
 
 @Composable
-fun Config(navController: NavHostController) {
+fun Config(navController: NavHostController, authViewModel: AuthViewModel) {
     CustomLayout(
         navController = navController,
         withStoreButton = true,
@@ -148,7 +155,14 @@ fun Config(navController: NavHostController) {
 
             OptionsSection(
                 options = listOf(
-                    Setting("Cerrar sesión", Icons.AutoMirrored.Filled.ExitToApp, Routes.ROUTE_HOME, navController)
+                    Setting(
+                        "Cerrar sesión",
+                        Icons.AutoMirrored.Filled.ExitToApp,
+                        Routes.ROUTE_HOME, navController,
+                        action = {
+                            authViewModel.logout(navController)
+                        }
+                    )
                 )
             )
         }

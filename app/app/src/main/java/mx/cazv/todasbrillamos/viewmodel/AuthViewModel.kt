@@ -3,8 +3,8 @@ package mx.cazv.todasbrillamos.viewmodel
 import android.app.Application
 import android.content.Context
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavHostController
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -12,6 +12,7 @@ import mx.cazv.todasbrillamos.model.AuthService
 import mx.cazv.todasbrillamos.model.models.Credentials
 import mx.cazv.todasbrillamos.model.models.SignInRequest
 import mx.cazv.todasbrillamos.model.models.UserInfo
+import mx.cazv.todasbrillamos.view.Routes
 
 class AuthViewModel (application: Application): AndroidViewModel(application) {
     private val context = application.applicationContext
@@ -50,7 +51,19 @@ class AuthViewModel (application: Application): AndroidViewModel(application) {
         }
     }
 
-    private fun saveToken(token: String) {
+    suspend fun verify(): Boolean {
+        val token = getToken() ?: return false
+        val result = remoteService.verify(token)
+
+        if (result) {
+            val credentials = Credentials(token)
+            _authState.value = AuthState.SignInSuccess(credentials)
+        }
+
+        return result
+    }
+
+    fun saveToken(token: String) {
         val sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
         with(sharedPreferences.edit()) {
             putString(KEY_AUTH_TOKEN, token)
@@ -61,6 +74,21 @@ class AuthViewModel (application: Application): AndroidViewModel(application) {
     fun getToken(): String? {
         val sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
         return sharedPreferences.getString(KEY_AUTH_TOKEN, null)
+    }
+
+    fun logout(navController: NavHostController) {
+        val sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        with(sharedPreferences.edit()) {
+            remove(KEY_AUTH_TOKEN)
+            commit()
+        }
+
+        _authState.value = AuthState.Idle
+
+        navController.navigate(Routes.ROUTE_LOGIN) {
+            popUpTo(navController.graph.startDestinationId) { inclusive = true }
+            launchSingleTop = true
+        }
     }
 }
 
