@@ -7,10 +7,7 @@ import { useState } from "react";
 import api from "@/utils/api/admin";
 import { useAuth } from "@/hooks/useAuth";
 
-
 export default function Home() {
-
-
   const navigate = useNavigate();
   const { signIn } = useAuth();
   const [email, setEmail] = useState("");
@@ -22,6 +19,7 @@ export default function Home() {
     signIn(email, password, navigate);
   }
 
+
   return (
     <div className="container h-full min-h-screen items-center justify-center grid lg:max-w-none lg:grid-cols-2 lg:px-0">
       <div className="relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex">
@@ -32,7 +30,8 @@ export default function Home() {
         <div className="relative z-20 mt-auto">
           <blockquote className="space-y-2">
             <p className="text-lg">
-              &ldquo;Nosotras queremos que todas las mujeres brillen, que todas las mujeres sean&rdquo;
+              &ldquo;Nosotras queremos que todas las mujeres brillen, que todas
+              las mujeres sean&rdquo;
             </p>
             <footer className="text-sm">Todas Brillamos</footer>
           </blockquote>
@@ -48,9 +47,12 @@ export default function Home() {
               Introduce tu usuario y contraseña para iniciar sesión
             </p>
           </div>
-          {error && <p className="text-red-500 text-center">{error}</p>} {/* Mostrar errores */}
+          {error && <p className="text-red-500 text-center">{error}</p>}{" "}
+          {/* Mostrar errores */}
           <div className={cn("grid gap-6")}>
-            <form onSubmit={handleLogin}> {/* Manejar envío de formulario */}
+            <form onSubmit={handleLogin}>
+              {" "}
+              {/* Manejar envío de formulario */}
               <div className="grid gap-2">
                 <div className="grid gap-1">
                   <Label className="card" htmlFor="email">
@@ -79,9 +81,7 @@ export default function Home() {
                     />
                   </div>
                 </div>
-                <Button type="submit">
-                  Continue
-                </Button>
+                <Button type="submit">Continue</Button>
               </div>
             </form>
           </div>
