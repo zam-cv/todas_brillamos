@@ -6,6 +6,11 @@ import mx.cazv.todasbrillamos.model.apiCall
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+/**
+ * Servicio que maneja las solicitudes relacionadas con el usuario.
+ *
+ * @author Carlos Zamudio
+ */
 class UserService {
     private val retrofitApi by lazy {
         Retrofit.Builder()
@@ -18,6 +23,12 @@ class UserService {
         retrofitApi.create(API::class.java)
     }
 
+    /**
+     * Obtiene el nombre completo del usuario.
+     *
+     * @param token El token de autenticación.
+     * @return El nombre completo del usuario.
+     */
     suspend fun fullname(token: String): String {
         return apiCall { apiService.getFullName("Bearer $token") }.getOrNull() ?: ""
     }
