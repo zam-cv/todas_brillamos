@@ -2,6 +2,8 @@ package database
 
 import "backend/models"
 
+// GetProducts obtiene todos los productos de la base de datos.
+// Devuelve una lista de productos y un error en caso de que ocurra.
 func GetProducts() ([]models.Product, error) {
 	products := []models.Product{}
 	if err := db.Find(&products).Error; err != nil {
@@ -11,6 +13,8 @@ func GetProducts() ([]models.Product, error) {
 	return products, nil
 }
 
+// GetProductById obtiene un producto por su ID.
+// Devuelve un puntero a models.Product y un error en caso de que ocurra.
 func GetProductById(id uint) (*models.Product, error) {
 	product := &models.Product{}
 	if err := db.First(product, id).Error; err != nil {
@@ -20,6 +24,8 @@ func GetProductById(id uint) (*models.Product, error) {
 	return product, nil
 }
 
+// GetRandomProducts obtiene productos aleatorios que no están en el carrito del cliente.
+// Devuelve una lista de productos y un error en caso de que ocurra.
 func GetRandomProducts(clientID uint) ([]models.Product, error) {
 	products := []models.Product{}
 	// Límite de 8 productos que cumplan con esta condición
@@ -36,6 +42,8 @@ func GetRandomProducts(clientID uint) ([]models.Product, error) {
 	return products, nil
 }
 
+// RegisterProduct registra un nuevo producto en la base de datos.
+// Devuelve el ID del producto creado y un error en caso de que ocurra.
 func RegisterProduct(product *models.Product) (uint, error) {
 	if err := db.Create(product).Error; err != nil {
 		return 0, err
@@ -44,6 +52,8 @@ func RegisterProduct(product *models.Product) (uint, error) {
 	return product.ID, nil
 }
 
+// RemoveProduct elimina un producto por su ID.
+// Devuelve el producto eliminado y un error en caso de que ocurra.
 func RemoveProduct(id uint) (*models.Product, error) {
 	product, err := GetProductById(id)
 	if err != nil {
@@ -57,6 +67,8 @@ func RemoveProduct(id uint) (*models.Product, error) {
 	return product, nil
 }
 
+// UpdateProduct actualiza un producto por su ID.
+// Devuelve un error en caso de que ocurra.
 func UpdateProduct(id uint, product *models.Product) error {
 	if err := db.Model(&models.Product{}).Where("id = ?", id).Updates(product).Error; err != nil {
 		return err
@@ -65,6 +77,8 @@ func UpdateProduct(id uint, product *models.Product) error {
 	return nil
 }
 
+// GetFileByHashDB obtiene un producto por su hash.
+// Devuelve un puntero a models.Product y un error en caso de que ocurra.
 func GetFileByHashDB(hash string) (*models.Product, error) {
 	product := &models.Product{}
 	if err := db.Where("hash = ?", hash).First(product).Error; err != nil {
