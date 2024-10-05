@@ -9,12 +9,21 @@ import kotlinx.coroutines.launch
 import mx.cazv.todasbrillamos.model.services.ProductsService
 import mx.cazv.todasbrillamos.model.states.RandomState
 
+/**
+ * ViewModel para gestionar la información aleatoria de productos.
+ * @author Carlos Zamudio
+ */
 class RandomViewModel : ViewModel() {
     private val randomService = ProductsService()
 
     private val _state = MutableStateFlow(RandomState())
     val state: StateFlow<RandomState> = _state.asStateFlow()
 
+    /**
+     * Carga la información aleatoria de productos utilizando el token de autenticación.
+     *
+     * @param token El token de autenticación.
+     */
     fun loadRandomInfo(token: String) {
         viewModelScope.launch {
             try {
