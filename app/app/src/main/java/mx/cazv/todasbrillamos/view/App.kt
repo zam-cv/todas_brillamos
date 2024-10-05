@@ -69,7 +69,8 @@ fun Nav(
     }
 
     if (startDestination != null) {
-        NavHost(navController = navController,
+        NavHost(
+            navController = navController,
             startDestination = startDestination!!,
             modifier = modifier.fillMaxSize()
         ) {
@@ -140,7 +141,7 @@ fun Nav(
             }
 
             composable(Routes.ROUTE_EDIT_PROFILE) {
-                EditProfile(navController)
+                EditProfile(navController, authViewModel, userViewModel)
             }
 
             composable(Routes.ROUTE_CHANGE_PASSWORD) {

@@ -2,6 +2,7 @@ package mx.cazv.todasbrillamos.model
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import mx.cazv.todasbrillamos.model.models.ClientDetails
 import mx.cazv.todasbrillamos.model.models.Credentials
 import mx.cazv.todasbrillamos.model.models.Post
 import mx.cazv.todasbrillamos.model.models.ProductList
@@ -12,6 +13,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
+import retrofit2.http.PUT
 
 /**
  * Interfaz que define las llamadas a la API.
@@ -44,14 +46,14 @@ interface API {
     @GET("api/auth/user/verify")
     suspend fun verify(@Header("Authorization") token: String)
 
-    /**
-     * Obtiene el nombre completo del usuario.
-     *
-     * @param token El token de autenticación.
-     * @return El nombre completo del usuario.
-     */
-    @GET("api/clients/fullname")
-    suspend fun getFullName(@Header("Authorization") token: String): String
+    @GET("api/clients")
+    suspend fun getClient(@Header("Authorization") token: String): ClientDetails
+
+    @PUT("api/clients")
+    suspend fun updateClientDetails(
+        @Header("Authorization") token: String,
+        @Body request: ClientDetails
+    ): String
 
     /**
      * Obtiene la lista de productos.

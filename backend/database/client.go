@@ -7,6 +7,18 @@ import (
 	"gorm.io/gorm"
 )
 
+func GetUserByID(id int) (*models.User, error) {
+	var user models.User
+	err := GetDatabase().First(&user, id).Error
+	return &user, err
+}
+
+func UpdateUserPassword(id int, password string) error {
+	return GetDatabase().Model(&models.User{}).
+		Where("id = ?", id).
+		Update("password", password).Error
+}
+
 func GetFullNameByClientID(id int) (string, error) {
 	var client models.Client
 	err := GetDatabase().First(&client, id).Error
