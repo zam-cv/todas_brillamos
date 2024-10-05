@@ -39,6 +39,8 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import mx.cazv.todasbrillamos.model.models.ProductList
+import mx.cazv.todasbrillamos.model.models.ProductRaw
 import mx.cazv.todasbrillamos.ui.theme.AccentColor
 import mx.cazv.todasbrillamos.ui.theme.BackgroundColor
 import mx.cazv.todasbrillamos.ui.theme.BadgePink
@@ -216,7 +218,7 @@ fun ProductDetails() {
 }
 
 @Composable
-fun Product() {
+fun Product(name: String, model: String, price: Int) {
     Box (
         modifier = Modifier
             .background(Color.White)
@@ -271,7 +273,7 @@ fun Product() {
                     .padding(start = 7.dp, end = 7.dp)
             ) {
                 Text(
-                    text = "PRODUCTO",
+                    text = name,
                     fontSize = 11.sp,
                     fontWeight = FontWeight.W400,
                     style = TextStyle(
@@ -282,7 +284,7 @@ fun Product() {
                 )
 
                 Text(
-                    text = "Tipo",
+                    text = model,
                     fontSize = 10.sp,
                     style = TextStyle(
                         baselineShift = BaselineShift(0f)
@@ -294,7 +296,7 @@ fun Product() {
                         .padding(bottom = 3.dp)
                 ) {
                     Text(
-                        text = "\$000.00",
+                        text = "\$${price}.00",
                         fontSize = 13.sp,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier
@@ -318,10 +320,9 @@ fun Product() {
 }
 
 @Composable
-fun MoreProducts(text: String, modifier: Modifier) {
+fun MoreProducts(text: String, products: ProductList, modifier: Modifier) {
     Column (
         modifier = modifier
-//            .padding(top = 50.dp, bottom = 10.dp)
     ) {
         Text(
             text = text,
@@ -334,16 +335,15 @@ fun MoreProducts(text: String, modifier: Modifier) {
                 .horizontalScroll(rememberScrollState())
                 .padding(top = 10.dp, bottom = 10.dp)
         ) {
-            Product()
-            Spacer(modifier = Modifier.width(10.dp))
-            Product()
-            Spacer(modifier = Modifier.width(10.dp))
-            Product()
-            Spacer(modifier = Modifier.width(10.dp))
-            Product()
-            Spacer(modifier = Modifier.width(10.dp))
-            Product()
-            Spacer(modifier = Modifier.width(10.dp))
+            for (product in products.products) {
+                Product(
+                    name = product.name,
+                    model = product.model,
+                    price = product.price
+                )
+
+                Spacer(modifier = Modifier.width(10.dp))
+            }
         }
     }
 }
@@ -448,7 +448,7 @@ fun ProductDetails(navController: NavHostController) {
                         ProductDetails()
                     }
 
-                    MoreProducts(text = "Más productos", modifier = Modifier.padding(top = 60.dp))
+/*                    MoreProducts(text = "Más productos", modifier = Modifier.padding(top = 60.dp))*/
                 }
             }
         }

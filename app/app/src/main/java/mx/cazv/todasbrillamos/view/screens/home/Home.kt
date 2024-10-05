@@ -13,17 +13,25 @@ import androidx.navigation.NavHostController
 import mx.cazv.todasbrillamos.view.layouts.MainLayout
 import mx.cazv.todasbrillamos.view.screens.MoreProducts
 import mx.cazv.todasbrillamos.viewmodel.AuthViewModel
+import mx.cazv.todasbrillamos.viewmodel.RandomViewModel
 import mx.cazv.todasbrillamos.viewmodel.UserViewModel
 
 @Composable
-fun Home(navController: NavHostController, authViewModel: AuthViewModel, userViewModel: UserViewModel) {
-    val state = userViewModel.state.collectAsState()
+fun Home(
+    navController: NavHostController,
+    authViewModel: AuthViewModel,
+    userViewModel: UserViewModel,
+    randomViewModel: RandomViewModel = RandomViewModel()
+) {
+    val userState = userViewModel.state.collectAsState()
+    val randomState = randomViewModel.state.collectAsState()
 
     LaunchedEffect(key1 = Unit) {
         val token = authViewModel.getToken()
 
         if (token != null) {
             userViewModel.loadUserInfo(token)
+            randomViewModel.loadRandomInfo(token)
         }
     }
 
@@ -32,10 +40,18 @@ fun Home(navController: NavHostController, authViewModel: AuthViewModel, userVie
             modifier = Modifier
                 .padding(top = 75.dp, start = 15.dp, end = 15.dp, bottom = 25.dp)
         ){
-            GreetingSec(state.value.fullName)
+            GreetingSec(userState.value.fullName)
             Spacer(modifier = Modifier.height(30.dp))
             InteractiveCardsHome()
-            MoreProducts(text = "Recomendado", modifier = Modifier.padding(top = 20.dp))
+
+            if (randomState.value.products.products.isNotEmpty()) {
+                MoreProducts(
+                    text = "Recomendado",
+                    products = randomState.value.products,
+                    modifier = Modifier.padding(top = 20.dp)
+                )
+            }
+
             Spacer(modifier = Modifier.height(20.dp))
             Post()
             Spacer(modifier = Modifier.height(20.dp))

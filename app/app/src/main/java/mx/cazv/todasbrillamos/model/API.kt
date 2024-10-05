@@ -3,6 +3,7 @@ package mx.cazv.todasbrillamos.model
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import mx.cazv.todasbrillamos.model.models.Credentials
+import mx.cazv.todasbrillamos.model.models.ProductList
 import mx.cazv.todasbrillamos.model.models.SignInRequest
 import mx.cazv.todasbrillamos.model.models.UserInfo
 import retrofit2.HttpException
@@ -23,6 +24,9 @@ interface API {
 
     @GET("api/clients/fullname")
     suspend fun getFullName(@Header("Authorization") token: String): String
+
+    @GET("api/products/random")
+    suspend fun getRandomProduct(@Header("Authorization") token: String): ProductList
 }
 
 suspend fun <T> apiCall(call: suspend () -> T): Result<T> = withContext(Dispatchers.IO) {
