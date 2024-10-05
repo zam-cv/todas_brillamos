@@ -16,7 +16,9 @@ import (
 
 var specialistCache []models.Specialist // Variable global para almacenar los especialistas en memoria caché
 
-// Función para agregar rutas de los especialistas
+/*
+ * Función para agregar rutas de los especialistas
+ */
 func addSpecialistsRoutes(api *gin.RouterGroup) {
 	specialists := api.Group("/specialists")
 
@@ -33,7 +35,7 @@ func addSpecialistsRoutes(api *gin.RouterGroup) {
 			return
 		}
 
-		newSpecialist.ID = uint(len(specialistCache) + 1) // Generar ID
+		newSpecialist.ID = uint(len(specialistCache) + 1) // Genera ID
 		specialistCache = append(specialistCache, newSpecialist)
 		c.JSON(http.StatusOK, newSpecialist)
 	})
