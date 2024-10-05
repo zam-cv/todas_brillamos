@@ -34,6 +34,12 @@ import mx.cazv.todasbrillamos.view.components.Button
 import mx.cazv.todasbrillamos.view.components.Input
 import mx.cazv.todasbrillamos.view.layouts.BasicLayout
 
+/**
+ * Pantalla de recuperación de contraseña que permite al usuario solicitar un enlace para restablecer su contraseña.
+ * @author Jennyfer Jasso
+ *
+ * @param navController El NavHostController utilizado para la navegación.
+ */
 @Composable
 fun ForgotPassword(navController: NavHostController) {
     BasicLayout(navController = navController) {

@@ -12,6 +12,12 @@ import mx.cazv.todasbrillamos.view.components.header.BasicTopBar
 import mx.cazv.todasbrillamos.view.layouts.CustomLayout
 import mx.cazv.todasbrillamos.view.screens.store.ViewFavorites
 
+/**
+ * Pantalla de favoritos que muestra una lista de productos favoritos del usuario.
+ * @author Min Che Kim
+ *
+ * @param navController El NavHostController utilizado para la navegación.
+ */
 @Composable
 fun Favorites(navController: NavHostController) {
     CustomLayout (
@@ -31,6 +37,9 @@ fun Favorites(navController: NavHostController) {
     }
 }
 
+/**
+ * Vista previa de la pantalla de favoritos.
+ */
 @Preview(showBackground = true)
 @Composable
 fun FavoritesPreview() {

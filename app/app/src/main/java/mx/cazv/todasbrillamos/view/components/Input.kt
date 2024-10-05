@@ -24,6 +24,23 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import mx.cazv.todasbrillamos.ui.theme.Stroke
 
+/**
+ * Función composable que muestra un campo de entrada de texto con opciones de ícono y estilo.
+ * @author Carlos Zamudio
+ *
+ * @param placeholder El texto de marcador de posición que se mostrará cuando el campo esté vacío.
+ * @param suffixIcon Un composable opcional que se mostrará al final del campo de entrada.
+ * @param imageId El recurso de la imagen que se mostrará en el campo de entrada (opcional).
+ * @param height La altura del campo de entrada (opcional).
+ * @param padding El relleno interno del campo de entrada.
+ * @param imageSize El tamaño de la imagen en el campo de entrada.
+ * @param topStart El radio de la esquina superior izquierda del campo de entrada.
+ * @param topEnd El radio de la esquina superior derecha del campo de entrada.
+ * @param bottomEnd El radio de la esquina inferior derecha del campo de entrada.
+ * @param bottomStart El radio de la esquina inferior izquierda del campo de entrada.
+ * @param value El valor actual del campo de entrada.
+ * @param onValueChange La función que se llamará cuando el valor del campo de entrada cambie.
+ */
 @Composable
 fun Input(
     placeholder: String,

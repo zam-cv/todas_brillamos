@@ -20,8 +20,15 @@ import mx.cazv.todasbrillamos.model.models.ProductList
 import mx.cazv.todasbrillamos.model.models.ProductProvider
 
 /**
- * Ver los productos dependiendo de la vista
- * @author: Min Che Kim
+ * Archivo para mostrar los productos en una vista de cuadrícula o lista.
+ * @author Min Che Kim
+ */
+
+/**
+ * Composable que muestra los productos en una vista de cuadrícula o lista, dependiendo del tipo especificado.
+ *
+ * @param type El tipo de vista ("grid" para cuadrícula, "list" para lista).
+ * @param products La lista de productos a mostrar.
  */
 @Composable
 fun ViewProducts(type: String, products: ProductList) {
@@ -56,6 +63,9 @@ fun ViewProducts(type: String, products: ProductList) {
     }
 }
 
+/**
+ * Composable que muestra los productos favoritos en una vista de cuadrícula.
+ */
 @Composable
 fun ViewFavorites() {
     LazyVerticalGrid(

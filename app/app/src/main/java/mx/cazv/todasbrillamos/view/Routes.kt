@@ -8,8 +8,17 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import mx.cazv.todasbrillamos.R
 
 /**
- * Ruta de las pantallas de la aplicación
+ * Archivo para definir las rutas de las pantallas de la aplicación.
  * @author Carlos Zamudio
+ *
+ */
+
+/**
+ * Ruta de las pantallas de la aplicación.
+ * Define las rutas y los íconos asociados a cada pantalla.
+ * @param route La ruta de la pantalla.
+ * @param tag La etiqueta de la pantalla.
+ * @param icon El ícono asociado a la pantalla.
  */
 sealed class Routes (
     val route: String,
@@ -53,6 +62,9 @@ sealed class Routes (
     private data object Config: Routes(ROUTE_CONFIG, "Config", Icon.VectorIcon(Icons.Default.Settings))
 }
 
+/**
+ * Clase sellada que representa un ícono.
+ */
 sealed class Icon {
     data class VectorIcon(val imageVector: ImageVector) : Icon()
     data class ResourceIcon(val resId: Int) : Icon()

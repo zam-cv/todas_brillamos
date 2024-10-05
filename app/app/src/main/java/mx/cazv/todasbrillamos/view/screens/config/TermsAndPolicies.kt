@@ -23,6 +23,18 @@ import mx.cazv.todasbrillamos.view.components.Section
 import mx.cazv.todasbrillamos.view.components.header.BasicTopBar
 import mx.cazv.todasbrillamos.view.layouts.CustomLayout
 
+/**
+ * Archivo para mostrar los términos y políticas legales de la organización.
+ * @author Carlos Zamudio
+ *
+ */
+
+/**
+ * Composable que muestra una sección con un título y contenido.
+ *
+ * @param title El título de la sección.
+ * @param content El contenido de la sección.
+ */
 @Composable
 fun SectionWithContent(title: String, content: String) {
     Section(
@@ -44,6 +56,12 @@ fun SectionWithContent(title: String, content: String) {
     }
 }
 
+/**
+ * Composable que muestra una sección con un título y una lista de elementos.
+ *
+ * @param title El título de la sección.
+ * @param list La lista de elementos a mostrar.
+ */
 @Composable
 fun SectionWithList(title: String, list: List<String>) {
     Section(
@@ -62,6 +80,11 @@ fun SectionWithList(title: String, list: List<String>) {
     }
 }
 
+/**
+ * Pantalla de términos y políticas legales que muestra la información de privacidad y uso de datos.
+ *
+ * @param navController El NavHostController utilizado para la navegación.
+ */
 @Composable
 fun TermsAndPolicies(navController: NavHostController) {
     CustomLayout(

@@ -19,6 +19,12 @@ import mx.cazv.todasbrillamos.view.components.Input
 import mx.cazv.todasbrillamos.view.components.header.BasicTopBar
 import mx.cazv.todasbrillamos.view.layouts.CustomLayout
 
+/**
+ * Pantalla de cambio de contraseña que permite al usuario actualizar su contraseña.
+ * @author Carlos Zamudio
+ *
+ * @param navController El NavHostController utilizado para la navegación.
+ */
 @Composable
 fun ChangePassword(navController: NavHostController) {
     CustomLayout(

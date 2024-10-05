@@ -26,6 +26,19 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+/**
+ * Función composable que muestra un botón personalizado con texto e íconos opcionales.
+ * @author Mariana Balderrábano
+ *
+ * @param text El texto que se mostrará en el botón.
+ * @param col El color de fondo del botón.
+ * @param colT El color del texto del botón.
+ * @param imageId El recurso de la imagen que se mostrará en el botón (opcional).
+ * @param height La altura del botón (opcional).
+ * @param borderColor El color del borde del botón (opcional).
+ * @param alignTextLeft Indica si el texto debe alinearse a la izquierda.
+ * @param trailingIcon El ícono que se mostrará al final del botón (opcional).
+ */
 @Composable
 fun CustomButton(text: String,
                  col: Color,

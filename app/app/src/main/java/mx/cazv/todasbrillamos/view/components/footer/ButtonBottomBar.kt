@@ -15,6 +15,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import mx.cazv.todasbrillamos.R
 
+/**
+ * Archivo para el botón de la barra de navegación inferior.
+ *
+ * @author Carlos Zamudio
+ */
+
+/**
+ * Función composable que muestra una barra inferior con un botón.
+ *
+ * @param buttonText El texto que se mostrará en el botón.
+ * @param onClick La acción que se ejecutará al hacer clic en el botón.
+ */
 @Composable
 fun ButtonBottomBar(buttonText: String, onClick: () -> Unit) {
     Box {

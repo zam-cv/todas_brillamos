@@ -15,6 +15,14 @@ import mx.cazv.todasbrillamos.view.components.footer.BottomBar
 import mx.cazv.todasbrillamos.view.components.StoreButton
 import mx.cazv.todasbrillamos.view.components.header.TopBar
 
+/**
+ * Layout principal que utiliza un Scaffold con una barra superior, una barra inferior,
+ * un botón flotante de tienda y desplazamiento vertical.
+ * @author Carlos Zamudio
+ *
+ * @param navController El NavHostController utilizado para la navegación.
+ * @param content El contenido que se mostrará dentro del layout.
+ */
 @Composable
 fun MainLayout(navController: NavHostController, content: @Composable () -> Unit) {
     Scaffold(

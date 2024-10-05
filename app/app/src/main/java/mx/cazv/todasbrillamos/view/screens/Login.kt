@@ -47,6 +47,13 @@ import mx.cazv.todasbrillamos.view.layouts.BasicLayout
 import mx.cazv.todasbrillamos.viewmodel.AuthState
 import mx.cazv.todasbrillamos.viewmodel.AuthViewModel
 
+/**
+ * Pantalla de inicio de sesión que permite al usuario ingresar su correo electrónico y contraseña para iniciar sesión.
+ * @author Jennyfer Jasso
+ *
+ * @param navController El NavHostController utilizado para la navegación.
+ * @param viewModel El ViewModel de autenticación utilizado para gestionar el inicio de sesión del usuario.
+ */
 @Composable
 fun Login(navController: NavHostController, viewModel: AuthViewModel) {
     val authState by viewModel.authState.collectAsState()

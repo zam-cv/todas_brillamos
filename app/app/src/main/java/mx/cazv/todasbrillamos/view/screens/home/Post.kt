@@ -19,6 +19,14 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+/**
+ * Composable que muestra una publicación con un título, contenido y un botón para leer más.
+ * @author Jennyfer Jasso
+ *
+ * @param title El título de la publicación.
+ * @param content El contenido de la publicación.
+ * @param wordLimit El límite de palabras a mostrar antes de truncar el contenido.
+ */
 @Composable
 fun Post(title: String, content: String, wordLimit: Int = 20) {
     Card(
@@ -62,6 +70,13 @@ fun Post(title: String, content: String, wordLimit: Int = 20) {
     }
 }
 
+/**
+ * Función que limita el número de palabras en un texto.
+ *
+ * @param text El texto a truncar.
+ * @param limit El número máximo de palabras a mostrar.
+ * @return El texto truncado con un sufijo "..." si excede el límite de palabras.
+ */
 fun limitWords(text: String, limit: Int): String {
     val words = text.split(" ")
     return if (words.size > limit) {

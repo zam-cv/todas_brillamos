@@ -21,6 +21,16 @@ import mx.cazv.todasbrillamos.view.layouts.CustomLayout
 import mx.cazv.todasbrillamos.view.components.footer.ChatBottomBar
 import mx.cazv.todasbrillamos.view.components.header.BasicTopBar
 
+/**
+ * Archivo para mostrar el chat
+ * @author Mariana Balderrábano
+ */
+
+/**
+ * Pantalla de chat que permite al usuario interactuar con un asistente de inteligencia artificial.
+ *
+ * @param navController El NavHostController utilizado para la navegación.
+ */
 @Composable
 fun Chat(navController: NavHostController) {
     CustomLayout(
@@ -49,6 +59,9 @@ fun Chat(navController: NavHostController) {
     }
 }
 
+/**
+ * Composable que muestra una advertencia sobre el uso del chat.
+ */
 @Composable
 fun Warning(){
     Column {
@@ -64,6 +77,13 @@ fun Warning(){
     }
 }
 
+
+/**
+ * Composable que muestra un mensaje del chat.
+ *
+ * @param descrip La descripción del mensaje.
+ * @param modifier Modificador para personalizar la apariencia y el comportamiento del componente.
+ */
 @Composable
 fun MessageChat( descrip: String, modifier: Modifier = Modifier) {
     Spacer(modifier = Modifier.height(16.dp))
@@ -94,6 +114,12 @@ fun MessageChat( descrip: String, modifier: Modifier = Modifier) {
     }
 }
 
+/**
+ * Composable que muestra un mensaje del usuario.
+ *
+ * @param descrip La descripción del mensaje.
+ * @param modifier Modificador para personalizar la apariencia y el comportamiento del componente.
+ */
 @Composable
 fun MessageUser(descrip: String, modifier: Modifier = Modifier) {
     Spacer(modifier = Modifier.height(16.dp))
@@ -123,13 +149,25 @@ fun MessageUser(descrip: String, modifier: Modifier = Modifier) {
     }
 }
 
+/**
+ * Datos de un mensaje.
+ *
+ * @param descrip La descripción del mensaje.
+ * @param type El tipo de mensaje (usuario o chat).
+ */
 data class Message(val descrip:String, val type:MessageType)
 
+/**
+ * Tipos de mensajes posibles.
+ */
 enum class MessageType{
     CHAT,
     USER
 }
 
+/**
+ * Lista de mensajes de ejemplo.
+ */
 val messages = listOf(
     Message("Este es un ejemplo de texto por la parte del usuario", MessageType.USER) ,
     Message("Este es un ejemplo de texto por la parte del chat", MessageType.CHAT),

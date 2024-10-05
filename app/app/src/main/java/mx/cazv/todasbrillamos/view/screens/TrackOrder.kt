@@ -41,6 +41,18 @@ import mx.cazv.todasbrillamos.view.layouts.BasicLayout
 import mx.cazv.todasbrillamos.view.layouts.CustomLayout
 import mx.cazv.todasbrillamos.view.layouts.MainLayout
 
+/**
+ * Archivo que contiene la vista de rastreo de pedido.
+ * @author Carlos Zamudio
+ * @author Jennyfer Jasso
+ *
+ */
+
+/**
+ * Pantalla de rastreo de pedido que muestra el estado del pedido y los detalles del mismo.
+ *
+ * @param navController El NavHostController utilizado para la navegación.
+ */
 @Composable
 fun TrackOrder(navController: NavHostController) {
     val configuration = LocalConfiguration.current
@@ -159,6 +171,11 @@ fun TrackOrder(navController: NavHostController) {
     }
 }
 
+/**
+ * Composable que muestra los productos del pedido.
+ *
+ * @param lenProducts La cantidad de productos en el pedido.
+ */
 @Composable
 fun OrderProducts(lenProducts: Int) {
     for (i in 1..lenProducts) {
@@ -207,6 +224,11 @@ fun OrderProducts(lenProducts: Int) {
     }
 }
 
+/**
+ * Composable que muestra el estado del pedido.
+ *
+ * @param status El estado actual del pedido.
+ */
 @Composable
 fun OrderStatus(status: String) {
     val statusList = listOf("Entregado", "En camino", "Preparando pedido", "Pedido recibido")
@@ -255,6 +277,9 @@ fun OrderStatus(status: String) {
     }
 }
 
+/**
+ * Vista previa de la pantalla de rastreo de pedido.
+ */
 @Preview
 @Composable
 fun TOPreview() {

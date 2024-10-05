@@ -25,6 +25,11 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import mx.cazv.todasbrillamos.view.Routes
 
+/**
+ * Barra superior con iconos de notificaciones, pedidos, favoritos y carrito de compras.
+ * @author Carlos Zamudio
+ * @param navController El NavHostController utilizado para la navegación.
+ */
 @Composable
 fun TopBar(navController: NavHostController) {
     Surface(

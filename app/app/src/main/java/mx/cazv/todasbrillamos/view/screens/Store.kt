@@ -20,6 +20,15 @@ import mx.cazv.todasbrillamos.view.screens.store.ViewProducts
 import mx.cazv.todasbrillamos.viewmodel.AuthViewModel
 import mx.cazv.todasbrillamos.viewmodel.ProductsViewModel
 
+/**
+ * Pantalla de la tienda que muestra los productos disponibles y permite cambiar la vista y filtrar por categoría.
+ * @author Carlos Zamudio
+ * @author Min Che Kim
+ *
+ *  @param navController El NavHostController utilizado para la navegación.
+ *  @param authViewModel El ViewModel de autenticación utilizado para obtener el token del usuario.
+ *  @param productsViewModel El ViewModel de productos utilizado para cargar y gestionar los productos.
+ */
 @Composable
 fun Store(
     navController: NavHostController,

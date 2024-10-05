@@ -24,6 +24,12 @@ import mx.cazv.todasbrillamos.view.components.Input
 import mx.cazv.todasbrillamos.view.components.header.BasicTopBar
 import mx.cazv.todasbrillamos.view.layouts.CustomLayout
 
+/**
+ * Pantalla de edición de perfil que permite al usuario actualizar su información personal.
+ * @author Carlos Zamudio
+ *
+ * @param navController El NavHostController utilizado para la navegación.
+ */
 @Composable
 fun EditProfile(navController: NavHostController) {
     CustomLayout(

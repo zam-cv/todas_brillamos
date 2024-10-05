@@ -47,6 +47,13 @@ import mx.cazv.todasbrillamos.ui.theme.BackgroundColor
 import mx.cazv.todasbrillamos.viewmodel.AuthState
 import mx.cazv.todasbrillamos.viewmodel.AuthViewModel
 
+/**
+ * Pantalla de registro que permite al usuario crear una nueva cuenta.
+ * @author Jennyfer Jasso
+ *
+ * @param navController El NavHostController utilizado para la navegación.
+ * @param authViewModel El ViewModel de autenticación utilizado para gestionar el registro del usuario.
+ */
 @Composable
 fun Register(navController: NavHostController, authViewModel: AuthViewModel) {
     val coroutineScope = rememberCoroutineScope()

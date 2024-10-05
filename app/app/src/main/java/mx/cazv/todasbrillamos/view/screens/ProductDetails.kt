@@ -55,6 +55,13 @@ import mx.cazv.todasbrillamos.view.components.Description
 import mx.cazv.todasbrillamos.view.components.Line
 import mx.cazv.todasbrillamos.view.layouts.CustomLayout
 
+/** Archivo para mostrar detalles de productos.
+ * @author Carlos Zamudio
+ * */
+
+/**
+ * Controlador de cantidad que permite al usuario aumentar o disminuir la cantidad de productos.
+ */
 @Composable
 fun QuantityController() {
     Box(
@@ -105,6 +112,12 @@ fun QuantityController() {
     }
 }
 
+/**
+ * Composable que muestra un detalle específico del producto.
+ *
+ * @param name El nombre del detalle.
+ * @param text El valor del detalle.
+ */
 @Composable
 fun Detail(name: String, text: String) {
     Column {
@@ -132,6 +145,9 @@ fun Detail(name: String, text: String) {
     }
 }
 
+/**
+ * Composable que muestra los detalles del producto, incluyendo descripción y detalles específicos.
+ */
 @Composable
 fun ProductDetails() {
     var section by remember { mutableStateOf("description") }
@@ -220,6 +236,16 @@ fun ProductDetails() {
     }
 }
 
+/**
+ * Composable que muestra un producto con su imagen, nombre, modelo, precio y descuento.
+ *
+ * @param name El nombre del producto.
+ * @param model El modelo del producto.
+ * @param price El precio del producto.
+ * @param folder La carpeta donde se encuentra la imagen del producto.
+ * @param hash El hash de la imagen del producto.
+ * @param type El tipo de archivo de la imagen del producto.
+ */
 @Composable
 fun Product(
     name: String,
@@ -336,6 +362,13 @@ fun Product(
     }
 }
 
+/**
+ * Composable que muestra una lista de productos adicionales.
+ *
+ * @param text El título de la sección.
+ * @param products La lista de productos a mostrar.
+ * @param modifier Modificador para personalizar la apariencia y el comportamiento del componente.
+ */
 @Composable
 fun MoreProducts(text: String, products: ProductList, modifier: Modifier) {
     Column (
@@ -368,6 +401,11 @@ fun MoreProducts(text: String, products: ProductList, modifier: Modifier) {
     }
 }
 
+/**
+ * Pantalla de detalles del producto que muestra la información detallada del producto seleccionado.
+ *
+ * @param navController El NavHostController utilizado para la navegación.
+ */
 @Composable
 fun ProductDetails(navController: NavHostController) {
     CustomLayout (

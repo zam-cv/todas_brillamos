@@ -28,6 +28,17 @@ import mx.cazv.todasbrillamos.ui.theme.UnselectedScreen
 import mx.cazv.todasbrillamos.view.Icon
 import mx.cazv.todasbrillamos.view.Routes
 
+/**
+ * Archivo para la barra de navegación inferior.
+ * @author Min Che Kim
+ *  @author Carlos Zamudio
+ */
+
+/**
+ * Función composable que muestra la barra de navegación inferior.
+ *
+ * @param navController El NavHostController utilizado para la navegación.
+ */
 @Composable
 fun BottomBar(navController: NavHostController) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -69,6 +80,12 @@ fun BottomBar(navController: NavHostController) {
     }
 }
 
+/**
+ * Navega a la ruta especificada utilizando el NavHostController proporcionado.
+ *
+ * @param route La ruta a la que se desea navegar.
+ * @param navController El NavHostController utilizado para la navegación.
+ */
 fun navigateTo(route: String, navController: NavHostController) {
     val currentRoute = navController.currentBackStackEntry?.destination?.route
     if (currentRoute != route) {
@@ -84,6 +101,11 @@ fun navigateTo(route: String, navController: NavHostController) {
     }
 }
 
+/**
+ * Proporciona los colores para los elementos de la barra de navegación.
+ *
+ * @return Los colores para los elementos de la barra de navegación.
+ */
 @Composable
 fun navBarItemsColors() = NavigationBarItemDefaults.colors(
     selectedIconColor = SelectedScreen,
@@ -93,6 +115,12 @@ fun navBarItemsColors() = NavigationBarItemDefaults.colors(
     indicatorColor = Color.Transparent
 )
 
+/**
+ * Muestra el icono para la pantalla dada.
+ *
+ * @param screen La pantalla para la cual se muestra el icono.
+ * @param currentRoute La ruta actual.
+ */
 @Composable
 fun IconDisplay(screen: Routes, currentRoute: String?) {
     val isSelected = screen.route == currentRoute

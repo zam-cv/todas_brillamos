@@ -38,6 +38,15 @@ import mx.cazv.todasbrillamos.view.components.header.BasicTopBar
 import mx.cazv.todasbrillamos.view.layouts.CustomLayout
 import mx.cazv.todasbrillamos.viewmodel.AuthViewModel
 
+/**
+ * Archivo para mostrar la pantalla de configuración del usuario.
+ * @author Carlos Zamudio
+ */
+/**
+ * Composable que muestra una opción de configuración con un icono y un título.
+ *
+ * @param setting La configuración a mostrar.
+ */
 @Composable
 fun Option(setting: Setting) {
     Column (
@@ -108,6 +117,11 @@ fun Option(setting: Setting) {
     }
 }
 
+/**
+ * Composable que muestra una sección de opciones de configuración.
+ *
+ * @param options La lista de configuraciones a mostrar.
+ */
 @Composable
 fun OptionsSection(options: List<Setting>) {
     Column (
@@ -120,6 +134,12 @@ fun OptionsSection(options: List<Setting>) {
     }
 }
 
+/**
+ * Pantalla de configuración que muestra varias opciones de configuración para el usuario.
+ *
+ * @param navController El NavHostController utilizado para la navegación.
+ * @param authViewModel El ViewModel de autenticación utilizado para gestionar el cierre de sesión.
+ */
 @Composable
 fun Config(navController: NavHostController, authViewModel: AuthViewModel) {
     CustomLayout(

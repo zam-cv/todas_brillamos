@@ -19,6 +19,10 @@ import androidx.compose.ui.unit.dp
 import mx.cazv.todasbrillamos.R
 import mx.cazv.todasbrillamos.view.components.InteractiveCard
 
+/**
+ * Composable que muestra una serie de tarjetas interactivas en la pantalla principal.
+ * @author Jennyfer Jasso
+ */
 @Preview
 @Composable
 fun InteractiveCardsHome(){

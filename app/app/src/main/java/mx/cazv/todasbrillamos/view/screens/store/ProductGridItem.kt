@@ -40,8 +40,11 @@ import mx.cazv.todasbrillamos.model.models.ProductRaw
 import mx.cazv.todasbrillamos.ui.theme.AccentColor
 
 /**
- * Vista cuadricula de los productos
+ * Vista cuadricula de los productos que muestra los detalles de un producto en una tarjeta.
  * @author: Min Che Kim
+ *
+ * @param product El producto a mostrar.
+ * @param folder La carpeta donde se encuentra la imagen del producto.
  */
 @Composable
 fun ProductGridItem(product: ProductRaw, folder: String) {

@@ -17,6 +17,16 @@ import mx.cazv.todasbrillamos.viewmodel.PostsViewModel
 import mx.cazv.todasbrillamos.viewmodel.RandomViewModel
 import mx.cazv.todasbrillamos.viewmodel.UserViewModel
 
+/**
+ * Pantalla principal que muestra un saludo, tarjetas interactivas y productos recomendados.
+ * @author Jennyfer Jasso
+ *
+ * @param navController El NavHostController utilizado para la navegación.
+ * @param authViewModel El ViewModel de autenticación utilizado para obtener el token del usuario.
+ * @param userViewModel El ViewModel de usuario utilizado para cargar la información del usuario.
+ * @param randomViewModel El ViewModel de productos aleatorios utilizado para cargar productos recomendados.
+ * @param postsViewModel El ViewModel de publicaciones utilizado para cargar publicaciones.
+ */
 @Composable
 fun Home(
     navController: NavHostController,
