@@ -46,7 +46,6 @@ interface API {
     @GET("api/auth/user/verify")
     suspend fun verify(@Header("Authorization") token: String)
 
-<<<<<<< HEAD
     @GET("api/clients")
     suspend fun getClient(@Header("Authorization") token: String): ClientDetails
 
@@ -55,16 +54,6 @@ interface API {
         @Header("Authorization") token: String,
         @Body request: ClientDetails
     ): String
-=======
-    /**
-     * Obtiene el nombre completo del usuario.
-     *
-     * @param token El token de autenticación.
-     * @return El nombre completo del usuario.
-     */
-    @GET("api/clients/fullname")
-    suspend fun getFullName(@Header("Authorization") token: String): String
->>>>>>> 523de40f89d420c58d931710bd4b75a670f2caf8
 
     /**
      * Obtiene la lista de productos.
