@@ -7,6 +7,12 @@ import mx.cazv.todasbrillamos.model.models.ProductList
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+
+/**
+ * Servicio que maneja las solicitudes relacionadas con los productos.
+ *
+ * @author Carlos Zamudio
+ */
 class ProductsService {
     private val retrofitApi by lazy {
         Retrofit.Builder()
@@ -19,10 +25,22 @@ class ProductsService {
         retrofitApi.create(API::class.java)
     }
 
+    /**
+     * Obtiene una lista de productos aleatorios.
+     *
+     * @param token El token de autenticación.
+     * @return La lista de productos aleatorios.
+     */
     suspend fun random(token: String): ProductList {
         return apiCall { apiService.getRandomProduct("Bearer $token") }.getOrNull()!!
     }
 
+    /**
+     * Obtiene la lista de productos.
+     *
+     * @param token El token de autenticación.
+     * @return La lista de productos.
+     */
     suspend fun products(token: String): ProductList {
         return apiCall { apiService.getProducts("Bearer $token") }.getOrNull()!!
     }

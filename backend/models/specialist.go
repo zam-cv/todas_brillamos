@@ -15,5 +15,4 @@ type Specialist struct {
 	Phone       string `json:"phone" validate:"required,min=10"`
 	Speciality  string `json:"speciality" validate:"required,min=2"`
 	Description string `json:"description" validate:"required,min=2"`
-	ClientID    uint   `json:"-"`
 }
