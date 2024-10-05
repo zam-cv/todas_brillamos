@@ -37,6 +37,7 @@ import mx.cazv.todasbrillamos.view.screens.config.EditProfile
 import mx.cazv.todasbrillamos.view.screens.config.SocialNetworks
 import mx.cazv.todasbrillamos.view.screens.config.TermsAndPolicies
 import mx.cazv.todasbrillamos.viewmodel.AuthViewModel
+import mx.cazv.todasbrillamos.viewmodel.UserViewModel
 
 @Composable
 fun App() {
@@ -48,6 +49,7 @@ fun App() {
 fun Nav(
     navController: NavHostController,
     authViewModel: AuthViewModel = viewModel(),
+    userViewModel: UserViewModel = viewModel(),
     modifier: Modifier = Modifier
 ) {
     var startDestination by remember { mutableStateOf<String?>(null) }
@@ -91,7 +93,7 @@ fun Nav(
             }
 
             composable(Routes.ROUTE_HOME) {
-                Home(navController)
+                Home(navController, authViewModel, userViewModel)
             }
 
             composable(Routes.ROUTE_CHAT) {

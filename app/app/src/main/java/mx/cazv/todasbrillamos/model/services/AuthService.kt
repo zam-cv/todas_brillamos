@@ -1,25 +1,13 @@
-package mx.cazv.todasbrillamos.model
+package mx.cazv.todasbrillamos.model.services
 
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import mx.cazv.todasbrillamos.model.API
+import mx.cazv.todasbrillamos.model.ApiConfig
+import mx.cazv.todasbrillamos.model.apiCall
 import mx.cazv.todasbrillamos.model.models.Credentials
 import mx.cazv.todasbrillamos.model.models.SignInRequest
 import mx.cazv.todasbrillamos.model.models.UserInfo
-import retrofit2.HttpException
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-
-suspend fun <T> apiCall(call: suspend () -> T): Result<T> = withContext(Dispatchers.IO) {
-    try {
-        Result.success(call())
-    } catch (e: HttpException) {
-        println("HTTP Error: ${e.code()} - ${e.message()}")
-        Result.failure(e)
-    } catch (e: Exception) {
-        println("Unexpected error: ${e.message}")
-        Result.failure(e)
-    }
-}
 
 class AuthService {
     private val retrofitApi by lazy {
