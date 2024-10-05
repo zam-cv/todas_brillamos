@@ -24,22 +24,11 @@ class UserService {
         retrofitApi.create(API::class.java)
     }
 
-<<<<<<< HEAD
     suspend fun getClient(token: String): ClientDetails {
         return apiCall { apiService.getClient("Bearer $token") }.getOrNull()!!
     }
 
     suspend fun update(token: String, clientDetails: ClientDetails) {
         apiCall { apiService.updateClientDetails("Bearer $token", clientDetails) }
-=======
-    /**
-     * Obtiene el nombre completo del usuario.
-     *
-     * @param token El token de autenticación.
-     * @return El nombre completo del usuario.
-     */
-    suspend fun fullname(token: String): String {
-        return apiCall { apiService.getFullName("Bearer $token") }.getOrNull() ?: ""
->>>>>>> 523de40f89d420c58d931710bd4b75a670f2caf8
     }
 }
