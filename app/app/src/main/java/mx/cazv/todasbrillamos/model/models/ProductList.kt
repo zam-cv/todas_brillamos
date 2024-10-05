@@ -3,7 +3,7 @@ package mx.cazv.todasbrillamos.model.models
 data class ProductRaw(
     val id: Int,
     val hash: String,
-    val tyoe: String,
+    val type: String,
     val model: String,
     val name: String,
     val description: String,
