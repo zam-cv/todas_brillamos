@@ -1,16 +1,17 @@
 import { columns } from "@/components/table/components/columns-shipments";
 import { DataTable } from "@/components/table/components/data-table-shipments";
-import api, {Orders}from "@/utils/api/orders";
+import api, {Order}from "@/utils/api/orders";
 import {useState, useEffect} from "react";
 
 export default function Shipments() {
-  const [orders, setOrders] = useState<Orders[]>([]); 
+  const [orders, setOrders] = useState<Order[]>([]); // Cambia a un array de 'Order'
 
   useEffect(() => {
-    api.orders.getOrders().then((orders) =>{
-      setOrders(orders);
+    api.orders.getOrders().then((response) => {
+      setOrders(response.orders); // Accede al array de órdenes dentro del objeto 'OrdersResponse'
     });
   }, []);
+  
 
   return (
     <div>
