@@ -23,7 +23,6 @@ func addOrdersRoutes(rg *gin.RouterGroup) {
 		}
 
 		c.JSON(200, gin.H{
-			"folder": files.GetURL(ProductArchive),
 			"orders": orders,
 		})
 	})
