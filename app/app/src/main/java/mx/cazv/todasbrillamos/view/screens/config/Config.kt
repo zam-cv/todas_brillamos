@@ -37,6 +37,7 @@ import mx.cazv.todasbrillamos.view.components.footer.BottomBar
 import mx.cazv.todasbrillamos.view.components.header.BasicTopBar
 import mx.cazv.todasbrillamos.view.layouts.CustomLayout
 import mx.cazv.todasbrillamos.viewmodel.AuthViewModel
+import mx.cazv.todasbrillamos.viewmodel.UserViewModel
 
 @Composable
 fun Option(setting: Setting) {
@@ -121,7 +122,10 @@ fun OptionsSection(options: List<Setting>) {
 }
 
 @Composable
-fun Config(navController: NavHostController, authViewModel: AuthViewModel) {
+fun Config(
+    navController: NavHostController,
+    authViewModel: AuthViewModel
+) {
     CustomLayout(
         navController = navController,
         withStoreButton = true,
