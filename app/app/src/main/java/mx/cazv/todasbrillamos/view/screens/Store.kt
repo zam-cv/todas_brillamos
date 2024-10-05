@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -15,11 +17,26 @@ import mx.cazv.todasbrillamos.view.layouts.StaticLayout
 import mx.cazv.todasbrillamos.view.screens.store.CategoryFilter
 import mx.cazv.todasbrillamos.view.screens.store.ToggleView
 import mx.cazv.todasbrillamos.view.screens.store.ViewProducts
-
+import mx.cazv.todasbrillamos.viewmodel.AuthViewModel
+import mx.cazv.todasbrillamos.viewmodel.ProductsViewModel
 
 @Composable
-fun Store(navController: NavHostController) {
+fun Store(
+    navController: NavHostController,
+    authViewModel: AuthViewModel,
+    productsViewModel: ProductsViewModel
+) {
+    val productsState = productsViewModel.state.collectAsState()
     var viewType by remember { mutableStateOf("grid") }
+
+    LaunchedEffect(key1 = Unit) {
+        val token = authViewModel.getToken()
+
+        if (token != null) {
+            productsViewModel.loadProducts(token)
+        }
+    }
+
     StaticLayout(navController = navController) {
         Column (modifier = Modifier
             .fillMaxSize()
@@ -34,7 +51,10 @@ fun Store(navController: NavHostController) {
                     .weight(1f)
                     .fillMaxWidth()
             ) {
-                ViewProducts(type = viewType)
+                ViewProducts(
+                    type = viewType,
+                    products = productsState.value.products
+                )
             }
         }
     }

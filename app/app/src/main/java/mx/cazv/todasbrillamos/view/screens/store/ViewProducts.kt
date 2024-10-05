@@ -16,6 +16,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import mx.cazv.todasbrillamos.model.models.ProductList
 import mx.cazv.todasbrillamos.model.models.ProductProvider
 
 /**
@@ -23,7 +24,7 @@ import mx.cazv.todasbrillamos.model.models.ProductProvider
  * @author: Min Che Kim
  */
 @Composable
-fun ViewProducts(type: String) {
+fun ViewProducts(type: String, products: ProductList) {
     if (type == "grid") {
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
@@ -38,12 +39,11 @@ fun ViewProducts(type: String) {
             ),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            items(ProductProvider.productList) { product ->
-                ProductGridItem(product = product)
+            items(products.products) { product ->
+                ProductGridItem(product = product, products.folder)
             }
         }
-    }
-    else if (type == "list") {
+    } else if (type == "list") {
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(vertical = 16.dp),
@@ -54,7 +54,6 @@ fun ViewProducts(type: String) {
             }
         }
     }
-
 }
 
 @Composable
@@ -65,9 +64,9 @@ fun ViewFavorites() {
         modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(vertical = 16.dp),
     ) {
-        itemsIndexed(ProductProvider.favProductList) { _, product ->
+/*        itemsIndexed(ProductProvider.favProductList) { _, product ->
             ProductGridItem(product = product)
             Spacer(modifier = Modifier.height(8.dp))
-        }
+        }*/
     }
 }
