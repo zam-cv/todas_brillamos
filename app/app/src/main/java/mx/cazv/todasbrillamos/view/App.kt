@@ -145,7 +145,7 @@ fun Nav(
             }
 
             composable(Routes.ROUTE_CHANGE_PASSWORD) {
-                ChangePassword(navController)
+                ChangePassword(navController, authViewModel, userViewModel)
             }
 
             composable(Routes.ROUTE_SOCIAL_NETWORKS) {

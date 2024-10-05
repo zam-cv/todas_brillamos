@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import mx.cazv.todasbrillamos.model.models.ClientDetails
+import mx.cazv.todasbrillamos.model.models.PasswordUpdate
 import mx.cazv.todasbrillamos.model.services.UserService
 import mx.cazv.todasbrillamos.model.states.UserState
 
@@ -32,6 +33,16 @@ class UserViewModel : ViewModel() {
             try {
                 userService.update(token, clientDetails)
                 _state.value = UserState(clientDetails)
+            } catch (e: Exception) {
+                // Handle error
+            }
+        }
+    }
+
+    fun updatePassword(token: String, passwordUpdate: PasswordUpdate) {
+        viewModelScope.launch {
+            try {
+                userService.updatePassword(token, passwordUpdate)
             } catch (e: Exception) {
                 // Handle error
             }

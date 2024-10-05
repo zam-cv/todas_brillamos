@@ -4,6 +4,7 @@ import mx.cazv.todasbrillamos.model.API
 import mx.cazv.todasbrillamos.model.ApiConfig
 import mx.cazv.todasbrillamos.model.apiCall
 import mx.cazv.todasbrillamos.model.models.ClientDetails
+import mx.cazv.todasbrillamos.model.models.PasswordUpdate
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -30,5 +31,9 @@ class UserService {
 
     suspend fun update(token: String, clientDetails: ClientDetails) {
         apiCall { apiService.updateClientDetails("Bearer $token", clientDetails) }
+    }
+
+    suspend fun updatePassword(token: String, passwordUpdate: PasswordUpdate) {
+        apiCall { apiService.updatePassword("Bearer $token", passwordUpdate) }
     }
 }

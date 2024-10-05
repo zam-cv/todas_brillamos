@@ -4,6 +4,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import mx.cazv.todasbrillamos.model.models.ClientDetails
 import mx.cazv.todasbrillamos.model.models.Credentials
+import mx.cazv.todasbrillamos.model.models.PasswordUpdate
 import mx.cazv.todasbrillamos.model.models.Post
 import mx.cazv.todasbrillamos.model.models.ProductList
 import mx.cazv.todasbrillamos.model.models.SignInRequest
@@ -48,6 +49,12 @@ interface API {
 
     @GET("api/clients")
     suspend fun getClient(@Header("Authorization") token: String): ClientDetails
+
+    @PUT("api/clients/update-password")
+    suspend fun updatePassword(
+        @Header("Authorization") token: String,
+        @Body request: PasswordUpdate
+    )
 
     @PUT("api/clients")
     suspend fun updateClientDetails(
