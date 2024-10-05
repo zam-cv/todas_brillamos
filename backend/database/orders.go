@@ -2,7 +2,11 @@ package database
 
 import (
 	"backend/models"
+	"fmt"
+	"strings"
 	"time"
+
+	"gorm.io/gorm"
 )
 
 func GetOrdersByIDandClientID(id int, clientId int) (*models.Orders, error) {
@@ -17,6 +21,11 @@ func GetOrdersByIDandClientID(id int, clientId int) (*models.Orders, error) {
 func CreateOrders(orders []*models.Orders) error {
 	db := GetDatabase()
 
+	for _, order := range orders {
+		order.OrderReceivedDate = time.Now().Format("2006-01-02")
+		order.DeliveryDate = time.Now().AddDate(0, 0, 5).Format("2006-01-02")
+	}
+
 	if err := db.Create(&orders).Error; err != nil {
 		return err
 	}
@@ -29,7 +38,7 @@ type ProductImage struct {
 }
 
 type OrderSummary struct {
-	DeliveryDate  string         `json:"delivery_date"`
+	DeliveryDate  *string        `json:"delivery_date"`
 	TotalProducts int            `json:"total_products"`
 	TotalAmount   float64        `json:"total_amount"`
 	ProductImages []ProductImage `json:"product_images" gorm:"-"`
@@ -40,14 +49,14 @@ func GetOrdersClientID(clientID uint) ([]OrderSummary, error) {
 
 	err := GetDatabase().Raw(`
         SELECT 
-            DATE(o.delivery_date) as delivery_date,
+            o.delivery_date,
             SUM(o.quantity) as total_products,
             SUM(o.quantity * p.price) as total_amount
         FROM orders o
         JOIN products p ON o.product_id = p.id
         WHERE o.client_id = ?
-        GROUP BY DATE(o.delivery_date)
-        ORDER BY DATE(o.delivery_date)
+        GROUP BY o.delivery_date
+        ORDER BY o.delivery_date
     `, clientID).Scan(&results).Error
 
 	if err != nil {
@@ -60,13 +69,15 @@ func GetOrdersClientID(clientID uint) ([]OrderSummary, error) {
             SELECT p.hash, p.type
             FROM orders o
             JOIN products p ON o.product_id = p.id
-            WHERE o.client_id = ? AND DATE(o.delivery_date) = ?
+            WHERE o.client_id = ? AND o.delivery_date = ?
         `, clientID, results[i].DeliveryDate).Scan(&productImages).Error
 
 		if err != nil {
 			return nil, err
 		}
 
+		deliveryDate := strings.Split(*results[i].DeliveryDate, "T")[0]
+		results[i].DeliveryDate = &deliveryDate
 		results[i].ProductImages = productImages
 	}
 
@@ -74,26 +85,84 @@ func GetOrdersClientID(clientID uint) ([]OrderSummary, error) {
 }
 
 func UpdateStatusOrders(id uint, status string) error {
-    db := GetDatabase()
+	db := GetDatabase()
 
-    var orders models.Orders
-    if err := db.Where("id = ?", id).First(&orders).Error; err != nil {
-        return err
-    }
+	var orders models.Orders
+	if err := db.Where("id = ?", id).First(&orders).Error; err != nil {
+		return err
+	}
 
-    orders.Status = status
-    now := time.Now()
+	orders.Status = status
+	now := time.Now().Format("2006-01-02")
 
-    switch status {
-    case "Preparando pedido":
-        orders.PreparingOrderDate = &now
-    case "Enviado":
-        orders.ShippedDate = &now
-    }
+	switch status {
+	case "Preparando pedido":
+		orders.PreparingOrderDate = &now
+	case "Enviado":
+		orders.ShippedDate = &now
+	}
 
-    if err := db.Save(&orders).Error; err != nil {
-        return err
-    }
+	if err := db.Save(&orders).Error; err != nil {
+		return err
+	}
 
-    return nil
+	return nil
 }
+
+/*
+type OrderProduct struct {
+	ProductName string  `json:"product_name"`
+	Quantity    int     `json:"quantity"`
+	Price       float64 `json:"price"`
+}
+
+type OrderInfoWithProducts struct {
+	DeliveryDate      time.Time      `json:"delivery_date"`
+	Status            string         `json:"status"`
+	OrderReceivedDate time.Time      `json:"order_received_date"`
+	FullName          string         `json:"full_name"`
+	Products          []OrderProduct `json:"products"`
+}
+
+func GetOrderInfoWithProducts(clientID uint, deliveryDate string) (*OrderInfoWithProducts, error) {
+	var result OrderInfoWithProducts
+
+	// Parsear la fecha de entrega
+	parsedDate, err := time.Parse("2006-01-02", deliveryDate)
+	if err != nil {
+		return nil, fmt.Errorf("error parsing delivery date: %v", err)
+	}
+
+	// Obtener información general del pedido (sin el nombre completo)
+	err = GetDatabase().
+		Table("orders").
+		Select("orders.delivery_date, orders.status, orders.order_received_date").
+		Where("orders.client_id = ? AND DATE(orders.delivery_date) = DATE(?)", clientID, parsedDate).
+		First(&result).Error
+
+	if err != nil {
+		if err == gorm.ErrRecordNotFound {
+			return nil, fmt.Errorf("no order found for client ID %d and delivery date %s", clientID, deliveryDate)
+		}
+		return nil, err
+	}
+
+	// Obtener productos asociados al pedido
+	var products []OrderProduct
+	err = GetDatabase().
+		Table("order_products").
+		Select("products.name as product_name, order_products.quantity, products.price").
+		Joins("JOIN products ON order_products.product_id = products.id").
+		Where("order_products.order_id = (SELECT id FROM orders WHERE client_id = ? AND DATE(delivery_date) = DATE(?))", clientID, parsedDate).
+		Scan(&products).Error
+
+	if err != nil {
+		return nil, fmt.Errorf("error fetching products: %v", err)
+	}
+
+	// Asignar productos a la estructura
+	result.Products = products
+
+	return &result, nil
+}
+*/
