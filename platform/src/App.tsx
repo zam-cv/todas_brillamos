@@ -20,6 +20,7 @@ import Products from "./pages/Products";
 import Shipments from "./pages/Shipments";
 import Specialists from "./pages/Specialists";
 import Users from "./pages/Users";
+import Donations from "./pages/Donations";
 import Notifications from "./pages/Notifications";
 import AuthProvider from "./providers/AuthProvider";
 
@@ -98,6 +99,14 @@ function App() {
               <Protected>
               <Notifications />
               </Protected>
+              } />
+          </Route>
+
+          <Route path="/donations" element={<Layout />}>
+              <Route index element={
+                <Protected>
+                  <Donations />
+                </Protected>
               } />
           </Route>
         </Routes>

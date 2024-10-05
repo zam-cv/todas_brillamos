@@ -6,75 +6,75 @@ import { DataTableColumnHeader } from "./data-table-column-header-shipments";
 
 export const columns: ColumnDef<Task>[] = [
     {
-        accessorKey: "idProducto",
+        accessorKey: "quantity",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="ID" />
+          <DataTableColumnHeader column={column} title="Cantidad" />
         ),
         cell: ({ row }) => {
           return (
             <div className="flex space-x-2">
               <span className="max-w-[500px] truncate font-medium">
-                {row.getValue("idProducto")}
+                {row.getValue("quantity")}
               </span>
             </div>
           );
         },
       },
     {
-      accessorKey: "nombreProd",
+      accessorKey: "delivery_date",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Nombre Producto" />
+        <DataTableColumnHeader column={column} title="Fecha de entrega" />
       ),
       cell: ({ row }) => {
         return (
           <div className="flex space-x-2">
             <span className="max-w-[500px] truncate font-medium">
-              {row.getValue("nombreProd")}
+              {row.getValue("delivery_date")}
             </span>
           </div>
         );
       },
     },
     {
-      accessorKey: "cantidad",
+      accessorKey: "status",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Cantidad" />
+        <DataTableColumnHeader column={column} title="Estado" />
       ),
       cell: ({ row }) => {
         return (
           <div className="flex space-x-2">
             <span className="max-w-[500px] truncate font-medium">
-              {row.getValue("cantidad")}
+              {row.getValue("status")}
             </span>
           </div>
         );
       },
     },
     {
-        accessorKey: "numGuia",
+        accessorKey: "product_id",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="Número de guía" />
+          <DataTableColumnHeader column={column} title="ID del producto" />
         ),
         cell: ({ row }) => {
           return (
             <div className="flex space-x-2">
               <span className="max-w-[500px] truncate font-medium">
-                {row.getValue("numGuia")}
+                {row.getValue("product_id")}
               </span>
             </div>
           );
         },
       },
       {
-        accessorKey: "estadoEnvio",
+        accessorKey: "client_id",
         header: ({ column }) => (
-          <DataTableColumnHeader column={column} title="Estado del envío" />
+          <DataTableColumnHeader column={column} title="ID del cliente" />
         ),
         cell: ({ row }) => {
           return (
             <div className="flex space-x-2">
               <span className="max-w-[500px] truncate font-medium">
-                {row.getValue("estadoEnvio")}
+                {row.getValue("client_id")}
               </span>
             </div>
           );
