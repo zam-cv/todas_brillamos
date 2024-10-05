@@ -7,6 +7,15 @@ import (
 	"gorm.io/gorm"
 )
 
+func GetFullNameByClientID(id int) (string, error) {
+	var client models.Client
+	err := GetDatabase().First(&client, id).Error
+	if err != nil {
+		return "", err
+	}
+	return client.FirstName + " " + client.LastName, nil
+}
+
 func GetClientByID(id int) (*models.Client, error) {
 	var client models.Client
 	err := GetDatabase().First(&client, id).Error

@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
@@ -31,6 +32,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.BaselineShift
@@ -39,6 +41,10 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import coil.compose.AsyncImage
+import mx.cazv.todasbrillamos.model.ApiConfig
+import mx.cazv.todasbrillamos.model.models.ProductList
+import mx.cazv.todasbrillamos.model.models.ProductRaw
 import mx.cazv.todasbrillamos.ui.theme.AccentColor
 import mx.cazv.todasbrillamos.ui.theme.BackgroundColor
 import mx.cazv.todasbrillamos.ui.theme.BadgePink
@@ -216,7 +222,14 @@ fun ProductDetails() {
 }
 
 @Composable
-fun Product() {
+fun Product(
+    name: String,
+    model: String,
+    price: Int,
+    folder: String,
+    hash: String,
+    type: String
+) {
     Box (
         modifier = Modifier
             .background(Color.White)
@@ -228,9 +241,17 @@ fun Product() {
                     .width(150.dp)
                     .height(100.dp)
                     .background(ImageBackgroundColor)
-                    .padding(10.dp)
             ) {
-                /* Image*/
+                val base_url = ApiConfig.BASE_URL
+                val url = "$base_url$folder/$hash.$type"
+                println(url)
+
+                AsyncImage(
+                    model = url,
+                    contentDescription = "Product",
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop
+                )
             }
 
             Row (
@@ -271,7 +292,7 @@ fun Product() {
                     .padding(start = 7.dp, end = 7.dp)
             ) {
                 Text(
-                    text = "PRODUCTO",
+                    text = name,
                     fontSize = 11.sp,
                     fontWeight = FontWeight.W400,
                     style = TextStyle(
@@ -282,7 +303,7 @@ fun Product() {
                 )
 
                 Text(
-                    text = "Tipo",
+                    text = model,
                     fontSize = 10.sp,
                     style = TextStyle(
                         baselineShift = BaselineShift(0f)
@@ -294,7 +315,7 @@ fun Product() {
                         .padding(bottom = 3.dp)
                 ) {
                     Text(
-                        text = "\$000.00",
+                        text = "\$${price}.00",
                         fontSize = 13.sp,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier
@@ -318,10 +339,9 @@ fun Product() {
 }
 
 @Composable
-fun MoreProducts(text: String, modifier: Modifier) {
+fun MoreProducts(text: String, products: ProductList, modifier: Modifier) {
     Column (
         modifier = modifier
-//            .padding(top = 50.dp, bottom = 10.dp)
     ) {
         Text(
             text = text,
@@ -334,16 +354,18 @@ fun MoreProducts(text: String, modifier: Modifier) {
                 .horizontalScroll(rememberScrollState())
                 .padding(top = 10.dp, bottom = 10.dp)
         ) {
-            Product()
-            Spacer(modifier = Modifier.width(10.dp))
-            Product()
-            Spacer(modifier = Modifier.width(10.dp))
-            Product()
-            Spacer(modifier = Modifier.width(10.dp))
-            Product()
-            Spacer(modifier = Modifier.width(10.dp))
-            Product()
-            Spacer(modifier = Modifier.width(10.dp))
+            for (product in products.products) {
+                Product(
+                    name = product.name,
+                    model = product.model,
+                    price = product.price,
+                    folder = products.folder,
+                    hash = product.hash,
+                    type = product.type,
+                )
+
+                Spacer(modifier = Modifier.width(10.dp))
+            }
         }
     }
 }
@@ -448,7 +470,7 @@ fun ProductDetails(navController: NavHostController) {
                         ProductDetails()
                     }
 
-                    MoreProducts(text = "Más productos", modifier = Modifier.padding(top = 60.dp))
+/*                    MoreProducts(text = "Más productos", modifier = Modifier.padding(top = 60.dp))*/
                 }
             }
         }

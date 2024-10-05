@@ -8,7 +8,7 @@ import androidx.navigation.NavHostController
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import mx.cazv.todasbrillamos.model.AuthService
+import mx.cazv.todasbrillamos.model.services.AuthService
 import mx.cazv.todasbrillamos.model.models.Credentials
 import mx.cazv.todasbrillamos.model.models.SignInRequest
 import mx.cazv.todasbrillamos.model.models.UserInfo

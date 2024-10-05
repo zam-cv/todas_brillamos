@@ -23,7 +23,8 @@ func addBuyRoutes(rg *gin.RouterGroup) {
 		}
 
 		orders := []*models.Orders{}
-		deliveryDate := time.Now().AddDate(0, 0, 7)
+		deliveryDate := time.Now().AddDate(0, 0, 5).Format("2006-01-02")
+		now := time.Now().Format("2006-01-02")
 		status := "En camino"
 
 		for _, product := range cart {
@@ -31,7 +32,7 @@ func addBuyRoutes(rg *gin.RouterGroup) {
 				ProductID:    product.ProductID,
 				ClientID:     product.ClientID,
 				Quantity:     product.Quantity,
-				OrderReceivedDate: time.Now(),
+				OrderReceivedDate: now,
 				DeliveryDate: deliveryDate,
 				Status:       status,
 				PreparingOrderDate: nil,
