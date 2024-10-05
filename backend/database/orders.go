@@ -8,6 +8,12 @@ import (
 	//"gorm.io/gorm"
 )
 
+func GetOrders() ([]models.Orders, error) {
+	var orders []models.Orders
+	err := GetDatabase().Find(&orders).Error
+	return orders, err
+}
+
 func GetOrdersByIDandClientID(id int, clientId int) (*models.Orders, error) {
 	var orders models.Orders
 	err := GetDatabase().
