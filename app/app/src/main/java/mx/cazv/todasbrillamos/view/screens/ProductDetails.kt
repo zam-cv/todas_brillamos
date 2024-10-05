@@ -44,7 +44,6 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import mx.cazv.todasbrillamos.model.ApiConfig
 import mx.cazv.todasbrillamos.model.models.ProductList
-import mx.cazv.todasbrillamos.model.models.ProductRaw
 import mx.cazv.todasbrillamos.ui.theme.AccentColor
 import mx.cazv.todasbrillamos.ui.theme.BackgroundColor
 import mx.cazv.todasbrillamos.ui.theme.BadgePink
@@ -244,7 +243,6 @@ fun Product(
             ) {
                 val base_url = ApiConfig.BASE_URL
                 val url = "$base_url$folder/$hash.$type"
-                println(url)
 
                 AsyncImage(
                     model = url,

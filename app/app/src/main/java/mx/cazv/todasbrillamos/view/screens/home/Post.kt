@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun Post(){
+fun Post(title: String, content: String, wordLimit: Int = 20) {
     Card(
         shape = RoundedCornerShape(5.dp),
         elevation = CardDefaults.cardElevation(8.dp),
@@ -29,14 +29,13 @@ fun Post(){
     ) {
         Column {
             Text(
-                text = "TITULO",
+                text = title,
                 fontSize = 16.sp,
                 modifier = Modifier.padding(10.dp)
             )
 
             Text(
-                text = "Los tampones contienen plomo, arsénico y sustancias químicas " +
-                        "que pueden causar enfermedades.",
+                text = limitWords(content, wordLimit),
                 fontSize = 14.sp,
                 lineHeight = 20.sp,
                 modifier = Modifier.padding(start = 10.dp, end = 10.dp)
@@ -60,5 +59,14 @@ fun Post(){
                 }
             }
         }
+    }
+}
+
+fun limitWords(text: String, limit: Int): String {
+    val words = text.split(" ")
+    return if (words.size > limit) {
+        words.take(limit).joinToString(" ") + "..."
+    } else {
+        text
     }
 }

@@ -3,6 +3,7 @@ package mx.cazv.todasbrillamos.model
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import mx.cazv.todasbrillamos.model.models.Credentials
+import mx.cazv.todasbrillamos.model.models.Post
 import mx.cazv.todasbrillamos.model.models.ProductList
 import mx.cazv.todasbrillamos.model.models.SignInRequest
 import mx.cazv.todasbrillamos.model.models.UserInfo
@@ -27,6 +28,9 @@ interface API {
 
     @GET("api/products/random")
     suspend fun getRandomProduct(@Header("Authorization") token: String): ProductList
+
+    @GET("api/posts")
+    suspend fun getPosts(@Header("Authorization") token: String): List<Post>
 }
 
 suspend fun <T> apiCall(call: suspend () -> T): Result<T> = withContext(Dispatchers.IO) {
