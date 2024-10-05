@@ -11,6 +11,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// FileConfig representa la configuración de un archivo.
 type FileConfig struct {
 	Folder        string
 	OptionalFile  bool
@@ -18,6 +19,7 @@ type FileConfig struct {
 	FileSizeLimit int64 // in bytes
 }
 
+// File representa la interfaz de un archivo.
 type File[M any] interface {
 	SetID(uint)
 	GetHash() *string
@@ -25,6 +27,7 @@ type File[M any] interface {
 	SetMetadata(*M)
 }
 
+// Files representa la interfaz de un conjunto de archivos.
 type Files[M any, T File[M]] interface {
 	GetConfig() *FileConfig
 	NewFile() T
@@ -36,15 +39,18 @@ type Files[M any, T File[M]] interface {
 	GetFileByHashDB(hash string) (T, error)
 }
 
+// UploadForm representa el formulario de carga de archivos.
 type UploadForm[M any] struct {
 	File     *multipart.FileHeader `form:"file"`
 	Metadata *M                    `form:"metadata"`
 }
 
+// GetURL obtiene la URL de los archivos.
 func GetURL[M any, T File[M]](files Files[M, T]) string {
 	return RootURL + "/" + files.GetConfig().Folder
 }
 
+// UploadFile maneja la carga de archivos.
 func UploadFile[M any, T File[M]](files Files[M, T], group *gin.RouterGroup, handlers ...gin.HandlerFunc) {
 	config := files.GetConfig()
 	numberTypes := len(config.AllowedTypes)
@@ -119,6 +125,8 @@ func UploadFile[M any, T File[M]](files Files[M, T], group *gin.RouterGroup, han
 	})...)
 }
 
+
+// DeleteFile maneja la eliminación de archivos.
 func DeleteFile[M any, T File[M]](files Files[M, T], group *gin.RouterGroup, handlers ...gin.HandlerFunc) {
 	config := files.GetConfig()
 
@@ -161,6 +169,7 @@ func DeleteFile[M any, T File[M]](files Files[M, T], group *gin.RouterGroup, han
 	})...)
 }
 
+// UpdateFile maneja la actualización de archivos.
 func UpdateFile[M any, T File[M]](files Files[M, T], group *gin.RouterGroup, handlers ...gin.HandlerFunc) {
 	config := files.GetConfig()
 	numberTypes := len(config.AllowedTypes)
@@ -258,6 +267,7 @@ func UpdateFile[M any, T File[M]](files Files[M, T], group *gin.RouterGroup, han
 	})...)
 }
 
+// UpdateMetadata maneja la actualización de metadatos de archivos.
 func UpdateMetadata[M any, T File[M]](files Files[M, T], group *gin.RouterGroup, handlers ...gin.HandlerFunc) {
 	group.POST("/:id/metadata", append(handlers, func(c *gin.Context) {
 		idStr := c.Param("id")
@@ -306,6 +316,7 @@ func UpdateMetadata[M any, T File[M]](files Files[M, T], group *gin.RouterGroup,
 	})...)
 }
 
+// ServeStaticFiles sirve archivos estáticos.
 func ServeStaticFiles[M any, T File[M]](files Files[M, T], router *gin.Engine, authMiddleware ...gin.HandlerFunc) {
 	config := files.GetConfig()
 	URL := RootURL + "/" + config.Folder

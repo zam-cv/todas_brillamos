@@ -33,6 +33,7 @@ const (
 	ALL    FileType = "*"
 )
 
+// GetName obtiene el nombre del archivo basado en su hash y extensión.
 func GetName(hash, extension string) string {
 	if extension == "" {
 		return hash
@@ -40,6 +41,8 @@ func GetName(hash, extension string) string {
 	return hash + "." + extension
 }
 
+// ProcessFile procesa un archivo subido, validando su tamaño y tipo.
+// Devuelve los bytes del archivo, su hash, su extensión y un error en caso de que ocurra.
 func ProcessFile(
 	file *multipart.FileHeader,
 	sizeLimit int64,
@@ -81,6 +84,7 @@ func ProcessFile(
 	return fileBytes, hashString, kind.Extension, nil
 }
 
+// SaveFileToSystem guarda un archivo en el sistema de archivos.
 func SaveFileToSystem(
 	folder string,
 	fileBytes []byte,
@@ -96,6 +100,7 @@ func SaveFileToSystem(
 	return nil
 }
 
+// DeleteSystemFile elimina un archivo del sistema de archivos.
 func DeleteSystemFile(folder, hash, extension string) error {
 	filePath := filepath.Join(StoragePath, folder, hash)
 	if extension != "" {
@@ -109,6 +114,7 @@ func DeleteSystemFile(folder, hash, extension string) error {
 	return nil
 }
 
+// Validate valida un formulario de carga de archivos.
 func Validate[M any](c *gin.Context) (*UploadForm[M], error) {
 	var form UploadForm[M]
 	if err := c.ShouldBind(&form); err != nil {
@@ -124,6 +130,7 @@ func Validate[M any](c *gin.Context) (*UploadForm[M], error) {
 	return &form, nil
 }
 
+// CreateFileObject crea un objeto de archivo.
 func CreateFileObject[M any, T File[M]](files Files[M, T], hash string, extension string, metadata *M, allowedTypes map[FileType]struct{}, numberTypes int) T {
 	file := files.NewFile()
 	if _, ok := allowedTypes[ALL]; ok || numberTypes > 1 {
@@ -134,6 +141,7 @@ func CreateFileObject[M any, T File[M]](files Files[M, T], hash string, extensio
 	return file
 }
 
+// SetupFlexibleFileServer configura un servidor de archivos flexible.
 func SetupFlexibleFileServer(router *gin.Engine, urlPath string, filePath string, authMiddleware []gin.HandlerFunc) {
 	if len(authMiddleware) == 0 {
 		router.Static(urlPath, filePath)

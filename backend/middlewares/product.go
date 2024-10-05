@@ -8,6 +8,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// ExistsProductMiddleware es un middleware que verifica si un producto existe en la base de datos.
+// Si el producto no existe, responde con un error 404 y aborta la solicitud.
 func ExistsProductMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		productID := c.Param("product_id")
@@ -30,6 +32,8 @@ func ExistsProductMiddleware() gin.HandlerFunc {
 	}
 }
 
+// GetProductID es un middleware que obtiene el ID del producto de la solicitud.
+// Si el ID del producto no está presente o es inválido, responde con un error 401 y aborta la solicitud.
 func GetProductID() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		idStr, exists := ctx.Get("productID")
