@@ -71,7 +71,7 @@ fun Nav(
             }
 
             composable(Routes.ROUTE_REGISTER) {
-                Register(navController)
+                Register(navController, authViewModel)
             }
 
             composable(Routes.ROUTE_CART) {

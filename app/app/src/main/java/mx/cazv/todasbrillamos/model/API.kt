@@ -13,7 +13,7 @@ interface API {
     suspend fun signin(@Body request: SignInRequest): Credentials
 
     @POST("api/auth/user/register")
-    suspend fun register(@Body request: UserInfo): Credentials
+    suspend fun register(@Body request: UserInfo)
 
     @GET("api/auth/user/verify")
     suspend fun verify(@Header("Authorization") token: String)

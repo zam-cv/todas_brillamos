@@ -42,11 +42,15 @@ class AuthViewModel (application: Application): AndroidViewModel(application) {
     fun register(userInfo: UserInfo) {
         viewModelScope.launch {
             _authState.value = AuthState.Loading
-            val result = remoteService.register(userInfo)
-            _authState.value = if (result) {
-                AuthState.RegisterSuccess
-            } else {
-                AuthState.Error("Registration failed")
+            try {
+                val result = remoteService.register(userInfo)
+                _authState.value = if (result) {
+                    AuthState.RegisterSuccess
+                } else {
+                    AuthState.Error("Registration failed: Server response was unsuccessful")
+                }
+            } catch (e: Exception) {
+                _authState.value = AuthState.Error("Registration failed: ${e.message}")
             }
         }
     }

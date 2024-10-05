@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
@@ -72,6 +74,7 @@ fun Login(navController: NavHostController, viewModel: AuthViewModel) {
             modifier = Modifier
                 .fillMaxSize()
                 .background(BackgroundColor)
+                .verticalScroll(rememberScrollState())
         ) {
             Box(
                 modifier = Modifier
@@ -99,7 +102,7 @@ fun Login(navController: NavHostController, viewModel: AuthViewModel) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = 10.dp, end = 10.dp)
+                    .padding(start = 10.dp, end = 10.dp, bottom = 16.dp)
                     .offset(y = (-130).dp)
                     .weight(1f),
                 horizontalAlignment = Alignment.CenterHorizontally,
