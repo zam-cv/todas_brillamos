@@ -23,6 +23,7 @@ var (
 	ClientTokenCookieName string
 )
 
+// LoadEnvVars carga las variables de entorno desde un archivo .env.
 func LoadEnvVars() {
 	if err := godotenv.Load(); err != nil {
 		panic(err)
