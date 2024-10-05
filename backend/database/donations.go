@@ -34,6 +34,7 @@ func GetAllDonations() ([]models.DonationGet, error) {
 	}
 
 	var donationsResponses []models.DonationGet
+
 	for _, donation := range donations {
 		donationsResponses = append(donationsResponses, models.DonationGet{
 			ID:          donation.ID,
