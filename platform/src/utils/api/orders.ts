@@ -1,18 +1,23 @@
-import {get} from "@/utils/methods";
+import { get } from "@/utils/methods";
 
-export interface Orders {
-    quantity: number;
-    delivery_date: string;
-    status: string;
-    ordered_receive_date: string;
-    product_id: number;
-    client_id: number;  
+// Ajustamos las propiedades de acuerdo al formato del JSON proporcionado
+export interface Order {
+    Quantity: number;
+    DeliveryDate: string;
+    Status: string;
+    ProductID: number;
+    ClientID: number;
 }
 
+// La estructura de la respuesta contiene un array de 'Order'
+export interface OrdersResponse {
+    orders: Order[];
+}
 
 export default {
     orders: {
-        getOrders: (): Promise<Orders[]> => {
+        // Cambiamos el tipo de retorno a 'Promise<OrdersResponse>' en vez de 'Promise<Order[]>'
+        getOrders: (): Promise<OrdersResponse> => {
             return get("/orders/all");
         }
     }

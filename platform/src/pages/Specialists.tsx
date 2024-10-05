@@ -193,15 +193,16 @@ export default function Specialists() {
               </div>
             </PopoverContent>
           </Popover>
-        </div>
+        <div className="flex flex-wrap gap-4"> {}
           {category.map((category) => (
-            <Drawer key={category.id}>
-              <DeleteWrapper message="Mensaje" key={1} del={() => deleteCategory()}>
-              <Badge key={category.id} variant="outline" className="cursor-pointer">{category.name}</Badge>
+            <DeleteWrapper message="Mensaje" key={category.id} del={() => deleteCategory()}>
+              <Badge key={category.id} variant="outline" className="cursor-pointer">
+                {category.name}
+                </Badge>
               </DeleteWrapper>
-            </Drawer>
           ))}
-       
+        </div> 
+        </div>      
         <br></br>
         <Popover>
       <PopoverTrigger asChild>

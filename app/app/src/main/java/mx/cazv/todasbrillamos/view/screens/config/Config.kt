@@ -37,6 +37,7 @@ import mx.cazv.todasbrillamos.view.components.footer.BottomBar
 import mx.cazv.todasbrillamos.view.components.header.BasicTopBar
 import mx.cazv.todasbrillamos.view.layouts.CustomLayout
 import mx.cazv.todasbrillamos.viewmodel.AuthViewModel
+import mx.cazv.todasbrillamos.viewmodel.UserViewModel
 
 /**
  * Archivo para mostrar la pantalla de configuración del usuario.
@@ -141,7 +142,10 @@ fun OptionsSection(options: List<Setting>) {
  * @param authViewModel El ViewModel de autenticación utilizado para gestionar el cierre de sesión.
  */
 @Composable
-fun Config(navController: NavHostController, authViewModel: AuthViewModel) {
+fun Config(
+    navController: NavHostController,
+    authViewModel: AuthViewModel
+) {
     CustomLayout(
         navController = navController,
         withStoreButton = true,

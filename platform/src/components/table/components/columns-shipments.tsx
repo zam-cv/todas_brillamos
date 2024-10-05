@@ -6,7 +6,7 @@ import { DataTableColumnHeader } from "./data-table-column-header-shipments";
 
 export const columns: ColumnDef<Task>[] = [
     {
-        accessorKey: "quantity",
+        accessorKey: "Quantity",
         header: ({ column }) => (
           <DataTableColumnHeader column={column} title="Cantidad" />
         ),
@@ -14,14 +14,14 @@ export const columns: ColumnDef<Task>[] = [
           return (
             <div className="flex space-x-2">
               <span className="max-w-[500px] truncate font-medium">
-                {row.getValue("quantity")}
+                {row.getValue("Quantity")}
               </span>
             </div>
           );
         },
       },
     {
-      accessorKey: "delivery_date",
+      accessorKey: "DeliveryDate",
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title="Fecha de entrega" />
       ),
@@ -29,14 +29,14 @@ export const columns: ColumnDef<Task>[] = [
         return (
           <div className="flex space-x-2">
             <span className="max-w-[500px] truncate font-medium">
-              {row.getValue("delivery_date")}
+              {row.getValue("DeliveryDate")}
             </span>
           </div>
         );
       },
     },
     {
-      accessorKey: "status",
+      accessorKey: "Status",
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title="Estado" />
       ),
@@ -44,14 +44,14 @@ export const columns: ColumnDef<Task>[] = [
         return (
           <div className="flex space-x-2">
             <span className="max-w-[500px] truncate font-medium">
-              {row.getValue("status")}
+              {row.getValue("Status")}
             </span>
           </div>
         );
       },
     },
     {
-        accessorKey: "product_id",
+        accessorKey: "ProductID",
         header: ({ column }) => (
           <DataTableColumnHeader column={column} title="ID del producto" />
         ),
@@ -59,14 +59,14 @@ export const columns: ColumnDef<Task>[] = [
           return (
             <div className="flex space-x-2">
               <span className="max-w-[500px] truncate font-medium">
-                {row.getValue("product_id")}
+                {row.getValue("ProductID")}
               </span>
             </div>
           );
         },
       },
       {
-        accessorKey: "client_id",
+        accessorKey: "ClientID",
         header: ({ column }) => (
           <DataTableColumnHeader column={column} title="ID del cliente" />
         ),
@@ -74,7 +74,7 @@ export const columns: ColumnDef<Task>[] = [
           return (
             <div className="flex space-x-2">
               <span className="max-w-[500px] truncate font-medium">
-                {row.getValue("client_id")}
+                {row.getValue("ClientID")}
               </span>
             </div>
           );
