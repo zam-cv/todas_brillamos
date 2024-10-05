@@ -149,12 +149,12 @@ fun TrackOrder(navController: NavHostController) {
                 OrderProducts(lenProducts = 3)
             }
 
-            MoreProducts(
+/*            MoreProducts(
                 text = "Más productos",
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 10.dp, end = 10.dp, top = 25.dp, bottom = 25.dp)
-            )
+            )*/
         }
     }
 }

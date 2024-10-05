@@ -2,10 +2,11 @@ package routes
 
 import (
 	"backend/database"
+	"backend/middlewares"
 	"backend/models"
 	"backend/resources/auth"
 	"backend/resources/files"
-	"strconv"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
@@ -75,11 +76,14 @@ func addProductRoutes(rg *gin.RouterGroup) {
 		})
 	})
 
-	group.GET("/random/:clientID", func(c *gin.Context) {
-		clientID := c.Param("clientID")
-		clientIDuint, err := strconv.ParseUint(clientID, 10, 32)
-		//clientIDuint, err := strconv.Atoi(clientID)
-		products, err := database.GetRandomProducts(uint(clientIDuint))
+	group.GET("/random", auth.GetMiddleware(ClientAuth), middlewares.GetClientID(), func(c *gin.Context) {
+		clientID, exists := c.MustGet("clientID").(uint)
+		if !exists {
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
+			return
+		}
+
+		products, err := database.GetRandomProducts(clientID)
 		if err != nil {
 			c.JSON(500, gin.H{"error": err.Error()})
 			return

@@ -1,7 +1,5 @@
 package mx.cazv.todasbrillamos.viewmodel
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -26,13 +24,5 @@ class UserViewModel : ViewModel() {
                 _state.value = UserState()
             }
         }
-    }
-
-    fun getUserState(): UserState {
-        return _state.value
-    }
-
-    fun getFullName(): String {
-        return _state.value.fullName
     }
 }

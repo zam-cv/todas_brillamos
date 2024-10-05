@@ -37,11 +37,11 @@ fun Orders(navController: NavHostController) {
             Spacer(modifier = Modifier.height(25.dp))
             InfoOrder()
             Spacer(modifier = Modifier.height(25.dp))
-            MoreProducts(
+/*            MoreProducts(
                 text = "Más productos",
                 modifier = Modifier
                     .padding(start = 15.dp, top = 25.dp)
-            )
+            )*/
             Spacer(modifier = Modifier.height(25.dp))
         }
     }
