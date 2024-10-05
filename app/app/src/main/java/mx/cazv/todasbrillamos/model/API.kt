@@ -26,6 +26,9 @@ interface API {
     @GET("api/clients/fullname")
     suspend fun getFullName(@Header("Authorization") token: String): String
 
+    @GET("api/products")
+    suspend fun getProducts(@Header("Authorization") token: String): ProductList
+
     @GET("api/products/random")
     suspend fun getRandomProduct(@Header("Authorization") token: String): ProductList
 

@@ -22,8 +22,8 @@ fun Home(
     navController: NavHostController,
     authViewModel: AuthViewModel,
     userViewModel: UserViewModel,
-    randomViewModel: RandomViewModel = RandomViewModel(),
-    postsViewModel: PostsViewModel = PostsViewModel()
+    randomViewModel: RandomViewModel,
+    postsViewModel: PostsViewModel
 ) {
     val userState = userViewModel.state.collectAsState()
     val randomState = randomViewModel.state.collectAsState()
