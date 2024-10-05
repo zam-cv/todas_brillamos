@@ -1,3 +1,8 @@
+/*
+ * Backend-routes: Código que determina los endpoints de client y sus métodos
+ * @author: Carlos Zamudio
+ * @co-author: Mariana Balderrábano
+ */
 package routes
 
 import (
@@ -16,9 +21,13 @@ type PasswordUpdate struct {
 	NewPassword string `json:"new_password" binding:"required"`
 }
 
+/*
+ * Función para agregar rutas de los clientes
+ */
 func addClientsRoutes(api *gin.RouterGroup) {
 	clients := api.Group("/clients")
 	{
+		// Endpoint GET que obtiene el nombre completo de un cliente dado por parámetros
 		clients.GET("/fullname", auth.GetMiddleware(ClientAuth), middlewares.GetClientID(), func(c *gin.Context) {
 			clientID, exists := c.MustGet("clientID").(uint)
 			if !exists {
@@ -35,6 +44,7 @@ func addClientsRoutes(api *gin.RouterGroup) {
 			c.JSON(http.StatusOK, fullname)
 		})
 
+		// Endpoint GET que obtiene los detalles de un cliente
 		clients.GET("", auth.GetMiddleware(ClientAuth), middlewares.GetClientID(), func(c *gin.Context) {
 			clientID, exists := c.MustGet("clientID").(uint)
 			if !exists {
@@ -50,6 +60,7 @@ func addClientsRoutes(api *gin.RouterGroup) {
 			c.JSON(http.StatusOK, clientDetails)
 		})
 
+		// Endpoint PUT que actualiza la contraseña de un cliente
 		clients.PUT("/update-password", auth.GetMiddleware(ClientAuth), func(c *gin.Context) {
 			userID, exists := c.MustGet("userID").(string)
 			if !exists {
@@ -95,6 +106,7 @@ func addClientsRoutes(api *gin.RouterGroup) {
 			c.Status(http.StatusOK)
 		})
 
+		// Endpoint PUT que actualiza los detalles de un cliente
 		clients.PUT("", auth.GetMiddleware(ClientAuth), middlewares.GetClientID(), func(c *gin.Context) {
 			clientID, exists := c.MustGet("clientID").(uint)
 			if !exists {

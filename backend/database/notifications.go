@@ -1,5 +1,5 @@
 /*
- * Backend-database: Querys nececarías para la tabla de notificaciones
+ * Backend-database: Querys necesarias para la tabla de notificaciones
  * @author: Mariana Balderrábano
  */
 package database

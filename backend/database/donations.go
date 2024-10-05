@@ -1,5 +1,5 @@
 /*
- * Backend-database: Querys nececarías para la tabla de donaciones
+ * Backend-database: Querys necesarias para la tabla de donaciones
  * @author: Mariana Balderrábano
  */
 

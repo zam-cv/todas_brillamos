@@ -1,3 +1,9 @@
+/*
+ * Backend-database: Querys necesarias para la tabla de clientes
+ * @author: Carlos Zamudio
+ * @co-author: Mariana Balderrábano
+ */
+
 package database
 
 import (
@@ -7,18 +13,36 @@ import (
 	"gorm.io/gorm"
 )
 
+/*
+ * Función que obtiene el usuario por su ID
+ * @param id: ID del cliente
+ * @return string: Usuario
+ * @return error: Error en caso de que exista
+ */
 func GetUserByID(id int) (*models.User, error) {
 	var user models.User
 	err := GetDatabase().First(&user, id).Error
 	return &user, err
 }
 
+/*
+ * Función que actualiza la contraseña
+ * @param id: ID del cliente
+ * @param password: Contraseña
+ * @return error: Error en caso de que exista
+ */
 func UpdateUserPassword(id int, password string) error {
 	return GetDatabase().Model(&models.User{}).
 		Where("id = ?", id).
 		Update("password", password).Error
 }
 
+/*
+ * Función que obtiene el nombre completo por el ID del cliente
+ * @param id: ID del cliente
+ * @return string: Nombre completo
+ * @return error: Error en caso de que exista
+ */
 func GetFullNameByClientID(id int) (string, error) {
 	var client models.Client
 	err := GetDatabase().First(&client, id).Error
@@ -28,18 +52,36 @@ func GetFullNameByClientID(id int) (string, error) {
 	return client.FirstName + " " + client.LastName, nil
 }
 
+/*
+ * Función que obtiene el cliente por su ID
+ * @param id: ID del cliente
+ * @return *models.Client: Cliente
+ * @return error: Error en caso de que exista
+ */
 func GetClientByID(id int) (*models.Client, error) {
 	var client models.Client
 	err := GetDatabase().First(&client, id).Error
 	return &client, err
 }
 
+/*
+ * Función que obtiene el cliente por el ID del usuario
+ * @param id: ID del usuario
+ * @return *models.Client: Cliente
+ * @return error: Error en caso de que exista
+ */
 func GetClientByUserID(id int) (*models.Client, error) {
 	var client models.Client
 	err := GetDatabase().Where("user_id = ?", id).First(&client).Error
 	return &client, err
 }
 
+/*
+ * Función que obtiene el usuario por el ID del cliente
+ * @param id: ID del cliente
+ * @return *models.User: Usuario
+ * @return error: Error en caso de que exista
+ */
 func GetUserByClientID(id int) (*models.User, error) {
 	var user models.User
 	err := GetDatabase().
@@ -49,6 +91,12 @@ func GetUserByClientID(id int) (*models.User, error) {
 	return &user, err
 }
 
+/*
+ * Función que obtiene el usuario por el email del cliente
+ * @param email: Email del cliente
+ * @return *models.User: Usuario
+ * @return error: Error en caso de que exista
+ */
 func GetUserByClientEmail(email string) (*models.User, error) {
 	var user models.User
 	db := GetDatabase()
@@ -64,6 +112,12 @@ func GetUserByClientEmail(email string) (*models.User, error) {
 	return &user, nil
 }
 
+/*
+ * Función que crea un cliente
+ * @param clientUser: Puntero al cliente
+ * @return: ID del cliente
+ * @return error: Error en caso de que exista
+ */
 func CreateClient(clientUser *models.ClientUser) (uint, error) {
 	db := GetDatabase()
 	tx := db.Begin()
@@ -107,12 +161,22 @@ func CreateClient(clientUser *models.ClientUser) (uint, error) {
 	return client.ID, nil
 }
 
+/*
+ * Función que obtiene todos los IDs de los clientes
+ * @return []uint: Arreglo de IDs de los clientes
+ */
 func GetAllClientsIDs() []uint {
 	var clients []uint
 	GetDatabase().Model(&models.Client{}).Pluck("id", &clients)
 	return clients
 }
 
+/*
+ * Función que obtiene los detalles de un cliente
+ * @param clientID: ID del cliente
+ * @return *models.ClientDetails: Detalles del cliente
+ * @return error: Error en caso de que exista
+ */
 func GetClientDetails(clientID uint) (*models.ClientDetails, error) {
 	db := GetDatabase()
 	result := models.ClientDetails{}
@@ -130,6 +194,12 @@ func GetClientDetails(clientID uint) (*models.ClientDetails, error) {
 	return &result, nil
 }
 
+/*
+ * Función que actualiza los detalles de un cliente
+ * @param clientID: ID del cliente
+ * @param details: Puntero a los detalles del cliente
+ * @return error: Error en caso de que exista
+ */
 func UpdateClientDetails(clientID uint, details *models.ClientDetails) error {
 	db := GetDatabase()
 	tx := db.Begin()
