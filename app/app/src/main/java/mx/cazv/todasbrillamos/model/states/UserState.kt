@@ -1,5 +1,7 @@
 package mx.cazv.todasbrillamos.model.states
 
+import mx.cazv.todasbrillamos.model.models.ClientDetails
+
 data class UserState(
-    val fullName: String = "",
+    val details: ClientDetails = ClientDetails("...", "...", "..."),
 )
