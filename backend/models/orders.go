@@ -1,5 +1,12 @@
+/*
+* Backend-models: Código que contiene el modelo de Orders y sus atributos
+* @author: Jennyfer Jasso
+ */
 package models
 
+/*
+ * Estructura de la tabla Orders
+ */
 type Orders struct {
 	ID                 uint `json:"-" gorm:"primarykey"`
 	Quantity           uint

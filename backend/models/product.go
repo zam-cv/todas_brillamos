@@ -1,5 +1,15 @@
+/*
+ * Backend-models: Código que contiene el modelo de Product y sus atributos
+ * @author: Carlos Zamudio
+ * @co-author: Jennyfer Jasso
+ * @co-author: Min Che Kim
+ */
+
 package models
 
+/*
+ * Estructura de la tabla Product
+ */
 type Product struct {
 	ID uint `json:"id" gorm:"primarykey" validate:"omitempty,eq=0"`
 
@@ -26,6 +36,9 @@ type Product struct {
 	CategoryID uint `json:"category_id"`
 }
 
+/*
+ * Estructura de la metadata de Product
+ */
 type ProductMetadata struct {
 	// General
 	Model       string  `json:"model" validate:"required,min=1"`
