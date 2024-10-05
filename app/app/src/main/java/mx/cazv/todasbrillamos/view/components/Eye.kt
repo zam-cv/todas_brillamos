@@ -13,6 +13,10 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.unit.dp
 import mx.cazv.todasbrillamos.ui.theme.AccentBlue
 
+/**
+ * Función composable que muestra un ícono de ojo con una línea diagonal.
+ * @author Carlos Zamudio
+ */
 @Composable
 fun Eye() {
     Box(

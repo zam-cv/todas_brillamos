@@ -14,6 +14,18 @@ import androidx.navigation.NavHostController
 import mx.cazv.todasbrillamos.ui.theme.BackgroundColor
 import mx.cazv.todasbrillamos.view.components.StoreButton
 
+/**
+ * Layout personalizado que utiliza un Scaffold con opciones para una barra superior, una barra inferior,
+ * un botón flotante de tienda y desplazamiento vertical.
+ * @author Carlos Zamudio
+ *
+ * @param navController El NavHostController utilizado para la navegación.
+ * @param topBar El contenido de la barra superior.
+ * @param bottomBar El contenido de la barra inferior.
+ * @param withStoreButton Indica si se debe mostrar el botón flotante de tienda.
+ * @param withScroll Indica si el contenido debe ser desplazable verticalmente.
+ * @param content El contenido que se mostrará dentro del layout.
+ */
 @Composable
 fun CustomLayout(
     navController: NavHostController,

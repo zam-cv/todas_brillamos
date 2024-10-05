@@ -27,6 +27,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import mx.cazv.todasbrillamos.R
 
+/**
+ * Función composable que muestra la información de un pedido.
+ * @author Jennyfer Jasso
+ */
 @Composable
 fun InfoOrder() {
     Divider(

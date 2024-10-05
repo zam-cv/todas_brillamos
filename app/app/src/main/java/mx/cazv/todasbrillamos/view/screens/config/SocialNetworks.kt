@@ -28,6 +28,18 @@ import mx.cazv.todasbrillamos.view.components.Line
 import mx.cazv.todasbrillamos.view.components.header.BasicTopBar
 import mx.cazv.todasbrillamos.view.layouts.CustomLayout
 
+/**
+ * Archivo para mostrar las redes sociales de la organización.
+ * @author Carlos Zamudio
+ */
+
+/**
+ * Composable que muestra un enlace a una red social con su nombre y logo.
+ *
+ * @param name El nombre de la red social.
+ * @param without Indica si se debe mostrar una línea debajo del enlace.
+ * @param image El recurso de imagen del logo de la red social.
+ */
 @Composable
 fun Link(name: String, without: Boolean = false, image: Int) {
     Row (
@@ -60,6 +72,11 @@ fun Link(name: String, without: Boolean = false, image: Int) {
     }
 }
 
+/**
+ * Pantalla de redes sociales que muestra los enlaces a las redes sociales de la organización.
+ *
+ * @param navController El NavHostController utilizado para la navegación.
+ */
 @Composable
 fun SocialNetworks(navController: NavHostController) {
     CustomLayout(

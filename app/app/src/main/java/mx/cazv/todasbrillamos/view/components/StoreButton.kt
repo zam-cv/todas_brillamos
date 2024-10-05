@@ -27,6 +27,13 @@ import mx.cazv.todasbrillamos.ui.theme.BackgroundColor
 import mx.cazv.todasbrillamos.ui.theme.SelectedScreen
 import mx.cazv.todasbrillamos.view.Routes.Companion.ROUTE_STORE
 
+/**
+ * Función composable que muestra un botón flotante para navegar a la tienda.
+ * @author Min Che Kim
+ *
+ * @param navController El NavHostController utilizado para la navegación.
+ * @param modifier Modificador para personalizar la apariencia y el comportamiento del botón.
+ */
 @Composable
 fun StoreButton(navController: NavHostController, modifier: Modifier = Modifier) {
     val currentBackStackEntry by navController.currentBackStackEntryAsState()

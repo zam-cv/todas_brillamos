@@ -14,6 +14,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+/**
+ * Función composable que muestra una sección con un título y un contenido.
+ * @author Carlos Zamudio
+ *
+ * @param title El título de la sección.
+ * @param element El contenido de la sección.
+ */
 @Composable
 fun Section(title: String, element: @Composable () -> Unit) {
     Column (

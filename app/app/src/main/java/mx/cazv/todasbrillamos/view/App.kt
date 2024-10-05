@@ -42,12 +42,31 @@ import mx.cazv.todasbrillamos.viewmodel.ProductsViewModel
 import mx.cazv.todasbrillamos.viewmodel.RandomViewModel
 import mx.cazv.todasbrillamos.viewmodel.UserViewModel
 
+/**
+ * Archivo principal de la aplicación.
+ * @author Carlos Zamudio
+ */
+
+/**
+ * Composable principal de la aplicación que inicializa el controlador de navegación.
+ */
 @Composable
 fun App() {
     val navController = rememberNavController()
     Nav(navController)
 }
 
+/**
+ * Composable que define la navegación de la aplicación.
+ *
+ * @param navController El controlador de navegación.
+ * @param authViewModel El ViewModel de autenticación.
+ * @param userViewModel El ViewModel de usuario.
+ * @param randomViewModel El ViewModel de productos aleatorios.
+ * @param postsViewModel El ViewModel de publicaciones.
+ * @param productsViewModel El ViewModel de productos.
+ * @param modifier El modificador para personalizar la apariencia y el comportamiento del componente.
+ */
 @Composable
 fun Nav(
     navController: NavHostController,
@@ -145,7 +164,7 @@ fun Nav(
             }
 
             composable(Routes.ROUTE_CHANGE_PASSWORD) {
-                ChangePassword(navController)
+                ChangePassword(navController, authViewModel, userViewModel)
             }
 
             composable(Routes.ROUTE_SOCIAL_NETWORKS) {

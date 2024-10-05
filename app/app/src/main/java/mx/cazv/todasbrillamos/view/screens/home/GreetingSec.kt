@@ -26,6 +26,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import mx.cazv.todasbrillamos.R
 
+/**
+ * Composable que muestra una tarjeta de saludo con el nombre del usuario.
+ * @author Jennyfer Jasso
+ *
+ * @param name El nombre del usuario.
+ */
 @Composable
 fun GreetingSec(name: String) {
     Box(

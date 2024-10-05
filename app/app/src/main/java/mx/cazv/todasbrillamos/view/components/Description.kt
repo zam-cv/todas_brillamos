@@ -8,6 +8,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+/**
+ * Función composable que muestra una descripción con un punto de viñeta.
+ * @author Carlos Zamudio
+ *
+ * @param text El texto de la descripción.
+ */
 @Composable
 fun Description(text: String) {
     Row {

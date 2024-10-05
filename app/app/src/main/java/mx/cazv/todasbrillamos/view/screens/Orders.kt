@@ -14,6 +14,12 @@ import mx.cazv.todasbrillamos.view.components.InfoOrder
 import mx.cazv.todasbrillamos.view.components.header.BasicTopBar
 import mx.cazv.todasbrillamos.view.layouts.CustomLayout
 
+/**
+ * Pantalla de pedidos que muestra una lista de pedidos realizados por el usuario.
+ * @author Jennyfer Jasso
+ *
+ * @param navController El NavHostController utilizado para la navegación.
+ */
 @Composable
 fun Orders(navController: NavHostController) {
     CustomLayout(

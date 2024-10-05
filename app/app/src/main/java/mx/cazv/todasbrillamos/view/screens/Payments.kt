@@ -32,6 +32,16 @@ import mx.cazv.todasbrillamos.view.components.CustomButton
 import mx.cazv.todasbrillamos.view.components.Input
 import mx.cazv.todasbrillamos.view.layouts.MainLayout
 
+/**
+ * Archivo para mostrar el formulario de pagos.
+ * @author Mariana Balderrábano
+ */
+
+/**
+ * Pantalla de pagos que permite al usuario ingresar la información de su tarjeta y realizar un pago.
+ *
+ * @param navController El NavHostController utilizado para la navegación.
+ */
 @Composable
 fun Payments(navController: NavHostController) {
     MainLayout(navController = navController) {
@@ -43,6 +53,9 @@ fun Payments(navController: NavHostController) {
     }
 }
 
+/**
+ * Composable que muestra el formulario de pago con campos para la información de la tarjeta y el titular.
+ */
 @Composable
 fun Pay(){
 
@@ -137,6 +150,11 @@ fun Pay(){
     }
 }
 
+/**
+ * Composable que muestra un texto con líneas divisorias a los lados.
+ *
+ * @param text El texto a mostrar.
+ */
 @Composable
 fun PrettyPrint(){
     Row(
@@ -168,6 +186,13 @@ fun PrettyPrint(){
     }
 }
 
+/**
+ * Composable que muestra un texto con un estilo específico.
+ *
+ * @param text El texto a mostrar.
+ * @param sizeT El tamaño del texto.
+ * @param colT El color del texto.
+ */
 @Composable
 fun NormalText(text: String, sizeT: Int, colT: Color){
     Text(text = text,
@@ -176,11 +201,12 @@ fun NormalText(text: String, sizeT: Int, colT: Color){
         color = colT,
         fontWeight = FontWeight.W400)
 }
-@Preview
-@Composable
-fun Payment(navController: NavHostController) {
-    val navController = rememberNavController()
-    Payments(navController = navController)
-}
+
+//@Preview
+//@Composable
+//fun Payment(navController: NavHostController) {
+//    val navController = rememberNavController()
+//    Payments(navController = navController)
+//}
 
 

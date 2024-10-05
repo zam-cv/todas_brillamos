@@ -34,6 +34,17 @@ import mx.cazv.todasbrillamos.view.components.Section
 import mx.cazv.todasbrillamos.view.components.header.BasicTopBar
 import mx.cazv.todasbrillamos.view.layouts.CustomLayout
 
+/**
+ * Archivo para mostrar información sobre la organización y su misión.
+ * @author Carlos Zamudio
+ */
+
+/**
+ * Composable que muestra un texto alrededor de una imagen.
+ *
+ * @param text El texto a mostrar.
+ * @param image El recurso de imagen a mostrar.
+ */
 @Composable
 fun TextAroundImage(text: String, image: Int) {
     val imageWidth = 80.dp
@@ -123,7 +134,11 @@ fun TextAroundImage(text: String, image: Int) {
     }
 }
 
-
+/**
+ * Pantalla de "Quiénes somos" que muestra información sobre la organización y su misión.
+ *
+ * @param navController El NavHostController utilizado para la navegación.
+ */
 @Composable
 fun About(navController: NavHostController) {
     CustomLayout(

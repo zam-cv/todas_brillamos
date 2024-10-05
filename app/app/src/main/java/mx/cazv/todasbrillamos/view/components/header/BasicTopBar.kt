@@ -25,6 +25,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 
+
+/**
+ * Barra superior básica con un título y un botón de retroceso.
+ *
+ * @author Carlos Zamudio
+ *
+ * @param title El título que se mostrará en la barra superior.
+ * @param navController El NavHostController utilizado para la navegación.
+ */
 @Composable
 fun BasicTopBar(title: String, navController: NavHostController) {
     Column {

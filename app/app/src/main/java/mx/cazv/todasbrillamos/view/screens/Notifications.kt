@@ -30,6 +30,16 @@ import mx.cazv.todasbrillamos.view.components.Line
 import mx.cazv.todasbrillamos.view.components.header.BasicTopBar
 import mx.cazv.todasbrillamos.view.layouts.CustomLayout
 
+/**
+ * Archivo para mostrar notificaciones.
+ * @author Carlos Zamudio
+ */
+
+/**
+ * Composable que muestra una fecha con líneas a los lados.
+ *
+ * @param value La fecha a mostrar.
+ */
 @Composable
 fun Date(value: String) {
     Row (
@@ -67,6 +77,14 @@ fun Date(value: String) {
     }
 }
 
+/**
+ * Composable que muestra una notificación con un título, descripción y hora.
+ *
+ * @param title El título de la notificación.
+ * @param description La descripción de la notificación.
+ * @param time La hora de la notificación.
+ * @param withLine Indica si se debe mostrar una línea debajo de la notificación.
+ */
 @Composable
 fun Notification(
     title: String,
@@ -134,6 +152,11 @@ fun Notification(
     }
 }
 
+/**
+ * Pantalla de notificaciones que muestra una lista de notificaciones agrupadas por fecha.
+ *
+ * @param navController El NavHostController utilizado para la navegación.
+ */
 @Composable
 fun Notifications(navController: NavHostController) {
     CustomLayout (

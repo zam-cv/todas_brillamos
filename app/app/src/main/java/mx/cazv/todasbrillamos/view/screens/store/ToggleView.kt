@@ -25,10 +25,12 @@ import mx.cazv.todasbrillamos.R
 import mx.cazv.todasbrillamos.ui.theme.BackgroundColor
 
 /**
- * Cambiar vista de los productos
- * @author: Min Che Kim
+ * Cambiar vista de los productos que permite al usuario alternar entre vista de cuadrícula y vista de lista.
+ * @author Min Che Kim
+ *
+ * @param selectedType El tipo de vista seleccionada ("grid" o "list").
+ * @param onSelectionChange Función que se llama cuando se cambia la selección de vista.
  */
-
 @Composable
 fun ToggleView(selectedType: String, onSelectionChange: (String) -> Unit) {
     val gridFill = R.drawable.ic_grid_view_fill

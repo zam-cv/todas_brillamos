@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.sp
 
 /**
  * Función composable para crear una tarjeta interactiva las cual contiene un texto y una imagen.
- * @author
+ * @author Jennyfer Jasso
  *
  * @param text El texto que se mostrará en la tarjeta.
  * @param image El recurso de la imagen que se mostrará en la tarjeta.

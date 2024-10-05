@@ -41,6 +41,16 @@ import mx.cazv.todasbrillamos.view.components.header.CustomTopBar
 import mx.cazv.todasbrillamos.view.components.PinkButton
 import mx.cazv.todasbrillamos.view.layouts.CustomLayout
 
+/**
+ * Archivo para mostrar el calendario del ciclo menstrual
+ * @author Carlos Zamudio
+ */
+
+/**
+ * Composable que muestra las etiquetas de los días de la semana.
+ *
+ * @param list La lista de etiquetas de los días de la semana.
+ */
 @Composable
 fun DaysLabel(
     list: List<String>,
@@ -63,6 +73,14 @@ fun DaysLabel(
     }
 }
 
+/**
+ * Composable que muestra los días de la semana con sus respectivos rangos de periodo, periodo fértil y día de ovulación.
+ *
+ * @param list La lista de días de la semana.
+ * @param periodRange El rango de días del periodo.
+ * @param fertileRange El rango de días del periodo fértil.
+ * @param ovulationDay El día de ovulación.
+ */
 @Composable
 fun DaysOfTheWeek(
     list: List<String>,
@@ -202,6 +220,9 @@ fun DaysOfTheWeek(
     }
 }
 
+/**
+ * Composable que muestra el calendario del ciclo menstrual.
+ */
 @Composable
 fun Calendar() {
     Box (
@@ -275,6 +296,12 @@ fun Calendar() {
     }
 }
 
+/**
+ * Composable que muestra una leyenda con un color y un nombre.
+ *
+ * @param color El color de la leyenda.
+ * @param name El nombre de la leyenda.
+ */
 @Composable
 fun Group(color: Color, name: String) {
     Row (
@@ -300,6 +327,11 @@ fun Group(color: Color, name: String) {
     }
 }
 
+/**
+ * Pantalla que muestra el ciclo menstrual del usuario con un calendario y leyendas.
+ *
+ * @param navController El NavHostController utilizado para la navegación.
+ */
 @Composable
 fun YourCycle(navController: NavHostController) {
     CustomLayout (

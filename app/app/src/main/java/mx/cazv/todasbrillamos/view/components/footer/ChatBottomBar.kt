@@ -30,6 +30,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.material3.Icon
 import mx.cazv.todasbrillamos.R
 
+/**
+ * Función composable que muestra una barra inferior para el chat.
+ *
+ * @author Carlos Zamudio
+ */
 @Composable
 fun ChatBottomBar() {
     var messageText by remember { mutableStateOf("") }

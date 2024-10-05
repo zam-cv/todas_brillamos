@@ -35,6 +35,15 @@ import mx.cazv.todasbrillamos.ui.theme.AccentColor
 import mx.cazv.todasbrillamos.view.screens.calendar.MinimalDialog
 import mx.cazv.todasbrillamos.viewmodel.CalendarVM
 
+/**
+ * Función composable que muestra un menú desplegable con sugerencias.
+ * @author Min Che Kim
+ *
+ * @param suggestions La lista de sugerencias que se mostrarán en el menú desplegable.
+ * @param type El tipo de menú desplegable (por ejemplo, "period" o "cycle").
+ * @param text El texto que se mostrará en el diálogo minimalista.
+ * @param calendarVM El ViewModel del calendario.
+ */
 @Composable
 fun DropDownMenu(
     suggestions: List<String>,

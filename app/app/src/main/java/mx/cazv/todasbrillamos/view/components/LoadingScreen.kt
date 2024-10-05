@@ -11,6 +11,12 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
+/**
+ * Función composable que muestra una pantalla de carga con un indicador de progreso circular.
+ * @author Carlos Zamudio
+ *
+ * @param modifier Modificador para personalizar la apariencia y el comportamiento de la pantalla de carga.
+ */
 @Composable
 fun LoadingScreen(modifier: Modifier = Modifier) {
     val infiniteTransition = rememberInfiniteTransition(label = "")

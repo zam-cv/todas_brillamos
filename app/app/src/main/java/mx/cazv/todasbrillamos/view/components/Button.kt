@@ -14,6 +14,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import mx.cazv.todasbrillamos.ui.theme.ButtonColor
 
+/**
+ * Función composable que muestra un botón con un texto.
+ * @author Carlos Zamudio
+ *
+ * @param text El texto que se mostrará en el botón.
+ * @param onClick La acción que se ejecutará al hacer clic en el botón.
+ */
 @Composable
 fun Button(text: String, onClick: () -> Unit = {}) {
     Box(

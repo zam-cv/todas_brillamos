@@ -42,6 +42,16 @@ import mx.cazv.todasbrillamos.view.components.footer.ButtonBottomBar
 import mx.cazv.todasbrillamos.view.components.header.BasicTopBar
 import mx.cazv.todasbrillamos.view.layouts.CustomLayout
 
+/**
+ * Archivo para mostrar el carrito de compras
+ * @author Mariana Balderrábano
+ */
+
+/**
+ * Pantalla del carrito de compras que muestra los productos agregados por el usuario.
+ *
+ * @param navController El NavHostController utilizado para la navegación.
+ */
 @Composable
 fun Cart(navController: NavHostController) {
     CustomLayout (
@@ -75,6 +85,9 @@ fun Cart(navController: NavHostController) {
     }
 }
 
+/**
+ * Composable que muestra un producto en el carrito de compras.
+ */
 @Composable
 fun Prod() {
     var num by remember { mutableStateOf(0) }

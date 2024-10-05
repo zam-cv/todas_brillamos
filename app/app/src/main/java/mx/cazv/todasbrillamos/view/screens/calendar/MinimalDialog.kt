@@ -32,6 +32,13 @@ import mx.cazv.todasbrillamos.ui.theme.AccentColor
 import mx.cazv.todasbrillamos.ui.theme.BackgroundColor
 import mx.cazv.todasbrillamos.ui.theme.GrayB3
 
+/**
+ * Composable que muestra un ícono de información que, al hacer clic, abre un diálogo con más información.
+ * @author Min Che Kim
+ *
+ * @param text El texto a mostrar en el diálogo.
+ * @param modifier El modificador para personalizar la apariencia y el comportamiento del componente.
+ */
 @Composable
 fun MinimalDialog(text: String, modifier: Modifier) {
 

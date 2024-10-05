@@ -24,6 +24,16 @@ import androidx.navigation.compose.rememberNavController
 import mx.cazv.todasbrillamos.view.components.Input
 import mx.cazv.todasbrillamos.view.layouts.MainLayout
 
+/**
+ * Archivo para la vista de datos de envío.
+ * @author Mariana Balderrábano
+ */
+
+/**
+ * Pantalla de información de envío que permite al usuario ingresar sus datos personales y de dirección.
+ *
+ * @param navController El NavHostController utilizado para la navegación.
+ */
 @Composable
 fun ShippingInfo(navController: NavHostController) {
     MainLayout(navController = navController) {
@@ -41,6 +51,9 @@ fun ShippingInfo(navController: NavHostController) {
     }
 }
 
+/**
+ * Composable que muestra los campos de entrada para los datos del cliente.
+ */
 @Composable
 fun ClientData(){
     Column (
@@ -119,6 +132,9 @@ fun ClientData(){
 
 }
 
+/**
+ * Vista previa de la pantalla de información de envío.
+ */
 @Preview
 @Composable
 fun ShippInfo() {

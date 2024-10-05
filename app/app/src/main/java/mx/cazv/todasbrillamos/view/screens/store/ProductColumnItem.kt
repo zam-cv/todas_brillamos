@@ -39,8 +39,9 @@ import mx.cazv.todasbrillamos.ui.theme.AccentColor
 /**
  * Vista de lista de los productos
  * @author: Min Che Kim
+ *
+ * @param product el producto a mostrar
  */
-
 @Composable
 fun ProductColumnItem(product: Product) {
     val formattedPrice = "%.2f".format(product.precio)
