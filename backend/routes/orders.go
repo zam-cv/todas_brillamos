@@ -3,8 +3,8 @@ package routes
 import (
 	"backend/database"
 	"backend/middlewares"
-	"backend/resources/files"
 	"backend/resources/auth"
+	"backend/resources/files"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -13,6 +13,20 @@ import (
 func addOrdersRoutes(rg *gin.RouterGroup) {
 
 	orders := rg.Group("/orders")
+
+	orders.GET("/all", auth.GetMiddleware(AdminAuth), func(c *gin.Context) {
+		orders, err := database.GetOrders()
+
+		if err != nil {
+			c.JSON(500, gin.H{"error": err.Error()})
+			return
+		}
+
+		c.JSON(200, gin.H{
+			"folder": files.GetURL(ProductArchive),
+			"orders": orders,
+		})
+	})
 
 	orders.GET("", auth.GetMiddleware(ClientAuth), middlewares.GetClientID(), func(c *gin.Context) {
 		id, _ := c.MustGet("clientID").(uint)
@@ -32,10 +46,10 @@ func addOrdersRoutes(rg *gin.RouterGroup) {
 	orders.PUT("/:id", auth.GetMiddleware(AdminAuth), func(c *gin.Context) {
 		//id, _ := c.MustGet("clientID").(uint)
 		orderID, err := strconv.ParseUint(c.Param("id"), 10, 32)
-        if err != nil {
-            c.JSON(400, gin.H{"error": "Invalid order ID"})
-            return
-        }
+		if err != nil {
+			c.JSON(400, gin.H{"error": "Invalid order ID"})
+			return
+		}
 
 		var input struct {
 			Status string `json:"status"`
