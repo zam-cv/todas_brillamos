@@ -22,4 +22,8 @@ class ProductsService {
     suspend fun random(token: String): ProductList {
         return apiCall { apiService.getRandomProduct("Bearer $token") }.getOrNull()!!
     }
+
+    suspend fun products(token: String): ProductList {
+        return apiCall { apiService.getProducts("Bearer $token") }.getOrNull()!!
+    }
 }

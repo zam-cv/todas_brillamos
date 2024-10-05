@@ -1,10 +1,16 @@
 import { columns } from "@/components/table/components/columns-shipments";
 import { DataTable } from "@/components/table/components/data-table-shipments";
+import api, {Orders}from "@/utils/api/orders";
+import {useState, useEffect} from "react";
 
 export default function Shipments() {
-  const mockData = [
-    {idProducto: "dadAW", nombreProd: "Producto #1", cantidad: "1", numGuia: "123", estadoEnvio: "En progreso"}
-  ];
+  const [orders, setOrders] = useState<Orders[]>([]); 
+
+  useEffect(() => {
+    api.orders.getOrders().then((orders) =>{
+      setOrders(orders);
+    });
+  }, []);
 
   return (
     <div>
@@ -13,7 +19,7 @@ export default function Shipments() {
     </h2>
     <br></br>      
       <DataTable 
-        data = {mockData}
+        data = {orders}
         columns={columns}
         event_id={1}
       

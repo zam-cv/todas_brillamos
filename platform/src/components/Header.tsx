@@ -7,7 +7,8 @@ import {
   ShoppingBasket,
   Truck,
   User,
-  Bell
+  Bell,
+  Coins
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -54,6 +55,11 @@ const LINKS = [
     icon: Bell,
     to: "/notifications",
   },
+  {
+    title: "Donaciones",
+    icon: Coins,
+    to: "/donations",
+  }
 ];
 
 export default function Header() {

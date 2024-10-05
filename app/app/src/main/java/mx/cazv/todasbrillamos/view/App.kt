@@ -37,6 +37,9 @@ import mx.cazv.todasbrillamos.view.screens.config.EditProfile
 import mx.cazv.todasbrillamos.view.screens.config.SocialNetworks
 import mx.cazv.todasbrillamos.view.screens.config.TermsAndPolicies
 import mx.cazv.todasbrillamos.viewmodel.AuthViewModel
+import mx.cazv.todasbrillamos.viewmodel.PostsViewModel
+import mx.cazv.todasbrillamos.viewmodel.ProductsViewModel
+import mx.cazv.todasbrillamos.viewmodel.RandomViewModel
 import mx.cazv.todasbrillamos.viewmodel.UserViewModel
 
 @Composable
@@ -49,7 +52,10 @@ fun App() {
 fun Nav(
     navController: NavHostController,
     authViewModel: AuthViewModel = viewModel(),
-    userViewModel: UserViewModel = viewModel(),
+    userViewModel: UserViewModel = UserViewModel(),
+    randomViewModel: RandomViewModel = RandomViewModel(),
+    postsViewModel: PostsViewModel = PostsViewModel(),
+    productsViewModel: ProductsViewModel = ProductsViewModel(),
     modifier: Modifier = Modifier
 ) {
     var startDestination by remember { mutableStateOf<String?>(null) }
@@ -85,7 +91,7 @@ fun Nav(
             }
 
             composable(Routes.ROUTE_STORE) {
-                Store(navController)
+                Store(navController, authViewModel, productsViewModel)
             }
 
             composable(Routes.ROUTE_CALENDAR) {
@@ -93,7 +99,7 @@ fun Nav(
             }
 
             composable(Routes.ROUTE_HOME) {
-                Home(navController, authViewModel, userViewModel)
+                Home(navController, authViewModel, userViewModel, randomViewModel, postsViewModel)
             }
 
             composable(Routes.ROUTE_CHAT) {
