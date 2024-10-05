@@ -1,3 +1,7 @@
+/*
+* Backend-database: Querys necesarias para la tabla de admin
+@author: Carlos Zamudio
+*/
 package database
 
 import (
@@ -7,6 +11,12 @@ import (
 	"gorm.io/gorm"
 )
 
+/*
+* Función que obtiene el usuario por su ID de administrador
+* @param id: ID del administrador
+* @return *models.User: Usuario
+* @return error: Error en caso de que exista
+ */
 func GetUserByAdminID(id int) (*models.User, error) {
 	var user models.User
 	err := GetDatabase().
@@ -16,6 +26,12 @@ func GetUserByAdminID(id int) (*models.User, error) {
 	return &user, err
 }
 
+/*
+* Función que obtiene el usuario por su email de administrador
+* @param email: Email del administrador
+* @return *models.User: Usuario
+* @return error: Error en caso de que exista
+ */
 func GetUserByAdminEmail(email string) (*models.User, error) {
 	var user models.User
 	db := GetDatabase()
@@ -31,6 +47,12 @@ func GetUserByAdminEmail(email string) (*models.User, error) {
 	return &user, nil
 }
 
+/*
+* Función que crea a un administrador asociado a un usuario
+* @param user: Puntero al usuario a asociar
+* @return uint: ID del administrador creado
+* @return error: Error en caso de que exista
+ */
 func CreateAdminWithUser(user *models.User) (uint, error) {
 	db := GetDatabase()
 	tx := db.Begin()
