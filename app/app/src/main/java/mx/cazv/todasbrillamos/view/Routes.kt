@@ -7,6 +7,10 @@ import androidx.compose.material.icons.filled.Store
 import androidx.compose.ui.graphics.vector.ImageVector
 import mx.cazv.todasbrillamos.R
 
+/**
+ * Ruta de las pantallas de la aplicación
+ * @author Carlos Zamudio
+ */
 sealed class Routes (
     val route: String,
     val tag: String,
