@@ -1,15 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
 import { DataTable } from "@/components/table/components/tableNotifications/data-table-notifications";
 import { columns as notificationColumns } from "@/components/table/components/tableNotifications/columns-notifications";  
-
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import api, {Notification}from "@/utils/api/notifications"
+import { useEffect } from "react";
 
 import {
   Accordion,
@@ -17,8 +12,44 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { useState } from "react";
 
 export default function Notifications() {
+  const [notification, setNotification] = useState<Notification[]>([]);
+  const [title, setTitle] = useState<string>(""); 
+  const [description, setDescription] = useState<string>(""); 
+  const [date, setDate] = useState<string>("");
+  const [client_id, setClient_id] = useState<number>(0);
+
+  function uploadNotification() {
+    api.notification.setNotification({
+      title,
+      description,
+      date : "2021-10-10",
+      client_id,
+    } as any).then((data) => {
+        const id = data.id;
+        setNotification([
+          ...notification,
+          {
+            id,
+            title,
+            description,
+            date,
+            client_id,
+          }
+        ]);
+    });
+  }
+
+
+  useEffect(() => {
+    api.notification.getNotifications().then((notification) => {
+      setNotification(notification);
+    })
+  }, []);
+
+
   return (
     <div>
       <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
@@ -37,19 +68,21 @@ export default function Notifications() {
                   <div className="flex flex-row space-x-2 px-2 pt-2">
                     <Input
                       name="titulo"
-                      value=""
+                      value={title}
                       placeholder="Título de la notificación"
+                      onChange={(e) => setTitle(e.target.value)}
                     ></Input>
                   </div>
                   <div className="flex flex-row space-x-2 px-2 pt-2">
                     <Textarea
                       name="descripcion"
-                      value=""
+                      value={description}
                       placeholder="Descripción..."
+                      onChange={(e) => setDescription(e.target.value)}
                     ></Textarea> 
                   </div>
                   <div className="flex flex-row space-x-2 px-2 pt-2">
-                    <Button>Agregar</Button>
+                    <Button onClick={uploadNotification}>Agregar</Button>
                   </div>
                 </div>
               </AccordionContent>
@@ -58,7 +91,7 @@ export default function Notifications() {
         </div>
       </div>
       <div>
-        <DataTable data={[]} columns={notificationColumns} event_id={1}/>
+        <DataTable data={notification} columns={notificationColumns} event_id={1}/>
       </div>
     </div>
   );

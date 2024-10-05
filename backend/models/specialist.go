@@ -5,6 +5,9 @@
 
 package models
 
+/*
+ * Estructura de la tabla de especialistas
+ */
 type Specialist struct {
 	ID          uint   `json:"ID" gorm:"primarykey"`
 	FirstName   string `json:"first_name" validate:"required,min=2"`
