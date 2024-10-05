@@ -8,18 +8,25 @@ import apiPost, { Posts } from "@/utils/api/post";
 import { Badge } from "@/components/ui/badge";
 import { DataTable } from "@/components/table/components/tablePosts/data-table-posts";
 import { createColumns } from "@/components/table/components/tablePosts/columns-posts";
-import Delete, { DeleteWrapper } from '@/components/Delete';
-
+import  { DeleteWrapper } from '@/components/Delete';
+import apiSpecialist, { Specialist} from "@/utils/api/specialist";
 import {
   Drawer,
-  DrawerContent,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
 } from "@/components/ui/drawer";
+
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+
 
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { set } from "zod";
 
 export default function Specialists() {
   const [name, setName] = useState<string>("");
@@ -31,6 +38,14 @@ export default function Specialists() {
   const [idPost, setIdPost] = useState<number | null>(null);
   const [isCategoryValid, setIsCategoryValid] = useState(false);
   const [isPostValid, setIsPostValid] = useState(false); 
+
+
+  const [FirstName, setFirstName] = useState<string>("");
+  const [LastName, setLastName] = useState<string>("");
+  const [phone, setPhone] = useState<string>("");
+  const [specialty, setSpecialty] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+  const [specialist, setSpecialist] = useState<Specialist[]>([]); 
 
   useEffect(() => {
     const categoryValid = name !== "";
@@ -69,6 +84,33 @@ export default function Specialists() {
     });
   }
 
+  function uploadSpecialist() {
+    apiSpecialist.specialist.setSpecialist({
+      FirstName,
+      LastName,
+      phone,
+      specialty,
+      description
+    } as any).then((data) => {
+      const id = data.id;
+      setSpecialist([
+        ...specialist,
+        {
+          id,
+          FirstName,
+          LastName,
+          phone,
+          specialty
+        }
+      ]);
+      setFirstName("");
+      setLastName("");
+      setPhone("");
+      setSpecialty("");
+      setDescription("");
+    });
+  }
+
   // Función para eliminar un post
   function handleDelete(postId: number) {
     apiPost.posts.deletePost(postId)
@@ -94,6 +136,12 @@ export default function Specialists() {
       setPosts(post);
     });
   }, []);
+
+  useEffect(() => {
+    apiSpecialist.specialist.getSpacialist().then((specialist) => {
+      setSpecialist(specialist);
+    })
+  })
 
   useEffect(() => {
     console.log(idPost);
@@ -154,6 +202,85 @@ export default function Specialists() {
           ))}
        
         <br></br>
+        <Popover>
+      <PopoverTrigger asChild>
+        <Button>Añadir Especialista</Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-80">
+        <div className="grid gap-4">
+          <div className="space-y-2">
+            <h4 className="font-medium leading-none">Especialista</h4>
+            <p className="text-sm text-muted-foreground">
+              Complete los siguientes campos.
+            </p>
+          </div>
+          <div className="grid gap-2">
+            <div className="grid grid-cols-3 items-center gap-4">
+              <Label htmlFor="width">Nombre</Label>
+              <Input
+                name="firstname"
+                value={FirstName}
+                className="col-span-2 h-8"
+                onChange={(e) => setFirstName(e.target.value)}
+              />
+            </div>
+            <div className="grid grid-cols-3 items-center gap-4">
+              <Label htmlFor="lastname">Segundo Nombre</Label>
+              <Input
+                  name="lastname"
+                  value={LastName}
+                  className="col-span-2 h-8"
+                  onChange={(e) => setLastName(e.target.value)}
+                />
+              </div>
+            <div className="grid grid-cols-3 items-center gap-4">
+              <Label htmlFor="maxWidth">Especialidad</Label>
+              <Input
+                name="specialty"
+                value={specialty}
+                onChange={(e)=> setSpecialty(e.target.value)}
+                className="col-span-2 h-8"
+              />
+            </div>
+            <div className="grid grid-cols-3 items-center gap-4">
+              <Label htmlFor="height">Contacto</Label>
+              <Input
+                name="phone"
+                value={phone}
+                onChange={(e)=> setPhone(e.target.value)}
+                className="col-span-2 h-8"
+              />
+            </div>
+            <div className="grid grid-cols-3 items-center gap-4">
+              <Label htmlFor="height">Descripcion</Label>
+              <Input
+                name="description"
+                value={description}
+                onChange={(e)=> setDescription(e.target.value)}
+                className="col-span-2 h-8"
+              />
+            </div>
+          </div>
+          <Button onClick={uploadSpecialist}>Agregar</Button>
+        </div>
+      </PopoverContent>
+    </Popover>
+        <br></br>
+        <br></br>
+        {specialist.map((specialist)=>(
+          <Card>
+            <CardHeader>
+                <CardTitle>{specialist.FirstName}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <CardDescription>{specialist.specialty}</CardDescription>
+              <CardDescription>{specialist.phone}</CardDescription>
+            </CardContent>
+            <CardFooter>
+              <Button variant="destructive">Eliminar</Button>
+            </CardFooter>
+          </Card>
+        ))}
         <br></br>
 
         {/* Posts */}

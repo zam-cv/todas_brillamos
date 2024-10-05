@@ -54,4 +54,5 @@ func addCategoriesRoutes(rg *gin.RouterGroup) {
 
 		c.JSON(http.StatusOK, categories)
 	})
+
 }
