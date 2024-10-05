@@ -1,5 +1,5 @@
 /*
- * Backend-routes: Código que determina los endpoints de donaciones y sus métodos
+ * Backend-routes: Código que determina los endpoints de donaciones y sus rutas
  * @author: Mariana Balderrábano
  */
 package routes

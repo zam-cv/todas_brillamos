@@ -1,3 +1,7 @@
+/*
+* Backend-routes: Código que determina los endpoints de tracking y sus rutas
+* @author: Jennyfer Jasso
+ */
 package routes
 
 import (
@@ -16,41 +20,44 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+/*
+* Función para agregar rutas de tracking a la API (Get, Post, Put, Delete)
+ */
 func addTrackingRoutes(rg *gin.RouterGroup) {
 	tracking := rg.Group("/tracking")
 
 	/*
-	tracking.GET("/order", auth.GetMiddleware(ClientAuth), middlewares.GetClientID(), func(c *gin.Context) {
-		clientID, exists := c.MustGet("clientID").(uint)
-		if !exists {
-			c.JSON(500, gin.H{"error": "Invalid client ID"})
-			return
-		}
+		tracking.GET("/order", auth.GetMiddleware(ClientAuth), middlewares.GetClientID(), func(c *gin.Context) {
+			clientID, exists := c.MustGet("clientID").(uint)
+			if !exists {
+				c.JSON(500, gin.H{"error": "Invalid client ID"})
+				return
+			}
 
-		deliveryDateStr := c.Query("deliveryDate")
-		if deliveryDateStr == "" {
-			c.JSON(400, gin.H{"error": "Invalid delivery date format"})
-			return
-		}
+			deliveryDateStr := c.Query("deliveryDate")
+			if deliveryDateStr == "" {
+				c.JSON(400, gin.H{"error": "Invalid delivery date format"})
+				return
+			}
 
-		_, err := time.Parse("2006-01-02", deliveryDateStr)
-		if err != nil {
-			c.JSON(400, gin.H{"error": "Invalid delivery date format"})
-			return
-		}
+			_, err := time.Parse("2006-01-02", deliveryDateStr)
+			if err != nil {
+				c.JSON(400, gin.H{"error": "Invalid delivery date format"})
+				return
+			}
 
-		result, err := database.GetOrderInfoWithProducts(clientID, deliveryDateStr)
-		if err != nil {
-			c.JSON(500, gin.H{"error": err.Error()})
-			return
-		}
+			result, err := database.GetOrderInfoWithProducts(clientID, deliveryDateStr)
+			if err != nil {
+				c.JSON(500, gin.H{"error": err.Error()})
+				return
+			}
 
-		//log.Println("Parsed delivery date:", deliveryDateStr)
-		//log.Println("Database delivery date:", result.DeliveryDate)
+			//log.Println("Parsed delivery date:", deliveryDateStr)
+			//log.Println("Database delivery date:", result.DeliveryDate)
 
-		c.JSON(200, result)
-	})
-		*/
+			c.JSON(200, result)
+		})
+	*/
 
 	tracking.GET("", auth.GetMiddleware(ClientAuth), middlewares.GetClientID(), func(c *gin.Context) {
 		//id, _ := c.MustGet("clientID").(uint)

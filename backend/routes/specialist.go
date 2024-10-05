@@ -1,5 +1,5 @@
 /*
- * Backend-routes: Código que determina los endpoints de especialistas y sus métodos
+ * Backend-routes: Código que determina los endpoints de especialistas y sus rutas
  * @author: Mariana Balderrábano
  */
 

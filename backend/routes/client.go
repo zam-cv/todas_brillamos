@@ -1,5 +1,5 @@
 /*
- * Backend-routes: Código que determina los endpoints de client y sus métodos
+ * Backend-routes: Código que determina los endpoints de client y sus rutas
  * @author: Carlos Zamudio
  * @co-author: Mariana Balderrábano
  */
