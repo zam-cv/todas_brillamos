@@ -100,7 +100,8 @@ export default function Specialists() {
           FirstName,
           LastName,
           phone,
-          specialty
+          specialty,
+          description
         }
       ]);
       setFirstName("");
@@ -271,10 +272,12 @@ export default function Specialists() {
           <Card>
             <CardHeader>
                 <CardTitle>{specialist.FirstName}</CardTitle>
+                <CardTitle>{specialist.LastName}</CardTitle>
             </CardHeader>
             <CardContent>
               <CardDescription>{specialist.specialty}</CardDescription>
               <CardDescription>{specialist.phone}</CardDescription>
+              <CardDescription>{specialist.description}</CardDescription>
             </CardContent>
             <CardFooter>
               <Button variant="destructive">Eliminar</Button>
