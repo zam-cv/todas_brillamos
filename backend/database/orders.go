@@ -2,11 +2,10 @@ package database
 
 import (
 	"backend/models"
-	"fmt"
+	//"fmt"
 	"strings"
 	"time"
-
-	"gorm.io/gorm"
+	//"gorm.io/gorm"
 )
 
 func GetOrdersByIDandClientID(id int, clientId int) (*models.Orders, error) {
