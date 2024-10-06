@@ -27,7 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import mx.cazv.todasbrillamos.model.CalculatePeriod
+import mx.cazv.todasbrillamos.model.CalendarModel
 import mx.cazv.todasbrillamos.ui.theme.AccentColor
 import mx.cazv.todasbrillamos.viewmodel.CalendarVM
 
@@ -37,7 +37,7 @@ fun DatePickerDocked(text: String = "", calendarVM: CalendarVM = viewModel()) {
     var showDatePicker by remember { mutableStateOf(false) }
     val datePickerState = rememberDatePickerState()
     val selectedDate = datePickerState.selectedDateMillis?.let {
-        CalculatePeriod().convertMillisToDate(it)
+        CalendarModel().convertMillisToDate(it)
     } ?: ""
 
     Row (modifier = Modifier) {
@@ -105,7 +105,7 @@ fun DatePickerDocked(text: String = "", calendarVM: CalendarVM = viewModel()) {
                         onDismissRequest = { showDatePicker = false },
                         confirmButton = {
                             TextButton(onClick = { datePickerState.selectedDateMillis?.let {
-                                CalculatePeriod().convertMillisToDate(it)
+                                CalendarModel().convertMillisToDate(it)
                                 calendarVM.updateSelectedDate(it) } ?: ""
                                 showDatePicker = false
                             }) {

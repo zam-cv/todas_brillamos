@@ -37,6 +37,7 @@ import mx.cazv.todasbrillamos.view.screens.config.EditProfile
 import mx.cazv.todasbrillamos.view.screens.config.SocialNetworks
 import mx.cazv.todasbrillamos.view.screens.config.TermsAndPolicies
 import mx.cazv.todasbrillamos.viewmodel.AuthViewModel
+import mx.cazv.todasbrillamos.viewmodel.CalendarVM
 import mx.cazv.todasbrillamos.viewmodel.PostsViewModel
 import mx.cazv.todasbrillamos.viewmodel.ProductsViewModel
 import mx.cazv.todasbrillamos.viewmodel.RandomViewModel
@@ -78,6 +79,7 @@ fun Nav(
     modifier: Modifier = Modifier
 ) {
     var startDestination by remember { mutableStateOf<String?>(null) }
+    val calendarVM: CalendarVM = viewModel()
 
     LaunchedEffect(key1 = Unit) {
         startDestination = if (authViewModel.verify()) {
@@ -115,7 +117,7 @@ fun Nav(
             }
 
             composable(Routes.ROUTE_CALENDAR) {
-                Calendar(navController)
+                Calendar(navController, calendarVM)
             }
 
             composable(Routes.ROUTE_HOME) {
@@ -143,7 +145,7 @@ fun Nav(
             }
 
             composable(Routes.ROUTE_YOUR_CYCLE) {
-                YourCycle(navController)
+                YourCycle(navController, calendarVM)
             }
 
             composable(Routes.ROUTE_TRACK_ORDER) {

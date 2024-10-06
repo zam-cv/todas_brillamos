@@ -1,5 +1,7 @@
 package mx.cazv.todasbrillamos.model
 
+import java.util.Date
+
 /**
  * Clase de datos que representa la información del ciclo menstrual.
  *
@@ -19,9 +21,9 @@ data class YourCycleInfo(
     val period: String = "0",
     val cycle: String = "0",
 
-    val nextPeriodStartDate: Long = 0L,
-    val nextPeriodEndDate: Long = 0L,
-    val ovulationDate: Long = 0L,
-    val fertileDayStart: Long = 0L,
-    val fertileDayEnd: Long = 0L
+    val nextPeriodStartDate: Date = Date(),
+    val nextPeriodEndDate: Date = Date(),
+    val ovulationDate: Date = Date(),
+    val fertileDayStart: Date = Date(),
+    val fertileDayEnd: Date = Date()
 )

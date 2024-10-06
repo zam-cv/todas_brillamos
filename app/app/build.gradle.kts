@@ -82,6 +82,7 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.gson)
     implementation(libs.coil)
+    implementation("org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.5")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
