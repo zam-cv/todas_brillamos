@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import mx.cazv.todasbrillamos.R
+import mx.cazv.todasbrillamos.view.Routes
 import mx.cazv.todasbrillamos.view.components.DropDownMenu
 import mx.cazv.todasbrillamos.view.components.PinkButton
 import mx.cazv.todasbrillamos.view.layouts.MainLayout
@@ -99,7 +100,7 @@ fun Calendar(navController: NavHostController, calendarVM: CalendarVM) {
                         estado.value.period != "0" &&
                         estado.value.cycle != "0"
                     ) {
-                        navController.navigate("your_cycle")
+                        navController.navigate(Routes.ROUTE_YOUR_CYCLE)
                     }
                 })
             }
