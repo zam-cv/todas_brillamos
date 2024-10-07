@@ -41,10 +41,10 @@ import mx.cazv.todasbrillamos.ui.theme.ColorOfMostFertilePeriod
 import mx.cazv.todasbrillamos.ui.theme.OvulationColor
 import mx.cazv.todasbrillamos.ui.theme.PeriodColor
 import mx.cazv.todasbrillamos.view.Routes
-import mx.cazv.todasbrillamos.view.components.footer.BottomBar
 import mx.cazv.todasbrillamos.view.components.header.CustomTopBar
 import mx.cazv.todasbrillamos.view.components.PinkButton
 import mx.cazv.todasbrillamos.view.layouts.CustomLayout
+import mx.cazv.todasbrillamos.view.layouts.MainLayout
 import mx.cazv.todasbrillamos.view.screens.CalendarView
 import mx.cazv.todasbrillamos.viewmodel.CalendarVM
 
@@ -366,17 +366,7 @@ fun YourCycle(navController: NavHostController, calendarVM: CalendarVM) {
         fertileEndDate = fertileDayEnd
     )
 
-    CustomLayout (
-        navController = navController,
-        topBar = {
-            CustomTopBar {
-                Text(text = "Custom Top Bar")
-            }
-        },
-        bottomBar = {
-            BottomBar(navController = navController)
-        }
-    ) {
+    MainLayout(navController = navController) {
         Column (
 //            modifier = Modifier
 //                .fillMaxHeight()
@@ -413,7 +403,6 @@ fun YourCycle(navController: NavHostController, calendarVM: CalendarVM) {
                 modifier = Modifier.fillMaxWidth()
             )
 
-            Spacer(modifier = Modifier.height(20.dp))
 
             Column (
                 modifier = Modifier
@@ -424,8 +413,6 @@ fun YourCycle(navController: NavHostController, calendarVM: CalendarVM) {
                 Group(color = ColorOfMostFertilePeriod, name = "Periodo más fértil")
                 Group(color = OvulationColor, name = "Ovulación")
             }
-
-            Spacer(modifier = Modifier.height(15.dp))
 
             Box (
                 modifier = Modifier
@@ -438,7 +425,10 @@ fun YourCycle(navController: NavHostController, calendarVM: CalendarVM) {
                     calendarVM.updateSelectedNumber("0", "period")
                     calendarVM.updateSelectedNumber("0", "cycle")})
             }
+
+            Spacer(modifier = Modifier.height(40.dp))
         }
+
 
 //        Column (
 ////            modifier = Modifier

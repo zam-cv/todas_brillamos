@@ -53,7 +53,7 @@ class CalendarVM: ViewModel() {
         val period = state.value.period
         val cycle = state.value.cycle
 
-        val nextPeriodStartDate = calendarModel.addDaysToDate(Date(date), cycle.toInt())
+        val nextPeriodStartDate = calendarModel.addDaysToDate(Date(date), cycle.toInt()+1)
         val nextPeriodEndDate = calendarModel.addDaysToDate(nextPeriodStartDate, period.toInt())
 
         val tempDate = calendarModel.addDaysToDate(nextPeriodStartDate, cycle.toInt())

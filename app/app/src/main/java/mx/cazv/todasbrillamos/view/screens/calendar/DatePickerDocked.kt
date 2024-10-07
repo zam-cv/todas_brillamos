@@ -30,6 +30,10 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import mx.cazv.todasbrillamos.model.CalendarModel
 import mx.cazv.todasbrillamos.ui.theme.AccentColor
 import mx.cazv.todasbrillamos.viewmodel.CalendarVM
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+import java.util.TimeZone
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -37,7 +41,9 @@ fun DatePickerDocked(text: String = "", calendarVM: CalendarVM = viewModel()) {
     var showDatePicker by remember { mutableStateOf(false) }
     val datePickerState = rememberDatePickerState()
     val selectedDate = datePickerState.selectedDateMillis?.let {
-        CalendarModel().convertMillisToDate(it)
+        SimpleDateFormat("dd/MM/yyyy", Locale.US).apply{
+            timeZone = TimeZone.getTimeZone("UTC")
+        }.format(Date(it))
     } ?: ""
 
     Row (modifier = Modifier) {
@@ -100,12 +106,13 @@ fun DatePickerDocked(text: String = "", calendarVM: CalendarVM = viewModel()) {
 //                        }
 //                    }
 //                }
+
                 if (showDatePicker) {
                     DatePickerDialog(
                         onDismissRequest = { showDatePicker = false },
                         confirmButton = {
                             TextButton(onClick = { datePickerState.selectedDateMillis?.let {
-                                CalendarModel().convertMillisToDate(it)
+                                Date(it)
                                 calendarVM.updateSelectedDate(it) } ?: ""
                                 showDatePicker = false
                             }) {
