@@ -23,7 +23,7 @@ import mx.cazv.todasbrillamos.view.screens.Notifications
 import mx.cazv.todasbrillamos.view.screens.Register
 import mx.cazv.todasbrillamos.view.screens.Cart
 import mx.cazv.todasbrillamos.view.screens.Orders
-import mx.cazv.todasbrillamos.view.screens.Payment
+//import mx.cazv.todasbrillamos.view.screens.Payment
 import mx.cazv.todasbrillamos.view.screens.TrackOrder
 import mx.cazv.todasbrillamos.view.screens.config.Config
 import mx.cazv.todasbrillamos.view.screens.ProductDetails
@@ -186,7 +186,7 @@ fun Nav(
             }
 
             composable(Routes.ROUTE_PAYMENTS){
-                Payment(navController)
+//                Payment(navController)
             }
         }
     } else {
