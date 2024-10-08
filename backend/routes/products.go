@@ -7,6 +7,7 @@ import (
 	"backend/resources/auth"
 	"backend/resources/files"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -76,6 +77,26 @@ func addProductRoutes(rg *gin.RouterGroup) {
 		})
 	})
 
+	group.GET("/:id", auth.GetMiddleware(ClientAuth), func(c *gin.Context) {
+		productIDStr := c.Param("id")
+		productID, err := strconv.Atoi(productIDStr)
+		if err != nil {
+			c.JSON(400, gin.H{"error": "Invalid product ID"})
+			return
+		}
+
+		product, err := database.GetProductById(uint(productID))
+		if err != nil {
+			c.JSON(404, gin.H{"error": "Product not found"})
+			return
+		}
+
+		c.JSON(200, gin.H{
+			"folder":  files.GetURL(ProductArchive),
+			"product": product,
+		})
+	})
+
 	group.GET("/random", auth.GetMiddleware(ClientAuth), middlewares.GetClientID(), func(c *gin.Context) {
 		clientID, exists := c.MustGet("clientID").(uint)
 		if !exists {
@@ -99,12 +120,6 @@ func addProductRoutes(rg *gin.RouterGroup) {
 	files.UpdateFile(ProductArchive, group, auth.GetMiddleware(AdminAuth))
 	files.DeleteFile(ProductArchive, group, auth.GetMiddleware(AdminAuth))
 	files.UpdateMetadata(ProductArchive, group, auth.GetMiddleware(AdminAuth))
-
-	// group.GET("/recommended", func(c *gin.Context) {
-	// 	c.JSON(200, gin.H{
-	// 		"message": "Get recommended products",
-	// 	})
-	// })
 
 	// Serve static files
 	files.ServeStaticFiles(ProductArchive, router)

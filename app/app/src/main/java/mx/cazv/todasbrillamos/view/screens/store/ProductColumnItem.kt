@@ -44,8 +44,8 @@ import mx.cazv.todasbrillamos.ui.theme.AccentColor
  */
 @Composable
 fun ProductColumnItem(product: Product) {
-    val formattedPrice = "%.2f".format(product.precio)
-    val formattedDC = "%.0f".format(product.descuento)
+/*    val formattedPrice = "%.2f".format(product.product.price)
+    val formattedDC = "0.0"
     val productFontSize = 15.sp
     val priceFontSize = 18.sp
     val priceLineSize = 13.sp
@@ -64,7 +64,7 @@ fun ProductColumnItem(product: Product) {
                     .fillMaxSize()
                     .clip(RoundedCornerShape(5.dp)),
                 painter = painterResource(id = product.imagen),
-                contentDescription = product.producto,
+                contentDescription = product.product.name,
                 contentScale = ContentScale.Crop
             )
 
@@ -192,7 +192,7 @@ fun ProductColumnItem(product: Product) {
             }
         }
 
-    }
+    }*/
 }
 
 /*

@@ -158,7 +158,7 @@ fun Nav(
                                 val id = productId?.toInt()
 
                                 if (id != null) {
-                                    ProductDetails(navController, id, randomState)
+                                    ProductDetails(navController, id, randomState, authViewModel)
                                 }
                             }
                             Routes.ROUTE_YOUR_CYCLE -> YourCycle(navController, calendarVM)
