@@ -30,6 +30,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import mx.cazv.todasbrillamos.R
+import mx.cazv.todasbrillamos.model.models.Category
 import mx.cazv.todasbrillamos.ui.theme.BackgroundColor
 
 /**
@@ -38,17 +39,11 @@ import mx.cazv.todasbrillamos.ui.theme.BackgroundColor
  */
 
 @Composable
-fun CategoryFilter() {
-    val categories = listOf(
-        "Ver Todo",
-        "Nocturna",
-        "Teen",
-        "Regular",
-        "Pantiprotectores",
-        "Pads"
-    )
+fun CategoryFilter(categories: List<Category>) {
+    if (categories.isEmpty()) return
+
     var selectedOption by remember {
-        mutableStateOf(categories[0])
+        mutableStateOf(categories[0].name)
     }
     val onSelectionChange = { text: String ->
         selectedOption = text
@@ -111,18 +106,20 @@ fun CategoryFilter() {
                 modifier = Modifier
                     .clip(shape = RoundedCornerShape(24.dp))
             ) {
-                itemsIndexed(categories) { _, text ->
+                itemsIndexed(categories) { _, category ->
+                    val name = category.name
+
                     Text(
-                        text = text,
+                        text = name,
                         style = TextStyle(
                             fontSize = fSize,
-                            color = if (text == selectedOption) Color.Black else Color.LightGray,
-                            fontWeight = if (text == selectedOption) FontWeight.ExtraBold else FontWeight.Normal
+                            color = if (name == selectedOption) Color.Black else Color.LightGray,
+                            fontWeight = if (name == selectedOption) FontWeight.ExtraBold else FontWeight.Normal
                         ),
                         modifier = Modifier
                             .clip(shape = RoundedCornerShape(24.dp))
                             .clickable {
-                                onSelectionChange(text)
+                                onSelectionChange(name)
                             }
                             .padding(
                                 vertical = 12.dp,

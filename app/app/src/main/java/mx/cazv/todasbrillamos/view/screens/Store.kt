@@ -42,7 +42,7 @@ fun Store(
         val token = authViewModel.token()
 
         if (token != null) {
-            productsViewModel.loadProducts(token)
+            productsViewModel.load(token)
         }
     }
 
@@ -54,7 +54,7 @@ fun Store(
                 selectedType = viewType,
                 onSelectionChange = { newType -> viewType = newType }
             )
-            CategoryFilter()
+            CategoryFilter(productsState.value.categories)
             Box (
                 modifier = Modifier
                     .weight(1f)

@@ -6,6 +6,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import mx.cazv.todasbrillamos.model.models.Category
+import mx.cazv.todasbrillamos.model.models.ProductList
 import mx.cazv.todasbrillamos.model.services.ProductsService
 import mx.cazv.todasbrillamos.model.states.ProductsState
 
@@ -14,24 +16,37 @@ import mx.cazv.todasbrillamos.model.states.ProductsState
  * @author Carlos Zamudio
  */
 class ProductsViewModel : ViewModel() {
-    private val randomService = ProductsService()
+    private val productsService = ProductsService()
 
     private val _state = MutableStateFlow(ProductsState())
     val state: StateFlow<ProductsState> = _state.asStateFlow()
 
     /**
-     * Carga los productos utilizando el token de autenticación.
+     * Carga los productos y categorias utilizando el token de autenticación.
      *
      * @param token El token de autenticación.
      */
-    fun loadProducts(token: String) {
+    fun load(token: String) {
         viewModelScope.launch {
+            var products = ProductList("", emptyList())
+            var categories: List<Category> = listOf(
+                Category(0, "Ver todos") // Default category
+            )
+
             try {
-                val products = randomService.random(token)
-                _state.value = ProductsState(products)
+                products = productsService.products(token)
             } catch (e: Exception) {
-                _state.value = ProductsState()
+                // TODO: Handle error
             }
+
+            try {
+                val moreCategories = productsService.categories(token)
+                categories = categories + moreCategories
+            } catch (e: Exception) {
+                // TODO: Handle error
+            }
+
+            _state.value = ProductsState(products, categories)
         }
     }
 }

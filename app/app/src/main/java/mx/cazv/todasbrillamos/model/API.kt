@@ -2,6 +2,7 @@ package mx.cazv.todasbrillamos.model
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import mx.cazv.todasbrillamos.model.models.Category
 import mx.cazv.todasbrillamos.model.models.ClientDetails
 import mx.cazv.todasbrillamos.model.models.Credentials
 import mx.cazv.todasbrillamos.model.models.PasswordUpdate
@@ -72,6 +73,9 @@ interface API {
      */
     @GET("api/products")
     suspend fun getProducts(@Header("Authorization") token: String): ProductList
+
+    @GET("api/categories")
+    suspend fun getCategories(@Header("Authorization") token: String): List<Category>
 
     @GET("api/products/{id}")
     suspend fun getProduct(
