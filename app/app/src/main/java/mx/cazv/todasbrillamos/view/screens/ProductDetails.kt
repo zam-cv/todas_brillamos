@@ -24,6 +24,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -44,6 +45,7 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import mx.cazv.todasbrillamos.model.ApiConfig
 import mx.cazv.todasbrillamos.model.models.ProductList
+import mx.cazv.todasbrillamos.model.states.RandomState
 import mx.cazv.todasbrillamos.ui.theme.AccentColor
 import mx.cazv.todasbrillamos.ui.theme.BackgroundColor
 import mx.cazv.todasbrillamos.ui.theme.BadgePink
@@ -53,6 +55,8 @@ import mx.cazv.todasbrillamos.view.components.footer.BottomBar
 import mx.cazv.todasbrillamos.view.components.header.CustomTopBar
 import mx.cazv.todasbrillamos.view.components.Description
 import mx.cazv.todasbrillamos.view.components.Line
+import mx.cazv.todasbrillamos.view.components.footer.ButtonBottomBar
+import mx.cazv.todasbrillamos.view.components.header.BasicTopBar
 import mx.cazv.todasbrillamos.view.layouts.CustomLayout
 
 /** Archivo para mostrar detalles de productos.
@@ -370,7 +374,11 @@ fun Product(
  * @param modifier Modificador para personalizar la apariencia y el comportamiento del componente.
  */
 @Composable
-fun MoreProducts(text: String, products: ProductList, modifier: Modifier) {
+fun MoreProducts(
+    text: String,
+    products: ProductList,
+    modifier: Modifier
+) {
     Column (
         modifier = modifier
     ) {
@@ -403,20 +411,20 @@ fun MoreProducts(text: String, products: ProductList, modifier: Modifier) {
 
 /**
  * Pantalla de detalles del producto que muestra la información detallada del producto seleccionado.
- *
- * @param navController El NavHostController utilizado para la navegación.
  */
 @Composable
-fun ProductDetails(navController: NavHostController) {
+fun ProductDetails(
+    navController: NavHostController,
+    productId: Int,
+    randomState: State<RandomState>
+) {
     CustomLayout (
         navController = navController,
         topBar = {
-            CustomTopBar {
-                Text(text = "Custom Top Bar")
-            }
+            BasicTopBar(title = "Detalles del Producto", navController = navController)
         },
         bottomBar = {
-            BottomBar(navController = navController)
+            ButtonBottomBar(buttonText = "Añadir al carrito", onClick = {})
         }
     ) {
         Column (
@@ -425,7 +433,6 @@ fun ProductDetails(navController: NavHostController) {
                 .fillMaxHeight()
                 .background(BackgroundColor)
                 .padding(top = 15.dp, start = 15.dp, bottom = 25.dp)
-                .verticalScroll(rememberScrollState())
         ) {
             Column (
                 modifier = Modifier
@@ -506,7 +513,13 @@ fun ProductDetails(navController: NavHostController) {
                         ProductDetails()
                     }
 
-/*                    MoreProducts(text = "Más productos", modifier = Modifier.padding(top = 60.dp))*/
+                    if (randomState.value.products.products.isNotEmpty()) {
+                        MoreProducts(
+                            text = "Más productos",
+                            products = randomState.value.products,
+                            modifier = Modifier.padding(top = 60.dp)
+                        )
+                    }
                 }
             }
         }

@@ -3,6 +3,7 @@ package mx.cazv.todasbrillamos.view
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -36,6 +37,7 @@ import mx.cazv.todasbrillamos.view.screens.config.ChangePassword
 import mx.cazv.todasbrillamos.view.screens.config.EditProfile
 import mx.cazv.todasbrillamos.view.screens.config.SocialNetworks
 import mx.cazv.todasbrillamos.view.screens.config.TermsAndPolicies
+import mx.cazv.todasbrillamos.viewmodel.AuthState
 import mx.cazv.todasbrillamos.viewmodel.AuthViewModel
 import mx.cazv.todasbrillamos.viewmodel.CalendarVM
 import mx.cazv.todasbrillamos.viewmodel.PostsViewModel
@@ -80,6 +82,7 @@ fun Nav(
 ) {
     var startDestination by remember { mutableStateOf<String?>(null) }
     val calendarVM: CalendarVM = viewModel()
+    val authState by authViewModel.authState.collectAsState()
 
     LaunchedEffect(key1 = Unit) {
         startDestination = if (authViewModel.verify()) {
@@ -95,98 +98,93 @@ fun Nav(
             startDestination = startDestination!!,
             modifier = modifier.fillMaxSize()
         ) {
-            // Screens
+            // Public routes (always accessible)
             composable(Routes.ROUTE_LOGIN) {
                 Login(navController, authViewModel)
             }
-
             composable(Routes.ROUTE_REGISTER) {
                 Register(navController, authViewModel)
             }
-
-            composable(Routes.ROUTE_CART) {
-                Cart(navController)
-            }
-
             composable(Routes.ROUTE_FORGOT_PASSWORD) {
                 ForgotPassword(navController)
             }
 
-            composable(Routes.ROUTE_STORE) {
-                Store(navController, authViewModel, productsViewModel)
-            }
+            // Protected routes (only accessible when authenticated)
+            val protectedRoutes = listOf(
+                Routes.ROUTE_HOME,
+                Routes.ROUTE_STORE,
+                Routes.ROUTE_CALENDAR,
+                Routes.ROUTE_CHAT,
+                Routes.ROUTE_FAVORITES,
+                Routes.ROUTE_NOTIFICATIONS,
+                Routes.ROUTE_CART,
+                Routes.ROUTE_PRODUCT_DETAILS + "/{productId}", // Dynamic route
+                Routes.ROUTE_YOUR_CYCLE,
+                Routes.ROUTE_TRACK_ORDER,
+                Routes.ROUTE_ORDERS,
+                Routes.ROUTE_CONFIG,
+                Routes.ROUTE_EDIT_PROFILE,
+                Routes.ROUTE_CHANGE_PASSWORD,
+                Routes.ROUTE_SOCIAL_NETWORKS,
+                Routes.ROUTE_TERMS_AND_POLICIES,
+                Routes.ROUTE_ABOUT,
+                Routes.ROUTE_SHIPPING_INFO,
+                Routes.ROUTE_PAYMENTS
+            )
 
-            composable(Routes.ROUTE_CALENDAR) {
-                Calendar(navController, calendarVM)
-            }
+            protectedRoutes.forEach { route ->
+                composable(route) { backStackEntry ->
+                    if (authState is AuthState.SignInSuccess) {
+                        val token = (authState as AuthState.SignInSuccess).credentials.token
 
-            composable(Routes.ROUTE_HOME) {
-                Home(navController, authViewModel, userViewModel, randomViewModel, postsViewModel)
-            }
+                        // Data
+                        val randomState = randomViewModel.state.collectAsState()
 
-            composable(Routes.ROUTE_CHAT) {
-                Chat(navController)
-            }
+                        // Load data
+                        LaunchedEffect(key1 = Unit) {
+                            randomViewModel.loadRandomInfo(token)
+                        }
 
-            composable(Routes.ROUTE_FAVORITES) {
-                Favorites(navController)
-            }
+                        when (route) {
+                            Routes.ROUTE_HOME -> Home(navController, authViewModel, userViewModel, postsViewModel, randomState)
+                            Routes.ROUTE_STORE -> Store(navController, authViewModel, productsViewModel)
+                            Routes.ROUTE_CALENDAR -> Calendar(navController, calendarVM)
+                            Routes.ROUTE_CHAT -> Chat(navController)
+                            Routes.ROUTE_FAVORITES -> Favorites(navController)
+                            Routes.ROUTE_NOTIFICATIONS -> Notifications(navController)
+                            Routes.ROUTE_CART -> Cart(navController)
+                            Routes.ROUTE_PRODUCT_DETAILS + "/{productId}" -> {
+                                val productId = backStackEntry.arguments?.getString("productId")
+                                val id = productId?.toInt()
 
-            composable(Routes.ROUTE_NOTIFICATIONS) {
-                Notifications(navController)
-            }
-
-            composable(Routes.ROUTE_CART) {
-                Cart(navController)
-            }
-
-            composable(Routes.ROUTE_PRODUCT_DETAILS) {
-                ProductDetails(navController)
-            }
-
-            composable(Routes.ROUTE_YOUR_CYCLE) {
-                YourCycle(navController, calendarVM)
-            }
-
-            composable(Routes.ROUTE_TRACK_ORDER) {
-                TrackOrder(navController)
-            }
-
-            composable(Routes.ROUTE_ORDERS) {
-                Orders(navController)
-            }
-
-            // Config
-            composable(Routes.ROUTE_CONFIG) {
-                Config(navController, authViewModel)
-            }
-
-            composable(Routes.ROUTE_EDIT_PROFILE) {
-                EditProfile(navController, authViewModel, userViewModel)
-            }
-
-            composable(Routes.ROUTE_CHANGE_PASSWORD) {
-                ChangePassword(navController, authViewModel, userViewModel)
-            }
-
-            composable(Routes.ROUTE_SOCIAL_NETWORKS) {
-                SocialNetworks(navController)
-            }
-
-            composable(Routes.ROUTE_TERMS_AND_POLICIES) {
-                TermsAndPolicies(navController)
-            }
-
-            composable(Routes.ROUTE_ABOUT) {
-                About(navController)
-            }
-
-            composable(Routes.ROUTE_SHIPPING_INFO){
-                ShippingInfo(navController)
-            }
-
-            composable(Routes.ROUTE_PAYMENTS){
-//                Payment(navController)
+                                if (id != null) {
+                                    ProductDetails(navController, id, randomState)
+                                }
+                            }
+                            Routes.ROUTE_YOUR_CYCLE -> YourCycle(navController, calendarVM)
+                            Routes.ROUTE_TRACK_ORDER -> TrackOrder(navController)
+                            Routes.ROUTE_ORDERS -> Orders(navController)
+                            Routes.ROUTE_CONFIG -> Config(navController, authViewModel)
+                            Routes.ROUTE_EDIT_PROFILE -> EditProfile(navController, authViewModel, userViewModel)
+                            Routes.ROUTE_CHANGE_PASSWORD -> ChangePassword(navController, authViewModel, userViewModel)
+                            Routes.ROUTE_SOCIAL_NETWORKS -> SocialNetworks(navController)
+                            Routes.ROUTE_TERMS_AND_POLICIES -> TermsAndPolicies(navController)
+                            Routes.ROUTE_ABOUT -> About(navController)
+                            Routes.ROUTE_SHIPPING_INFO -> ShippingInfo(navController)
+                            Routes.ROUTE_PAYMENTS -> {
+                                // Payment(navController, token)
+                            }
+                        }
+                    } else {
+                        // Redirect to login if not authenticated
+                        LaunchedEffect(Unit) {
+                            navController.navigate(Routes.ROUTE_LOGIN) {
+                                popUpTo(navController.graph.startDestinationId) { inclusive = true }
+                                launchSingleTop = true
+                            }
+                        }
+                    }
+                }
             }
         }
     } else {

@@ -95,7 +95,7 @@ fun ChangePassword(
                             old_password = currentPassword,
                             new_password = newPassword
                         )
-                        authViewModel.getToken()?.let { token ->
+                        authViewModel.token()?.let { token ->
                             userViewModel.updatePassword(token, passwordUpdate)
                         }
                     } else {

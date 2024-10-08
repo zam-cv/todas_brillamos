@@ -16,6 +16,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import mx.cazv.todasbrillamos.model.models.ProductList
 import mx.cazv.todasbrillamos.model.models.ProductProvider
 
@@ -26,12 +27,13 @@ import mx.cazv.todasbrillamos.model.models.ProductProvider
 
 /**
  * Composable que muestra los productos en una vista de cuadrícula o lista, dependiendo del tipo especificado.
- *
- * @param type El tipo de vista ("grid" para cuadrícula, "list" para lista).
- * @param products La lista de productos a mostrar.
  */
 @Composable
-fun ViewProducts(type: String, products: ProductList) {
+fun ViewProducts(
+    type: String,
+    products: ProductList,
+    navController: NavHostController
+) {
     if (type == "grid") {
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
@@ -47,7 +49,11 @@ fun ViewProducts(type: String, products: ProductList) {
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             items(products.products) { product ->
-                ProductGridItem(product = product, products.folder)
+                ProductGridItem(
+                    product = product,
+                    products.folder,
+                    navController
+                )
             }
         }
     } else if (type == "list") {

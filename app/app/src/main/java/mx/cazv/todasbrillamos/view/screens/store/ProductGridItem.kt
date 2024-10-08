@@ -1,6 +1,7 @@
 package mx.cazv.todasbrillamos.view.screens.store
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -34,20 +35,23 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import mx.cazv.todasbrillamos.model.ApiConfig
 import mx.cazv.todasbrillamos.model.models.ProductRaw
 import mx.cazv.todasbrillamos.ui.theme.AccentColor
+import mx.cazv.todasbrillamos.view.Routes
 
 /**
  * Vista cuadricula de los productos que muestra los detalles de un producto en una tarjeta.
  * @author: Min Che Kim
- *
- * @param product El producto a mostrar.
- * @param folder La carpeta donde se encuentra la imagen del producto.
  */
 @Composable
-fun ProductGridItem(product: ProductRaw, folder: String) {
+fun ProductGridItem(
+    product: ProductRaw,
+    folder: String,
+    navController: NavHostController
+) {
     val formattedPrice = product.price
     val formattedDC = "%.0f".format(0.0) // TODO: Aplicar descuento
     val discountPrice = 0.0
@@ -56,10 +60,13 @@ fun ProductGridItem(product: ProductRaw, folder: String) {
     Card (
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 8.dp, vertical = 8.dp),
+            .padding(horizontal = 8.dp, vertical = 8.dp)
+            .clickable {
+                navController.navigate(Routes.ROUTE_PRODUCT_DETAILS + "/${product.id}")
+            },
         elevation = CardDefaults.cardElevation(2.dp),
         colors = CardDefaults.cardColors(Color.White),
-        shape = RoundedCornerShape(corner = CornerSize(5.dp))
+        shape = RoundedCornerShape(corner = CornerSize(5.dp)),
     ){
         Column (
             modifier = Modifier
