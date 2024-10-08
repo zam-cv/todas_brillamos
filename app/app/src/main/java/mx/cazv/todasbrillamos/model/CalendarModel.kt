@@ -27,13 +27,13 @@ class CalendarModel {
         return calendar.time  // Retornamos el nuevo objeto Date
     }
 
-    /**
-     * Convierte milisegundos a una cadena de fecha formateada.
-     * @param millis Los milisegundos a convertir.
-     * @return La cadena de fecha formateada.
-     */
-    fun convertMillisToDate(millis: Long): String {
-        val formatter = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-        return formatter.format(Date(millis))
-    }
+//    /**
+//     * Convierte milisegundos a una cadena de fecha formateada.
+//     * @param millis Los milisegundos a convertir.
+//     * @return La cadena de fecha formateada.
+//     */
+//    fun convertMillisToDate(millis: Long): String {
+//        val formatter = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+//        return formatter.format(Date(millis))
+//    }
 }
