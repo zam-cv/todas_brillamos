@@ -14,12 +14,22 @@ func CreateOtherByClientID(other *models.Other) (uint, error) {
 	return other.ID, nil
 }
 
-// GetOthersByClientID obtiene registros "Other" asociados a un cliente por su ID.
-// Devuelve un puntero a models.Other y un error en caso de que ocurra.
 func GetOthersByClientID(clientID uint) (*models.Other, error) {
-	others := &models.Other{}
-	err := db.Where("client_id = ?", clientID).Find(&others).Error
-	return others, err
+	other := &models.Other{}
+	if err := db.Where("client_id = ?", clientID).First(other).Error; err != nil {
+		return nil, err
+	}
+
+	return other, nil
+}
+
+func ExistOthersByClientID(clientID uint) bool {
+	other := &models.Other{}
+	if err := db.Where("client_id = ?", clientID).First(other).Error; err != nil {
+		return false
+	}
+
+	return true
 }
 
 // UpdateOthersByClientID actualiza registros "Other" asociados a un cliente por su ID.

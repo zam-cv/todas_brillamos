@@ -47,10 +47,15 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import mx.cazv.todasbrillamos.model.ApiConfig
 import mx.cazv.todasbrillamos.model.models.Product
 import mx.cazv.todasbrillamos.model.models.ProductList
 import mx.cazv.todasbrillamos.model.models.ProductRaw
+import mx.cazv.todasbrillamos.model.services.UserService
 import mx.cazv.todasbrillamos.model.states.RandomState
 import mx.cazv.todasbrillamos.ui.theme.AccentColor
 import mx.cazv.todasbrillamos.ui.theme.BackgroundColor
@@ -66,17 +71,17 @@ import mx.cazv.todasbrillamos.view.components.footer.ButtonBottomBar
 import mx.cazv.todasbrillamos.view.components.header.BasicTopBar
 import mx.cazv.todasbrillamos.view.layouts.CustomLayout
 import mx.cazv.todasbrillamos.viewmodel.AuthViewModel
+import mx.cazv.todasbrillamos.viewmodel.CartViewModel
 import mx.cazv.todasbrillamos.viewmodel.ProductViewModel
+import mx.cazv.todasbrillamos.viewmodel.UserViewModel
 
-/** Archivo para mostrar detalles de productos.
- * @author Carlos Zamudio
- * */
-
-/**
- * Controlador de cantidad que permite al usuario aumentar o disminuir la cantidad de productos.
- */
 @Composable
-fun QuantityController() {
+fun QuantityController(
+    value: Int,
+    onValueChange: (Int) -> Unit
+) {
+    val displayValue = if (value <= 0) 1 else value
+
     Box(
         modifier = Modifier
             .clip(RoundedCornerShape(4.dp))
@@ -84,34 +89,40 @@ fun QuantityController() {
             .background(SelectorsBackgroundColor)
             .padding(3.dp)
     ) {
-        Row (
+        Row(
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Box (
+            Box(
                 modifier = Modifier
+                    .clickable {
+                        if (displayValue > 1) {
+                            onValueChange(displayValue - 1)
+                        }
+                    }
                     .clip(RoundedCornerShape(4.dp))
                     .background(Color.White)
                     .padding(start = 8.dp, end = 8.dp)
             ) {
-                Text(
-                    text = "-",
-                )
+                Text(text = "-")
             }
 
-            Box (
+            Box(
                 modifier = Modifier
                     .padding(start = 6.dp, end = 6.dp),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "0",
+                    text = displayValue.toString(),
                     fontSize = 16.sp,
                     modifier = Modifier.align(Alignment.Center)
                 )
             }
 
-            Box (
+            Box(
                 modifier = Modifier
+                    .clickable {
+                        onValueChange(displayValue + 1)
+                    }
                     .clip(RoundedCornerShape(4.dp))
                     .background(Color.White)
                     .padding(start = 6.dp, end = 6.dp)
@@ -436,8 +447,11 @@ fun ProductDetails(
     productId: Int,
     randomState: State<RandomState>,
     authViewModel: AuthViewModel,
-    productViewModel: ProductViewModel = viewModel()
+    userViewModel: UserViewModel,
+    cartViewModel: CartViewModel,
+    productViewModel: ProductViewModel = viewModel(),
 ) {
+    var quantity by remember { mutableStateOf(1) }
     val productState = productViewModel.state.collectAsState()
 
     LaunchedEffect(key1 = Unit) {
@@ -454,7 +468,30 @@ fun ProductDetails(
             BasicTopBar(title = "Detalles del Producto", navController = navController)
         },
         bottomBar = {
-            ButtonBottomBar(buttonText = "Añadir al carrito", onClick = {})
+            ButtonBottomBar(buttonText = "Añadir al carrito", onClick = {
+                CoroutineScope(Dispatchers.Main).launch {
+                    val token = withContext(Dispatchers.IO) {
+                        authViewModel.token()
+                    }
+
+                    if (token != null) {
+                        val exist = withContext(Dispatchers.IO) {
+                            userViewModel.exist(token)
+                        }
+
+                        if (exist != null) {
+                            if (exist.exist) {
+                                cartViewModel.addProductToCart(token, productId, quantity)
+                                navController.navigate(Routes.ROUTE_CART)
+                            } else {
+                                navController.navigate(Routes.ROUTE_SHIPPING_INFO + "/$productId" + "/$quantity")
+                            }
+                        } else {
+                            navController.navigate(Routes.ROUTE_SHIPPING_INFO + "/$productId" + "/$quantity")
+                        }
+                    }
+                }
+            })
         }
     ) {
         Column (
@@ -544,7 +581,10 @@ fun ProductDetails(
 
                     Spacer(modifier = Modifier.weight(1f))
 
-                    QuantityController()
+                    QuantityController(
+                        value = quantity,
+                        onValueChange = { quantity = it }
+                    )
                 }
             }
 

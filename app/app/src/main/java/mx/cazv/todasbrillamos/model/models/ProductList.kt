@@ -12,4 +12,3 @@ data class ProductList(
     val folder: String,
     val products: List<ProductRaw>
 )
-

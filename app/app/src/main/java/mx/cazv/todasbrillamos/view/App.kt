@@ -40,6 +40,7 @@ import mx.cazv.todasbrillamos.view.screens.config.TermsAndPolicies
 import mx.cazv.todasbrillamos.viewmodel.AuthState
 import mx.cazv.todasbrillamos.viewmodel.AuthViewModel
 import mx.cazv.todasbrillamos.viewmodel.CalendarVM
+import mx.cazv.todasbrillamos.viewmodel.CartViewModel
 import mx.cazv.todasbrillamos.viewmodel.PostsViewModel
 import mx.cazv.todasbrillamos.viewmodel.ProductsViewModel
 import mx.cazv.todasbrillamos.viewmodel.RandomViewModel
@@ -78,6 +79,7 @@ fun Nav(
     randomViewModel: RandomViewModel = RandomViewModel(),
     postsViewModel: PostsViewModel = PostsViewModel(),
     productsViewModel: ProductsViewModel = ProductsViewModel(),
+    cartViewModel: CartViewModel = CartViewModel(),
     modifier: Modifier = Modifier
 ) {
     var startDestination by remember { mutableStateOf<String?>(null) }
@@ -128,7 +130,7 @@ fun Nav(
                 Routes.ROUTE_SOCIAL_NETWORKS,
                 Routes.ROUTE_TERMS_AND_POLICIES,
                 Routes.ROUTE_ABOUT,
-                Routes.ROUTE_SHIPPING_INFO,
+                Routes.ROUTE_SHIPPING_INFO + "/{productId}/{quantity}", // Dynamic route
                 Routes.ROUTE_PAYMENTS
             )
 
@@ -158,7 +160,7 @@ fun Nav(
                                 val id = productId?.toInt()
 
                                 if (id != null) {
-                                    ProductDetails(navController, id, randomState, authViewModel)
+                                    ProductDetails(navController, id, randomState, authViewModel, userViewModel, cartViewModel)
                                 }
                             }
                             Routes.ROUTE_YOUR_CYCLE -> YourCycle(navController, calendarVM)
@@ -170,7 +172,14 @@ fun Nav(
                             Routes.ROUTE_SOCIAL_NETWORKS -> SocialNetworks(navController)
                             Routes.ROUTE_TERMS_AND_POLICIES -> TermsAndPolicies(navController)
                             Routes.ROUTE_ABOUT -> About(navController)
-                            Routes.ROUTE_SHIPPING_INFO -> ShippingInfo(navController)
+                            Routes.ROUTE_SHIPPING_INFO + "/{productId}/{quantity}" -> {
+                                val productId = backStackEntry.arguments?.getString("productId")?.toInt()
+                                val quantity = backStackEntry.arguments?.getString("quantity")?.toInt()
+
+                                if (productId != null && quantity != null) {
+                                    ShippingInfo(navController, id, quantity, authViewModel, userViewModel, cartViewModel)
+                                }
+                            }
                             Routes.ROUTE_PAYMENTS -> {
                                 // Payment(navController, token)
                             }

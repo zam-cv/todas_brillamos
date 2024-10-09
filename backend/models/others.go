@@ -18,5 +18,5 @@ type Other struct {
 	State     string
 	ZIP       string
 	Reference string
-	ClientID  uint
+	ClientID  uint `json:"-"`
 }

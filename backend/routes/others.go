@@ -13,14 +13,15 @@ import (
 func addOthersRoutes(rg *gin.RouterGroup) {
 	group := rg.Group("/others")
 
+	group.GET("/exist", auth.GetMiddleware(ClientAuth), middlewares.GetClientID(), func(c *gin.Context) {
+		id, _ := c.MustGet("clientID").(uint)
+		exist := database.ExistOthersByClientID(id)
+		c.JSON(200, gin.H{"exist": exist})
+	})
+
 	group.GET("", auth.GetMiddleware(ClientAuth), middlewares.GetClientID(), func(c *gin.Context) {
 		id, _ := c.MustGet("clientID").(uint)
-		others, err := database.GetOthersByClientID(id)
-		if err != nil {
-			c.JSON(500, gin.H{"error": err.Error()})
-			return
-		}
-
+		others, _ := database.GetOthersByClientID(id)
 		c.JSON(200, others)
 	})
 
@@ -44,7 +45,7 @@ func addOthersRoutes(rg *gin.RouterGroup) {
 			return
 		}
 
-		c.JSON(200, other)
+		c.Status(201)
 	})
 
 	group.PUT("", auth.GetMiddleware(ClientAuth), middlewares.GetClientID(), func(c *gin.Context) {

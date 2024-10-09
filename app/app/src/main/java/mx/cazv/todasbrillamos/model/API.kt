@@ -5,6 +5,8 @@ import kotlinx.coroutines.withContext
 import mx.cazv.todasbrillamos.model.models.Category
 import mx.cazv.todasbrillamos.model.models.ClientDetails
 import mx.cazv.todasbrillamos.model.models.Credentials
+import mx.cazv.todasbrillamos.model.models.Exist
+import mx.cazv.todasbrillamos.model.models.Others
 import mx.cazv.todasbrillamos.model.models.PasswordUpdate
 import mx.cazv.todasbrillamos.model.models.Post
 import mx.cazv.todasbrillamos.model.models.Product
@@ -59,6 +61,12 @@ interface API {
         @Body request: PasswordUpdate
     )
 
+    @POST("api/others")
+    suspend fun setOthers(
+        @Header("Authorization") token: String,
+        @Body request: Others
+    )
+
     @PUT("api/clients")
     suspend fun updateClientDetails(
         @Header("Authorization") token: String,
@@ -77,11 +85,21 @@ interface API {
     @GET("api/categories")
     suspend fun getCategories(@Header("Authorization") token: String): List<Category>
 
+    @GET("api/others/exist")
+    suspend fun exist(@Header("Authorization") token: String): Exist
+
     @GET("api/products/{id}")
     suspend fun getProduct(
         @Header("Authorization") token: String,
         @Path("id") id: String
     ): Product
+
+    @GET("api/cart/{id}/{quantity}")
+    suspend fun addProductToCart(
+        @Header("Authorization") token: String,
+        @Path("id") id: Int,
+        @Path("quantity") quantity: Int
+    )
 
     /**
      * Obtiene una lista de productos aleatorios.

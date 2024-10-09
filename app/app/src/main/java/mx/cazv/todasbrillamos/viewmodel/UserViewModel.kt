@@ -7,6 +7,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import mx.cazv.todasbrillamos.model.models.ClientDetails
+import mx.cazv.todasbrillamos.model.models.Exist
+import mx.cazv.todasbrillamos.model.models.Others
 import mx.cazv.todasbrillamos.model.models.PasswordUpdate
 import mx.cazv.todasbrillamos.model.services.UserService
 import mx.cazv.todasbrillamos.model.states.UserState
@@ -68,5 +70,13 @@ class UserViewModel : ViewModel() {
                 // Handle error
             }
         }
+    }
+
+    suspend fun exist(token: String): Exist? {
+        return userService.exist(token)
+    }
+
+    suspend fun setOthers(token: String, others: Others): Boolean {
+        return userService.setOthers(token, others)
     }
 }
