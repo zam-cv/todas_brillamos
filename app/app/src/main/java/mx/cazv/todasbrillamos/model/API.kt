@@ -2,6 +2,7 @@ package mx.cazv.todasbrillamos.model
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import mx.cazv.todasbrillamos.model.models.CartResponse
 import mx.cazv.todasbrillamos.model.models.Category
 import mx.cazv.todasbrillamos.model.models.ClientDetails
 import mx.cazv.todasbrillamos.model.models.Credentials
@@ -15,6 +16,7 @@ import mx.cazv.todasbrillamos.model.models.SignInRequest
 import mx.cazv.todasbrillamos.model.models.UserInfo
 import retrofit2.HttpException
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
@@ -94,12 +96,28 @@ interface API {
         @Path("id") id: String
     ): Product
 
-    @GET("api/cart/{id}/{quantity}")
+    @POST("api/cart/{id}/{quantity}")
     suspend fun addProductToCart(
         @Header("Authorization") token: String,
         @Path("id") id: Int,
         @Path("quantity") quantity: Int
     )
+
+    @PUT("api/cart/{id}/{quantity}")
+    suspend fun updateProductQuantityInCart(
+        @Header("Authorization") token: String,
+        @Path("id") id: Int,
+        @Path("quantity") quantity: Int
+    )
+
+    @DELETE("api/cart/{id}")
+    suspend fun deleteProductFromCart(
+        @Header("Authorization") token: String,
+        @Path("id") id: Int
+    )
+
+    @GET("api/cart")
+    suspend fun getCart(@Header("Authorization") token: String): CartResponse
 
     /**
      * Obtiene una lista de productos aleatorios.

@@ -22,6 +22,43 @@ func GetCartByClientID(clientID uint) ([]models.Cart, error) {
 	return carts, err
 }
 
+func GetAllCartByClientID(clientID uint) ([]models.CartItem, error) {
+	var cartItems []struct {
+		Quantity  uint
+		ProductID uint
+		Name      string
+		Price     float64
+		Hash      string
+		Type      string
+	}
+
+	err := db.Table("carts").
+		Select("carts.quantity, carts.product_id, products.name, products.price, products.hash, products.type").
+		Joins("LEFT JOIN products ON carts.product_id = products.id").
+		Where("carts.client_id = ?", clientID).
+		Scan(&cartItems).Error
+
+	if err != nil {
+		return nil, err
+	}
+
+	result := make([]models.CartItem, len(cartItems))
+	for i, item := range cartItems {
+		result[i] = models.CartItem{
+			Quantity: item.Quantity,
+			Product: models.CartProduct{
+				Name:      item.Name,
+				Price:     item.Price,
+				ProductID: item.ProductID,
+				Hash:      item.Hash,
+				Type:      item.Type,
+			},
+		}
+	}
+
+	return result, nil
+}
+
 // GetProductFromCartByProductIDClientID obtiene un producto del carrito por el ID del producto y el ID del cliente.
 // Devuelve un puntero a models.Cart y un error en caso de que ocurra.
 func GetProductFromCartByProductIDClientID(productID, clientID uint) (*models.Cart, error) {

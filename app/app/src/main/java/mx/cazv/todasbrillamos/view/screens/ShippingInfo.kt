@@ -31,6 +31,7 @@ import mx.cazv.todasbrillamos.view.components.header.BasicTopBar
 import mx.cazv.todasbrillamos.view.layouts.CustomLayout
 import mx.cazv.todasbrillamos.viewmodel.AuthViewModel
 import mx.cazv.todasbrillamos.viewmodel.CartViewModel
+import mx.cazv.todasbrillamos.viewmodel.ProductsViewModel
 import mx.cazv.todasbrillamos.viewmodel.UserViewModel
 
 /**
@@ -51,6 +52,7 @@ fun ShippingInfo(
     authViewModel: AuthViewModel,
     userViewModel: UserViewModel,
     cartViewModel: CartViewModel,
+    productsViewModel: ProductsViewModel
 ) {
     var curp by remember { mutableStateOf("") }
     var street by remember { mutableStateOf("") }
@@ -87,7 +89,9 @@ fun ShippingInfo(
                     if (token != null) {
                         try {
                             userViewModel.setOthers(token, others)
-                            cartViewModel.addProductToCart(token, productId, quantity)
+
+                            val product = productsViewModel.getProduct(token, productId.toString())
+                            cartViewModel.addProductToCart(token, product.product, quantity)
                             navController.navigate(Routes.ROUTE_CART)
                         } catch (e: Exception) {
                             // Handle error

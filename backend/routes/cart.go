@@ -5,6 +5,7 @@ import (
 	"backend/middlewares"
 	"backend/models"
 	"backend/resources/auth"
+	"backend/resources/files"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -16,16 +17,18 @@ func addCartRoutes(rg *gin.RouterGroup) {
 	cart.GET("", auth.GetMiddleware(ClientAuth), middlewares.GetClientID(), func(c *gin.Context) {
 		id, _ := c.MustGet("clientID").(uint)
 
-		products, err := database.GetCartByClientID(id)
+		cartItems, err := database.GetAllCartByClientID(id)
 		if err != nil {
 			c.JSON(500, gin.H{"error": err.Error()})
 			return
 		}
-		
 
-		c.JSON(200, gin.H{
-			"products": products,
-		})
+		response := models.CartResponse{
+			Folder: files.GetURL(ProductArchive),
+			Cart:   cartItems,
+		}
+
+		c.JSON(200, response)
 	})
 
 	cart.GET("/exists/:product_id", auth.GetMiddleware(ClientAuth), middlewares.GetClientID(), func(c *gin.Context) {

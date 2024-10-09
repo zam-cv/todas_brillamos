@@ -481,7 +481,7 @@ fun ProductDetails(
 
                         if (exist != null) {
                             if (exist.exist) {
-                                cartViewModel.addProductToCart(token, productId, quantity)
+                                cartViewModel.addProductToCart(token, productState.value.product.product, quantity)
                                 navController.navigate(Routes.ROUTE_CART)
                             } else {
                                 navController.navigate(Routes.ROUTE_SHIPPING_INFO + "/$productId" + "/$quantity")

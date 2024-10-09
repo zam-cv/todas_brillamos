@@ -154,7 +154,7 @@ fun Nav(
                             Routes.ROUTE_CHAT -> Chat(navController)
                             Routes.ROUTE_FAVORITES -> Favorites(navController)
                             Routes.ROUTE_NOTIFICATIONS -> Notifications(navController)
-                            Routes.ROUTE_CART -> Cart(navController)
+                            Routes.ROUTE_CART -> Cart(navController, authViewModel, cartViewModel)
                             Routes.ROUTE_PRODUCT_DETAILS + "/{productId}" -> {
                                 val productId = backStackEntry.arguments?.getString("productId")
                                 val id = productId?.toInt()
@@ -177,7 +177,14 @@ fun Nav(
                                 val quantity = backStackEntry.arguments?.getString("quantity")?.toInt()
 
                                 if (productId != null && quantity != null) {
-                                    ShippingInfo(navController, id, quantity, authViewModel, userViewModel, cartViewModel)
+                                    ShippingInfo(
+                                        navController,
+                                        id, quantity,
+                                        authViewModel,
+                                        userViewModel,
+                                        cartViewModel,
+                                        productsViewModel
+                                    )
                                 }
                             }
                             Routes.ROUTE_PAYMENTS -> {

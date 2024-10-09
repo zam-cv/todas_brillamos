@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import mx.cazv.todasbrillamos.model.models.Category
+import mx.cazv.todasbrillamos.model.models.Product
 import mx.cazv.todasbrillamos.model.models.ProductList
 import mx.cazv.todasbrillamos.model.services.ProductsService
 import mx.cazv.todasbrillamos.model.states.ProductsState
@@ -48,5 +49,9 @@ class ProductsViewModel : ViewModel() {
 
             _state.value = ProductsState(products, categories)
         }
+    }
+
+    suspend fun getProduct(token: String, productId: String): Product {
+        return productsService.product(token, productId)
     }
 }
