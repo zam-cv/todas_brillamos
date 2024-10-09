@@ -36,13 +36,18 @@ import mx.cazv.todasbrillamos.viewmodel.UserViewModel
 
 /**
  * Archivo para la vista de datos de envío.
- * @author Mariana Balderrábano
+ * @author Mariana Balderrábano, Carlos Zamudio
  */
 
 /**
  * Pantalla de información de envío que permite al usuario ingresar sus datos personales y de dirección.
  *
  * @param navController El NavHostController utilizado para la navegación.
+ * @param productId El ID del producto seleccionado.
+ * @param quantity La cantidad del producto seleccionado.
+ * @param authViewModel El ViewModel de autenticación (gestionar el registro del usuario).
+ * @param userViewModel El ViewModel de usuario (gestionar las operaciones del usuario).
+ * @param cartViewModel El ViewModel de carrito (gestionar las operaciones del carrito).
  */
 @Composable
 fun ShippingInfo(

@@ -47,13 +47,15 @@ import mx.cazv.todasbrillamos.viewmodel.CartViewModel
 
 /**
  * Archivo para mostrar el carrito de compras
- * @author Mariana Balderrábano
+ * @author Mariana Balderrábano, Carlos Zamudio
  */
 
 /**
  * Pantalla del carrito de compras que muestra los productos agregados por el usuario.
  *
  * @param navController El NavHostController utilizado para la navegación.
+ * @param authViewModel El ViewModel de autenticación.
+ * @param cartViewModel El ViewModel del carrito de compras.
  */
 @Composable
 fun Cart(
@@ -122,6 +124,11 @@ fun Cart(
 
 /**
  * Composable que muestra un producto en el carrito de compras.
+ *
+ * @param folder La carpeta donde se encuentra la imagen del producto.
+ * @param item El producto a mostrar.
+ * @param onQuantityChange La función que se llama cuando se cambia la cantidad del producto.
+ * @param onDelete La función que se llama para eliminar el producto del carrito.
  */
 @Composable
 fun Prod(

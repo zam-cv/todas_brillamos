@@ -18,7 +18,17 @@ import mx.cazv.todasbrillamos.view.components.footer.BottomBar
 import mx.cazv.todasbrillamos.view.components.header.BasicTopBar
 import mx.cazv.todasbrillamos.view.layouts.CustomLayout
 
-
+/**
+ * Función que muestra la vista de un artículo con su título, autor, fecha de publicación
+ * y contenido.
+ * @author Min Che Kim
+ *
+ * @param navController El controlador de navegación de la aplicación.
+ * @param title El título del artículo.
+ * @param author El autor del artículo.
+ * @param date La fecha de publicación del artículo.
+ * @param content El contenido del artículo.
+ */
 @Composable
 fun PostView(
     navController: NavHostController,
@@ -82,6 +92,9 @@ fun PostView(
 
 }
 
+/**
+ * Vista previa de la pantalla de publicaciones
+ */
 @Preview(showBackground = true)
 @Composable
 fun PostPreview() {

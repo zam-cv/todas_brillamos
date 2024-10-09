@@ -37,6 +37,8 @@ import mx.cazv.todasbrillamos.viewmodel.UserViewModel
  * @author Carlos Zamudio
  *
  * @param navController El NavHostController utilizado para la navegación.
+ * @param authViewModel El ViewModel para la autenticación.
+ * @param userViewModel El ViewModel para la gestión de usuarios.
  */
 @Composable
 fun EditProfile(

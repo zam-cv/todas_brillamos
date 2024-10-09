@@ -104,6 +104,7 @@ class CalendarVM: ViewModel() {
 
     /**
      * Genera una lista de fechas para el mes dado, marcando los días especiales.
+     *
      * @param monthDate La fecha que representa el mes para generar las fechas.
      * @param nextPeriodStartDate La fecha de inicio del próximo periodo.
      * @param nextPeriodEndDate La fecha de fin del próximo periodo.
@@ -155,6 +156,7 @@ class CalendarVM: ViewModel() {
 
     /**
      * Obtiene la fecha del próximo mes basada en la fecha del mes actual.
+     *
      * @param currentMonthDate La fecha del mes actual.
      * @return La fecha del próximo mes.
      */
@@ -168,6 +170,7 @@ class CalendarVM: ViewModel() {
 
     /**
      * Obtiene la fecha del mes anterior basada en la fecha del mes actual.
+     *
      * @param currentMonthDate La fecha del mes actual.
      * @return La fecha del mes anterior.
      */

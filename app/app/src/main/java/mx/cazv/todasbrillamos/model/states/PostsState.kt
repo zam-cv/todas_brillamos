@@ -4,7 +4,6 @@ import mx.cazv.todasbrillamos.model.models.Post
 
 /**
  * Clase de datos que representa el estado de las publicaciones de los articulos.
- *
  * @author Carlos Zamudio
  *
  * @property posts La lista de publicaciones.

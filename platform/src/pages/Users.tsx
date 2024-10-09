@@ -1,45 +1,37 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import { columns } from "@/components/table/components/columns-users";
 import { DataTable } from "@/components/table/components/data-table-users";
+import api, { ClientInfo } from "@/utils/api/client";
 
 export default function Users(){
+  const [ids, setIds] = useState<number[]> ([]);
+  const [clientInfo, setClientInfo] = useState<ClientInfo[]>([]);
 
-  const mockParticipants = [
-    { idUsuario: '1', 
-      nombre: 'John', 
-      apellido: 'Doe', 
-      personal_email: 'john.doe@example.com', 
-      phone: '123-456-7890', 
-      curp: '2132818181', 
-      street: 'Calle #1', 
-      ZIP: '1213213'},
-      { idUsuario: '1', 
-        nombre: 'John', 
-        apellido: 'Doe', 
-        personal_email: 'john.doe@example.com', 
-        phone: '123-456-7890', 
-        curp: '2132818181', 
-        street: 'Calle #1', 
-        ZIP: '1213213'},
-        { idUsuario: '1', 
-          nombre: 'John', 
-          apellido: 'Doe', 
-          personal_email: 'john.doe@example.com', 
-          phone: '123-456-7890', 
-          curp: '2132818181', 
-          street: 'Calle #1', 
-          ZIP: '1213213'},
-          { idUsuario: '1', 
-            nombre: 'John', 
-            apellido: 'Doe', 
-            personal_email: 'john.doe@example.com', 
-            phone: '123-456-7890', 
-            curp: '2132818181', 
-            street: 'Calle #1', 
-            ZIP: '1213213'},
-    // Add more mock participants as needed
-  ];
+  useEffect(() => {
+    api.client.getClientsIDs().then((ids) => {
+      setIds(ids);
+    });
+  }, []);
+
+  function getClientInfo(ids: number[]) {
+    const clientPromises = ids.map((id) => api.client.getClientsInfo(id));
+
+    Promise.all(clientPromises)
+      .then((clients) => {
+        console.log(clients);
+        setClientInfo(clients.flat());
+      })
+      .catch((error) => {
+        console.error("Error fetching client info:", error);
+      });
+  }
+
+  useEffect(() => {
+    if (ids.length > 0) {
+      getClientInfo(ids);
+    }
+  }, [ids]);
+
 
     return (
       <div>
@@ -50,7 +42,7 @@ export default function Users(){
            
           <div>
               <DataTable
-                data = {mockParticipants}
+                data = {clientInfo}
                 columns={columns}
                 event_id={1}
               />

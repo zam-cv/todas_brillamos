@@ -75,6 +75,13 @@ import mx.cazv.todasbrillamos.viewmodel.CartViewModel
 import mx.cazv.todasbrillamos.viewmodel.ProductViewModel
 import mx.cazv.todasbrillamos.viewmodel.UserViewModel
 
+/**
+ * Función que controla la cantidad de un producto en el carrito.
+ * @author Carlos Zamudio
+ *
+ * @param value El valor actual de la cantidad.
+ * @param onValueChange La función que se llama cuando se cambia el valor de la cantidad.
+ */
 @Composable
 fun QuantityController(
     value: Int,
@@ -138,6 +145,7 @@ fun QuantityController(
 
 /**
  * Composable que muestra un detalle específico del producto.
+ * @author Carlos Zamudio
  *
  * @param name El nombre del detalle.
  * @param text El valor del detalle.
@@ -171,6 +179,9 @@ fun Detail(name: String, text: String) {
 
 /**
  * Composable que muestra los detalles del producto, incluyendo descripción y detalles específicos.
+ * @author Carlos Zamudio
+ *
+ * @param product El producto [ProductRaw] del cual se mostrarán los detalles.
  */
 @Composable
 fun Details(product: ProductRaw) {
@@ -392,6 +403,7 @@ fun Product(
  *
  * @param text El título de la sección.
  * @param products La lista de productos a mostrar.
+ * @param navController El controlador de navegación de la aplicación.
  * @param modifier Modificador para personalizar la apariencia y el comportamiento del componente.
  */
 @Composable
@@ -440,6 +452,13 @@ fun MoreProducts(
 
 /**
  * Pantalla de detalles del producto que muestra la información detallada del producto seleccionado.
+ *
+ * @param navController El controlador de navegación de la aplicación.
+ * @param productId El ID del producto a mostrar.
+ * @param randomState El estado de la lista de productos aleatorios.
+ * @param authViewModel El ViewModel de autenticación.
+ * @param userViewModel El ViewModel de usuario.
+ * @param cartViewModel El ViewModel del carrito de compras.
  */
 @Composable
 fun ProductDetails(

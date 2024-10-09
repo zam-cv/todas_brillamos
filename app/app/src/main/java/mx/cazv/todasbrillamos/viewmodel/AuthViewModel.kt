@@ -16,7 +16,8 @@ import mx.cazv.todasbrillamos.model.models.UserInfo
 import mx.cazv.todasbrillamos.view.Routes
 
 /**
- * ViewModel para gestionar la autenticación del usuario.
+ * ViewModel para gestionar la autenticación del usuario. Proporciona métodos para iniciar sesión, registrar usuarios,
+ * verificar tokens y cerrar sesión.
  * @author Carlos Zamudio
  *
  * @param application La aplicación que se está ejecutando.
@@ -30,6 +31,7 @@ class AuthViewModel (application: Application): AndroidViewModel(application) {
 
     private var token: String? = null
 
+    // Constantes para las preferencias compartidas
     companion object {
         private const val PREFS_NAME = "AuthPrefs"
         private const val KEY_AUTH_TOKEN = "token"
@@ -108,8 +110,14 @@ class AuthViewModel (application: Application): AndroidViewModel(application) {
         }
     }
 
+    /**
+     * Guarda el token de autenticación en las preferencias compartidas.
+     *
+     * @param token El token de autenticación.
+     */
     fun token(): String? = token
 
+    // Obtiene el token de autenticación actual y regresa una cadena vacía si no hay uno.
     private fun getToken(): String? {
         val sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
         return sharedPreferences.getString(KEY_AUTH_TOKEN, null)

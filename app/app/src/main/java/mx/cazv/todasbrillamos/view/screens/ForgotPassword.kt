@@ -132,7 +132,9 @@ fun ForgotPassword(navController: NavHostController) {
     }
 }
 
-
+/**
+ * Vista previa de la pantalla de recuperación de contraseña.
+ */
 @Preview
 @Composable
 fun FGPreview() {

@@ -2,7 +2,6 @@ package mx.cazv.todasbrillamos.model.models
 
 /**
  * Clase de datos que representa una publicación.
- *
  * @author Carlos Zamudio
  *
  * @property id El ID de la publicación.

@@ -14,7 +14,7 @@ import mx.cazv.todasbrillamos.view.screens.store.ViewFavorites
 
 /**
  * Pantalla de favoritos que muestra una lista de productos favoritos del usuario.
- * @author Min Che Kim
+ * @author Min Che Kim, Carlos Zamudio
  *
  * @param navController El NavHostController utilizado para la navegación.
  */

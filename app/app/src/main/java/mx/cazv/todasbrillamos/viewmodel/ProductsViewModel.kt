@@ -51,6 +51,12 @@ class ProductsViewModel : ViewModel() {
         }
     }
 
+    /**
+     * Obtiene un producto por su ID.
+     *
+     * @param token El token de autenticación.
+     * @param productId El ID del producto.
+     */
     suspend fun getProduct(token: String, productId: String): Product {
         return productsService.product(token, productId)
     }
