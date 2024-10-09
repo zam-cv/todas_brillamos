@@ -16,14 +16,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import mx.cazv.todasbrillamos.R
+import mx.cazv.todasbrillamos.view.Routes
 import mx.cazv.todasbrillamos.view.components.InteractiveCard
 
 /**
  * Composable que muestra una serie de tarjetas interactivas en la pantalla principal.
  * @author Jennyfer Jasso
  */
-@Preview
+
 @Composable
 fun InteractiveCardsHome(){
     Column(
@@ -31,7 +33,9 @@ fun InteractiveCardsHome(){
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         Box(
-            modifier = Modifier.fillMaxWidth().height(385.dp)
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(385.dp)
         ){
             InteractiveCard(
                 text = buildAnnotatedString {
@@ -55,13 +59,14 @@ fun InteractiveCardsHome(){
                 backgroundColor = Color(0xffd5507c),
                 imageSize = 150,
                 imageAlignment = Alignment.BottomEnd,
-                valx = 30.dp
+                valx = 30.dp,
+//                onClick = { navController.navigate(Routes.ROUTE_CHAT) }
             )
 
             InteractiveCard(
                 text = buildAnnotatedString {
                     withStyle(style = SpanStyle(fontStyle = FontStyle.Italic)) {
-                        append("Calcula ")
+                        append("Visita nuestra\n")
                     }
                     withStyle(
                         style = SpanStyle(
@@ -69,19 +74,20 @@ fun InteractiveCardsHome(){
                             fontStyle = FontStyle.Italic
                         )
                     ) {
-                        append("tu ciclo \nmenstrual")
+                        append("TIENDA")
 
                     }
                 },
-                image = R.drawable.calendar_ic,
+                image = R.drawable.tienda_ic,
                 modifier = Modifier
                     .align(Alignment.TopEnd)
                     .fillMaxWidth(0.48f)
-                    .height(245.dp),
+                    .height(220.dp),
                 backgroundColor = Color(0xfff4d0cb),
                 imageSize = 200,
                 imageAlignment = Alignment.Center,
                 valy = 20.dp,
+//                onClick = { navController.navigate(Routes.ROUTE_STORE) }
             )
 
 
@@ -104,15 +110,16 @@ fun InteractiveCardsHome(){
                         .align(Alignment.BottomStart)
                         .fillMaxWidth(0.48f)
                         .height(210.dp),
-                    backgroundColor = Color(0xfff4d0cb),
-                    imageSize = 100,
-                    imageAlignment = Alignment.BottomEnd
-                )
+                backgroundColor = Color(0xfff4d0cb),
+                imageSize = 100,
+                imageAlignment = Alignment.BottomEnd,
+//                onClick = {  }
+            )
 
                 InteractiveCard(
                     text = buildAnnotatedString {
                         withStyle(style = SpanStyle(fontStyle = FontStyle.Italic)) {
-                            append("Visita \n")
+                            append("Calcula tu ciclo \n")
                         }
                         withStyle(
                             style = SpanStyle(
@@ -120,18 +127,20 @@ fun InteractiveCardsHome(){
                                 fontStyle = FontStyle.Italic
                             )
                         ) {
-                            append("nuestra \ntienda")
+                            append("menstrual")
                         }
                     },
-                    image = R.drawable.tienda_ic,
+                    image = R.drawable.calendar_ic,
                     modifier = Modifier
                         .align(Alignment.BottomEnd)
                         .fillMaxWidth(0.48f)
-                        .height(120.dp),
+                        .height(150.dp),
                     backgroundColor = Color(0xffd5507c),
-                    imageSize = 150,
+                    imageSize = 100,
                     imageAlignment = Alignment.CenterEnd,
-                    valx = 30.dp
+                    valx = (-5).dp,
+                    valy = 30.dp,
+//                    onClick = { navController.navigate(Routes.ROUTE_CALENDAR) }
                 )
         }
 //        Row(
