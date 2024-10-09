@@ -65,6 +65,7 @@ ADMIN_SECRET_KEY=secret_admin
 ADMIN_TOKEN_COOKIE_NAME=token_admin
 CLIENT_SECRET_KEY=secret
 CLIENT_TOKEN_COOKIE_NAME=token
+STRIPE_SECRET_KEY=sk_test_51Q7usUL7iE9WvPEQaoGeGY1XGBUHBypQ69iLA7nDJ3wvl0i4r5doVmTv5iu24oPRMcbTS0pmB79fgQEPgl6Xgq0D004M272XQ0
 ```
 
 5. Create a `.env` file in the `platform` directory with the following content

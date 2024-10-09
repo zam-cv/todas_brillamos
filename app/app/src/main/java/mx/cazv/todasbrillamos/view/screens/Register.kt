@@ -49,10 +49,11 @@ import mx.cazv.todasbrillamos.viewmodel.AuthViewModel
 
 /**
  * Pantalla de registro que permite al usuario crear una nueva cuenta.
- * @author Jennyfer Jasso
+ * @author Jennyfer Jasso, Carlos Zamudio
  *
  * @param navController El NavHostController utilizado para la navegación.
- * @param authViewModel El ViewModel de autenticación utilizado para gestionar el registro del usuario.
+ * @param authViewModel El ViewModel de autenticación utilizado para gestionar el registro
+ * del usuario.
  */
 @Composable
 fun Register(navController: NavHostController, authViewModel: AuthViewModel) {

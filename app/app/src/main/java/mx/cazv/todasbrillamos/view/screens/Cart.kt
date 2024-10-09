@@ -26,24 +26,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
-import mx.cazv.todasbrillamos.R
 import mx.cazv.todasbrillamos.model.ApiConfig
 import mx.cazv.todasbrillamos.model.models.CartItem
-import mx.cazv.todasbrillamos.model.models.CartResponse
+import mx.cazv.todasbrillamos.view.Routes
 import mx.cazv.todasbrillamos.view.components.footer.ButtonBottomBar
 import mx.cazv.todasbrillamos.view.components.header.BasicTopBar
 import mx.cazv.todasbrillamos.view.layouts.CustomLayout
@@ -52,13 +47,15 @@ import mx.cazv.todasbrillamos.viewmodel.CartViewModel
 
 /**
  * Archivo para mostrar el carrito de compras
- * @author Mariana Balderrábano
+ * @author Mariana Balderrábano, Carlos Zamudio
  */
 
 /**
  * Pantalla del carrito de compras que muestra los productos agregados por el usuario.
  *
  * @param navController El NavHostController utilizado para la navegación.
+ * @param authViewModel El ViewModel de autenticación.
+ * @param cartViewModel El ViewModel del carrito de compras.
  */
 @Composable
 fun Cart(
@@ -83,7 +80,9 @@ fun Cart(
         bottomBar = {
             ButtonBottomBar(
                 buttonText = "Comprar (Total: $${String.format("%.2f", cartState.totalPrice)})",
-                onClick = {}
+                onClick = {
+                    navController.navigate(Routes.ROUTE_PAYMENTS)
+                }
             )
         }
     ) {
@@ -125,6 +124,11 @@ fun Cart(
 
 /**
  * Composable que muestra un producto en el carrito de compras.
+ *
+ * @param folder La carpeta donde se encuentra la imagen del producto.
+ * @param item El producto a mostrar.
+ * @param onQuantityChange La función que se llama cuando se cambia la cantidad del producto.
+ * @param onDelete La función que se llama para eliminar el producto del carrito.
  */
 @Composable
 fun Prod(

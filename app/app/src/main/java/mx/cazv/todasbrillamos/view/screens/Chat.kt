@@ -32,13 +32,15 @@ import mx.cazv.todasbrillamos.viewmodel.ChatViewModel
 
 /**
  * Archivo para mostrar el chat
- * @author Mariana Balderrábano
+ * @author Mariana Balderrábano, Carlos Zamudio
  */
 
 /**
  * Pantalla de chat que permite al usuario interactuar con un asistente de inteligencia artificial.
  *
  * @param navController El NavHostController utilizado para la navegación.
+ * @param authViewModel El ViewModel de autenticación.
+ * @param viewModel El ViewModel del chat.
  */
 @Composable
 fun Chat(
@@ -186,7 +188,7 @@ fun MessageUser(descrip: String, modifier: Modifier = Modifier) {
 data class Message(val descrip:String, val type:MessageType)
 
 /**
- * Tipos de mensajes posibles.
+ * Enumeración de tipos de mensajes posibles.
  */
 enum class MessageType{
     CHAT,

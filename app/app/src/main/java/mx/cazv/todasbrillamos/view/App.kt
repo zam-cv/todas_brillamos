@@ -14,6 +14,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.stripe.android.Stripe
 import mx.cazv.todasbrillamos.view.components.LoadingScreen
 import mx.cazv.todasbrillamos.view.screens.Chat
 import mx.cazv.todasbrillamos.view.screens.Favorites
@@ -24,7 +25,7 @@ import mx.cazv.todasbrillamos.view.screens.Notifications
 import mx.cazv.todasbrillamos.view.screens.Register
 import mx.cazv.todasbrillamos.view.screens.Cart
 import mx.cazv.todasbrillamos.view.screens.Orders
-//import mx.cazv.todasbrillamos.view.screens.Payment
+import mx.cazv.todasbrillamos.view.screens.Payments
 import mx.cazv.todasbrillamos.view.screens.TrackOrder
 import mx.cazv.todasbrillamos.view.screens.config.Config
 import mx.cazv.todasbrillamos.view.screens.ProductDetails
@@ -39,6 +40,7 @@ import mx.cazv.todasbrillamos.view.screens.config.SocialNetworks
 import mx.cazv.todasbrillamos.view.screens.config.TermsAndPolicies
 import mx.cazv.todasbrillamos.viewmodel.AuthState
 import mx.cazv.todasbrillamos.viewmodel.AuthViewModel
+import mx.cazv.todasbrillamos.viewmodel.BuyViewModel
 import mx.cazv.todasbrillamos.viewmodel.CalendarVM
 import mx.cazv.todasbrillamos.viewmodel.CartViewModel
 import mx.cazv.todasbrillamos.viewmodel.ChatViewModel
@@ -56,25 +58,30 @@ import mx.cazv.todasbrillamos.viewmodel.UserViewModel
  * Composable principal de la aplicación que inicializa el controlador de navegación.
  */
 @Composable
-fun App() {
+fun App(stripe: Stripe) {
     val navController = rememberNavController()
-    Nav(navController)
+    Nav(navController, stripe)
 }
 
 /**
  * Composable que define la navegación de la aplicación.
  *
  * @param navController El controlador de navegación.
+ * @param stripe El objeto Stripe utilizado para procesar pagos.
  * @param authViewModel El ViewModel de autenticación.
  * @param userViewModel El ViewModel de usuario.
  * @param randomViewModel El ViewModel de productos aleatorios.
  * @param postsViewModel El ViewModel de publicaciones.
  * @param productsViewModel El ViewModel de productos.
+ * @param cartViewModel El ViewModel de carrito.
+ * @param chatViewModel El ViewModel de chat.
+ * @param buyViewModel El ViewModel de compra.
  * @param modifier El modificador para personalizar la apariencia y el comportamiento del componente.
  */
 @Composable
 fun Nav(
     navController: NavHostController,
+    stripe: Stripe,
     authViewModel: AuthViewModel = viewModel(),
     userViewModel: UserViewModel = UserViewModel(),
     randomViewModel: RandomViewModel = RandomViewModel(),
@@ -82,6 +89,7 @@ fun Nav(
     productsViewModel: ProductsViewModel = ProductsViewModel(),
     cartViewModel: CartViewModel = CartViewModel(),
     chatViewModel: ChatViewModel = ChatViewModel(),
+    buyViewModel: BuyViewModel = BuyViewModel(),
     modifier: Modifier = Modifier
 ) {
     var startDestination by remember { mutableStateOf<String?>(null) }
@@ -102,7 +110,7 @@ fun Nav(
             startDestination = startDestination!!,
             modifier = modifier.fillMaxSize()
         ) {
-            // Public routes (always accessible)
+            // Rutas públicas (siempre accesibles)
             composable(Routes.ROUTE_LOGIN) {
                 Login(navController, authViewModel)
             }
@@ -113,7 +121,7 @@ fun Nav(
                 ForgotPassword(navController)
             }
 
-            // Protected routes (only accessible when authenticated)
+            // Rutas protegidas (accesibles cuando el usuario está autenticado)
             val protectedRoutes = listOf(
                 Routes.ROUTE_HOME,
                 Routes.ROUTE_STORE,
@@ -122,7 +130,7 @@ fun Nav(
                 Routes.ROUTE_FAVORITES,
                 Routes.ROUTE_NOTIFICATIONS,
                 Routes.ROUTE_CART,
-                Routes.ROUTE_PRODUCT_DETAILS + "/{productId}", // Dynamic route
+                Routes.ROUTE_PRODUCT_DETAILS + "/{productId}", // Ruta dinamica
                 Routes.ROUTE_YOUR_CYCLE,
                 Routes.ROUTE_TRACK_ORDER,
                 Routes.ROUTE_ORDERS,
@@ -132,7 +140,7 @@ fun Nav(
                 Routes.ROUTE_SOCIAL_NETWORKS,
                 Routes.ROUTE_TERMS_AND_POLICIES,
                 Routes.ROUTE_ABOUT,
-                Routes.ROUTE_SHIPPING_INFO + "/{productId}/{quantity}", // Dynamic route
+                Routes.ROUTE_SHIPPING_INFO + "/{productId}/{quantity}", // Ruta dinamica
                 Routes.ROUTE_PAYMENTS
             )
 
@@ -190,11 +198,11 @@ fun Nav(
                                 }
                             }
                             Routes.ROUTE_PAYMENTS -> {
-                                // Payment(navController, token)
+                                Payments(navController, authViewModel, cartViewModel, buyViewModel)
                             }
                         }
                     } else {
-                        // Redirect to login if not authenticated
+                        // Redireccion a login si no está autenticado.
                         LaunchedEffect(Unit) {
                             navController.navigate(Routes.ROUTE_LOGIN) {
                                 popUpTo(navController.graph.startDestinationId) { inclusive = true }

@@ -36,6 +36,8 @@ import mx.cazv.todasbrillamos.ui.theme.BackgroundColor
 /**
  * Barra de categorias
  * @author: Min Che Kim
+ *
+ * @param categories lista de categorias
  */
 
 @Composable

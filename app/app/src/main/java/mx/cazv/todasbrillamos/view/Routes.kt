@@ -9,7 +9,7 @@ import mx.cazv.todasbrillamos.R
 
 /**
  * Archivo para definir las rutas de las pantallas de la aplicación.
- * @author Carlos Zamudio
+ * @author Carlos Zamudio, Min Che Kim, Jennyfer Jasso, Mariana Balderrábano
  *
  */
 

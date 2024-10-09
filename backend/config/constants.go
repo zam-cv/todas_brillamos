@@ -21,6 +21,7 @@ var (
 	AdminTokenCookieName  string
 	ClientSecretKey       string
 	ClientTokenCookieName string
+	StripeSecretKey       string
 )
 
 // LoadEnvVars carga las variables de entorno desde un archivo .env.
@@ -43,4 +44,5 @@ func LoadEnvVars() {
 	AdminTokenCookieName = os.Getenv("ADMIN_TOKEN_COOKIE_NAME")
 	ClientSecretKey = os.Getenv("CLIENT_SECRET_KEY")
 	ClientTokenCookieName = os.Getenv("CLIENT_TOKEN_COOKIE_NAME")
+	StripeSecretKey = os.Getenv("STRIPE_SECRET_KEY")
 }

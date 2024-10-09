@@ -44,7 +44,11 @@ import mx.cazv.todasbrillamos.view.Routes
 
 /**
  * Vista cuadricula de los productos que muestra los detalles de un producto en una tarjeta.
- * @author: Min Che Kim
+ * @author: Min Che Kim, Carlos Zamudio
+ *
+ * @param product objeto [ProductRaw] que es el producto a mostrar.
+ * @param folder la carpeta de la imagen del producto.
+ * @param navController el controlador de navegación.
  */
 @Composable
 fun ProductGridItem(

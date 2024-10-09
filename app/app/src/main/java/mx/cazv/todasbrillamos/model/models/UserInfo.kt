@@ -2,8 +2,6 @@ package mx.cazv.todasbrillamos.model.models
 
 /**
  * Clase de datos que representa la información de un usuario.
- *
- *
  * @author Carlos Zamudio
  *
  * @property email El correo electrónico del usuario.

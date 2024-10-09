@@ -35,6 +35,15 @@ import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
 
+/**
+ * Composable que muestra un campo de texto con un botón para seleccionar una fecha
+ * Permite que el usuario seleccione una fecha y la muestra en el campo de texto que representa el
+ * inicio de su periodo menstrual paasdo.
+ * @author Min Che Kim
+ *
+ * @param text El texto a mostrar en el campo de texto.
+ * @param calendarVM El ViewModel del calendario.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DatePickerDocked(text: String = "", calendarVM: CalendarVM = viewModel()) {
