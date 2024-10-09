@@ -1,6 +1,7 @@
 package mx.cazv.todasbrillamos.view.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,6 +25,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.State
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -40,20 +44,29 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import mx.cazv.todasbrillamos.model.ApiConfig
+import mx.cazv.todasbrillamos.model.models.Product
 import mx.cazv.todasbrillamos.model.models.ProductList
+import mx.cazv.todasbrillamos.model.models.ProductRaw
+import mx.cazv.todasbrillamos.model.states.RandomState
 import mx.cazv.todasbrillamos.ui.theme.AccentColor
 import mx.cazv.todasbrillamos.ui.theme.BackgroundColor
 import mx.cazv.todasbrillamos.ui.theme.BadgePink
 import mx.cazv.todasbrillamos.ui.theme.ImageBackgroundColor
 import mx.cazv.todasbrillamos.ui.theme.SelectorsBackgroundColor
+import mx.cazv.todasbrillamos.view.Routes
 import mx.cazv.todasbrillamos.view.components.footer.BottomBar
 import mx.cazv.todasbrillamos.view.components.header.CustomTopBar
 import mx.cazv.todasbrillamos.view.components.Description
 import mx.cazv.todasbrillamos.view.components.Line
+import mx.cazv.todasbrillamos.view.components.footer.ButtonBottomBar
+import mx.cazv.todasbrillamos.view.components.header.BasicTopBar
 import mx.cazv.todasbrillamos.view.layouts.CustomLayout
+import mx.cazv.todasbrillamos.viewmodel.AuthViewModel
+import mx.cazv.todasbrillamos.viewmodel.ProductViewModel
 
 /** Archivo para mostrar detalles de productos.
  * @author Carlos Zamudio
@@ -149,7 +162,7 @@ fun Detail(name: String, text: String) {
  * Composable que muestra los detalles del producto, incluyendo descripción y detalles específicos.
  */
 @Composable
-fun ProductDetails() {
+fun Details(product: ProductRaw) {
     var section by remember { mutableStateOf("description") }
 
     Column {
@@ -212,23 +225,24 @@ fun ProductDetails() {
         ) {
             when (section) {
                 "description" -> {
+                    val descriptions = product.description.split("|").map { it.trim() }
+
                     Column {
-                        Description(text = "Toalla sanitaria reutilizable para quienes buscan comodidad y seguridad durante su ciclo menstrual.")
-                        Description(text = "Confeccionada a mano con algodón hipoalergénico, es suave al contacto con la piel y reduce el riesgo de irritaciones.")
-                        Description(text = "Los broches de plástico en las alas proporcionan un ajuste firme, ofreciendo mayor tranquilidad y seguridad.")
-                        Description(text = "Lavable y reutilizable, es una opción práctica y ecológica.")
+                        descriptions.forEach { part ->
+                            Description(text = part)
+                        }
                     }
                 }
 
                 "details" -> {
                     Column {
                         Detail(name = "Marca", text = "ZAZIL")
-                        Detail(name = "Tamaño", text = "27.7 cm")
-                        Detail(name = "Mantenimiento", text = "Lavable y reutilizable")
-                        Detail(name = "Material", text = "Algodón")
-                        Detail(name = "Absorbencia", text = "Alta")
-                        Detail(name = "Cuidado de la piel", text = "Hipoalergénica, transpirable")
-                        Detail(name = "Color", text = "Rojo")
+                        Detail(name = "Tamaño", text = product.size)
+                        Detail(name = "Mantenimiento", text = product.maintenance)
+                        Detail(name = "Material", text = product.material)
+                        Detail(name = "Absorbencia", text = product.absorbency)
+                        Detail(name = "Cuidado de la piel", text = product.material_feature)
+                        Detail(name = "Color", text = product.color)
                     }
                 }
             }
@@ -267,8 +281,8 @@ fun Product(
                     .height(100.dp)
                     .background(ImageBackgroundColor)
             ) {
-                val base_url = ApiConfig.BASE_URL
-                val url = "$base_url$folder/$hash.$type"
+                val baseUrl = ApiConfig.BASE_URL
+                val url = "$baseUrl$folder/$hash.$type"
 
                 AsyncImage(
                     model = url,
@@ -370,7 +384,12 @@ fun Product(
  * @param modifier Modificador para personalizar la apariencia y el comportamiento del componente.
  */
 @Composable
-fun MoreProducts(text: String, products: ProductList, modifier: Modifier) {
+fun MoreProducts(
+    text: String,
+    products: ProductList,
+    navController: NavHostController,
+    modifier: Modifier,
+) {
     Column (
         modifier = modifier
     ) {
@@ -386,14 +405,21 @@ fun MoreProducts(text: String, products: ProductList, modifier: Modifier) {
                 .padding(top = 10.dp, bottom = 10.dp)
         ) {
             for (product in products.products) {
-                Product(
-                    name = product.name,
-                    model = product.model,
-                    price = product.price,
-                    folder = products.folder,
-                    hash = product.hash,
-                    type = product.type,
-                )
+                Box (
+                    modifier = Modifier
+                        .clickable {
+                            navController.navigate(Routes.ROUTE_PRODUCT_DETAILS + "/${product.id}")
+                        }
+                ) {
+                    Product(
+                        name = product.name,
+                        model = product.model,
+                        price = product.price,
+                        folder = products.folder,
+                        hash = product.hash,
+                        type = product.type,
+                    )
+                }
 
                 Spacer(modifier = Modifier.width(10.dp))
             }
@@ -403,20 +429,32 @@ fun MoreProducts(text: String, products: ProductList, modifier: Modifier) {
 
 /**
  * Pantalla de detalles del producto que muestra la información detallada del producto seleccionado.
- *
- * @param navController El NavHostController utilizado para la navegación.
  */
 @Composable
-fun ProductDetails(navController: NavHostController) {
+fun ProductDetails(
+    navController: NavHostController,
+    productId: Int,
+    randomState: State<RandomState>,
+    authViewModel: AuthViewModel,
+    productViewModel: ProductViewModel = viewModel()
+) {
+    val productState = productViewModel.state.collectAsState()
+
+    LaunchedEffect(key1 = Unit) {
+        val token = authViewModel.token()
+
+        if (token != null) {
+            productViewModel.loadProduct(token, productId.toString())
+        }
+    }
+
     CustomLayout (
         navController = navController,
         topBar = {
-            CustomTopBar {
-                Text(text = "Custom Top Bar")
-            }
+            BasicTopBar(title = "Detalles del Producto", navController = navController)
         },
         bottomBar = {
-            BottomBar(navController = navController)
+            ButtonBottomBar(buttonText = "Añadir al carrito", onClick = {})
         }
     ) {
         Column (
@@ -425,27 +463,41 @@ fun ProductDetails(navController: NavHostController) {
                 .fillMaxHeight()
                 .background(BackgroundColor)
                 .padding(top = 15.dp, start = 15.dp, bottom = 25.dp)
-                .verticalScroll(rememberScrollState())
         ) {
             Column (
                 modifier = Modifier
                     .padding(end = 15.dp)
             ) {
-                Box(modifier = Modifier
-                    .clip(RoundedCornerShape(10.dp))
-                    .fillMaxWidth()
-                    .height(300.dp)
-                    .background(ImageBackgroundColor)
-                    .padding(10.dp)
+                Box(
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(10.dp))
+                        .fillMaxWidth()
+                        .height(300.dp)
+                        .background(ImageBackgroundColor)
                 ) {
-                    Box (
+                    val baseUrl = ApiConfig.BASE_URL
+                    val folder = productState.value.product.folder
+                    val hash = productState.value.product.product.hash
+                    val type = productState.value.product.product.type
+                    val url = "$baseUrl$folder/$hash.$type"
+
+                    AsyncImage(
+                        model = url,
+                        contentDescription = "Product Image",
                         modifier = Modifier
-                            .offset(x = 0.dp, y = 0.dp)
+                            .fillMaxSize()
+                            .clip(RoundedCornerShape(10.dp)),
+                        contentScale = ContentScale.Crop
+                    )
+
+                    Box(
+                        modifier = Modifier
+                            .offset(x = (-10).dp, y = 10.dp)
                     ) {
                         Row {
                             Spacer(modifier = Modifier.weight(1f))
 
-                            Box (
+                            Box(
                                 modifier = Modifier
                                     .clip(RoundedCornerShape(10.dp))
                                     .background(Color.White)
@@ -471,7 +523,7 @@ fun ProductDetails(navController: NavHostController) {
                 )
 
                 Text(
-                    text = "SKU: 0017",
+                    text = productState.value.product.product.model,
                     fontSize = 13.sp,
                 )
 
@@ -484,7 +536,7 @@ fun ProductDetails(navController: NavHostController) {
                             .wrapContentWidth()
                     ) {
                         Text(
-                            text = "\$1,000.00",
+                            text = "\$${productState.value.product.product.price}.00",
                             fontSize = 20.sp,
                             modifier = Modifier.padding(top = 10.dp)
                         )
@@ -503,10 +555,17 @@ fun ProductDetails(navController: NavHostController) {
                             .fillMaxWidth()
                             .padding(end = 15.dp)
                     ) {
-                        ProductDetails()
+                        Details(productState.value.product.product)
                     }
 
-/*                    MoreProducts(text = "Más productos", modifier = Modifier.padding(top = 60.dp))*/
+                    if (randomState.value.products.products.isNotEmpty()) {
+                        MoreProducts(
+                            text = "Más productos",
+                            products = randomState.value.products,
+                            navController = navController,
+                            modifier = Modifier.padding(top = 60.dp)
+                        )
+                    }
                 }
             }
         }

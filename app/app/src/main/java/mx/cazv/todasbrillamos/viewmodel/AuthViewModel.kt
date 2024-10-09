@@ -1,5 +1,6 @@
 package mx.cazv.todasbrillamos.viewmodel
 
+import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
 import androidx.lifecycle.AndroidViewModel
@@ -21,10 +22,13 @@ import mx.cazv.todasbrillamos.view.Routes
  * @param application La aplicación que se está ejecutando.
  */
 class AuthViewModel (application: Application): AndroidViewModel(application) {
+    @SuppressLint("StaticFieldLeak")
     private val context = application.applicationContext
     private val remoteService = AuthService()
     private val _authState = MutableStateFlow<AuthState>(AuthState.Idle)
     val authState: StateFlow<AuthState> = _authState
+
+    private var token: String? = null
 
     companion object {
         private const val PREFS_NAME = "AuthPrefs"
@@ -78,11 +82,12 @@ class AuthViewModel (application: Application): AndroidViewModel(application) {
      * @return `true` si el token es válido, `false` en caso contrario.
      */
     suspend fun verify(): Boolean {
-        val token = getToken() ?: return false
-        val result = remoteService.verify(token)
+        val t = getToken() ?: return false
+        token = t
+        val result = remoteService.verify(t)
 
         if (result) {
-            val credentials = Credentials(token)
+            val credentials = Credentials(t)
             _authState.value = AuthState.SignInSuccess(credentials)
         }
 
@@ -94,20 +99,18 @@ class AuthViewModel (application: Application): AndroidViewModel(application) {
      *
      * @param token El token de autenticación.
      */
-    fun saveToken(token: String) {
+    fun saveToken(newToken: String) {
+        token = newToken
         val sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
         with(sharedPreferences.edit()) {
-            putString(KEY_AUTH_TOKEN, token)
+            putString(KEY_AUTH_TOKEN, newToken)
             apply()
         }
     }
 
-    /**
-     * Obtiene el token de autenticación de las preferencias compartidas.
-     *
-     * @return El token de autenticación, o `null` si no existe.
-     */
-    fun getToken(): String? {
+    fun token(): String? = token
+
+    private fun getToken(): String? {
         val sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
         return sharedPreferences.getString(KEY_AUTH_TOKEN, null)
     }
@@ -118,6 +121,7 @@ class AuthViewModel (application: Application): AndroidViewModel(application) {
      * @param navController El controlador de navegación.
      */
     fun logout(navController: NavHostController) {
+        token = null
         val sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
         with(sharedPreferences.edit()) {
             remove(KEY_AUTH_TOKEN)
@@ -137,9 +141,9 @@ class AuthViewModel (application: Application): AndroidViewModel(application) {
  * Estados posibles de la autenticación.
  */
 sealed class AuthState {
-    object Idle : AuthState()
-    object Loading : AuthState()
+    data object Idle : AuthState()
+    data object Loading : AuthState()
     data class SignInSuccess(val credentials: Credentials) : AuthState()
-    object RegisterSuccess : AuthState()
+    data object RegisterSuccess : AuthState()
     data class Error(val message: String) : AuthState()
 }

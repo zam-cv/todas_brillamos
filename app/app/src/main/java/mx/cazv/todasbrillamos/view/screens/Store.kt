@@ -39,10 +39,10 @@ fun Store(
     var viewType by remember { mutableStateOf("grid") }
 
     LaunchedEffect(key1 = Unit) {
-        val token = authViewModel.getToken()
+        val token = authViewModel.token()
 
         if (token != null) {
-            productsViewModel.loadProducts(token)
+            productsViewModel.load(token)
         }
     }
 
@@ -54,7 +54,9 @@ fun Store(
                 selectedType = viewType,
                 onSelectionChange = { newType -> viewType = newType }
             )
-            CategoryFilter()
+
+            CategoryFilter(productsState.value.categories)
+
             Box (
                 modifier = Modifier
                     .weight(1f)
@@ -62,7 +64,8 @@ fun Store(
             ) {
                 ViewProducts(
                     type = viewType,
-                    products = productsState.value.products
+                    products = productsState.value.products,
+                    navController
                 )
             }
         }

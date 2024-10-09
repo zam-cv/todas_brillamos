@@ -2,10 +2,12 @@ package mx.cazv.todasbrillamos.model
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import mx.cazv.todasbrillamos.model.models.Category
 import mx.cazv.todasbrillamos.model.models.ClientDetails
 import mx.cazv.todasbrillamos.model.models.Credentials
 import mx.cazv.todasbrillamos.model.models.PasswordUpdate
 import mx.cazv.todasbrillamos.model.models.Post
+import mx.cazv.todasbrillamos.model.models.Product
 import mx.cazv.todasbrillamos.model.models.ProductList
 import mx.cazv.todasbrillamos.model.models.SignInRequest
 import mx.cazv.todasbrillamos.model.models.UserInfo
@@ -15,6 +17,7 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.PUT
+import retrofit2.http.Path
 
 /**
  * Interfaz que define las llamadas a la API.
@@ -70,6 +73,15 @@ interface API {
      */
     @GET("api/products")
     suspend fun getProducts(@Header("Authorization") token: String): ProductList
+
+    @GET("api/categories")
+    suspend fun getCategories(@Header("Authorization") token: String): List<Category>
+
+    @GET("api/products/{id}")
+    suspend fun getProduct(
+        @Header("Authorization") token: String,
+        @Path("id") id: String
+    ): Product
 
     /**
      * Obtiene una lista de productos aleatorios.

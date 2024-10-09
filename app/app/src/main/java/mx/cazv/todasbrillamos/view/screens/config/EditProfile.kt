@@ -122,7 +122,7 @@ fun EditProfile(
                         email = email
                     )
 
-                    authViewModel.getToken()?.let { token ->
+                    authViewModel.token()?.let { token ->
                         userViewModel.update(token, clientDetails)
                     }
                 }

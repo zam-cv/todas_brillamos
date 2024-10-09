@@ -1,5 +1,6 @@
 package mx.cazv.todasbrillamos.model.states
 
+import mx.cazv.todasbrillamos.model.models.Category
 import mx.cazv.todasbrillamos.model.models.ProductList
 
 /**
@@ -10,5 +11,6 @@ import mx.cazv.todasbrillamos.model.models.ProductList
  * @property products La lista de productos.
  */
 data class ProductsState(
-    val products: ProductList = ProductList("", emptyList())
+    val products: ProductList = ProductList("", emptyList()),
+    val categories: List<Category> = emptyList()
 )
