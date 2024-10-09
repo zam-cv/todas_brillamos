@@ -71,7 +71,7 @@ fun Home(
 
             if (postsState.value.posts.isNotEmpty()) {
                 for (post in postsState.value.posts) {
-                    Post(post.title, post.content)
+                    Post(navController, post.title, post.content)
                     Spacer(modifier = Modifier.height(20.dp))
                 }
             }

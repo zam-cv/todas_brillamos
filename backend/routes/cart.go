@@ -21,6 +21,7 @@ func addCartRoutes(rg *gin.RouterGroup) {
 			c.JSON(500, gin.H{"error": err.Error()})
 			return
 		}
+		
 
 		c.JSON(200, gin.H{
 			"products": products,

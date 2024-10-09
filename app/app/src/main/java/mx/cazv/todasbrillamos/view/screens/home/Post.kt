@@ -18,6 +18,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import mx.cazv.todasbrillamos.view.Routes
 
 /**
  * Composable que muestra una publicación con un título, contenido y un botón para leer más.
@@ -28,7 +30,7 @@ import androidx.compose.ui.unit.sp
  * @param wordLimit El límite de palabras a mostrar antes de truncar el contenido.
  */
 @Composable
-fun Post(title: String, content: String, wordLimit: Int = 20) {
+fun Post(navController: NavHostController,title: String, content: String, wordLimit: Int = 20) {
     Card(
         shape = RoundedCornerShape(5.dp),
         elevation = CardDefaults.cardElevation(8.dp),
@@ -52,7 +54,7 @@ fun Post(title: String, content: String, wordLimit: Int = 20) {
             Spacer(modifier = Modifier.height(5.dp))
 
             TextButton(
-                onClick = {},
+                onClick = { navController.navigate(Routes.ROUTE_POST) },
                 modifier = Modifier.padding(start = 10.dp, end = 10.dp),
             ) {
                 Box(
