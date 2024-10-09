@@ -12,6 +12,15 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 
 
 export const createColumns = (handleDelete: (id: number) => void): ColumnDef<Task>[] => [
@@ -198,12 +207,27 @@ export const createColumns = (handleDelete: (id: number) => void): ColumnDef<Tas
       cell: ({ row }) => {
         return (
           <div className="flex justify-end">
-            <Button 
-              variant="destructive" 
-              onClick={() => handleDelete((row.original as any).id)}
-            >
-              Eliminar
-            </Button>
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button variant="destructive">Eliminar</Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[425px]">
+                  <DialogHeader>
+                    <DialogTitle>Eliminar Producto</DialogTitle>
+                    <DialogDescription>
+                      Esta acción no se puede deshacer.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <DialogFooter>
+                  <Button 
+                    variant="destructive" 
+                    onClick={() => handleDelete((row.original as any).id)}
+                  >
+                    Eliminar
+                  </Button>
+                  </DialogFooter>
+              </DialogContent>
+            </Dialog>
           </div>
         );
       },

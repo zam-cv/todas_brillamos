@@ -1,10 +1,9 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
-import api from "@/utils/api/admin";
 import { useAuth } from "@/hooks/useAuth";
 
 export default function Home() {
@@ -12,7 +11,7 @@ export default function Home() {
   const { signIn } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [error] = useState("");
 
   function handleLogin(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault(); // Prevenir la recarga
@@ -85,23 +84,7 @@ export default function Home() {
               </div>
             </form>
           </div>
-          <p className="px-8 text-center text-sm text-muted-foreground">
-            Al iniciar sesión aceptas los{" "}
-            <Link
-              to="/terms"
-              className="underline underline-offset-4 hover:text-primary"
-            >
-              Términos y Condiciones
-            </Link>{" "}
-            de{" "}
-            <Link
-              to="/privacy"
-              className="underline underline-offset-4 hover:text-primary"
-            >
-              Todas Brillamos{" "}
-            </Link>
-            .
-          </p>
+          
         </div>
       </div>
     </div>

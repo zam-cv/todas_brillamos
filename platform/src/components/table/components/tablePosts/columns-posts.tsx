@@ -2,6 +2,15 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Task } from "@/components/table/components/tablePosts/schema_posts";
 import { DataTableColumnHeader } from "./data-table-column-header-posts";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 
 export const createColumns = (handleDelete: (postId: number) => void): ColumnDef<Task>[] => [
   {
@@ -54,14 +63,29 @@ export const createColumns = (handleDelete: (postId: number) => void): ColumnDef
     header: "Acciones",
     cell: ({ row }) => {
       return (
-        <div className="flex justify-end">
-          <Button 
-            variant="destructive" 
-            onClick={() => handleDelete((row.original as any).id)}
-          >
-            Eliminar
-          </Button>
-        </div>
+        <div className="flex ">
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button variant="destructive" className="size-fit">Eliminar</Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[425px]">
+                  <DialogHeader>
+                    <DialogTitle>Eliminar Artículo</DialogTitle>
+                    <DialogDescription>
+                      Esta acción no se puede deshacer.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <DialogFooter>
+                  <Button 
+                    variant="destructive" 
+                    onClick={() => handleDelete((row.original as any).id)}
+                  >
+                    Eliminar
+                  </Button>
+                  </DialogFooter>
+              </DialogContent>
+            </Dialog>
+          </div>
       );
     },
   },

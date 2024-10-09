@@ -12,8 +12,7 @@ import Protected from "@/components/Protected";
 
 // Pages
 import Home from "@/pages/index";
-import Terms from "./pages/Terms";
-import Privacy from "./pages/Privacy";
+
 
 import Dashboard from "./pages/Dashboard";
 import Products from "./pages/Products";
@@ -44,15 +43,6 @@ function App() {
               </Protected>
               } />
           </Route>
-
-          <Route path="/terms" element={<Layout />}>
-            <Route index element={<Terms />} />
-          </Route>
-
-          <Route path="/privacy" element={<Layout />}>
-            <Route index element={<Privacy />} />
-          </Route>
-
           <Route path="/dashboard" element={<Layout />}>
             <Route index element={
               <Protected>
