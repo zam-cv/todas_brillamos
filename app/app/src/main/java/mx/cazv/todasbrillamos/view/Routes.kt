@@ -32,6 +32,7 @@ sealed class Routes (
         const val ROUTE_REGISTER = "Register"
         const val ROUTE_STORE = "Store"
         const val ROUTE_HOME = "Home"
+        const val ROUTE_POST = "Post"
         const val ROUTE_CALENDAR = "Calendar"
         const val ROUTE_FORGOT_PASSWORD = "ForgotPassword"
         const val ROUTE_CHAT = "Chat"

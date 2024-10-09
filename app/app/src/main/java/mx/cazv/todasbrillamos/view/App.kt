@@ -23,6 +23,7 @@ import mx.cazv.todasbrillamos.view.screens.Notifications
 import mx.cazv.todasbrillamos.view.screens.Register
 import mx.cazv.todasbrillamos.view.screens.Cart
 import mx.cazv.todasbrillamos.view.screens.Orders
+import mx.cazv.todasbrillamos.view.screens.PostView
 //import mx.cazv.todasbrillamos.view.screens.Payment
 import mx.cazv.todasbrillamos.view.screens.TrackOrder
 import mx.cazv.todasbrillamos.view.screens.config.Config
@@ -122,6 +123,10 @@ fun Nav(
 
             composable(Routes.ROUTE_HOME) {
                 Home(navController, authViewModel, userViewModel, randomViewModel, postsViewModel)
+            }
+
+            composable(Routes.ROUTE_POST) {
+                PostView(navController)
             }
 
             composable(Routes.ROUTE_CHAT) {
