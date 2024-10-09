@@ -49,4 +49,5 @@ func getRoutes() {
 	addClientsRoutes(api)
 	addDonationsRoutes(api)
 	addSpecialistsRoutes(api)
+	addChatRoutes(api)
 }

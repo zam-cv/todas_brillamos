@@ -36,7 +36,9 @@ import mx.cazv.todasbrillamos.R
  * @author Carlos Zamudio
  */
 @Composable
-fun ChatBottomBar() {
+fun ChatBottomBar(
+    onSendMessage: (String) -> Unit
+) {
     var messageText by remember { mutableStateOf("") }
 
     Box {
@@ -79,6 +81,7 @@ fun ChatBottomBar() {
                     trailingIcon = {
                         IconButton(
                             onClick = {
+                                onSendMessage(messageText)
                                 messageText = ""
                             }
                         ) {

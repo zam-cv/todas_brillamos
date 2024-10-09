@@ -8,6 +8,8 @@
 - [Git](https://git-scm.com/downloads)
 - [VSCode](https://code.visualstudio.com/download)
 - [Kotlin](https://kotlinlang.org/docs/getting-started.html#choose-your-kotlin-use-case)
+- [Python](https://www.python.org/downloads/)
+- [Ollama](https://ollama.com/)
 
 ### Getting Started
 
@@ -80,7 +82,18 @@ cd platform
 npm install
 ```
 
-6. Start the project
+7. Install 
+
+```bash
+ollama pull all-minilm:latest
+pip install chromadb
+```
+
+8. Start the project
+
+```bash
+chroma run --host localhost --port 8080 --path ./datadb
+```
 
 ```bash
 docker run --name todasbrillamos-postgres -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=awdrqwer12 -e POSTGRES_DB=todasbrillamos -p 5432:5432 -d postgres

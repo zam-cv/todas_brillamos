@@ -41,6 +41,7 @@ import mx.cazv.todasbrillamos.viewmodel.AuthState
 import mx.cazv.todasbrillamos.viewmodel.AuthViewModel
 import mx.cazv.todasbrillamos.viewmodel.CalendarVM
 import mx.cazv.todasbrillamos.viewmodel.CartViewModel
+import mx.cazv.todasbrillamos.viewmodel.ChatViewModel
 import mx.cazv.todasbrillamos.viewmodel.PostsViewModel
 import mx.cazv.todasbrillamos.viewmodel.ProductsViewModel
 import mx.cazv.todasbrillamos.viewmodel.RandomViewModel
@@ -80,6 +81,7 @@ fun Nav(
     postsViewModel: PostsViewModel = PostsViewModel(),
     productsViewModel: ProductsViewModel = ProductsViewModel(),
     cartViewModel: CartViewModel = CartViewModel(),
+    chatViewModel: ChatViewModel = ChatViewModel(),
     modifier: Modifier = Modifier
 ) {
     var startDestination by remember { mutableStateOf<String?>(null) }
@@ -151,7 +153,7 @@ fun Nav(
                             Routes.ROUTE_HOME -> Home(navController, authViewModel, userViewModel, postsViewModel, randomState)
                             Routes.ROUTE_STORE -> Store(navController, authViewModel, productsViewModel)
                             Routes.ROUTE_CALENDAR -> Calendar(navController, calendarVM)
-                            Routes.ROUTE_CHAT -> Chat(navController)
+                            Routes.ROUTE_CHAT -> Chat(navController, authViewModel, chatViewModel)
                             Routes.ROUTE_FAVORITES -> Favorites(navController)
                             Routes.ROUTE_NOTIFICATIONS -> Notifications(navController)
                             Routes.ROUTE_CART -> Cart(navController, authViewModel, cartViewModel)

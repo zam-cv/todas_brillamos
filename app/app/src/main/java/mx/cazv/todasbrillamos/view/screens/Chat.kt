@@ -12,14 +12,23 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import mx.cazv.todasbrillamos.view.Routes
 import mx.cazv.todasbrillamos.view.layouts.CustomLayout
 import mx.cazv.todasbrillamos.view.components.footer.ChatBottomBar
 import mx.cazv.todasbrillamos.view.components.header.BasicTopBar
+import mx.cazv.todasbrillamos.viewmodel.AuthViewModel
+import mx.cazv.todasbrillamos.viewmodel.ChatViewModel
 
 /**
  * Archivo para mostrar el chat
@@ -32,14 +41,32 @@ import mx.cazv.todasbrillamos.view.components.header.BasicTopBar
  * @param navController El NavHostController utilizado para la navegación.
  */
 @Composable
-fun Chat(navController: NavHostController) {
+fun Chat(
+    navController: NavHostController,
+    authViewModel: AuthViewModel,
+    viewModel: ChatViewModel
+) {
+    val state by viewModel.state.collectAsState()
+
     CustomLayout(
         navController = navController,
         topBar = {
             BasicTopBar(title = "Chat", navController = navController)
         },
         bottomBar = {
-            ChatBottomBar()
+            ChatBottomBar(
+                onSendMessage = { message ->
+                    CoroutineScope(Dispatchers.Main).launch {
+                        val token = withContext(Dispatchers.IO) {
+                            authViewModel.token()
+                        }
+
+                        if (token != null) {
+                            viewModel.sendMessage(token, message)
+                        }
+                    }
+                }
+            )
         }
     ) {
         Column(
@@ -48,12 +75,14 @@ fun Chat(navController: NavHostController) {
                 .fillMaxSize()
         ) {
             Warning()
-            messages.forEach { message ->
+
+            state.conversations.forEach { message ->
                 when (message.type) {
                     MessageType.USER -> MessageUser(message.descrip)
                     MessageType.CHAT -> MessageChat(message.descrip)
                 }
             }
+
             Spacer(modifier = Modifier.height(16.dp))
         }
     }
@@ -66,14 +95,13 @@ fun Chat(navController: NavHostController) {
 fun Warning(){
     Column {
         Text(text = "Este es un chat que contesta tus dudas con ayuda de Inteligencia Artificial" +
-                " , las respuestas pueden no ser del todo acertadas, por lo que también" +
+                ", las respuestas pueden no ser del todo acertadas, por lo que también" +
                 " podrá sugerirte especialistas expertos con los que podrás ponerte en contacto " +
                 "y recibir atención personalizada",
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .padding(10.dp)
                 .fillMaxWidth())
-
     }
 }
 
@@ -164,27 +192,3 @@ enum class MessageType{
     CHAT,
     USER
 }
-
-/**
- * Lista de mensajes de ejemplo.
- */
-val messages = listOf(
-    Message("Este es un ejemplo de texto por la parte del usuario", MessageType.USER) ,
-    Message("Este es un ejemplo de texto por la parte del chat", MessageType.CHAT),
-    Message("Este es un ejemplo de texto por la parte del usuario", MessageType.USER) ,
-    Message("Este es un ejemplo de texto por la parte del chat", MessageType.CHAT),
-    Message("Este es un ejemplo de texto por la parte del usuario", MessageType.USER) ,
-    Message("Este es un ejemplo de texto por la parte del chat", MessageType.CHAT),
-    Message("Este es un ejemplo de texto por la parte del usuario", MessageType.USER) ,
-    Message("Este es un ejemplo de texto por la parte del chat", MessageType.CHAT),
-    Message("Este es un ejemplo de texto por la parte del usuario", MessageType.USER) ,
-    Message("Este es un ejemplo de texto por la parte del chat", MessageType.CHAT),
-    Message("Este es un ejemplo de texto por la parte del usuario", MessageType.USER) ,
-    Message("Este es un ejemplo de texto por la parte del chat", MessageType.CHAT),
-    Message("Este es un ejemplo de texto por la parte del usuario", MessageType.USER) ,
-    Message("Este es un ejemplo de texto por la parte del chat", MessageType.CHAT),
-    Message("Este es un ejemplo de texto por la parte del usuario", MessageType.USER) ,
-    Message("Este es un ejemplo de texto por la parte del chat", MessageType.CHAT)
-)
-
-

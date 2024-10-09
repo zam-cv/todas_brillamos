@@ -4,6 +4,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import mx.cazv.todasbrillamos.model.models.CartResponse
 import mx.cazv.todasbrillamos.model.models.Category
+import mx.cazv.todasbrillamos.model.models.ChatMessage
 import mx.cazv.todasbrillamos.model.models.ClientDetails
 import mx.cazv.todasbrillamos.model.models.Credentials
 import mx.cazv.todasbrillamos.model.models.Exist
@@ -102,6 +103,12 @@ interface API {
         @Path("id") id: Int,
         @Path("quantity") quantity: Int
     )
+
+    @POST("api/chat")
+    suspend fun sendMessage(
+        @Header("Authorization") token: String,
+        @Body request: ChatMessage
+    ): ChatMessage
 
     @PUT("api/cart/{id}/{quantity}")
     suspend fun updateProductQuantityInCart(
