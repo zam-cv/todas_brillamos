@@ -5,7 +5,6 @@ import androidx.navigation.NavController
 
 /**
  * Clase de datos que representa una configuración.
- *
  * @author Carlos Zamudio
  *
  * @property title El título de la configuración.

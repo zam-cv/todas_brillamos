@@ -2,7 +2,6 @@ package mx.cazv.todasbrillamos.model
 
 /**
  * Objeto que contiene la configuración de la API.
- *
  * @author Carlos Zamudio
  */
 object ApiConfig {

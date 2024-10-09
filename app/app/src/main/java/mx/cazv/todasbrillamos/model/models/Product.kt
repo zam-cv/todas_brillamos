@@ -2,7 +2,6 @@ package mx.cazv.todasbrillamos.model.models
 
 /**
  * Clase de datos que representa un producto sin procesar.
- *
  * @author Carlos Zamudio
  *
  * @property id El ID del producto.
@@ -41,7 +40,10 @@ data class ProductRaw(
 
 /**
  * Datos del producto
- * @author: Min Che Kim
+ * @author: Min Che Kim, Carlos Zamudio
+ *
+ * @property folder El nombre de la carpeta del producto.
+ * @property product El producto.
  */
 data class Product(
     val folder: String,

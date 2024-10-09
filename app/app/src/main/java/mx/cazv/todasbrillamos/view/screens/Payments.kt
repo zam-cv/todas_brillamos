@@ -49,13 +49,16 @@ import mx.cazv.todasbrillamos.viewmodel.CartViewModel
 
 /**
  * Archivo para mostrar el formulario de pagos.
- * @author Mariana Balderrábano
+ * @author Mariana Balderrábano, Jennyfer Jasso
  */
 
 /**
  * Pantalla de pagos que permite al usuario ingresar la información de su tarjeta y realizar un pago.
  *
  * @param navController El NavHostController utilizado para la navegación.
+ * @param authViewModel El ViewModel para manejar las operaciones de autenticación.
+ * @param cartViewModel El ViewModel para manejar las operaciones del carrito de compras.
+ * @param buyViewModel El ViewModel para manejar las operaciones de compra.
  */
 @Composable
 fun Payments(

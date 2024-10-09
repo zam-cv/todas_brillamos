@@ -13,6 +13,7 @@ import mx.cazv.todasbrillamos.view.App
 /**
  * Actividad principal de la aplicación.
  * Configura el tema y el contenido de la aplicación.
+ * @author Carlos Zamudio
  */
 class MainActivity : ComponentActivity() {
     private lateinit var stripe: Stripe
@@ -24,6 +25,7 @@ class MainActivity : ComponentActivity() {
             applicationContext,
             Config.STRIPE_PUBLISHABLE_KEY
         )
+        // Crea una instancia de Stripe
         stripe = Stripe(applicationContext, PaymentConfiguration.getInstance(applicationContext).publishableKey)
 
         enableEdgeToEdge()

@@ -28,6 +28,7 @@ import mx.cazv.todasbrillamos.view.Routes
 /**
  * Barra superior con iconos de notificaciones, pedidos, favoritos y carrito de compras.
  * @author Carlos Zamudio
+ *
  * @param navController El NavHostController utilizado para la navegación.
  */
 @Composable

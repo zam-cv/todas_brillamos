@@ -49,7 +49,7 @@ import mx.cazv.todasbrillamos.viewmodel.AuthViewModel
 
 /**
  * Pantalla de inicio de sesión que permite al usuario ingresar su correo electrónico y contraseña para iniciar sesión.
- * @author Jennyfer Jasso
+ * @author Jennyfer Jasso, Carlos Zamudio
  *
  * @param navController El NavHostController utilizado para la navegación.
  * @param viewModel El ViewModel de autenticación utilizado para gestionar el inicio de sesión del usuario.

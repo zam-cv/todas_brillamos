@@ -55,6 +55,7 @@ import java.util.Locale
 
 /**
  * Composable que representa una celda del calendario.
+ *
  * @param date La fecha de la celda.
  * @param signal Indica si la celda debe estar resaltada.
  * @param onClick Acción a realizar al hacer clic en la celda.
@@ -132,6 +133,7 @@ private fun WeekdayCell(weekday: Int, modifier: Modifier = Modifier) {
 
 /**
  * Composable que representa la cuadrícula del calendario.
+ *
  * @param date Lista de pares de fecha y booleano indicando si es un día especial.
  * @param onClick Acción a realizar al hacer clic en una celda.
  * @param startFromSunday Indica si la semana comienza en domingo.
@@ -192,6 +194,7 @@ private fun CalendarGrid(
 
 /**
  * Composable que representa un diseño personalizado para la cuadrícula del calendario.
+ *
  * @param modifier Modificador para el diseño.
  * @param horizontalGapDp Espacio horizontal entre celdas.
  * @param verticalGapDp Espacio vertical entre celdas.
@@ -252,6 +255,7 @@ private fun CalendarCustomLayout(
 
 /**
  * Composable que representa la vista del calendario.
+ *
  * @param month El mes actual.
  * @param date Lista de pares de fecha y booleano indicando si es un día especial.
  * @param displayNext Indica si se debe mostrar el botón para el siguiente mes.

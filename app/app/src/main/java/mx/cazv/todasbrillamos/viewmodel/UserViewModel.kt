@@ -14,7 +14,8 @@ import mx.cazv.todasbrillamos.model.services.UserService
 import mx.cazv.todasbrillamos.model.states.UserState
 
 /**
- * ViewModel para gestionar la información del usuario.
+ * ViewModel para gestionar la información del usuario. Permite cargar y actualizar la
+ * información del usuario en la aplicación.
  * @author Carlos Zamudio
  */
 class UserViewModel : ViewModel() {
@@ -72,10 +73,23 @@ class UserViewModel : ViewModel() {
         }
     }
 
+    /**
+     * Verifica la existencia del usuario utilizando el token.
+     *
+     * @param token El token de autenticación del usuario.
+     * @return Un objeto Exist que indica si el usuario existe.
+     */
     suspend fun exist(token: String): Exist? {
         return userService.exist(token)
     }
 
+    /**
+     * Establece otros detalles relacionados con el usuario.
+     *
+     * @param token El token de autenticación del usuario.
+     * @param others Los detalles adicionales que se desean establecer.
+     * @return `true` si la operación fue exitosa, `false` en caso contrario.
+     */
     suspend fun setOthers(token: String, others: Others): Boolean {
         return userService.setOthers(token, others)
     }

@@ -23,8 +23,9 @@ import mx.cazv.todasbrillamos.view.Routes
 
 /**
  * Composable que muestra una publicación con un título, contenido y un botón para leer más.
- * @author Jennyfer Jasso
+ * @author Jennyfer Jasso, Carlos Zamudio
  *
+ * @param navController El controlador de navegación.
  * @param title El título de la publicación.
  * @param content El contenido de la publicación.
  * @param wordLimit El límite de palabras a mostrar antes de truncar el contenido.
@@ -74,6 +75,7 @@ fun Post(navController: NavHostController,title: String, content: String, wordLi
 
 /**
  * Función que limita el número de palabras en un texto.
+ * @author Carlos Zamudio
  *
  * @param text El texto a truncar.
  * @param limit El número máximo de palabras a mostrar.

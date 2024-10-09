@@ -21,7 +21,7 @@ import mx.cazv.todasbrillamos.model.models.ProductList
 
 /**
  * Archivo para mostrar los productos en una vista de cuadrícula o lista.
- * @author Min Che Kim
+ * @author Min Che Kim, Carlos Zamudio
  */
 
 /**

@@ -21,7 +21,7 @@ import mx.cazv.todasbrillamos.viewmodel.UserViewModel
 
 /**
  * Pantalla principal que muestra un saludo, tarjetas interactivas y productos recomendados.
- * @author Jennyfer Jasso
+ * @author Jennyfer Jasso, Carlos Zamudio
  *
  * @param navController El NavHostController utilizado para la navegación.
  * @param authViewModel El ViewModel de autenticación utilizado para obtener el token del usuario.

@@ -67,11 +67,15 @@ fun App(stripe: Stripe) {
  * Composable que define la navegación de la aplicación.
  *
  * @param navController El controlador de navegación.
+ * @param stripe El objeto Stripe utilizado para procesar pagos.
  * @param authViewModel El ViewModel de autenticación.
  * @param userViewModel El ViewModel de usuario.
  * @param randomViewModel El ViewModel de productos aleatorios.
  * @param postsViewModel El ViewModel de publicaciones.
  * @param productsViewModel El ViewModel de productos.
+ * @param cartViewModel El ViewModel de carrito.
+ * @param chatViewModel El ViewModel de chat.
+ * @param buyViewModel El ViewModel de compra.
  * @param modifier El modificador para personalizar la apariencia y el comportamiento del componente.
  */
 @Composable
@@ -106,7 +110,7 @@ fun Nav(
             startDestination = startDestination!!,
             modifier = modifier.fillMaxSize()
         ) {
-            // Public routes (always accessible)
+            // Rutas públicas (siempre accesibles)
             composable(Routes.ROUTE_LOGIN) {
                 Login(navController, authViewModel)
             }
@@ -117,7 +121,7 @@ fun Nav(
                 ForgotPassword(navController)
             }
 
-            // Protected routes (only accessible when authenticated)
+            // Rutas protegidas (accesibles cuando el usuario está autenticado)
             val protectedRoutes = listOf(
                 Routes.ROUTE_HOME,
                 Routes.ROUTE_STORE,
@@ -126,7 +130,7 @@ fun Nav(
                 Routes.ROUTE_FAVORITES,
                 Routes.ROUTE_NOTIFICATIONS,
                 Routes.ROUTE_CART,
-                Routes.ROUTE_PRODUCT_DETAILS + "/{productId}", // Dynamic route
+                Routes.ROUTE_PRODUCT_DETAILS + "/{productId}", // Ruta dinamica
                 Routes.ROUTE_YOUR_CYCLE,
                 Routes.ROUTE_TRACK_ORDER,
                 Routes.ROUTE_ORDERS,
@@ -136,7 +140,7 @@ fun Nav(
                 Routes.ROUTE_SOCIAL_NETWORKS,
                 Routes.ROUTE_TERMS_AND_POLICIES,
                 Routes.ROUTE_ABOUT,
-                Routes.ROUTE_SHIPPING_INFO + "/{productId}/{quantity}", // Dynamic route
+                Routes.ROUTE_SHIPPING_INFO + "/{productId}/{quantity}", // Ruta dinamica
                 Routes.ROUTE_PAYMENTS
             )
 
@@ -198,7 +202,7 @@ fun Nav(
                             }
                         }
                     } else {
-                        // Redirect to login if not authenticated
+                        // Redireccion a login si no está autenticado.
                         LaunchedEffect(Unit) {
                             navController.navigate(Routes.ROUTE_LOGIN) {
                                 popUpTo(navController.graph.startDestinationId) { inclusive = true }
