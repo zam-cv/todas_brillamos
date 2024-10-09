@@ -54,7 +54,9 @@ fun Store(
                 selectedType = viewType,
                 onSelectionChange = { newType -> viewType = newType }
             )
+
             CategoryFilter(productsState.value.categories)
+
             Box (
                 modifier = Modifier
                     .weight(1f)

@@ -53,7 +53,7 @@ fun Home(
         Column(
             modifier = Modifier
                 .padding(top = 75.dp, start = 15.dp, end = 15.dp, bottom = 25.dp)
-        ){
+        ) {
             GreetingSec(userState.value.details.first_name + " " + userState.value.details.last_name)
             Spacer(modifier = Modifier.height(30.dp))
             InteractiveCardsHome()
@@ -62,6 +62,7 @@ fun Home(
                 MoreProducts(
                     text = "Recomendado",
                     products = randomState.value.products,
+                    navController = navController,
                     modifier = Modifier.padding(top = 20.dp)
                 )
             }

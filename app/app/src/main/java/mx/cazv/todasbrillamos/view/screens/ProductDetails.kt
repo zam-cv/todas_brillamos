@@ -1,6 +1,7 @@
 package mx.cazv.todasbrillamos.view.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -56,6 +57,7 @@ import mx.cazv.todasbrillamos.ui.theme.BackgroundColor
 import mx.cazv.todasbrillamos.ui.theme.BadgePink
 import mx.cazv.todasbrillamos.ui.theme.ImageBackgroundColor
 import mx.cazv.todasbrillamos.ui.theme.SelectorsBackgroundColor
+import mx.cazv.todasbrillamos.view.Routes
 import mx.cazv.todasbrillamos.view.components.footer.BottomBar
 import mx.cazv.todasbrillamos.view.components.header.CustomTopBar
 import mx.cazv.todasbrillamos.view.components.Description
@@ -385,7 +387,8 @@ fun Product(
 fun MoreProducts(
     text: String,
     products: ProductList,
-    modifier: Modifier
+    navController: NavHostController,
+    modifier: Modifier,
 ) {
     Column (
         modifier = modifier
@@ -402,14 +405,21 @@ fun MoreProducts(
                 .padding(top = 10.dp, bottom = 10.dp)
         ) {
             for (product in products.products) {
-                Product(
-                    name = product.name,
-                    model = product.model,
-                    price = product.price,
-                    folder = products.folder,
-                    hash = product.hash,
-                    type = product.type,
-                )
+                Box (
+                    modifier = Modifier
+                        .clickable {
+                            navController.navigate(Routes.ROUTE_PRODUCT_DETAILS + "/${product.id}")
+                        }
+                ) {
+                    Product(
+                        name = product.name,
+                        model = product.model,
+                        price = product.price,
+                        folder = products.folder,
+                        hash = product.hash,
+                        type = product.type,
+                    )
+                }
 
                 Spacer(modifier = Modifier.width(10.dp))
             }
@@ -552,6 +562,7 @@ fun ProductDetails(
                         MoreProducts(
                             text = "Más productos",
                             products = randomState.value.products,
+                            navController = navController,
                             modifier = Modifier.padding(top = 60.dp)
                         )
                     }
