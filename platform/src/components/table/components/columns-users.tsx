@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { ColumnDef } from "@tanstack/react-table";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Task } from "../data/schema";
 import { DataTableColumnHeader } from "./data-table-column-header-users";
 
 export const columns: ColumnDef<Task>[] = [
     {
-        accessorKey: "idUsuario",
+        accessorKey: "client_id",
         header: ({ column }) => (
           <DataTableColumnHeader column={column} title="ID" />
         ),
@@ -14,14 +13,14 @@ export const columns: ColumnDef<Task>[] = [
           return (
             <div className="flex space-x-2">
               <span className="max-w-[500px] truncate font-medium">
-                {row.getValue("idUsuario")}
+                {row.getValue("client_id")}
               </span>
             </div>
           );
         },
       },
     {
-      accessorKey: "nombre",
+      accessorKey: "first_name",
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title="Nombre" />
       ),
@@ -29,14 +28,14 @@ export const columns: ColumnDef<Task>[] = [
         return (
           <div className="flex space-x-2">
             <span className="max-w-[500px] truncate font-medium">
-              {row.getValue("nombre")}
+              {row.getValue("first_name")}
             </span>
           </div>
         );
       },
     },
     {
-      accessorKey: "apellido",
+      accessorKey: "last_name",
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title="Apellido" />
       ),
@@ -44,37 +43,22 @@ export const columns: ColumnDef<Task>[] = [
         return (
           <div className="flex space-x-2">
             <span className="max-w-[500px] truncate font-medium">
-              {row.getValue("apellido")}
+              {row.getValue("last_name")}
             </span>
           </div>
         );
       },
     },
     {
-      accessorKey: "personal_email",
+      accessorKey: "email",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Personal Email" />
+        <DataTableColumnHeader column={column} title="Email" />
       ),
       cell: ({ row }) => {
         return (
           <div className="flex space-x-2">
             <span className="max-w-[500px] truncate font-medium">
-              {row.getValue("personal_email")}
-            </span>
-          </div>
-        );
-      },
-    },
-    {
-      accessorKey: "phone",
-      header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Phone" />
-      ),
-      cell: ({ row }) => {
-        return (
-          <div className="flex space-x-2">
-            <span className="max-w-[500px] truncate font-medium">
-              {row.getValue("phone")}
+              {row.getValue("email")}
             </span>
           </div>
         );
@@ -98,7 +82,7 @@ export const columns: ColumnDef<Task>[] = [
     {
       accessorKey: "street",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Dirección" />
+        <DataTableColumnHeader column={column} title="Calle" />
       ),
       cell: ({ row }) => {
         return (
@@ -111,7 +95,7 @@ export const columns: ColumnDef<Task>[] = [
       },
     },
     {
-      accessorKey: "ZIP",
+      accessorKey: "z_ip",
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title="Código Postal" />
       ),
@@ -119,7 +103,22 @@ export const columns: ColumnDef<Task>[] = [
         return (
           <div className="flex space-x-2">
             <span className="max-w-[500px] truncate font-medium">
-              {row.getValue("ZIP")}
+              {row.getValue("z_ip")}
+            </span>
+          </div>
+        );
+      },
+    },
+    {
+      accessorKey: "reference",
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="Referencia" />
+      ),
+      cell: ({ row }) => {
+        return (
+          <div className="flex space-x-2">
+            <span className="max-w-[500px] truncate font-medium">
+              {row.getValue("reference")}
             </span>
           </div>
         );

@@ -127,5 +127,29 @@ func addClientsRoutes(api *gin.RouterGroup) {
 			}
 			c.JSON(http.StatusOK, clientDetails)
 		})
+
+		clients.GET("/getInfo/:id", auth.GetMiddleware(AdminAuth), func(c *gin.Context) {
+			clientIDStr := c.Param("id")
+			clientID, err := strconv.Atoi(clientIDStr)
+			if err != nil {
+				c.JSON(400, gin.H{"error": "Invalid client ID"})
+				return
+			}
+
+			clientInfo, err := database.GetOthersClientDetails(uint(clientID))
+			if err != nil {
+				c.JSON(404, gin.H{"error": "Not Found"})
+				return
+			}
+
+			c.JSON(http.StatusOK, clientInfo)
+
+		})
+
+		clients.GET("/getIDS", auth.GetMiddleware(AdminAuth), func(c *gin.Context) {
+			ids := database.GetAllClientsIDs()
+
+			c.JSON(http.StatusOK, ids)
+		})
 	}
 }
