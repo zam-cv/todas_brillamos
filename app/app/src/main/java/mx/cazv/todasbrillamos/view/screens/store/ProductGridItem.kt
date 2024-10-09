@@ -75,8 +75,9 @@ fun ProductGridItem(
         Column (
             modifier = Modifier
                 .fillMaxSize()
+                .height(300.dp)
         ) {
-            Box(modifier = Modifier.fillMaxWidth()) {
+            Box(modifier = Modifier.fillMaxWidth().weight(1f)) {
                 val base_url = ApiConfig.BASE_URL
                 val hash = product.hash
                 val type = product.type
@@ -116,7 +117,7 @@ fun ProductGridItem(
                 }
             }
 
-            Box (modifier = Modifier.height(150.dp)){
+            Box (modifier = Modifier.weight(0.8f)){
                 Column (modifier = Modifier
                             .align(Alignment.Center)
                             .padding(10.dp)
