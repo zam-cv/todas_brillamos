@@ -14,6 +14,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.stripe.android.Stripe
 import mx.cazv.todasbrillamos.view.components.LoadingScreen
 import mx.cazv.todasbrillamos.view.screens.Chat
 import mx.cazv.todasbrillamos.view.screens.Favorites
@@ -24,7 +25,7 @@ import mx.cazv.todasbrillamos.view.screens.Notifications
 import mx.cazv.todasbrillamos.view.screens.Register
 import mx.cazv.todasbrillamos.view.screens.Cart
 import mx.cazv.todasbrillamos.view.screens.Orders
-//import mx.cazv.todasbrillamos.view.screens.Payment
+import mx.cazv.todasbrillamos.view.screens.Payments
 import mx.cazv.todasbrillamos.view.screens.TrackOrder
 import mx.cazv.todasbrillamos.view.screens.config.Config
 import mx.cazv.todasbrillamos.view.screens.ProductDetails
@@ -39,6 +40,7 @@ import mx.cazv.todasbrillamos.view.screens.config.SocialNetworks
 import mx.cazv.todasbrillamos.view.screens.config.TermsAndPolicies
 import mx.cazv.todasbrillamos.viewmodel.AuthState
 import mx.cazv.todasbrillamos.viewmodel.AuthViewModel
+import mx.cazv.todasbrillamos.viewmodel.BuyViewModel
 import mx.cazv.todasbrillamos.viewmodel.CalendarVM
 import mx.cazv.todasbrillamos.viewmodel.CartViewModel
 import mx.cazv.todasbrillamos.viewmodel.ChatViewModel
@@ -56,9 +58,9 @@ import mx.cazv.todasbrillamos.viewmodel.UserViewModel
  * Composable principal de la aplicación que inicializa el controlador de navegación.
  */
 @Composable
-fun App() {
+fun App(stripe: Stripe) {
     val navController = rememberNavController()
-    Nav(navController)
+    Nav(navController, stripe)
 }
 
 /**
@@ -75,6 +77,7 @@ fun App() {
 @Composable
 fun Nav(
     navController: NavHostController,
+    stripe: Stripe,
     authViewModel: AuthViewModel = viewModel(),
     userViewModel: UserViewModel = UserViewModel(),
     randomViewModel: RandomViewModel = RandomViewModel(),
@@ -82,6 +85,7 @@ fun Nav(
     productsViewModel: ProductsViewModel = ProductsViewModel(),
     cartViewModel: CartViewModel = CartViewModel(),
     chatViewModel: ChatViewModel = ChatViewModel(),
+    buyViewModel: BuyViewModel = BuyViewModel(),
     modifier: Modifier = Modifier
 ) {
     var startDestination by remember { mutableStateOf<String?>(null) }
@@ -190,7 +194,7 @@ fun Nav(
                                 }
                             }
                             Routes.ROUTE_PAYMENTS -> {
-                                // Payment(navController, token)
+                                Payments(navController, authViewModel, cartViewModel, buyViewModel)
                             }
                         }
                     } else {

@@ -10,6 +10,9 @@ import mx.cazv.todasbrillamos.model.models.Credentials
 import mx.cazv.todasbrillamos.model.models.Exist
 import mx.cazv.todasbrillamos.model.models.Others
 import mx.cazv.todasbrillamos.model.models.PasswordUpdate
+import mx.cazv.todasbrillamos.model.models.PaymentConfirmationRequest
+import mx.cazv.todasbrillamos.model.models.PaymentConfirmationResponse
+import mx.cazv.todasbrillamos.model.models.PaymentIntentResponse
 import mx.cazv.todasbrillamos.model.models.Post
 import mx.cazv.todasbrillamos.model.models.Product
 import mx.cazv.todasbrillamos.model.models.ProductList
@@ -109,6 +112,15 @@ interface API {
         @Header("Authorization") token: String,
         @Body request: ChatMessage
     ): ChatMessage
+
+    @POST("api/buy/create-payment-intent")
+    suspend fun createPaymentIntent(@Header("Authorization") token: String): PaymentIntentResponse
+
+    @POST("api/buy/confirm")
+    suspend fun confirmPayment(
+        @Header("Authorization") token: String,
+        @Body request: PaymentConfirmationRequest
+    ): PaymentConfirmationResponse
 
     @PUT("api/cart/{id}/{quantity}")
     suspend fun updateProductQuantityInCart(

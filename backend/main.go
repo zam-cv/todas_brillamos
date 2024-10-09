@@ -6,11 +6,16 @@ import (
 
 	"backend/config"
 	"backend/resources"
+
+	"github.com/stripe/stripe-go"
 )
 
 func main() {
 	// Load environment variables
 	config.LoadEnvVars()
+
+	// Stripe setup
+	stripe.Key = config.StripeSecretKey
 
 	// Database setup
 	database.InitDatabase(
