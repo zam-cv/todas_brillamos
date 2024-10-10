@@ -8,6 +8,7 @@ import mx.cazv.todasbrillamos.model.models.ChatMessage
 import mx.cazv.todasbrillamos.model.models.ClientDetails
 import mx.cazv.todasbrillamos.model.models.Credentials
 import mx.cazv.todasbrillamos.model.models.Exist
+import mx.cazv.todasbrillamos.model.models.Favorites
 import mx.cazv.todasbrillamos.model.models.Others
 import mx.cazv.todasbrillamos.model.models.PasswordUpdate
 import mx.cazv.todasbrillamos.model.models.PaymentConfirmationRequest
@@ -246,6 +247,27 @@ interface API {
      */
     @GET("api/posts")
     suspend fun getPosts(@Header("Authorization") token: String): List<Post>
+
+    @GET("api/favorites/exists/{id}")
+    suspend fun existFavorite(
+        @Header("Authorization") token: String,
+        @Path("id") id: Int
+    ): Exist
+
+    @POST("api/favorites/{id}")
+    suspend fun addFavorite(
+        @Header("Authorization") token: String,
+        @Path("id") id: Int
+    )
+
+    @DELETE("api/favorites/{id}")
+    suspend fun deleteFavorite(
+        @Header("Authorization") token: String,
+        @Path("id") id: Int
+    )
+
+    @GET("api/favorites")
+    suspend fun getFavorites(@Header("Authorization") token: String): Favorites
 }
 
 /**

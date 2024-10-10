@@ -11,15 +11,23 @@ import mx.cazv.todasbrillamos.view.components.footer.BottomBar
 import mx.cazv.todasbrillamos.view.components.header.BasicTopBar
 import mx.cazv.todasbrillamos.view.layouts.CustomLayout
 import mx.cazv.todasbrillamos.view.screens.store.ViewFavorites
+import mx.cazv.todasbrillamos.viewmodel.AuthViewModel
+import mx.cazv.todasbrillamos.viewmodel.FavoritesViewModel
 
 /**
  * Pantalla de favoritos que muestra una lista de productos favoritos del usuario.
  * @author Min Che Kim, Carlos Zamudio
  *
  * @param navController El NavHostController utilizado para la navegación.
+ * @param authViewModel El AuthViewModel utilizado para obtener el token del usuario.
+ * @param favoritesViewModel El FavoritesViewModel utilizado para obtener los productos favoritos del usuario.
  */
 @Composable
-fun Favorites(navController: NavHostController) {
+fun Favorites(
+    navController: NavHostController,
+    authViewModel: AuthViewModel,
+    favoritesViewModel: FavoritesViewModel
+) {
     CustomLayout (
         withStoreButton = true,
         withScroll = false,
@@ -32,17 +40,7 @@ fun Favorites(navController: NavHostController) {
         }
     ) {
         Column (modifier = Modifier.fillMaxWidth()){
-            ViewFavorites()
+            ViewFavorites(authViewModel, favoritesViewModel, navController)
         }
     }
-}
-
-/**
- * Vista previa de la pantalla de favoritos.
- */
-@Preview(showBackground = true)
-@Composable
-fun FavoritesPreview() {
-    val navController = rememberNavController()
-    Favorites(navController = navController)
 }

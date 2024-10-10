@@ -14,7 +14,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.stripe.android.Stripe
 import mx.cazv.todasbrillamos.view.components.LoadingScreen
 import mx.cazv.todasbrillamos.view.screens.Chat
 import mx.cazv.todasbrillamos.view.screens.Favorites
@@ -44,6 +43,7 @@ import mx.cazv.todasbrillamos.viewmodel.BuyViewModel
 import mx.cazv.todasbrillamos.viewmodel.CalendarVM
 import mx.cazv.todasbrillamos.viewmodel.CartViewModel
 import mx.cazv.todasbrillamos.viewmodel.ChatViewModel
+import mx.cazv.todasbrillamos.viewmodel.FavoritesViewModel
 import mx.cazv.todasbrillamos.viewmodel.PostsViewModel
 import mx.cazv.todasbrillamos.viewmodel.ProductsViewModel
 import mx.cazv.todasbrillamos.viewmodel.RandomViewModel
@@ -58,16 +58,15 @@ import mx.cazv.todasbrillamos.viewmodel.UserViewModel
  * Composable principal de la aplicación que inicializa el controlador de navegación.
  */
 @Composable
-fun App(stripe: Stripe) {
+fun App() {
     val navController = rememberNavController()
-    Nav(navController, stripe)
+    Nav(navController)
 }
 
 /**
  * Composable que define la navegación de la aplicación.
  *
  * @param navController El controlador de navegación.
- * @param stripe El objeto Stripe utilizado para procesar pagos.
  * @param authViewModel El ViewModel de autenticación.
  * @param userViewModel El ViewModel de usuario.
  * @param randomViewModel El ViewModel de productos aleatorios.
@@ -81,7 +80,6 @@ fun App(stripe: Stripe) {
 @Composable
 fun Nav(
     navController: NavHostController,
-    stripe: Stripe,
     authViewModel: AuthViewModel = viewModel(),
     userViewModel: UserViewModel = UserViewModel(),
     randomViewModel: RandomViewModel = RandomViewModel(),
@@ -90,6 +88,7 @@ fun Nav(
     cartViewModel: CartViewModel = CartViewModel(),
     chatViewModel: ChatViewModel = ChatViewModel(),
     buyViewModel: BuyViewModel = BuyViewModel(),
+    favoritesViewModel: FavoritesViewModel = FavoritesViewModel(),
     modifier: Modifier = Modifier
 ) {
     var startDestination by remember { mutableStateOf<String?>(null) }
@@ -162,7 +161,7 @@ fun Nav(
                             Routes.ROUTE_STORE -> Store(navController, authViewModel, productsViewModel)
                             Routes.ROUTE_CALENDAR -> Calendar(navController, calendarVM)
                             Routes.ROUTE_CHAT -> Chat(navController, authViewModel, chatViewModel)
-                            Routes.ROUTE_FAVORITES -> Favorites(navController)
+                            Routes.ROUTE_FAVORITES -> Favorites(navController, authViewModel, favoritesViewModel)
                             Routes.ROUTE_NOTIFICATIONS -> Notifications(navController)
                             Routes.ROUTE_CART -> Cart(navController, authViewModel, cartViewModel)
                             Routes.ROUTE_PRODUCT_DETAILS + "/{productId}" -> {
@@ -170,7 +169,15 @@ fun Nav(
                                 val id = productId?.toInt()
 
                                 if (id != null) {
-                                    ProductDetails(navController, id, randomState, authViewModel, userViewModel, cartViewModel)
+                                    ProductDetails(
+                                        navController,
+                                        id,
+                                        randomState,
+                                        authViewModel,
+                                        userViewModel,
+                                        cartViewModel,
+                                        favoritesViewModel
+                                    )
                                 }
                             }
                             Routes.ROUTE_YOUR_CYCLE -> YourCycle(navController, calendarVM)

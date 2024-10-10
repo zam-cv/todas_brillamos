@@ -9,18 +9,12 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -59,7 +53,6 @@ fun ProductGridItem(
     val formattedPrice = product.price
     val formattedDC = "%.0f".format(0.0) // TODO: Aplicar descuento
     val discountPrice = 0.0
-    val favorite = false
     
     Card (
         modifier = Modifier
@@ -91,31 +84,6 @@ fun ProductGridItem(
                         .height(150.dp),
                     contentScale = ContentScale.Crop
                 )
-
-                Box(
-                    modifier = Modifier
-                        .align(Alignment.BottomEnd)
-                        .offset(x = (-10).dp, y = (-10).dp)
-                ) {
-                    // Background with independent offset
-                    Box(
-                        modifier = Modifier
-                            .size(35.dp)
-                            .align(Alignment.BottomEnd)
-                            .background(Color.White, shape = RoundedCornerShape(24.dp))
-                             // This only moves the background
-                    )
-
-                    Icon (
-                        imageVector = (if (favorite) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder),
-                        contentDescription = "favorito",
-                        tint = (if (favorite) AccentColor else Color.Black),
-                        modifier = Modifier
-                            .size(25.dp)
-                            .align(Alignment.Center)
-                            .offset(y = 2.dp)
-                    )
-                }
             }
 
             Box {

@@ -9,12 +9,3 @@ type Favorites struct {
 	ClientID  uint
 	ProductID uint
 }
-
-// Estructura de la tabla de productos favoritos
-type FavProduct struct {
-	Name      string  `json:"name"`
-	Price     float64 `json:"price"`
-	ProductID uint    `json:"product_id"`
-	Hash      string  `json:"hash"`
-	Type      string  `json:"type"`
-}

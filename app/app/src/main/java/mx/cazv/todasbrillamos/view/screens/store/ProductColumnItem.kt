@@ -1,6 +1,5 @@
 package mx.cazv.todasbrillamos.view.screens.store
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -9,16 +8,10 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.outlined.FavoriteBorder
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -26,7 +19,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -37,9 +29,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import mx.cazv.todasbrillamos.model.ApiConfig
-import mx.cazv.todasbrillamos.model.models.Product
 import mx.cazv.todasbrillamos.model.models.ProductRaw
-import mx.cazv.todasbrillamos.ui.theme.AccentColor
 import mx.cazv.todasbrillamos.ui.theme.ImageBackgroundColor
 import mx.cazv.todasbrillamos.view.Routes
 
@@ -58,7 +48,6 @@ fun ProductColumnItem(
     val formattedPrice = product.price
     val formattedDC = "%.0f".format(0.0) // TODO: Aplicar descuento
     val discountPrice = 0.0
-    val favorite = false
 
     Row(
         modifier = Modifier
@@ -88,32 +77,6 @@ fun ProductColumnItem(
                     .width(50.dp),
                 contentScale = ContentScale.Crop
             )
-
-            Box(
-                modifier = Modifier
-                    .align(Alignment.BottomEnd)
-                    .offset(x = (-5).dp, y = (-5).dp)
-            ) {
-                // Background with independent offset
-                Box(
-                    modifier = Modifier
-                        .size(35.dp)
-                        .align(Alignment.BottomEnd)
-                        .background(Color.White, shape = RoundedCornerShape(24.dp))
-                    // This only moves the background
-                )
-
-                Icon(
-                    imageVector = (if (favorite) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder),
-                    contentDescription = "favorito",
-                    tint = (if (favorite) AccentColor else Color.Black),
-                    modifier = Modifier
-                        .size(25.dp)
-                        .align(Alignment.Center)
-                        .offset(y = 2.dp)
-                )
-
-            }
         }
 
         Box(
@@ -202,11 +165,3 @@ fun ProductColumnItem(
 
     }
 }
-
-/*
-@Preview(showBackground = true)
-@Composable
-fun ListViewPreview() {
-    ViewProducts("list")
-}
-*/

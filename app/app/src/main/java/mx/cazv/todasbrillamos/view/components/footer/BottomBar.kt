@@ -90,9 +90,7 @@ fun navigateTo(route: String, navController: NavHostController) {
     val currentRoute = navController.currentBackStackEntry?.destination?.route
     if (currentRoute != route) {
         navController.navigate(route) {
-            popUpTo(navController.graph.findStartDestination().id) {
-                saveState = true
-            }
+            // Eliminar o ajustar popUpTo
             launchSingleTop = true
             restoreState = true
         }

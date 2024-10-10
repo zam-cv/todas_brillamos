@@ -50,7 +50,6 @@ func getRoutes() {
 	addBuyRoutes(api)
 	addTrackingRoutes(api)
 	addConfigRoutes(api)
-	addBlogRoutes(api)
 	addCategoriesRoutes(api)
 	addPostRoutes(api)
 	addNotificationsRoutes(api)

@@ -22,7 +22,7 @@ func addOthersRoutes(rg *gin.RouterGroup) {
 	group.GET("/exist", auth.GetMiddleware(ClientAuth), middlewares.GetClientID(), func(c *gin.Context) {
 		id, _ := c.MustGet("clientID").(uint)
 		exist := database.ExistOthersByClientID(id)
-		c.JSON(200, gin.H{"exist": exist})
+		c.JSON(200, gin.H{"exists": exist})
 	})
 
 	// GET /others - Obtiene la información adicional del cliente autenticado

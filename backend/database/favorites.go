@@ -27,20 +27,20 @@ func GetFavoritesByClientID(clientID uint) ([]models.Favorites, error) {
 }
 
 // Obtiene un producto favorito por el ID del producto y el ID del cliente.
-func GetAllFavoritesByClientID(clientID uint) ([]models.FavProduct, error) {
-	var favItems []models.FavProduct
+func GetAllFavoritesByClientID(clientID uint) ([]models.Product, error) {
+	var favoriteProducts []models.Product
 
 	err := db.Table("favorites").
-		Select("favorites.product_id, products.name, products.price, products.hash, products.type").
+		Select("products.*").
 		Joins("LEFT JOIN products ON favorites.product_id = products.id").
 		Where("favorites.client_id = ?", clientID).
-		Scan(&favItems).Error
+		Scan(&favoriteProducts).Error
 
 	if err != nil {
 		return nil, err
 	}
 
-	return favItems, nil
+	return favoriteProducts, nil
 }
 
 // GetProductFromFavoritesByProductIDClientID obtiene un producto favorito por el ID del producto y el ID del cliente.

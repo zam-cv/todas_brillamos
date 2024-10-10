@@ -24,7 +24,7 @@ func addFavoritesRoutes(rg *gin.RouterGroup) {
 		}
 
 		c.JSON(200, gin.H{
-			"Folder": files.GetURL(ProductArchive), 
+			"folder":    files.GetURL(ProductArchive),
 			"favorites": favorites,
 		})
 	})
@@ -35,13 +35,17 @@ func addFavoritesRoutes(rg *gin.RouterGroup) {
 		productIDStr := c.Param("product_id")
 		productID, err := strconv.Atoi(productIDStr)
 		if err != nil {
-			c.JSON(500, gin.H{"error": "Invalid product ID"})
+			c.JSON(200, gin.H{
+				"exists": false,
+			})
 			return
 		}
 
 		_, err = database.GetProductFromFavoritesByProductIDClientID(uint(productID), id)
 		if err != nil {
-			c.JSON(500, gin.H{"error": "Product not found in favorites"})
+			c.JSON(200, gin.H{
+				"exists": false,
+			})
 			return
 		}
 

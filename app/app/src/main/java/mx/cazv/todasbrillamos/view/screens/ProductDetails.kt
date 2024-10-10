@@ -13,16 +13,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Bookmark
-import androidx.compose.material.icons.outlined.FavoriteBorder
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -52,12 +46,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import mx.cazv.todasbrillamos.R
 import mx.cazv.todasbrillamos.model.ApiConfig
-import mx.cazv.todasbrillamos.model.models.Product
 import mx.cazv.todasbrillamos.model.models.ProductList
 import mx.cazv.todasbrillamos.model.models.ProductRaw
-import mx.cazv.todasbrillamos.model.services.UserService
 import mx.cazv.todasbrillamos.model.states.RandomState
 import mx.cazv.todasbrillamos.ui.theme.AccentColor
 import mx.cazv.todasbrillamos.ui.theme.BackgroundColor
@@ -65,15 +56,15 @@ import mx.cazv.todasbrillamos.ui.theme.BadgePink
 import mx.cazv.todasbrillamos.ui.theme.ImageBackgroundColor
 import mx.cazv.todasbrillamos.ui.theme.SelectorsBackgroundColor
 import mx.cazv.todasbrillamos.view.Routes
-import mx.cazv.todasbrillamos.view.components.footer.BottomBar
-import mx.cazv.todasbrillamos.view.components.header.CustomTopBar
 import mx.cazv.todasbrillamos.view.components.Description
+import mx.cazv.todasbrillamos.view.components.FavoriteComponent
 import mx.cazv.todasbrillamos.view.components.Line
 import mx.cazv.todasbrillamos.view.components.footer.ButtonBottomBar
 import mx.cazv.todasbrillamos.view.components.header.BasicTopBar
 import mx.cazv.todasbrillamos.view.layouts.CustomLayout
 import mx.cazv.todasbrillamos.viewmodel.AuthViewModel
 import mx.cazv.todasbrillamos.viewmodel.CartViewModel
+import mx.cazv.todasbrillamos.viewmodel.FavoritesViewModel
 import mx.cazv.todasbrillamos.viewmodel.ProductViewModel
 import mx.cazv.todasbrillamos.viewmodel.UserViewModel
 
@@ -461,6 +452,8 @@ fun MoreProducts(
  * @param authViewModel El ViewModel de autenticación.
  * @param userViewModel El ViewModel de usuario.
  * @param cartViewModel El ViewModel del carrito de compras.
+ * @param favoritesViewModel El ViewModel de favoritos.
+ * @param productViewModel El ViewModel de productos.
  */
 @Composable
 fun ProductDetails(
@@ -470,6 +463,7 @@ fun ProductDetails(
     authViewModel: AuthViewModel,
     userViewModel: UserViewModel,
     cartViewModel: CartViewModel,
+    favoritesViewModel: FavoritesViewModel = FavoritesViewModel(),
     productViewModel: ProductViewModel = viewModel(),
 ) {
     var quantity by remember { mutableStateOf(1) }
@@ -501,7 +495,7 @@ fun ProductDetails(
                         }
 
                         if (exist != null) {
-                            if (exist.exist) {
+                            if (exist.exists) {
                                 cartViewModel.addProductToCart(token, productState.value.product.product, quantity)
                                 navController.navigate(Routes.ROUTE_CART)
                             } else {
@@ -554,22 +548,11 @@ fun ProductDetails(
                     ) {
                         Row {
                             Spacer(modifier = Modifier.weight(1f))
-
-                            Box(
-                                modifier = Modifier
-                                    .clip(RoundedCornerShape(10.dp))
-                                    .background(Color.White)
-                                    .padding(5.dp)
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Outlined.FavoriteBorder,
-                                    contentDescription = "Bookmark",
-                                    tint = AccentColor,
-                                    modifier = Modifier
-                                        .size(32.dp)
-                                        .align(Alignment.Center)
-                                )
-                            }
+                            FavoriteComponent(
+                                authViewModel,
+                                favoritesViewModel,
+                                productState.value.product.product
+                            )
                         }
                     }
                 }
