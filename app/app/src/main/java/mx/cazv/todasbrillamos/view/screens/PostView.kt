@@ -107,6 +107,4 @@ fun PostView(
             }
         }
     }
-
-
 }

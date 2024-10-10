@@ -124,7 +124,7 @@ fun Nav(
             // Rutas protegidas (accesibles cuando el usuario está autenticado)
             val protectedRoutes = listOf(
                 Routes.ROUTE_HOME,
-                Routes.ROUTE_POST + "/{postId}",
+                Routes.ROUTE_POST + "/{postId}", // Ruta dinamica
                 Routes.ROUTE_STORE,
                 Routes.ROUTE_CALENDAR,
                 Routes.ROUTE_CHAT,
