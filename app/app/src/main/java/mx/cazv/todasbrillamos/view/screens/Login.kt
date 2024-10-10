@@ -179,6 +179,9 @@ fun Login(navController: NavHostController, viewModel: AuthViewModel) {
                 Button(
                     text = "Iniciar sesión",
                     onClick = {
+                        email = email.trim()
+                        password = password.trim()
+
                         if (email.isBlank() || password.isBlank()) {
                             isEmptyFieldError = true
                             errorMessage = null

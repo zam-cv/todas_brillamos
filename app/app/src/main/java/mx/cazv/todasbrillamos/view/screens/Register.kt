@@ -257,6 +257,12 @@ fun Register(navController: NavHostController, authViewModel: AuthViewModel) {
                     Button(
                         "Continuar",
                         onClick = {
+                            email = email.trim()
+                            password = password.trim()
+                            confirmPassword = confirmPassword.trim()
+                            name = name.trim()
+                            lastName = lastName.trim()
+
                             val validationResult = validateRegistration(
                                 email = email,
                                 password = password,
