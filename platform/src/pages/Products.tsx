@@ -219,7 +219,7 @@ export default function UploadProducts() {
                     required
                   />
                 </label>
-                <label className="w-1/4">
+                <label className="w-3/4">
                   <span className="font-semibold">Stock</span>
                   <Input
                     name="stock"
@@ -228,7 +228,7 @@ export default function UploadProducts() {
                     className="w-1/3"
                     placeholder="Cantidad"
                     type="number"
-                    required
+                    
                   />
                 </label>
               </div>
