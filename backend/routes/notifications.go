@@ -1,7 +1,6 @@
-/*
- * Backend-routes: Código que determina los endpoints de notificaciones y sus rutas
- * @author: Mariana Balderrábano
- */
+// Contiene las operaciones relacionadas con las notificaciones.
+// Autores:
+//   - Mariana Balderrábano
 package routes
 
 import (
@@ -16,13 +15,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-/*
- * Función para agregar rutas de notificaciones a la API (Post, Get)
- */
+// Crea una nueva notificación en la base de datos para todos los clientes.
+// Devuelve un error en caso de que ocurra.
 func addNotificationsRoutes(rg *gin.RouterGroup) {
 	notifications := rg.Group("/notifications")
 
-	// Endpoint POST que agrega una nueva notificación a la base de datos para todos los clientes
+	// Agrega una nueva notificación a la base de datos para todos los clientes
 	notifications.POST("", auth.GetMiddleware(AdminAuth), func(c *gin.Context) {
 		var notification models.Notifications
 		if err := c.ShouldBindJSON(&notification); err != nil {
@@ -32,7 +30,7 @@ func addNotificationsRoutes(rg *gin.RouterGroup) {
 
 		idClients := database.GetAllClientsIDs()
 
-		// asigna la fecha actual a la notificación
+		// asigna la fecha a la notificación
 		now := time.Now()
 		notification.Date = now
 
@@ -53,7 +51,7 @@ func addNotificationsRoutes(rg *gin.RouterGroup) {
 		c.Status(http.StatusCreated)
 	})
 
-	// Endpoint POST que agrega una nueva notificación a la base de datos asociada a un cliente
+	// Agrega una nueva notificación a la base de datos asociada a un cliente
 	notifications.POST("/:clientID", auth.GetMiddleware(AdminAuth), func(c *gin.Context) {
 		userId := c.Param("clientID")
 		userIdInt, err := strconv.Atoi(userId)
@@ -83,25 +81,7 @@ func addNotificationsRoutes(rg *gin.RouterGroup) {
 
 	})
 
-	// Endpoint GET que obtiene todas las notificaciones de un cliente de la base de datos
-	// notifications.GET("/:clientID", auth.GetMiddleware(ClientAuth), middlewares.GetClientID(), func(c *gin.Context) {
-	// 	//id, _ := c.MustGet("clientID").(uint)
-	// 	clientID := c.Param("clientID")
-	// 	clientIDInt, err := strconv.Atoi(clientID)
-
-	// 	if err != nil {
-	// 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-	// 		return
-	// 	}
-	// 	notifications, err := database.GetNotificationsByClientID(uint(clientIDInt))
-	// 	if err != nil {
-	// 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-	// 		return
-	// 	}
-
-	// 	c.JSON(http.StatusOK, notifications)
-	// })
-
+	// Obtiene todas las notificaciones de la base de datos asociadas a un cliente
 	notifications.GET("/:clientID", auth.GetMiddleware(ClientAuth), middlewares.GetClientID(), func(c *gin.Context) {
 		clientID := c.Param("clientID")
 		clientIDInt, err := strconv.Atoi(clientID)
@@ -119,7 +99,7 @@ func addNotificationsRoutes(rg *gin.RouterGroup) {
 		c.JSON(http.StatusOK, groupedNotifications)
 	})
 
-	// Endpoint GET que obtiene todas las notificaciones de la base de datos de todos los clientes
+	// Obtiene todas las notificaciones de la base de datos de todos los clientes
 	notifications.GET("", auth.GetMiddleware(AdminAuth), func(c *gin.Context) {
 		notifications, err := database.GetAllNotifications()
 		if err != nil {
