@@ -22,12 +22,15 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import mx.cazv.todasbrillamos.view.Routes
 import mx.cazv.todasbrillamos.view.components.Button
-import mx.cazv.todasbrillamos.view.components.Input
 import mx.cazv.todasbrillamos.view.layouts.BasicLayout
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Checkbox
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -44,6 +47,7 @@ import kotlinx.coroutines.launch
 import mx.cazv.todasbrillamos.R
 import mx.cazv.todasbrillamos.model.models.UserInfo
 import mx.cazv.todasbrillamos.ui.theme.BackgroundColor
+import mx.cazv.todasbrillamos.view.components.LabeledInput
 import mx.cazv.todasbrillamos.viewmodel.AuthState
 import mx.cazv.todasbrillamos.viewmodel.AuthViewModel
 
@@ -81,120 +85,104 @@ fun Register(navController: NavHostController, authViewModel: AuthViewModel) {
     }
 
     BasicLayout(navController = navController) {
-        Column {
-            Box(
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(BackgroundColor)
+        ) {
+            Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(BackgroundColor)
+                    .verticalScroll(rememberScrollState()),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .offset(y = (-200).dp),
+                        .height(200.dp),
                     contentAlignment = Alignment.Center
                 ) {
                     Image(
                         painter = painterResource(id = R.drawable.degradado3),
                         contentDescription = "Background",
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        contentScale = ContentScale.FillHeight
+                        modifier = Modifier.fillMaxSize(),
+                        contentScale = ContentScale.FillBounds
                     )
 
                     Image(
                         painter = painterResource(id = R.drawable.logo_tb),
                         contentDescription = "Logo",
-                        modifier = Modifier
-                            .size(140.dp)
-                            .align(Alignment.Center)
-                            .offset(y = 80.dp)
+                        modifier = Modifier.size(100.dp)
                     )
-
                 }
 
-                Column(
+                Column (
                     modifier = Modifier
-                        .fillMaxSize()
-                        .padding(start = 10.dp, end = 10.dp)
-                        .offset(y = 80.dp),
+                        .padding(16.dp)
+                        .fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
+                    verticalArrangement = Arrangement.Top
                 ) {
-                    Spacer(modifier = Modifier.size(16.dp))
-
                     Text(
-                        text = "¡Regístrate!",
-                        fontSize = 35.sp,
+                        text = "Regístrate",
+                        fontSize = 28.sp,
                         fontWeight = FontWeight.Bold,
                         textAlign = TextAlign.Center
                     )
 
-                    Spacer(modifier = Modifier.size(30.dp))
+                    Spacer(modifier = Modifier.height(16.dp))
 
-                    Row(
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .weight(1f)
-                        ) {
-                            Input(
-                                placeholder = "Nombre",
-                                value = name,
-                                onValueChange = { name = it }
-                            )
-                        }
-
-                        Spacer(modifier = Modifier.size(10.dp))
-
-                        Box(
-                            modifier = Modifier
-                                .weight(1f)
-                        ) {
-                            Input(
-                                placeholder = "Apellido",
-                                value = lastName,
-                                onValueChange = { lastName = it },
-                            )
-                        }
-                    }
-
-
-                    Spacer(modifier = Modifier.size(16.dp))
-
-                    Input(
-                        placeholder = "Correo electrónico",
-                        value = email,
-                        onValueChange = { email = it }
+                    LabeledInput(
+                        label = "Nombre",
+                        placeholder = "Ejemplo: María",
+                        value = name,
+                        onValueChange = { name = it },
+                        required = true,
                     )
 
-                    Spacer(modifier = Modifier.size(16.dp))
+                    Spacer(modifier = Modifier.height(8.dp))
 
-                    Input(
-                        placeholder = "Contraseña",
-                        suffixIcon = {
-                            Icon(
-                                Icons.Outlined.RemoveRedEye,
-                                contentDescription = "Mostrar/Ocultar contraseña"
-                            )
-                        },
+                    LabeledInput(
+                        label = "Apellido",
+                        placeholder = "Ejemplo: González",
+                        value = lastName,
+                        onValueChange = { lastName = it },
+                        required = true,
+                    )
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    LabeledInput(
+                        label = "Correo electrónico",
+                        placeholder = "Ejemplo: m@ejemplo.com",
+                        value = email,
+                        onValueChange = { email = it },
+                        required = true
+                    )
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    LabeledInput(
+                        label = "Contraseña",
+                        placeholder = "",
                         value = password,
                         onValueChange = { password = it },
+                        required = true,
+                        isPassword = true
                     )
-                    Spacer(modifier = Modifier.size(16.dp))
 
-                    Input(
-                        placeholder = "Confirmar contraseña",
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    LabeledInput(
+                        label = "Confirmar contraseña",
+                        placeholder = "Repite tu contraseña",
                         value = confirmPassword,
                         onValueChange = { confirmPassword = it },
-                        suffixIcon = {
-                            Icon(
-                                Icons.Outlined.RemoveRedEye,
-                                contentDescription = "Mostrar/Ocultar contraseña"
-                            )
-                        }
+                        required = true,
+                        isPassword = true
                     )
-                    Spacer(modifier = Modifier.size(16.dp))
+
+                    Spacer(modifier = Modifier.height(16.dp))
 
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
@@ -206,8 +194,8 @@ fun Register(navController: NavHostController, authViewModel: AuthViewModel) {
                         )
                         Text(
                             text = "Me gustaría recibir información de Todas Brillamos por correo",
-                            fontSize = 14.sp,
-                            style = TextStyle(lineHeight = 17.sp)
+                            fontSize = 12.sp,
+                            style = TextStyle(lineHeight = 15.sp)
                         )
                     }
 
@@ -221,11 +209,11 @@ fun Register(navController: NavHostController, authViewModel: AuthViewModel) {
                         )
                         Text(
                             text = "Acepto el aviso de privacidad",
-                            fontSize = 14.sp
+                            fontSize = 12.sp
                         )
                     }
 
-                    Spacer(modifier = Modifier.size(16.dp))
+                    Spacer(modifier = Modifier.height(16.dp))
 
                     Button(
                         text = "Continuar",
@@ -245,12 +233,12 @@ fun Register(navController: NavHostController, authViewModel: AuthViewModel) {
                         }
                     )
 
-                    Spacer(modifier = Modifier.size(16.dp))
+                    Spacer(modifier = Modifier.height(8.dp))
 
                     TextButton(onClick = { navController.navigate(Routes.ROUTE_LOGIN) }) {
                         Text(
                             text = "Ya tengo una cuenta",
-                            fontSize = 15.sp,
+                            fontSize = 14.sp,
                             fontWeight = FontWeight.Bold
                         )
                     }

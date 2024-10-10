@@ -43,6 +43,7 @@ import mx.cazv.todasbrillamos.ui.theme.BackgroundColor
 import mx.cazv.todasbrillamos.view.Routes
 import mx.cazv.todasbrillamos.view.components.Button
 import mx.cazv.todasbrillamos.view.components.Input
+import mx.cazv.todasbrillamos.view.components.LabeledInput
 import mx.cazv.todasbrillamos.view.layouts.BasicLayout
 import mx.cazv.todasbrillamos.viewmodel.AuthState
 import mx.cazv.todasbrillamos.viewmodel.AuthViewModel
@@ -135,7 +136,7 @@ fun Login(navController: NavHostController, viewModel: AuthViewModel) {
 
                 Spacer(modifier = Modifier.size(12.dp))
 
-                Input(
+                LabeledInput(
                     placeholder = "Correo electrónico",
                     value = email,
                     onValueChange = { email = it }
@@ -143,18 +144,11 @@ fun Login(navController: NavHostController, viewModel: AuthViewModel) {
 
                 Spacer(modifier = Modifier.size(16.dp))
 
-                Input(
+                LabeledInput(
                     placeholder = "Contraseña",
                     value = password,
                     onValueChange = { password = it },
-                    suffixIcon = {
-                        IconButton(onClick = { isPasswordVisible = !isPasswordVisible }) {
-                            Icon(
-                                if (isPasswordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
-                                contentDescription = "Toggle password visibility"
-                            )
-                        }
-                    }
+                    isPassword = true,
                 )
 
                 Spacer(modifier = Modifier.size(16.dp))

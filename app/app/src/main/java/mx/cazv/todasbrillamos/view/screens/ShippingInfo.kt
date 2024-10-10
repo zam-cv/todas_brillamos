@@ -30,6 +30,7 @@ import kotlinx.coroutines.withContext
 import mx.cazv.todasbrillamos.model.models.Others
 import mx.cazv.todasbrillamos.view.Routes
 import mx.cazv.todasbrillamos.view.components.Input
+import mx.cazv.todasbrillamos.view.components.LabeledInput
 import mx.cazv.todasbrillamos.view.components.footer.ButtonBottomBar
 import mx.cazv.todasbrillamos.view.components.header.BasicTopBar
 import mx.cazv.todasbrillamos.view.layouts.CustomLayout
@@ -207,35 +208,5 @@ fun ShippingInfo(
                 Spacer(modifier = Modifier.size(16.dp))
             }
         }
-    }
-}
-
-@Composable
-fun LabeledInput(
-    label: String,
-    placeholder: String,
-    value: String,
-    onValueChange: (String) -> Unit,
-    required: Boolean
-) {
-    Column {
-        Text(
-            buildAnnotatedString {
-                append(label)
-                if (required) {
-                    withStyle(style = SpanStyle(color = Color.Red)) {
-                        append(" *")
-                    }
-                }
-            },
-            fontSize = 16.sp,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(bottom = 4.dp)
-        )
-        Input(
-            placeholder = placeholder,
-            value = value,
-            onValueChange = onValueChange
-        )
     }
 }
