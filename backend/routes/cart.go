@@ -75,11 +75,25 @@ func addCartRoutes(rg *gin.RouterGroup) {
 			return
 		}
 
-		err = database.AddProduct(product.ID, uint(id), uint(quantity))
+		currentCartProduct, err := database.GetProductFromCartByProductIDClientID(product.ID, id)
 		if err != nil {
-			c.JSON(500, gin.H{"error": err.Error()})
+			if product.Stock == 0 {
+				c.JSON(400, gin.H{"error": "Product out of stock"})
+				return
+			}
+
+			err = database.AddProduct(product.ID, uint(id), uint(quantity))
+			if err != nil {
+				c.JSON(500, gin.H{"error": err.Error()})
+				return
+			}
+		}
+
+		if product.ID == currentCartProduct.ProductID {
+			c.JSON(400, gin.H{"error": "Product already in cart"})
 			return
 		}
+		
 
 		c.JSON(200, gin.H{
 			"message": "Add item to cart",
@@ -100,7 +114,19 @@ func addCartRoutes(rg *gin.RouterGroup) {
 			return
 		}
 
-		err = database.UpdateProductQuantity(product.ID, id, uint(quantity))
+		currentCartProduct, err := database.GetProductFromCartByProductIDClientID(product.ID, id)
+		if err != nil {
+			c.JSON(500, gin.H{"error": err.Error()})
+			return
+		}
+
+		totalQuantity := currentCartProduct.Quantity + uint(quantity)
+		if totalQuantity > uint(product.Stock) {
+			c.JSON(400, gin.H{"error": "Quantity exceeds available stock"})
+			return
+		}
+
+		err = database.UpdateProductQuantity(product.ID, id, uint(totalQuantity))
 		if err != nil {
 			c.JSON(500, gin.H{"error": err.Error()})
 			return
