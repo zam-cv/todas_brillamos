@@ -56,7 +56,7 @@ fun Home(
         ) {
             GreetingSec(userState.value.details.first_name + " " + userState.value.details.last_name)
             Spacer(modifier = Modifier.height(30.dp))
-            InteractiveCardsHome()
+            InteractiveCardsHome(navController)
 
             if (randomState.value.products.products.isNotEmpty()) {
                 MoreProducts(

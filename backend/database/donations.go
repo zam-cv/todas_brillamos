@@ -1,7 +1,6 @@
-/*
- * Backend-database: Querys necesarias para la tabla de donaciones
- * @author: Mariana Balderrábano
- */
+// Contiene las operaciones relacionadas con las donaciones.
+// Autores:
+//   - Mariana Balderrábano
 
 package database
 
@@ -9,11 +8,8 @@ import (
 	"backend/models"
 )
 
-/*
- * Función que crea una nueva donación en la base de datos asociada a un cliente
- * @param donation: Puntero a la donación a crear
- * @return error: Error en caso de que exista
- */
+// Crea una nueva donación en la base de datos asociada a un cliente.
+// Devuelve un error en caso de que ocurra.
 func CreateDonationByClientID(donation *models.Donation) error {
 	if err := db.Create(donation).Error; err != nil {
 		return err
@@ -21,11 +17,8 @@ func CreateDonationByClientID(donation *models.Donation) error {
 	return nil
 }
 
-/*
- * Función que obtiene todas las donaciones de la base de datos de todos los clientes
- * @return []models.DonationGet: Arreglo de donaciones que contienen datos referentes a la donación hecha
- * @return error: Error en caso de que exista
- */
+// Obtiene todas las donaciones de la base de datos de todos los clientes.
+// Devuelve un slice de models.DonationGet y un error en caso de que ocurra.
 func GetAllDonations() ([]models.DonationGet, error) {
 	var donations []models.Donation
 	err := db.Find(&donations).Error

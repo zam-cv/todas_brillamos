@@ -1,19 +1,16 @@
-/*
- * Backend-models: Código que contiene el modelo de Favoritos y sus atributos
- * @author: Min Che Kim
- */
+// Autores:
+//   - Min Che Kim
 
 package models
 
-/*
- * Estructura de la tabla Favorites
- */
+// Estructura de la tabla de favoritos
 type Favorites struct {
 	ID        uint `json:"-" gorm:"primarykey"`
 	ClientID  uint
 	ProductID uint
 }
 
+// Estructura de la tabla de productos favoritos
 type FavProduct struct {
 	Name      string  `json:"name"`
 	Price     float64 `json:"price"`

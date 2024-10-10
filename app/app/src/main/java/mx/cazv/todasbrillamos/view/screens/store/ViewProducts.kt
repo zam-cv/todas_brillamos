@@ -12,6 +12,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.itemsIndexed
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -60,10 +61,13 @@ fun ViewProducts(
             modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(vertical = 16.dp),
         ) {
-/*            itemsIndexed(ProductProvider.productList) { _, product ->
-                ProductColumnItem(product = product)
+            items(products.products) { product ->
+                ProductColumnItem(
+                    product = product,
+                    products.folder,
+                    navController)
                 Spacer(modifier = Modifier.height(8.dp))
-            }*/
+            }
         }
     }
 }

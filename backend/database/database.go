@@ -1,3 +1,7 @@
+// Contiene las funciones para inicializar y obtener la conexión a la base de datos.
+// Autores:
+//   - Carlos Zamudio
+
 package database
 
 import (
@@ -10,7 +14,7 @@ import (
 var db *gorm.DB
 var once sync.Once
 
-// InitDatabase inicializa la conexión a la base de datos.
+// Inicializa la conexión a la base de datos.
 // Devuelve una instancia de *gorm.DB.
 func InitDatabase(host, user, password, name string) *gorm.DB {
 	once.Do(func() {
@@ -26,7 +30,7 @@ func InitDatabase(host, user, password, name string) *gorm.DB {
 	return db
 }
 
-// GetDatabase obtiene la instancia de la base de datos.
+// Obtiene la instancia de la base de datos.
 // Pánico si la base de datos no está inicializada.
 func GetDatabase() *gorm.DB {
 	if db == nil {

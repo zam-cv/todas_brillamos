@@ -1,3 +1,7 @@
+// Rutas de posts
+// Autores:
+//   - Jennyfer Jasso
+
 package routes
 
 import (
@@ -10,9 +14,11 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// Añade las rutas relacionadas con los posts al grupo de rutas proporcionado.
 func addPostRoutes(rg *gin.RouterGroup) {
 	post := rg.Group("/posts")
 
+	// POST /posts - Crea un nuevo post (solo para administradores)
 	post.POST("", auth.GetMiddleware(AdminAuth), func(c *gin.Context) {
 		var post models.Post
 		if err := c.ShouldBindJSON(&post); err != nil {
@@ -33,6 +39,7 @@ func addPostRoutes(rg *gin.RouterGroup) {
 		c.JSON(201, gin.H{"id": id})
 	})
 
+	// GET /posts - Obtiene todos los posts
 	post.GET("", func(c *gin.Context) {
 		
 		posts, err := database.GetPosts()
@@ -44,6 +51,7 @@ func addPostRoutes(rg *gin.RouterGroup) {
 		c.JSON(200, posts)
 	})
 
+	// DELETE /posts/:id - Elimina un post específico (solo para administradores)
 	post.DELETE("/:id", auth.GetMiddleware(AdminAuth), func(c *gin.Context) {
 		idStr := c.Param("id")
 		id, err := strconv.Atoi(idStr)

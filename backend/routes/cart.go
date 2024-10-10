@@ -1,3 +1,8 @@
+// Definiciones de rutas de carrito.
+// Autores:
+//   - Min Che Kim
+//   - Carlos Zamudio
+
 package routes
 
 import (
@@ -11,9 +16,11 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// Añade las rutas relacionadas con el carrito de compras al grupo de rutas proporcionado.
 func addCartRoutes(rg *gin.RouterGroup) {
 	cart := rg.Group("/cart")
 
+	// GET /cart - Obtiene todos los items del carrito del cliente
 	cart.GET("", auth.GetMiddleware(ClientAuth), middlewares.GetClientID(), func(c *gin.Context) {
 		id, _ := c.MustGet("clientID").(uint)
 
@@ -31,6 +38,7 @@ func addCartRoutes(rg *gin.RouterGroup) {
 		c.JSON(200, response)
 	})
 
+	// GET /cart/exists/:product_id - Verifica si un producto existe en el carrito del cliente
 	cart.GET("/exists/:product_id", auth.GetMiddleware(ClientAuth), middlewares.GetClientID(), func(c *gin.Context) {
 		id, _ := c.MustGet("clientID").(uint)
 
@@ -52,6 +60,7 @@ func addCartRoutes(rg *gin.RouterGroup) {
 		})
 	})
 
+	// POST /cart/:product_id/:quantity - Añade un producto al carrito del cliente
 	cart.POST("/:product_id/:quantity", auth.GetMiddleware(ClientAuth), middlewares.ExistsProductMiddleware(), middlewares.GetClientID(), func(c *gin.Context) {
 		id, _ := c.MustGet("clientID").(uint)
 
@@ -77,6 +86,7 @@ func addCartRoutes(rg *gin.RouterGroup) {
 		})
 	})
 
+	// PUT /cart/:product_id/:quantity - Actualiza la cantidad de un producto en el carrito del cliente
 	cart.PUT("/:product_id/:quantity", auth.GetMiddleware(ClientAuth), middlewares.ExistsProductMiddleware(), middlewares.GetClientID(), func(c *gin.Context) {
 		id, _ := c.MustGet("clientID").(uint)
 
@@ -101,6 +111,7 @@ func addCartRoutes(rg *gin.RouterGroup) {
 		})
 	})
 
+	// DELETE /cart/:product_id - Elimina un producto del carrito del cliente
 	cart.DELETE("/:product_id", auth.GetMiddleware(ClientAuth), middlewares.ExistsProductMiddleware(), middlewares.GetClientID(), func(c *gin.Context) {
 		id, _ := c.MustGet("clientID").(uint)
 

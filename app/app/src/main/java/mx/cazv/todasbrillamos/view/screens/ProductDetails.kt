@@ -21,6 +21,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Bookmark
+import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -51,6 +52,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import mx.cazv.todasbrillamos.R
 import mx.cazv.todasbrillamos.model.ApiConfig
 import mx.cazv.todasbrillamos.model.models.Product
 import mx.cazv.todasbrillamos.model.models.ProductList
@@ -560,7 +562,7 @@ fun ProductDetails(
                                     .padding(5.dp)
                             ) {
                                 Icon(
-                                    Icons.Outlined.Bookmark,
+                                    imageVector = Icons.Outlined.FavoriteBorder,
                                     contentDescription = "Bookmark",
                                     tint = AccentColor,
                                     modifier = Modifier

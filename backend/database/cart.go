@@ -1,10 +1,15 @@
+// Contiene las operaciones relacionadas con el carrito de compras.
+// Autores:
+//   - Min Che Kim
+//   - Carlos Zamudio
+
 package database
 
 import (
 	"backend/models"
 )
 
-// AddProduct agrega un producto al carrito de un cliente.
+// Agrega un producto al carrito de un cliente.
 // Devuelve un error en caso de que ocurra.
 func AddProduct(productID, clientID, quantity uint) error {
 	cart := &models.Cart{ProductID: productID, ClientID: clientID, Quantity: quantity}
@@ -14,7 +19,7 @@ func AddProduct(productID, clientID, quantity uint) error {
 	return nil
 }
 
-// GetCartByClientID obtiene el carrito de un cliente por su ID.
+// Obtiene el carrito de un cliente por su ID.
 // Devuelve una lista de productos en el carrito y un error en caso de que ocurra.
 func GetCartByClientID(clientID uint) ([]models.Cart, error) {
 	carts := []models.Cart{}
@@ -22,6 +27,8 @@ func GetCartByClientID(clientID uint) ([]models.Cart, error) {
 	return carts, err
 }
 
+// Obtiene todos los productos del carrito de un cliente por su ID.
+// Devuelve una lista de productos en el carrito y un error en caso de que ocurra.
 func GetAllCartByClientID(clientID uint) ([]models.CartItem, error) {
 	var cartItems []struct {
 		Quantity  uint

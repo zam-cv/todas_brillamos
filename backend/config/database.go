@@ -1,3 +1,13 @@
+// Este archivo contiene funciones relacionadas con la configuración y
+// inicialización de la base de datos, incluyendo migraciones y creación
+// de usuarios administrativos por defecto.
+//
+// Autores:
+//   - Carlos Zamudio
+//   - Min Che Kim
+//   - Jennyfer Jasso
+//   - Mariana Barderrabáno
+
 package config
 
 import (
@@ -7,7 +17,7 @@ import (
 	"os"
 )
 
-// Migrate realiza la migración del esquema de la base de datos.
+// Realiza la migración del esquema de la base de datos.
 func Migrate() {
 	db := database.GetDatabase()
 
@@ -26,7 +36,7 @@ func Migrate() {
 	db.AutoMigrate(&models.Donation{})
 }
 
-// CreateDefaultAdmin crea un administrador por defecto utilizando las variables de entorno ADMIN_EMAIL y ADMIN_PASSWORD.
+// Crea un administrador por defecto utilizando las variables de entorno ADMIN_EMAIL y ADMIN_PASSWORD.
 func CreateDefaultAdmin() {
 	email := os.Getenv("ADMIN_EMAIL")
 	password := os.Getenv("ADMIN_PASSWORD")

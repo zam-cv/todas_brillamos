@@ -1,3 +1,7 @@
+// Limita el número de intentos de autenticación.
+// Autores:
+//   - Carlos Zamudio
+
 package auth
 
 import (
@@ -9,14 +13,14 @@ import (
 	"github.com/allegro/bigcache/v3"
 )
 
-// Limit representa una estructura para limitar intentos de autenticación.
+// Representa una estructura para limitar intentos de autenticación.
 type Limit struct {
 	MaxAttempts   int
 	BlockDuration time.Duration
 	cache         *bigcache.BigCache
 }
 
-// NewLimit crea una nueva instancia de Limit.
+// Crea una nueva instancia de Limit.
 // Devuelve un puntero a Limit y un error en caso de que ocurra.
 func NewLimit(maxAttempts int, blockDuration time.Duration) (*Limit, error) {
 	ctx := context.Background()
@@ -32,7 +36,7 @@ func NewLimit(maxAttempts int, blockDuration time.Duration) (*Limit, error) {
 	}, nil
 }
 
-// GetAttempts obtiene el número de intentos de autenticación para una clave dada.
+// Obtiene el número de intentos de autenticación para una clave dada.
 // Devuelve el número de intentos.
 func GetAttempts(l *Limit, key string) int {
 	attempts, err := l.cache.Get(key)
@@ -44,7 +48,7 @@ func GetAttempts(l *Limit, key string) int {
 	return count
 }
 
-// IncrementAttempts incrementa el número de intentos de autenticación para una clave dada.
+// Incrementa el número de intentos de autenticación para una clave dada.
 // Devuelve un error si se alcanzó el número máximo de intentos.
 func IncrementAttempts(l *Limit, key string) error {
 	count := GetAttempts(l, key) + 1
@@ -56,7 +60,7 @@ func IncrementAttempts(l *Limit, key string) error {
 	}
 }
 
-// ResetAttempts reinicia el número de intentos de autenticación para una clave dada.
+// Reinicia el número de intentos de autenticación para una clave dada.
 func ResetAttempts(l *Limit, key string) {
 	l.cache.Delete(key)
 }
