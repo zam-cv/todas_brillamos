@@ -28,13 +28,13 @@ import mx.cazv.todasbrillamos.R
  * @param onClick La acción que se ejecutará al hacer clic en el botón.
  */
 @Composable
-fun ButtonBottomBar(buttonText: String, onClick: () -> Unit) {
+fun ButtonBottomBar(buttonText: String, onClick: () -> Unit, barImage: Int = R.drawable.bottom_bar_full) {
     Box {
         Box(
             modifier = Modifier.matchParentSize()
         ) {
             Image(
-                painter = painterResource(id = R.drawable.bottom_bar_full),
+                painter = painterResource(id = barImage),
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxSize()
