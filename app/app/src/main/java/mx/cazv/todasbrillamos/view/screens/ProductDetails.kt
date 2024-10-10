@@ -46,6 +46,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import mx.cazv.todasbrillamos.R
 import mx.cazv.todasbrillamos.model.ApiConfig
 import mx.cazv.todasbrillamos.model.models.ProductList
 import mx.cazv.todasbrillamos.model.models.ProductRaw
@@ -482,18 +483,26 @@ fun ProductDetails(
             BasicTopBar(title = "Detalles del Producto", navController = navController)
         },
         bottomBar = {
-            ButtonBottomBar(buttonText = "Añadir al carrito", onClick = {
-                CoroutineScope(Dispatchers.Main).launch {
-                    val token = withContext(Dispatchers.IO) {
-                        authViewModel.token()
-                    }
+            if (productState.value.product.product.stock == 0) {
+                ButtonBottomBar(buttonText = "Producto no disponible", onClick = { }, barImage = R.drawable.bottom_bar_disabled)
+            } else {
+                ButtonBottomBar(buttonText = "Añadir al carrito", onClick = {
+                    CoroutineScope(Dispatchers.Main).launch {
+                        val token = withContext(Dispatchers.IO) {
+                            authViewModel.token()
+                        }
 
-                    if (token != null) {
-                        cartViewModel.addProductToCart(token, productState.value.product.product, quantity)
-                        navController.navigate(Routes.ROUTE_CART)
+                        if (token != null) {
+                            cartViewModel.addProductToCart(
+                                token,
+                                productState.value.product.product,
+                                quantity
+                            )
+                            navController.navigate(Routes.ROUTE_CART)
+                        }
                     }
-                }
-            })
+                })
+            }
         }
     ) {
         Column (
