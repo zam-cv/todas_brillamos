@@ -29,3 +29,8 @@ type OrderInformation struct {
 	ClientID    uint   `json:"client_id"`
 	TotalPrice  uint   `json:"total_price"`
 }
+
+type MonthlyRevenue struct {
+	Month        string `json:"month"`
+	TotalRevenue uint   `json:"total_revenue"`
+}

@@ -149,9 +149,9 @@ func GetOrderInfo() ([]models.OrderInformation, error) {
 	return results, nil // Devuelve el slice de órdenes
 }
 
-func GetMostCommonProducts() ([]models.Product, error) {
+func GetMostCommonProducts() ([]models.MostSellProducts, error) {
 	db := GetDatabase()
-	var products []models.Product
+	var products []models.MostSellProducts
 
 	// Realizamos la consulta que cuenta cuántas veces se ordena cada producto
 	err := db.Model(&models.Orders{}).
@@ -167,6 +167,26 @@ func GetMostCommonProducts() ([]models.Product, error) {
 	}
 
 	return products, nil
+}
+
+func GetMonthlyRevenue() ([]models.MonthlyRevenue, error) {
+	db := GetDatabase()
+	var revenue []models.MonthlyRevenue
+
+	// Suponiendo que 'order_received_date' es la fecha de la orden,
+	// y que 'quantity' está en la tabla 'orders'
+	err := db.Table("orders").
+		Select("TO_CHAR(order_received_date, 'YYYY-MM') AS month, SUM(orders.quantity * products.price) AS total_revenue").
+		Joins("JOIN products ON products.id = orders.product_id"). // Unir con la tabla de productos
+		Group("TO_CHAR(order_received_date, 'YYYY-MM')").
+		Order("month").
+		Scan(&revenue).Error
+
+	if err != nil {
+		return nil, err
+	}
+
+	return revenue, nil
 }
 
 /*

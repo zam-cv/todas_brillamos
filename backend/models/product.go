@@ -53,6 +53,12 @@ type ProductMetadata struct {
 	CategoryID uint `json:"category_id" validate:"required,min=0"`
 }
 
+type MostSellProducts struct {
+	ID         uint   `json:"id"`
+	Name       string `json:"name"`
+	OrderCount uint   `json:"order_count"`
+}
+
 // Establece el ID del producto
 func (p *Product) SetID(id uint) {
 	p.ID = id

@@ -1,4 +1,5 @@
 import { get } from "@/utils/methods";
+import { Product } from "@/utils/api/products";
 
 // Ajustamos las propiedades de acuerdo al formato del JSON proporcionado
 export interface Order {
@@ -31,6 +32,11 @@ export interface OrderInfoResponse {
     ordersInformation: OrderInfo[];
 }
 
+export interface MostSellProducts {
+    id: number;
+    name: string;
+    order_count: number;
+}
 
 
 export default {
@@ -44,7 +50,7 @@ export default {
             return get("/orders/info");
         },
 
-        getMostSell: (): Promise<void> => {
+        getMostSell: (): Promise<MostSellProducts[]> => {
             return get("/orders/BestSell")
         }
     }
