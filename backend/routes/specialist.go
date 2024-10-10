@@ -1,7 +1,6 @@
-/*
- * Backend-routes: Código que determina los endpoints de especialistas y sus rutas
- * @author: Mariana Balderrábano
- */
+// Rutas de especialistas
+// Autores:
+//   - Mariana Balderrábano
 
 package routes
 
@@ -14,20 +13,19 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-var specialistCache []models.Specialist // Variable global para almacenar los especialistas en memoria caché
+// Variable global para almacenar los especialistas en memoria caché.
+var specialistCache []models.Specialist
 
-/*
- * Función para agregar rutas de los especialistas
- */
+// Añade las rutas relacionadas con los especialistas al grupo de rutas proporcionado.
 func addSpecialistsRoutes(api *gin.RouterGroup) {
 	specialists := api.Group("/specialists")
 
-	// Endpoint GET que obtiene a todos los especialistas desde la caché
+	// GET /specialists - Obtiene todos los especialistas desde la caché
 	specialists.GET("", func(c *gin.Context) {
 		c.JSON(http.StatusOK, specialistCache)
 	})
 
-	// Endpoint POST que agrega a un nuevo especialista a la caché
+	// POST /specialists - Agrega un nuevo especialista a la caché (solo para administradores)
 	specialists.POST("", auth.GetMiddleware(AdminAuth), func(c *gin.Context) {
 		var newSpecialist models.Specialist
 		if err := c.ShouldBindJSON(&newSpecialist); err != nil {
@@ -40,7 +38,7 @@ func addSpecialistsRoutes(api *gin.RouterGroup) {
 		c.JSON(http.StatusOK, newSpecialist)
 	})
 
-	// Endpoint PUT que actualiza datos de un especialista existente con ayuda de su ID
+	// PUT /specialists/:id - Actualiza datos de un especialista existente por su ID (solo para administradores)
 	specialists.PUT("/:id", auth.GetMiddleware(AdminAuth), func(c *gin.Context) {
 		var updatedSpecialist models.Specialist
 		if err := c.ShouldBindJSON(&updatedSpecialist); err != nil {

@@ -1,3 +1,6 @@
+// Autores:
+//   - Carlos Zamudio
+
 package auth
 
 import (
@@ -11,7 +14,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// AuthConfig representa la configuración de autenticación.
+// Representa la configuración de autenticación.
 type AuthConfig struct {
 	SecretKey     string
 	CookieName    string
@@ -20,20 +23,20 @@ type AuthConfig struct {
 	BlockDuration time.Duration
 }
 
-// Credentials representa las credenciales de un usuario.
+// Representa las credenciales de un usuario.
 type Credentials struct {
 	Email    string `json:"email" validate:"required,email"`
 	Password string `json:"password" validate:"required,min=8"`
 }
 
-// User representa la interfaz de un usuario.
+// Representa la interfaz de un usuario.
 type User interface {
 	GetID() uint
 	GetEmail() *string
 	GetPassword() *string
 }
 
-// Auth representa la interfaz de autenticación.
+// Representa la interfaz de autenticación.
 type Auth[T User] interface {
 	GetConfig() *AuthConfig
 	GetUserByEmail(email string) (T, error)
@@ -41,7 +44,7 @@ type Auth[T User] interface {
 	GetUserById(id int) (T, error)
 }
 
-// AuthType representa los tipos de autenticación.
+// Representa los tipos de autenticación.
 type AuthType int
 
 const (
@@ -49,7 +52,7 @@ const (
 	SupportTokenAuth
 )
 
-// AuthMiddleware es un middleware de autenticación que soporta múltiples tipos de autenticación.
+// Es un middleware de autenticación que soporta múltiples tipos de autenticación.
 func AuthMiddleware(authTypes map[AuthType]struct{}, secret string, cookieName string) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var token *string = nil
@@ -107,13 +110,13 @@ func AuthMiddleware(authTypes map[AuthType]struct{}, secret string, cookieName s
 	}
 }
 
-// GetMiddleware obtiene el middleware de autenticación configurado.
+// Obtiene el middleware de autenticación configurado.
 func GetMiddleware[T User](auth Auth[T]) gin.HandlerFunc {
 	config := auth.GetConfig()
 	return AuthMiddleware(config.AuthTypes, config.SecretKey, config.CookieName)
 }
 
-// SigninHandler maneja la ruta de inicio de sesión.
+// Maneja la ruta de inicio de sesión.
 func SigninHandler[T User](auth Auth[T], group *gin.RouterGroup) {
 	config := auth.GetConfig()
 	limit, err := NewLimit(config.MaxAttempts, config.BlockDuration)
@@ -177,7 +180,7 @@ func SigninHandler[T User](auth Auth[T], group *gin.RouterGroup) {
 	})
 }
 
-// registerUser registra un nuevo usuario.
+// Registra un nuevo usuario.
 func registerUser[T User, C User](c *gin.Context, auth Auth[T], createUser func(C) (uint, error)) {
 	var user C
 	if err := c.ShouldBindJSON(&user); err != nil {
@@ -217,7 +220,7 @@ func registerUser[T User, C User](c *gin.Context, auth Auth[T], createUser func(
 	c.Status(http.StatusCreated)
 }
 
-// Register registra un nuevo usuario con una función de creación personalizada.
+// Registra un nuevo usuario con una función de creación personalizada.
 func Register[T User, C User](
 	auth Auth[T],
 	group *gin.RouterGroup,
@@ -228,21 +231,21 @@ func Register[T User, C User](
 	})
 }
 
-// RegisterHandler maneja la ruta de registro de usuarios.
+// Maneja la ruta de registro de usuarios.
 func RegisterHandler[T User](auth Auth[T], group *gin.RouterGroup) {
 	group.POST("/register", func(c *gin.Context) {
 		registerUser(c, auth, auth.CreateUser)
 	})
 }
 
-// VerifyHandler maneja la ruta de verificación de usuarios.
+// Maneja la ruta de verificación de usuarios.
 func VerifyHandler[T User](auth Auth[T], group *gin.RouterGroup) {
 	group.GET("/verify", GetMiddleware(auth), func(c *gin.Context) {
 		c.Status(http.StatusOK)
 	})
 }
 
-// SignoutHandler maneja la ruta de cierre de sesión.
+// Maneja la ruta de cierre de sesión.
 func SignoutHandler[T User](auth Auth[T], group *gin.RouterGroup) {
 	config := auth.GetConfig()
 	group.POST("/signout", GetMiddleware(auth), func(c *gin.Context) {

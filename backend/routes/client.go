@@ -1,8 +1,8 @@
-/*
- * Backend-routes: Código que determina los endpoints de client y sus rutas
- * @author: Carlos Zamudio
- * @co-author: Mariana Balderrábano
- */
+// Definiciones de rutas de clientes.
+// Autores:
+//   - Mariana Balderrábano
+//   - Carlos Zamudio
+
 package routes
 
 import (
@@ -16,14 +16,13 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// Representa la estructura para actualizar la contraseña de un cliente.
 type PasswordUpdate struct {
 	OldPassword string `json:"old_password" binding:"required"`
 	NewPassword string `json:"new_password" binding:"required"`
 }
 
-/*
- * Función para agregar rutas de los clientes
- */
+// Añade las rutas relacionadas con los clientes al grupo de rutas proporcionado.
 func addClientsRoutes(api *gin.RouterGroup) {
 	clients := api.Group("/clients")
 	{
@@ -128,6 +127,7 @@ func addClientsRoutes(api *gin.RouterGroup) {
 			c.JSON(http.StatusOK, clientDetails)
 		})
 
+		// GET /clients/getInfo/:id - Obtiene información de un cliente específico (solo para administradores)
 		clients.GET("/getInfo/:id", auth.GetMiddleware(AdminAuth), func(c *gin.Context) {
 			clientIDStr := c.Param("id")
 			clientID, err := strconv.Atoi(clientIDStr)
@@ -146,6 +146,7 @@ func addClientsRoutes(api *gin.RouterGroup) {
 
 		})
 
+		// GET /clients/getIDS - Obtiene todos los IDs de clientes (solo para administradores)
 		clients.GET("/getIDS", auth.GetMiddleware(AdminAuth), func(c *gin.Context) {
 			ids := database.GetAllClientsIDs()
 

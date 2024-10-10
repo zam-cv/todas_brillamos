@@ -1,13 +1,9 @@
-/*
- * Backend-models: Código que contiene el modelo de Post y sus atributos
- * @author: Jennnyfer Jasso
- */
+// Autores:
+//   - Jennyfer Jasso
 
 package models
 
-/*
- * Estructura de la tabla Post
- */
+// Estructura de la tabla de posts
 type Post struct {
 	ID      uint   `json:"id" gorm:"primarykey" validate:"omitempty,eq=0"`
 	Title   string `json:"title" validate:"required,min=1"`

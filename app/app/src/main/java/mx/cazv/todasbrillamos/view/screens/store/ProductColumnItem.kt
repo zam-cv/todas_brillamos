@@ -2,6 +2,7 @@ package mx.cazv.todasbrillamos.view.screens.store
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -33,8 +34,14 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import coil.compose.AsyncImage
+import mx.cazv.todasbrillamos.model.ApiConfig
 import mx.cazv.todasbrillamos.model.models.Product
+import mx.cazv.todasbrillamos.model.models.ProductRaw
 import mx.cazv.todasbrillamos.ui.theme.AccentColor
+import mx.cazv.todasbrillamos.ui.theme.ImageBackgroundColor
+import mx.cazv.todasbrillamos.view.Routes
 
 /**
  * Vista de lista de los productos
@@ -43,28 +50,42 @@ import mx.cazv.todasbrillamos.ui.theme.AccentColor
  * @param product el producto a mostrar
  */
 @Composable
-fun ProductColumnItem(product: Product) {
-/*    val formattedPrice = "%.2f".format(product.product.price)
-    val formattedDC = "0.0"
-    val productFontSize = 15.sp
-    val priceFontSize = 18.sp
-    val priceLineSize = 13.sp
-    val dcFontSize = 15.sp
-    val size = 120.dp
+fun ProductColumnItem(
+    product: ProductRaw,
+    folder: String,
+    navController: NavHostController
+) {
+    val formattedPrice = product.price
+    val formattedDC = "%.0f".format(0.0) // TODO: Aplicar descuento
+    val discountPrice = 0.0
+    val favorite = false
 
-    Row (
+    Row(
         modifier = Modifier
-            .height(size)
             .fillMaxWidth()
             .padding(start = 8.dp, end = 8.dp)
+            .clickable {
+                navController.navigate(Routes.ROUTE_PRODUCT_DETAILS + "/${product.id}")
+            }
     ) {
-        Box(modifier = Modifier.width(size)){
-            Image(
+        Box (
+            modifier = Modifier
+                .weight(2f)
+                .height(110.dp)
+                .clip(RoundedCornerShape(10.dp))
+                .background(ImageBackgroundColor)
+        ) {
+            val base_url = ApiConfig.BASE_URL
+            val hash = product.hash
+            val type = product.type
+            val url = "$base_url$folder/$hash.$type"
+
+            AsyncImage(
+                model = url,
+                contentDescription = "Product",
                 modifier = Modifier
                     .fillMaxSize()
-                    .clip(RoundedCornerShape(5.dp)),
-                painter = painterResource(id = product.imagen),
-                contentDescription = product.product.name,
+                    .width(50.dp),
                 contentScale = ContentScale.Crop
             )
 
@@ -82,10 +103,10 @@ fun ProductColumnItem(product: Product) {
                     // This only moves the background
                 )
 
-                Icon (
-                    imageVector = (if (product.favorito) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder),
+                Icon(
+                    imageVector = (if (favorite) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder),
                     contentDescription = "favorito",
-                    tint = (if (product.favorito) AccentColor else Color.Black),
+                    tint = (if (favorite) AccentColor else Color.Black),
                     modifier = Modifier
                         .size(25.dp)
                         .align(Alignment.Center)
@@ -95,104 +116,91 @@ fun ProductColumnItem(product: Product) {
             }
         }
 
-        Box (modifier = Modifier
-            .fillMaxSize()
-            .padding(8.dp)
-        ){
+        Box(
+            modifier = Modifier
+                .weight(5f)
+                .padding(8.dp)
+        ) {
             Column(
                 modifier = Modifier
                     .align(Alignment.Center)
                     .fillMaxWidth()
             ) {
-                if (product.descuento != null) {
-                    Row(modifier = Modifier.weight(1f)) {
-                        Box(
-                            modifier = Modifier
-                                .align(Alignment.CenterVertically)
-                                .clip(RoundedCornerShape(4.dp))
-                                .background(Color(0xFFF4D0CB))
-                                .size(50.dp)
-                        ) {
-                            Text(
-                                text = "-$formattedDC% ",
-                                style = TextStyle(
-                                    fontSize = dcFontSize,
-                                    fontWeight = FontWeight.Bold,
-                                    textAlign = TextAlign.Center
-                                ),
-                                modifier = Modifier
-                                    .align(Alignment.Center)
-                            )
-                        }
-
-
+                Row(modifier = Modifier.weight(1f)) {
+                    Box(
+                        modifier = Modifier
+                            .align(Alignment.CenterVertically)
+                            .clip(RoundedCornerShape(4.dp))
+                            .background(Color(0xFFF4D0CB))
+                    ) {
                         Text(
-                            text = "Promoción",
-                            color = Color(0xFFD5507C),
-                            fontSize = dcFontSize,
+                            text = "-$formattedDC% ",
+                            style = TextStyle(
+                                fontSize = 15.sp,
+                                fontWeight = FontWeight.Bold,
+                                textAlign = TextAlign.Center
+                            ),
                             modifier = Modifier
-                                .align(Alignment.CenterVertically)
-                                .padding(start = 10.dp)
-                                .weight(3.5f)
+                                .align(Alignment.Center)
+                                .padding(5.dp)
                         )
                     }
+
+
+                    Text(
+                        text = "Promoción",
+                        color = Color(0xFFD5507C),
+                        fontSize = 15.sp,
+                        modifier = Modifier
+                            .align(Alignment.CenterVertically)
+                            .padding(start = 10.dp)
+                    )
                 }
 
+
                 Text(
-                    text = product.producto,
-                    fontSize = productFontSize,
+                    text = product.name,
+                    fontSize = 15.sp,
                     fontWeight = FontWeight.SemiBold,
                     modifier = Modifier
-                        .weight(1f)
                         .wrapContentSize(),
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis
                 )
 
                 Text(
-                    text = product.tipo,
-                    fontSize = productFontSize,
+                    text = product.model,
+                    fontSize = 15.sp,
                     modifier = Modifier
-                        .weight(1f)
                         .wrapContentSize()
                 )
 
-                if (product.descuento != null) {
-                    val discountPrice =
-                        "%.2f".format(product.precio * (1 - product.descuento / 100))
-                    Row(modifier = Modifier
-                        .weight(1f)
-                        .wrapContentSize()) {
-                        Text(
-                            text = "$$discountPrice",
-                            fontSize = priceFontSize,
-                            modifier = Modifier
-                                .align(Alignment.Bottom)
-                                .wrapContentSize()
-                        )
-                        Text(
-                            text = "$$formattedPrice",
-                            fontSize = priceLineSize,
-                            style = TextStyle(textDecoration = TextDecoration.LineThrough),
-                            modifier = Modifier
-                                .align(Alignment.Bottom)
-                                .padding(start = 20.dp)
-                                .wrapContentSize()
-                        )
-                    }
-                } else {
+                Row(
+                    modifier = Modifier
+                        .wrapContentSize()
+                ) {
                     Text(
-                        text = "$$formattedPrice",
-                        fontSize = priceFontSize,
+                        text = "$$formattedPrice.00",
+                        fontSize = 18.sp,
                         modifier = Modifier
-                            .weight(1f)
+                            .align(Alignment.Bottom)
+                            .wrapContentSize()
+                    )
+                    Text(
+                        text = "$$discountPrice",
+                        fontSize = 13.sp,
+                        style = TextStyle(textDecoration = TextDecoration.LineThrough),
+                        modifier = Modifier
+                            .align(Alignment.Bottom)
+                            .padding(start = 20.dp)
                             .wrapContentSize()
                     )
                 }
+
             }
         }
 
-    }*/
+    }
 }
 
 /*

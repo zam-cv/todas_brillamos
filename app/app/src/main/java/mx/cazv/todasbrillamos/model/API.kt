@@ -246,6 +246,15 @@ interface API {
      */
     @GET("api/posts")
     suspend fun getPosts(@Header("Authorization") token: String): List<Post>
+
+    /**
+     * Obtiene un post por su ID.
+     *
+     * @param token El token de autenticación.
+     * @return El post solicitado.
+     */
+    @GET("api/posts/{id}")
+    suspend fun getPost(@Header("Authorization") token: String, @Path("id") id: String): Post
 }
 
 /**

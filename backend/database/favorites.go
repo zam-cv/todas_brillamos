@@ -1,10 +1,14 @@
+// Contiene las operaciones relacionadas con los favoritos de los clientes.
+// Autores:
+//   - Min Che Kim
+
 package database
 
 import (
 	"backend/models"
 )
 
-// AddProductToFavorites agrega un producto a los favoritos de un cliente.
+// Agrega un producto a los favoritos de un cliente.
 // Devuelve un error en caso de que ocurra.
 func AddProductToFavorites(productID, clientID uint) error {
 	favorite := &models.Favorites{ProductID: productID, ClientID: clientID}
@@ -14,7 +18,7 @@ func AddProductToFavorites(productID, clientID uint) error {
 	return nil
 }
 
-// GetFavoritesByClientID obtiene los productos favoritos de un cliente por su ID.
+// Obtiene los productos favoritos de un cliente por su ID.
 // Devuelve una lista de favoritos y un error en caso de que ocurra.
 func GetFavoritesByClientID(clientID uint) ([]models.Favorites, error) {
 	favorites := []models.Favorites{}
@@ -22,6 +26,7 @@ func GetFavoritesByClientID(clientID uint) ([]models.Favorites, error) {
 	return favorites, err
 }
 
+// Obtiene un producto favorito por el ID del producto y el ID del cliente.
 func GetAllFavoritesByClientID(clientID uint) ([]models.FavProduct, error) {
 	var favItems []models.FavProduct
 
@@ -46,7 +51,7 @@ func GetProductFromFavoritesByProductIDClientID(productID, clientID uint) (*mode
 	return favorite, err
 }
 
-// DeleteProductFromFavorites elimina un producto de los favoritos de un cliente por el ID del producto y el ID del cliente.
+// Elimina un producto de los favoritos de un cliente por el ID del producto y el ID del cliente.
 // Devuelve un error en caso de que ocurra.
 func DeleteProductFromFavorites(productID, clientID uint) error {
 	err := db.Where("product_id = ? AND client_id = ?", productID, clientID).Delete(&models.Favorites{}).Error

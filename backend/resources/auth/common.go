@@ -1,3 +1,6 @@
+// Proporciona funciones para la autenticación y manejo de tokens.
+// Autores:
+//   - Carlos Zamudio
 package auth
 
 import (
@@ -6,21 +9,21 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-// HashPassword genera un hash para una contraseña dada.
+// Genera un hash para una contraseña dada.
 // Devuelve el hash de la contraseña y un error en caso de que ocurra.
 func HashPassword(password string) (string, error) {
 	bytes, err := bcrypt.GenerateFromPassword([]byte(password), HashingCost)
 	return string(bytes), err
 }
 
-// CheckPasswordHash compara una contraseña con su hash.
+// Compara una contraseña con su hash.
 // Devuelve true si coinciden, de lo contrario false.
 func CheckPasswordHash(password, hash string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
 	return err == nil
 }
 
-// GenerateToken genera un token JWT para un ID de usuario dado.
+// Genera un token JWT para un ID de usuario dado.
 // Devuelve el token y un error en caso de que ocurra.
 func GenerateToken(id string, secret string) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
@@ -30,7 +33,7 @@ func GenerateToken(id string, secret string) (string, error) {
 	return token.SignedString([]byte(secret))
 }
 
-// ParseToken analiza un token JWT y devuelve el ID del usuario.
+// Analiza un token JWT y devuelve el ID del usuario.
 // Devuelve el ID del usuario y un error en caso de que ocurra.
 func ParseToken(tokenString string, secret string) (string, error) {
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
@@ -50,12 +53,12 @@ func ParseToken(tokenString string, secret string) (string, error) {
 	return id, nil
 }
 
-// CookieWithToken establece una cookie con el token JWT en el contexto de Gin.
+// Establece una cookie con el token JWT en el contexto de Gin.
 func CookieWithToken(c *gin.Context, token string, cookieName string) {
 	c.SetCookie(cookieName, token, int(TokenExpirationTime), "/", "", false, true)
 }
 
-// ClearCookie elimina una cookie en el contexto de Gin.
+// Elimina una cookie en el contexto de Gin.
 func ClearCookie(c *gin.Context, cookieName string) {
 	c.SetCookie(cookieName, "", -1, "/", "", false, true)
 }

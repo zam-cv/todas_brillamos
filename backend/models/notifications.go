@@ -1,7 +1,5 @@
-/*
- * Backend-models: Código que contiene el modelo de notificaciones
- * @author: Mariana Balderrábano
- */
+// Autores:
+//   - Mariana Balderrábano
 
 package models
 
@@ -9,9 +7,7 @@ import (
 	"time"
 )
 
-/*
- * Estructura de la tabla de notificaciones
- */
+// Estructura de la tabla de notificaciones
 type Notifications struct {
 	ID          uint      `json:"id" gorm:"primarykey" validate:"omitempty,eq=0"`
 	Title       string    `json:"title" validate:"required,min=1"`

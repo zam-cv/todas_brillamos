@@ -1,3 +1,7 @@
+// Definiciones de rutas de categorías.
+// Autores:
+//   - Min Che Kim
+
 package routes
 
 import (
@@ -10,9 +14,11 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// Añade las rutas relacionadas con las categorías al grupo de rutas proporcionado.
 func addCategoriesRoutes(rg *gin.RouterGroup) {
 	group := rg.Group("/categories")
 
+	// POST /categories - Crea una nueva categoría (solo para administradores)
 	group.POST("", auth.GetMiddleware(AdminAuth), func(c *gin.Context) {
 		var category models.Category
 		if err := c.ShouldBindJSON(&category); err != nil {
@@ -28,6 +34,7 @@ func addCategoriesRoutes(rg *gin.RouterGroup) {
 		c.JSON(http.StatusCreated, category)
 	})
 
+	// GET /categories/:id - Obtiene una categoría específica por su ID
 	group.GET("/:id", func(c *gin.Context) {
 		idStr := c.Param("id")
 		id, err := strconv.Atoi(idStr)
@@ -45,6 +52,7 @@ func addCategoriesRoutes(rg *gin.RouterGroup) {
 		c.JSON(http.StatusOK, category)
 	})
 
+	// GET /categories - Obtiene todas las categorías
 	group.GET("", func(c *gin.Context) {
 		categories, err := database.GetCategories()
 		if err != nil {
@@ -54,5 +62,4 @@ func addCategoriesRoutes(rg *gin.RouterGroup) {
 
 		c.JSON(http.StatusOK, categories)
 	})
-
 }

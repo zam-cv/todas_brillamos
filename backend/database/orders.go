@@ -1,3 +1,7 @@
+// Contiene las operaciones relacionadas con las órdenes de los clientes.
+// Autores:
+//   - Jennyfer Jasso
+
 package database
 
 import (
@@ -8,7 +12,7 @@ import (
 	//"gorm.io/gorm"
 )
 
-// GetOrders obtiene todas las órdenes de la base de datos.
+// Obtiene todas las órdenes de la base de datos.
 // Devuelve una lista de órdenes y un error en caso de que ocurra.
 func GetOrders() ([]models.Orders, error) {
 	var orders []models.Orders
@@ -16,7 +20,7 @@ func GetOrders() ([]models.Orders, error) {
 	return orders, err
 }
 
-// GetOrdersByIDandClientID obtiene una orden por su ID y el ID del cliente.
+// Obtiene una orden por su ID y el ID del cliente.
 // Devuelve un puntero a models.Orders y un error en caso de que ocurra.
 func GetOrdersByIDandClientID(id int, clientId int) (*models.Orders, error) {
 	var orders models.Orders
@@ -27,7 +31,7 @@ func GetOrdersByIDandClientID(id int, clientId int) (*models.Orders, error) {
 	return &orders, err
 }
 
-// CreateOrders crea nuevas órdenes en la base de datos.
+// Crea nuevas órdenes en la base de datos.
 // Devuelve un error en caso de que ocurra.
 func CreateOrders(orders []*models.Orders) error {
 	db := GetDatabase()
@@ -43,13 +47,13 @@ func CreateOrders(orders []*models.Orders) error {
 	return nil
 }
 
-// ProductImage representa la estructura de una imagen de producto.
+// Representa la estructura de una imagen de producto.
 type ProductImage struct {
 	Hash string `json:"hash"`
 	Type string `json:"type"`
 }
 
-// OrderSummary representa el resumen de una orden.
+// Representa el resumen de una orden.
 type OrderSummary struct {
 	DeliveryDate  *string        `json:"delivery_date"`
 	TotalProducts int            `json:"total_products"`
@@ -57,7 +61,7 @@ type OrderSummary struct {
 	ProductImages []ProductImage `json:"product_images" gorm:"-"`
 }
 
-// GetOrdersClientID obtiene un resumen de órdenes por el ID del cliente.
+// Obtiene un resumen de órdenes por el ID del cliente.
 // Devuelve una lista de resúmenes de órdenes y un error en caso de que ocurra.
 func GetOrdersClientID(clientID uint) ([]OrderSummary, error) {
 	var results []OrderSummary
@@ -99,7 +103,7 @@ func GetOrdersClientID(clientID uint) ([]OrderSummary, error) {
 	return results, nil
 }
 
-// UpdateStatusOrders actualiza el estado de una orden por su ID.
+// Actualiza el estado de una orden por su ID.
 // Devuelve un error en caso de que ocurra.
 func UpdateStatusOrders(id uint, status string) error {
 	db := GetDatabase()
@@ -124,6 +128,65 @@ func UpdateStatusOrders(id uint, status string) error {
 	}
 
 	return nil
+}
+
+func GetOrderInfo() ([]models.OrderInformation, error) {
+	db := GetDatabase()
+	var results []models.OrderInformation // Cambia a un slice para almacenar múltiples resultados
+
+	// Realizamos la consulta con Joins para unir las tablas necesarias y hacer el cálculo de total
+	err := db.Model(&models.Orders{}).
+		Select("orders.id, clients.first_name, clients.last_name, users.email, orders.product_id, orders.client_id, orders.quantity, products.name as product_name, products.price, (orders.quantity * products.price) as total_price").
+		Joins("JOIN clients ON clients.id = orders.client_id").
+		Joins("JOIN users ON users.id = orders.client_id").
+		Joins("JOIN products ON products.id = orders.product_id").
+		Find(&results).Error // Cambia de First a Find
+
+	if err != nil {
+		return nil, err
+	}
+
+	return results, nil // Devuelve el slice de órdenes
+}
+
+func GetMostCommonProducts() ([]models.MostSellProducts, error) {
+	db := GetDatabase()
+	var products []models.MostSellProducts
+
+	// Realizamos la consulta que cuenta cuántas veces se ordena cada producto
+	err := db.Model(&models.Orders{}).
+		Select("products.id, products.name, COUNT(orders.product_id) as order_count").
+		Joins("JOIN products ON products.id = orders.product_id").
+		Group("products.id, products.name").
+		Order("order_count DESC").
+		Limit(3).
+		Scan(&products).Error
+
+	if err != nil {
+		return nil, err
+	}
+
+	return products, nil
+}
+
+func GetMonthlyRevenue() ([]models.MonthlyRevenue, error) {
+	db := GetDatabase()
+	var revenue []models.MonthlyRevenue
+
+	// Suponiendo que 'order_received_date' es la fecha de la orden,
+	// y que 'quantity' está en la tabla 'orders'
+	err := db.Table("orders").
+		Select("TO_CHAR(order_received_date, 'YYYY-MM') AS month, SUM(orders.quantity * products.price) AS total_revenue").
+		Joins("JOIN products ON products.id = orders.product_id"). // Unir con la tabla de productos
+		Group("TO_CHAR(order_received_date, 'YYYY-MM')").
+		Order("month").
+		Scan(&revenue).Error
+
+	if err != nil {
+		return nil, err
+	}
+
+	return revenue, nil
 }
 
 /*

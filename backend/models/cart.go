@@ -1,12 +1,9 @@
-/*
-* Backend-models: Código que contiene el modelo de carrito y sus atributos
-* @author: Min Che Kim
- */
+// Autores:
+//   - Min Che Kim
+
 package models
 
-/*
- * Estructura de la tabla Cart
- */
+// Estructura de la tabla Cart
 type Cart struct {
 	ID        uint `json:"-" gorm:"primarykey"`
 	Quantity  uint `json:"quantity"`
@@ -14,6 +11,7 @@ type Cart struct {
 	ClientID  uint `json:"-"`
 }
 
+// Estructura de la tabla CartProduct
 type CartProduct struct {
 	Name      string  `json:"name"`
 	Price     float64 `json:"price"`
@@ -22,11 +20,13 @@ type CartProduct struct {
 	Type      string  `json:"type"`
 }
 
+// Estructura de la tabla CartItem
 type CartItem struct {
 	Quantity uint        `json:"quantity"`
 	Product  CartProduct `json:"product"`
 }
 
+// Estructura de la respuesta del carrito
 type CartResponse struct {
 	Folder string     `json:"folder"`
 	Cart   []CartItem `json:"cart"`
