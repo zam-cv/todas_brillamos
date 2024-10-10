@@ -6,6 +6,7 @@ package database
 
 import (
 	"backend/models"
+	"strings"
 )
 
 /*
@@ -31,9 +32,75 @@ func CreateNotification(notification *models.Notifications) error {
 // 	err := db.Where("client_id = ?", clientID).Find(&notifications).Error
 // 	return notifications, err
 // }
+
+var monthTranslations = map[string]string{
+	"Jan": "Ene",
+	"Feb": "Feb",
+	"Mar": "Mar",
+	"Apr": "Abr",
+	"May": "May",
+	"Jun": "Jun",
+	"Jul": "Jul",
+	"Aug": "Ago",
+	"Sep": "Sep",
+	"Oct": "Oct",
+	"Nov": "Nov",
+	"Dec": "Dic",
+}
+
+func translateMonth(date string) string {
+	for eng, esp := range monthTranslations {
+		date = strings.ReplaceAll(date, eng, esp)
+	}
+	return date
+}
+
+// func GetNotificationsByClientID(clientID uint) ([]models.GroupedNotifications, error) {
+// 	var notifications []models.Notifications
+// 	err := db.Where("client_id = ?", clientID).Order("date DESC").Find(&notifications).Error
+// 	if err != nil {
+// 		return nil, err
+// 	}
+
+// 	grouped := make(map[string][]models.NotificationsGet)
+
+// 	for _, notification := range notifications {
+// 		dateKey := notification.Date.Format("2006-01-02")
+// 		displayDate := translateMonth(notification.Date.Format("Jan 2"))
+// 		hour := notification.Date.Format("03:04 PM")
+
+// 		grouped[dateKey] = append(grouped[dateKey], models.NotificationsGet{
+// 			Hour:        hour,
+// 			Title:       notification.Title,
+// 			Description: notification.Description,
+// 			ClientID:    notification.ClientID,
+
+// 		})
+// 	}
+
+// 	// var result []models.GroupedNotifications
+// 	// for date, notifs := range grouped {
+// 	// 	result = append(result, models.GroupedNotifications{
+// 	// 		Date:          date,
+// 	// 		Notifications: notifs,
+// 	// 	})
+// 	// }
+
+// 	var groupedNotifications []models.GroupedNotifications
+// 	for _, notifications := range grouped {
+// 		groupedNotifications = append(groupedNotifications, models.GroupedNotifications{
+// 			//Date:          notifications[0].DisplayDate, // Tomamos la fecha formateada del primer elemento
+// 			Date:
+// 			Notifications: notifications,
+// 		})
+// 	}
+
+// 	return groupedNotifications, nil
+// }
+
 func GetNotificationsByClientID(clientID uint) ([]models.GroupedNotifications, error) {
 	var notifications []models.Notifications
-	err := db.Where("client_id = ?", clientID).Find(&notifications).Error
+	err := db.Where("client_id = ?", clientID).Order("date DESC").Find(&notifications).Error
 	if err != nil {
 		return nil, err
 	}
@@ -41,23 +108,27 @@ func GetNotificationsByClientID(clientID uint) ([]models.GroupedNotifications, e
 	grouped := make(map[string][]models.NotificationsGet)
 
 	for _, notification := range notifications {
-		dateKey := notification.Date.Format("2006-01-02") // Formato de la fecha
-		grouped[dateKey] = append(grouped[dateKey], models.NotificationsGet{
+		// Aquí formateamos la fecha en español para el agrupamiento
+		displayDate := translateMonth(notification.Date.Format("Jan 2"))
+		hour := notification.Date.Format("03:04 PM")
+
+		grouped[displayDate] = append(grouped[displayDate], models.NotificationsGet{
+			Hour:        hour,
 			Title:       notification.Title,
 			Description: notification.Description,
 			ClientID:    notification.ClientID,
 		})
 	}
 
-	var result []models.GroupedNotifications
-	for date, notifs := range grouped {
-		result = append(result, models.GroupedNotifications{
-			Date:          date,
-			Notifications: notifs,
+	var groupedNotifications []models.GroupedNotifications
+	for date, notifications := range grouped {
+		groupedNotifications = append(groupedNotifications, models.GroupedNotifications{
+			Date:          date, // Usamos la fecha traducida como clave del grupo
+			Notifications: notifications,
 		})
 	}
 
-	return result, nil
+	return groupedNotifications, nil
 }
 
 /*

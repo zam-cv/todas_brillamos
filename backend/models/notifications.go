@@ -24,9 +24,11 @@ type Notifications struct {
  * Estructura de la información de notificaciones
  */
 type NotificationsGet struct {
+	Hour        string `json:"hour" validate:"required,min=1"`
 	Title       string `json:"title" validate:"required,min=1"`
 	Description string `json:"description" validate:"required,min=1"`
 	ClientID    uint   `json:"-"`
+	//DisplayDate string `json:"display_date" validate:"required,min=1"`
 }
 
 /*
