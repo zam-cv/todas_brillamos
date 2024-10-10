@@ -133,7 +133,9 @@ fun Cart(
                         item = cartItem,
                         onQuantityChange = { newQuantity ->
                             authViewModel.token()?.let { token ->
-                                cartViewModel.updateProductQuantityInCart(token, cartItem.product.product_id, newQuantity)
+                                if (cartItem.product.stock >= newQuantity) {
+                                    cartViewModel.updateProductQuantityInCart(token, cartItem.product.product_id, newQuantity)
+                                }
                             }
                         },
                         onDelete = {

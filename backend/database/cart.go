@@ -7,6 +7,9 @@ package database
 
 import (
 	"backend/models"
+	"errors"
+
+	"gorm.io/gorm"
 )
 
 // Agrega un producto al carrito de un cliente.
@@ -37,10 +40,11 @@ func GetAllCartByClientID(clientID uint) ([]models.CartItem, error) {
 		Price     float64
 		Hash      string
 		Type      string
+		Stock     uint
 	}
 
 	err := db.Table("carts").
-		Select("carts.quantity, carts.product_id, products.name, products.price, products.hash, products.type").
+		Select("carts.quantity, carts.product_id, products.name, products.price, products.hash, products.type, products.stock").
 		Joins("LEFT JOIN products ON carts.product_id = products.id").
 		Where("carts.client_id = ?", clientID).
 		Scan(&cartItems).Error
@@ -59,6 +63,7 @@ func GetAllCartByClientID(clientID uint) ([]models.CartItem, error) {
 				ProductID: item.ProductID,
 				Hash:      item.Hash,
 				Type:      item.Type,
+				Stock:     item.Stock,
 			},
 		}
 	}
@@ -66,12 +71,29 @@ func GetAllCartByClientID(clientID uint) ([]models.CartItem, error) {
 	return result, nil
 }
 
-// GetProductFromCartByProductIDClientID obtiene un producto del carrito por el ID del producto y el ID del cliente.
-// Devuelve un puntero a models.Cart y un error en caso de que ocurra.
 func GetProductFromCartByProductIDClientID(productID, clientID uint) (*models.Cart, error) {
 	cart := &models.Cart{}
 	err := db.Where("product_id = ? AND client_id = ?", productID, clientID).First(cart).Error
+	if errors.Is(err, gorm.ErrRecordNotFound) {
+		return nil, err
+	}
 	return cart, err
+}
+
+func UpdateCartItem(productID, clientID, quantity uint) error {
+	result := db.Model(&models.Cart{}).
+		Where("product_id = ? AND client_id = ?", productID, clientID).
+		Update("quantity", quantity)
+
+	if result.Error != nil {
+		return result.Error
+	}
+
+	if result.RowsAffected == 0 {
+		return gorm.ErrRecordNotFound
+	}
+
+	return nil
 }
 
 // UpdateProductQuantity actualiza la cantidad de un producto en el carrito.

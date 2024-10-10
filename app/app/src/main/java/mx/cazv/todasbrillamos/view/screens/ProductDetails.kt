@@ -75,11 +75,13 @@ import mx.cazv.todasbrillamos.viewmodel.UserViewModel
  *
  * @param value El valor actual de la cantidad.
  * @param onValueChange La función que se llama cuando se cambia el valor de la cantidad.
+ * @param stock La cantidad de stock disponible del producto.
  */
 @Composable
 fun QuantityController(
     value: Int,
-    onValueChange: (Int) -> Unit
+    onValueChange: (Int) -> Unit,
+    stock: Int
 ) {
     val displayValue = if (value <= 0) 1 else value
 
@@ -122,7 +124,9 @@ fun QuantityController(
             Box(
                 modifier = Modifier
                     .clickable {
-                        onValueChange(displayValue + 1)
+                        if (displayValue < stock) {
+                            onValueChange(displayValue + 1)
+                        }
                     }
                     .clip(RoundedCornerShape(4.dp))
                     .background(Color.White)
@@ -583,7 +587,8 @@ fun ProductDetails(
 
                     QuantityController(
                         value = quantity,
-                        onValueChange = { quantity = it }
+                        onValueChange = { quantity = it },
+                        stock = productState.value.product.product.stock
                     )
                 }
             }

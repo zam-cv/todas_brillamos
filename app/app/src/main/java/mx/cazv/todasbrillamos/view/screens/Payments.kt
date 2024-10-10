@@ -262,7 +262,7 @@ fun Payments(
                                         errorMessage = "Error al obtener el clientSecret"
                                     }
                                 } else {
-                                    errorMessage = createIntentResult.exceptionOrNull()?.message ?: "Error al crear la intención de pago"
+                                    errorMessage = "Error al crear la intención de pago"
                                 }
                             } catch (e: Exception) {
                                 errorMessage = "Error: ${e.message}"

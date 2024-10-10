@@ -9,6 +9,7 @@ package mx.cazv.todasbrillamos.model.models
  * @property product_id El ID del producto.
  * @property hash El hash de la imagen del producto.
  * @property type Extensión de la imagen del producto (jpg, png, etc.).
+ * @property stock La cantidad de productos en existencia.
  *
  */
 data class CartProduct(
@@ -16,7 +17,8 @@ data class CartProduct(
     val price: Double,
     val product_id: Int,
     val hash: String,
-    val type: String
+    val type: String,
+    val stock: Int
 )
 
 /**

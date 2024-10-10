@@ -18,6 +18,7 @@ type CartProduct struct {
 	ProductID uint    `json:"product_id"`
 	Hash      string  `json:"hash"`
 	Type      string  `json:"type"`
+	Stock     uint    `json:"stock"`
 }
 
 // Estructura de la tabla CartItem
