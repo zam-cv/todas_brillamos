@@ -5,6 +5,7 @@ import (
 	"backend/middlewares"
 	"backend/models"
 	"backend/resources/auth"
+	"backend/resources/files"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -16,13 +17,14 @@ func addFavoritesRoutes(rg *gin.RouterGroup) {
 	favorites.GET("/", auth.GetMiddleware(ClientAuth), middlewares.GetClientID(), func(c *gin.Context) {
 		id, _ := c.MustGet("clientID").(uint)
 
-		favorites, err := database.GetFavoritesByClientID(id)
+		favorites, err := database.GetAllFavoritesByClientID(id)
 		if err != nil {
 			c.JSON(500, gin.H{"error": err.Error()})
 			return
 		}
 
 		c.JSON(200, gin.H{
+			"Folder": files.GetURL(ProductArchive), 
 			"favorites": favorites,
 		})
 	})

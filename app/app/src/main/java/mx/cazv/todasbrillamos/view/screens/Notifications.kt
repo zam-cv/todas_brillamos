@@ -83,7 +83,6 @@ fun Date(value: String) {
  * @param title El título de la notificación.
  * @param description La descripción de la notificación.
  * @param time La hora de la notificación.
- * @param withLine Indica si se debe mostrar una línea debajo de la notificación.
  */
 @Composable
 fun Notification(

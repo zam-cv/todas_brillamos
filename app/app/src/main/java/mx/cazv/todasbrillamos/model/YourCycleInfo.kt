@@ -25,5 +25,7 @@ data class YourCycleInfo(
     val nextPeriodEndDate: Date = Date(),
     val ovulationDate: Date = Date(),
     val fertileDayStart: Date = Date(),
-    val fertileDayEnd: Date = Date()
+    val fertileDayEnd: Date = Date(),
+
+    val threeCycles: List<YourCycleInfo> = emptyList()
 )

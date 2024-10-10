@@ -25,6 +25,8 @@ import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -40,9 +42,11 @@ import mx.cazv.todasbrillamos.formatToMonthAndYearString
 import mx.cazv.todasbrillamos.getDayOfWeek
 import mx.cazv.todasbrillamos.getDayOfWeek3Letters
 import mx.cazv.todasbrillamos.getWeekDays
+import mx.cazv.todasbrillamos.model.YourCycleInfo
 import mx.cazv.todasbrillamos.ui.theme.ColorOfMostFertilePeriod
 import mx.cazv.todasbrillamos.ui.theme.OvulationColor
 import mx.cazv.todasbrillamos.ui.theme.PeriodColor
+import mx.cazv.todasbrillamos.viewmodel.CalendarVM
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -137,11 +141,7 @@ private fun WeekdayCell(weekday: Int, modifier: Modifier = Modifier) {
  * @param date Lista de pares de fecha y booleano indicando si es un día especial.
  * @param onClick Acción a realizar al hacer clic en una celda.
  * @param startFromSunday Indica si la semana comienza en domingo.
- * @param nextPeriodStartDate La fecha de inicio del próximo periodo.
- * @param nextPeriodEndDate La fecha de fin del próximo periodo.
- * @param ovulationDate La fecha de ovulación.
- * @param fertileStartDate La fecha de inicio del periodo fértil.
- * @param fertileEndDate La fecha de fin del periodo fértil.
+ * @param threeCycles Lista de los ciclos menstruales del usuario.
  * @param modifier Modificador para la cuadrícula.
  */
 @Composable
@@ -149,12 +149,8 @@ private fun CalendarGrid(
     date: ImmutableList<Pair<Date, Boolean>>,
     onClick: (Date) -> Unit,
     startFromSunday: Boolean,
-    nextPeriodStartDate: Date,
-    nextPeriodEndDate: Date,
-    ovulationDate: Date,
-    fertileStartDate: Date,
-    fertileEndDate: Date,
-    modifier: Modifier = Modifier,
+    threeCycles: List<YourCycleInfo>,
+    modifier: Modifier = Modifier
 ) {
     val weekdayFirstDay = date.first().first.getDayOfWeek()
     val weekdays = getWeekDays(startFromSunday)
@@ -171,15 +167,20 @@ private fun CalendarGrid(
         date.forEach {
             val currentDate = it.first
 
-            val color = when {
-                currentDate == ovulationDate -> OvulationColor
-                (currentDate >= (fertileStartDate) && currentDate <= (fertileEndDate)) -> ColorOfMostFertilePeriod
-                //(currentDate >= (nextPeriodStartDate) && currentDate <= (nextPeriodEndDate)) -> PeriodColor
-                else -> Color.Transparent
-            }
+            val color = threeCycles.fold(Color.Transparent) { acc, cycle ->
+                when (currentDate) {
+                    cycle.ovulationDate -> OvulationColor
+                    in cycle.fertileDayStart..cycle.fertileDayEnd -> ColorOfMostFertilePeriod
+                    else -> acc
+                }
 
-            val isPeriod =
-                currentDate >= (nextPeriodStartDate) && currentDate < (nextPeriodEndDate)
+            }
+            println(it.second)
+
+            // Color por defecto
+            val isPeriod = threeCycles.any { cycle ->
+                currentDate >= cycle.nextPeriodStartDate && currentDate < cycle.nextPeriodEndDate
+            }
 
             CalendarCell(
                 date = it.first,
@@ -190,6 +191,7 @@ private fun CalendarGrid(
             )
         }
     }
+
 }
 
 /**
@@ -264,11 +266,7 @@ private fun CalendarCustomLayout(
  * @param onClickPrev Acción a realizar al hacer clic en el botón de mes anterior.
  * @param onClick Acción a realizar al hacer clic en una celda.
  * @param startFromSunday Indica si la semana comienza en domingo.
- * @param nextPeriodStartDate La fecha de inicio del próximo periodo.
- * @param nextPeriodEndDate La fecha de fin del próximo periodo.
- * @param ovulationDate La fecha de ovulación.
- * @param fertileDayStart La fecha de inicio del periodo fértil.
- * @param fertileDayEnd La fecha de fin del periodo fértil.
+ * @param threeCycles Lista de los ciclos menstruales del usuario.
  * @param modifier Modificador para la vista del calendario.
  */
 @Composable
@@ -281,11 +279,7 @@ fun CalendarView(
     onClickPrev: () -> Unit,
     onClick: (Date) -> Unit,
     startFromSunday: Boolean,
-    nextPeriodStartDate: Date,
-    nextPeriodEndDate: Date,
-    ovulationDate: Date,
-    fertileDayStart: Date,
-    fertileDayEnd: Date,
+    threeCycles: List<YourCycleInfo>,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -328,11 +322,7 @@ fun CalendarView(
                 date = date,
                 onClick = onClick,
                 startFromSunday = startFromSunday,
-                nextPeriodStartDate = nextPeriodStartDate,
-                nextPeriodEndDate = nextPeriodEndDate,
-                ovulationDate = ovulationDate,
-                fertileStartDate = fertileDayStart,
-                fertileEndDate = fertileDayEnd,
+                threeCycles,
                 modifier = Modifier
                     .wrapContentHeight()
                     .padding(horizontal = 16.dp)

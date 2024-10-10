@@ -84,15 +84,39 @@ func addNotificationsRoutes(rg *gin.RouterGroup) {
 	})
 
 	// Endpoint GET que obtiene todas las notificaciones de un cliente de la base de datos
-	notifications.GET("/client", auth.GetMiddleware(ClientAuth), middlewares.GetClientID(), func(c *gin.Context) {
-		id, _ := c.MustGet("clientID").(uint)
-		notifications, err := database.GetNotificationsByClientID(id)
+	// notifications.GET("/:clientID", auth.GetMiddleware(ClientAuth), middlewares.GetClientID(), func(c *gin.Context) {
+	// 	//id, _ := c.MustGet("clientID").(uint)
+	// 	clientID := c.Param("clientID")
+	// 	clientIDInt, err := strconv.Atoi(clientID)
+
+	// 	if err != nil {
+	// 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+	// 		return
+	// 	}
+	// 	notifications, err := database.GetNotificationsByClientID(uint(clientIDInt))
+	// 	if err != nil {
+	// 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+	// 		return
+	// 	}
+
+	// 	c.JSON(http.StatusOK, notifications)
+	// })
+
+	notifications.GET("/:clientID", auth.GetMiddleware(ClientAuth), middlewares.GetClientID(), func(c *gin.Context) {
+		clientID := c.Param("clientID")
+		clientIDInt, err := strconv.Atoi(clientID)
+
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+		groupedNotifications, err := database.GetNotificationsByClientID(uint(clientIDInt))
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
 		}
 
-		c.JSON(http.StatusOK, notifications)
+		c.JSON(http.StatusOK, groupedNotifications)
 	})
 
 	// Endpoint GET que obtiene todas las notificaciones de la base de datos de todos los clientes
