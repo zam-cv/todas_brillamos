@@ -42,6 +42,10 @@ export default {
 
         getOrdersInfo: (): Promise<OrderInfo[]> => {
             return get("/orders/info");
+        },
+
+        getMostSell: (): Promise<void> => {
+            return get("/orders/BestSell")
         }
     }
 }
