@@ -74,7 +74,7 @@ export default {
         //GET
         getProducts: async (): Promise<[Product[], string]> => {
             const prodInfo = await get<ProductsInfo>("/products")
-            return [prodInfo.products.map((prod) => ({
+            return [prodInfo.products.map((prod: ProductRaw) => ({
                 ...prod,
                 url: `${SERVER}/${prodInfo.folder}/${prod.hash}.${prod.type}`
             })), prodInfo.folder]

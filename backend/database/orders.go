@@ -130,6 +130,25 @@ func UpdateStatusOrders(id uint, status string) error {
 	return nil
 }
 
+func GetOrderInfo() ([]models.OrderInformation, error) {
+	db := GetDatabase()
+	var results []models.OrderInformation // Cambia a un slice para almacenar múltiples resultados
+
+	// Realizamos la consulta con Joins para unir las tablas necesarias y hacer el cálculo de total
+	err := db.Model(&models.Orders{}).
+		Select("orders.id, clients.first_name, clients.last_name, users.email, orders.product_id, orders.client_id, orders.quantity, products.name as product_name, products.price, (orders.quantity * products.price) as total_price").
+		Joins("JOIN clients ON clients.id = orders.client_id").
+		Joins("JOIN users ON users.id = orders.client_id").
+		Joins("JOIN products ON products.id = orders.product_id").
+		Find(&results).Error // Cambia de First a Find
+
+	if err != nil {
+		return nil, err
+	}
+
+	return results, nil // Devuelve el slice de órdenes
+}
+
 /*
 type OrderProduct struct {
 	ProductName string  `json:"product_name"`

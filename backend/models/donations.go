@@ -9,7 +9,7 @@ type Donation struct {
 	ID          uint      `json:"-" gorm:"primarykey"`
 	Amount      uint      `json:"amount"`
 	Description string    `json:"description"`
-	Date        time.Time `json:"-"`
+	Date        time.Time `json:"date"`
 	ClientID    uint      `json:"-"`
 }
 

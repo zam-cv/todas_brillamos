@@ -15,3 +15,16 @@ type Orders struct {
 	ProductID          uint
 	ClientID           uint
 }
+
+type OrderInformation struct {
+	ID          uint   `json:"id"`
+	FirstName   string `json:"first_name"`
+	LastName    string `json:"last_name"`
+	Email       string `json:"email"`
+	Price       uint   `json:"price"`
+	Quantity    uint   `json:"quantity"`
+	ProductName string `json:"product_name"`
+	ProductID   uint   `json:"product_id"`
+	ClientID    uint   `json:"client_id"`
+	TotalPrice  uint   `json:"total_price"`
+}

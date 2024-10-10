@@ -13,10 +13,12 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ChartConfig, ChartContainer } from "@/components/ui/chart";
+import api, {ClientInfo} from "@/utils/api/client";
+import { useState, useEffect } from 'react';
 
-const radialChartVisitorData = [
-  { browserType: "safari", visitorCount: 450, fill: "var(--color-safari)" },
-];
+
+
+
 
 const radialChartConfig = {
   visitorCount: {
@@ -29,12 +31,28 @@ const radialChartConfig = {
 } satisfies ChartConfig;
 
 export default function UsersRadialChart() {
+  const [ids, setIds] = useState<number[]>([]);
+
+
+  useEffect(() => {
+    api.client.getClientsIDs().then((ids) => {
+      setIds(ids);
+    });
+  }, []);
+
+  var users = ids.length;
+
+  const radialChartVisitorData = [
+    { browserType: "safari", visitorCount: users, fill: "var(--color-safari)" },
+  ];
+
+  
   return (
     <div>
-      <Card className="flex flex-col">
+      <Card className="flex flex-col ">
         <CardHeader className="items-center pb-0">
           <CardTitle>Total de usuarios</CardTitle>
-          <CardDescription>Agosto - Septiembre 2024</CardDescription>
+          <CardDescription>Usuarios registrados al momento</CardDescription>
         </CardHeader>
         <CardContent className="flex-1 pb-0">
           <ChartContainer
@@ -44,7 +62,7 @@ export default function UsersRadialChart() {
             <RadialBarChart
               data={radialChartVisitorData}
               startAngle={0}
-              endAngle={250}
+              endAngle={radialChartVisitorData[0].visitorCount}
               innerRadius={80}
               outerRadius={110}
             >

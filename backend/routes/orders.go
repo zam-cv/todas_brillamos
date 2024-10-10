@@ -5,6 +5,7 @@ import (
 	"backend/middlewares"
 	"backend/resources/auth"
 	"backend/resources/files"
+	"net/http"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -68,5 +69,14 @@ func addOrdersRoutes(rg *gin.RouterGroup) {
 		c.JSON(200, gin.H{
 			"message": "Order status updated",
 		})
+	})
+
+	orders.GET("/info", auth.GetMiddleware(AdminAuth), func(c *gin.Context) {
+		ordersInfo, err := database.GetOrderInfo()
+		if err != nil {
+			c.JSON(500, gin.H{"error": err.Error()})
+			return
+		}
+		c.JSON(http.StatusOK, ordersInfo)
 	})
 }
