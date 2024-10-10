@@ -189,6 +189,27 @@ func GetMonthlyRevenue() ([]models.MonthlyRevenue, error) {
 	return revenue, nil
 }
 
+func GetBestSelledCategories() ([]models.CategorySales, error) {
+	db := GetDatabase()
+	var categoriesSales []models.CategorySales
+
+	err := db.Table("orders").
+		Select("categories.id, categories.name AS category_name, COUNT(orders.id) AS total_sold").
+		Joins("LEFT JOIN products ON products.id = orders.product_id").
+		Joins("LEFT JOIN categories ON categories.id = products.category_id").
+		Where("orders.product_id IS NOT NULL").
+		Group("categories.id, categories.name").
+		Order("total_sold DESC").
+		Limit(5).
+		Find(&categoriesSales).Error
+
+	if err != nil {
+		return nil, err
+	}
+
+	return categoriesSales, nil
+}
+
 /*
 type OrderProduct struct {
 	ProductName string  `json:"product_name"`
