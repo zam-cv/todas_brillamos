@@ -91,13 +91,14 @@ func addNotificationsRoutes(rg *gin.RouterGroup) {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
 		}
-		groupedNotifications, err := database.GetNotificationsByClientID(uint(clientIDInt))
+
+		notifications, err := database.GetNotificationsByClientID(uint(clientIDInt))
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
 		}
 
-		c.JSON(http.StatusOK, groupedNotifications)
+		c.JSON(http.StatusOK, notifications)
 	})
 
 	// GET /notifications - Obtiene todas las notificaciones de todos los usuarios
