@@ -37,6 +37,7 @@ fun Post(navController: NavHostController, postId: Int, title: String, content: 
         shape = RoundedCornerShape(5.dp),
         elevation = CardDefaults.cardElevation(8.dp),
         colors = CardDefaults.cardColors(containerColor = Color(0xfff4d0cb)),
+        onClick = { navController.navigate(Routes.ROUTE_POST + "/$postId") },
         modifier = Modifier.fillMaxWidth()
     ) {
         Column {
@@ -55,9 +56,9 @@ fun Post(navController: NavHostController, postId: Int, title: String, content: 
 
             Spacer(modifier = Modifier.height(5.dp))
 
-            TextButton(
-                onClick = { navController.navigate(Routes.ROUTE_POST + "/$postId") },
-                modifier = Modifier.padding(start = 10.dp, end = 10.dp),
+            Box(
+                modifier = Modifier
+                    .padding(start = 10.dp, end = 10.dp, bottom = 10.dp, top = 5.dp),
             ) {
                 Box(
                     modifier = Modifier.fillMaxWidth(),

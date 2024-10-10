@@ -37,11 +37,13 @@ func addOthersRoutes(rg *gin.RouterGroup) {
 		id, _ := c.MustGet("clientID").(uint)
 		other := &models.Other{}
 		if err := c.ShouldBindJSON(other); err != nil {
+			println(err.Error())
 			c.JSON(400, gin.H{"error": err.Error()})
 			return
 		}
 
 		if err := resources.ValidateStruct(other); err != nil {
+			println(err.Error())
 			c.JSON(400, gin.H{"error": err.Error()})
 			return
 		}

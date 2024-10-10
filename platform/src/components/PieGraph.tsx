@@ -50,7 +50,6 @@ export default function PieGraph() {
           fill: colors[index % colors.length], // Asigna un color
         })));
       } catch (err) {
-        console.error("Error fetching category data:", err);
         setError("Error al cargar los datos de categorías.");
       }
     })();
@@ -62,9 +61,6 @@ export default function PieGraph() {
         <CardTitle>Productos por categoría</CardTitle>
       </CardHeader>
       <CardContent className="flex-1 pb-0">
-        {error ? (
-          <div className="text-red-500">{error}</div>
-        ) : (
           <ChartContainer
             config={chartConfig}
             className="mx-auto aspect-square max-h-[250px]"
@@ -88,12 +84,9 @@ export default function PieGraph() {
               </Pie>
             </PieChart>
           </ChartContainer>
-        )}
+     
       </CardContent>
       <CardFooter className="flex-col gap-2 text-sm">
-        <div className="leading-none text-muted-foreground">
-          Mostrando la distribución de productos por categoría
-        </div>
       </CardFooter>
     </Card>
   );

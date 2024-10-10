@@ -6,13 +6,13 @@ package models
 // Estructura de la tabla de otros (otra información del cliente)
 type Other struct {
 	ID        uint   `json:"-" gorm:"primarykey"`
-	CURP      string `json:"curp" validate:"required,eq=18"`
+	CURP      string `json:"curp" validate:"required,len=18"`
 	Street    string `json:"street" validate:"required"`
 	Interior  int    `json:"interior" validate:"required"`
-	Exterior  int    `json:"exterior" validate:"required"`
+	Exterior  *int   `json:"exterior" validate:"omitempty"`
 	City      string `json:"city" validate:"required,min=1"`
 	State     string `json:"state" validate:"required,min=1"`
-	ZIP       string `json:"zip" validate:"required,min=4"`
+	ZIP       string `json:"zip" validate:"required,min=4,max=10"`
 	Reference string `json:"reference"`
 	ClientID  uint   `json:"-"`
 }
