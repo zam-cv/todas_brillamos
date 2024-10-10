@@ -27,6 +27,7 @@ type ClientDetails struct {
 	Email     string `json:"email" validate:"required,email"`
 }
 
+// Estructura de información de cliente
 type ClientOthersInfo struct {
 	ClientID  uint   `json:"client_id"`
 	FirstName string `json:"first_name"`
