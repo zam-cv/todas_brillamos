@@ -24,6 +24,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { SelectGroup, SelectLabel } from "@radix-ui/react-select";
+import { Space } from "lucide-react";
 
 // {
 //   "model": "0017",
@@ -181,17 +182,17 @@ export default function UploadProducts() {
     }
   }, [navigate]);
 
-
   function handleDelete(productId: number) {
-    api.product.deleteProduct(productId)
-    .then(() => {
-      setProducts(products.filter(product => product.id !== productId));
-      console.log("Producto eliminado");
-    })
-    .catch(error => {
-      console.error("Error al eliminar el producto:", error);
-    });
-  } 
+    api.product
+      .deleteProduct(productId)
+      .then(() => {
+        setProducts(products.filter((product) => product.id !== productId));
+        console.log("Producto eliminado");
+      })
+      .catch((error) => {
+        console.error("Error al eliminar el producto:", error);
+      });
+  }
 
   const columns = createColumns(handleDelete);
   return (
@@ -206,121 +207,164 @@ export default function UploadProducts() {
         <AccordionItem value="item-1">
           <AccordionTrigger className="font-semibold">Agregar</AccordionTrigger>
           <AccordionContent>
-            <div className="flex flex-nowrap flex-col">
-              <div className="flex flex-row space-x-2 px-2 pt-2">
-                <Input
-                  name="name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="w-4/5"
-                  placeholder="Nombre del producto"
-                  required
-                />
-                <Input
-                  name="stock"
-                  value={stock}
-                  onChange={(e) => setStock(Number(e.target.value))}
-                  className="w-3/4"
-                  placeholder="Cantidad"
-                  type="number"
-                  required
-                />
+            <div className="flex flex-wrap flex-col">
+              <div className="flex flex-rows space-x-2 px-2 pt-2">
+                <label className="w-3/4">
+                  <span className="font-semibold">Nombre</span>
+                  <Input
+                    name="name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="Toalla reusable...."
+                    required
+                  />
+                </label>
+                <label className="w-1/4">
+                  <span className="font-semibold">Stock</span>
+                  <Input
+                    name="stock"
+                    value={stock}
+                    onChange={(e) => setStock(Number(e.target.value))}
+                    className="w-1/3"
+                    placeholder="Cantidad"
+                    type="number"
+                    required
+                  />
+                </label>
               </div>
               <div className="flex flex-row space-x-2 px-2 pt-2">
-                <Input
-                  name="price"
-                  value={price}
-                  onChange={(e) => setPrice(Number(e.target.value))}
-                  placeholder="Precio"
-                  type="number"
-                  required
-                />
-                <Input
-                  name="model"
-                  value={model}
-                  onChange={(e) => setModel(e.target.value)}
-                  placeholder="Modelo"
-                  required
-                />
+                <label className="w-1/5">
+                  <span className="font-semibold">Precio</span>
+                  <Input
+                    name="price"
+                    value={price}
+                    onChange={(e) => setPrice(Number(e.target.value))}
+                    placeholder="Precio"
+                    type="number"
+                    required
+                  />
+                </label>
+                <label className="w-3/5">
+                  <span className="font-semibold">Modelo</span>
+                  <Input
+                    name="model"
+                    value={model}
+                    onChange={(e) => setModel(e.target.value)}
+                    placeholder="GX-1201.."
+                    required
+                  />
+                </label>
+                <label className="w-1/5">
+                  <span className="font-semibold">Tamaño</span>
+                  <Input
+                    name="size"
+                    value={size}
+                    onChange={(e) => setSize(e.target.value)}
+                    placeholder="12x12.."
+                  />
+                </label>
               </div>
               <div className="flex flex-row space-x-2 px-2 pt-2">
-                <Input
-                  name="size"
-                  value={size}
-                  onChange={(e) => setSize(e.target.value)}
-                  placeholder="Tamaño"
-                />
-                <Input
-                  name="material"
-                  value={material}
-                  onChange={(e) => setMaterial(e.target.value)}
-                  placeholder="Material"
-                />
+                <label className="w-2/4">
+                  <span className="font-semibold">Material</span>
+                  <Input
+                    name="material"
+                    value={material}
+                    onChange={(e) => setMaterial(e.target.value)}
+                    placeholder="fibras de algodón.."
+                  />
+                </label>
+                <label className="w-2/4">
+                  <span className="font-semibold">Absorbencia</span>
+                  <Input
+                    name="absorbency"
+                    value={absorbency}
+                    onChange={(e) => setAbsorbency(e.target.value)}
+                    placeholder="Alta.."
+                  />
+                </label>
               </div>
               <div className="flex flex-row space-x-2 px-2 pt-2">
-                <Input
-                  name="absorbency"
-                  value={absorbency}
-                  onChange={(e) => setAbsorbency(e.target.value)}
-                  placeholder="Absorbencia"
-                />
-                <Input
-                  name="material_feature"
-                  value={material_feature}
-                  onChange={(e) => setMaterial_feature(e.target.value)}
-                  placeholder="Cuidado de la piel"
-                />
-                <Input
-                  name="color"
-                  value={color}
-                  onChange={(e) => setColor(e.target.value)}
-                  placeholder="Color"
-                />
-                <Input
-                  name="maintenance"
-                  value={maintenance}
-                  onChange={(e) => setMaintenance(e.target.value)}
-                  placeholder="Mantenimiento"
-                />
+                <label className="w-3/4">
+                  <span className="font-semibold">
+                    Características del material
+                  </span>
+                  <Input
+                    name="material_feature"
+                    value={material_feature}
+                    onChange={(e) => setMaterial_feature(e.target.value)}
+                    placeholder="Hipoalergénica..."
+                  />
+                </label>
+                <label className="w-1/4">
+                  <span className="font-semibold">Color</span>
+                  <Input
+                    name="color"
+                    value={color}
+                    onChange={(e) => setColor(e.target.value)}
+                    placeholder="Azul.."
+                  />
+                </label>
+              </div>
+              <div className="grid space-x-2 px-2 pt-2">
+                <label>
+                  <span className="font-semibold">Mantenimiento</span>
+                  <Input
+                    name="maintenance"
+                    value={maintenance}
+                    onChange={(e) => setMaintenance(e.target.value)}
+                    placeholder="Lavable..."
+                  />
+                </label>
+              </div>
+              <div className="grid space-x-2 px-2 pt-2">
+                <label>
+                  <span className="font-semibold">Descripción</span>
+                  <Textarea
+                    name="description"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    placeholder="Medidas, indicaciones.."
+                    className="w-full"
+                  />
+                </label>
               </div>
               <div className="flex flex-row space-x-2 px-2 pt-2">
-                <Textarea
-                  name="description"
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                  placeholder="Descripción.."
-                />
+                <label className="w-2/4">
+                  <span className="font-semibold">Categoría</span>
+                  <Select
+                    value={category_id.toString()}
+                    onValueChange={(value) => setCategory_id(Number(value))}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Selecciona una categoría" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectLabel>Categorías</SelectLabel>
+                        {categories.map((category) => (
+                          <SelectItem
+                            key={category.id}
+                            value={category.id.toString()}
+                          >
+                            {category.name}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </label>
               </div>
               <div className="flex flex-row space-x-2 px-2 pt-2">
-                <Select
-                  value={category_id.toString()}
-                  onValueChange={(value) => setCategory_id(Number(value))}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Selecciona una categoría" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectLabel>Categorías</SelectLabel>
-                      {categories.map((category) => (
-                        <SelectItem
-                          key={category.id}
-                          value={category.id.toString()}
-                        >
-                          {category.name}
-                        </SelectItem>
-                      ))}
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="flex flex-row space-x-2 px-2 pt-2">
-                <Input
-                  ref={imageInput}
-                  type="file"
-                  onChange={() => {}}
-                  required
-                />
+                <label>
+                  <span className="font-semibold">Imagen</span>
+                  <Input
+                    ref={imageInput}
+                    type="file"
+                    onChange={() => {}}
+                    required
+                  />
+                </label>
               </div>
               <div className="flex flex-row space-x-2 px-2 pt-2">
                 <Button onClick={uploadProduct} disabled={!isFormValid}>
