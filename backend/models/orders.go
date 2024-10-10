@@ -16,6 +16,7 @@ type Orders struct {
 	ClientID           uint
 }
 
+// Estructura de la tabla de la información de pedido
 type OrderInformation struct {
 	ID          uint   `json:"id"`
 	FirstName   string `json:"first_name"`
