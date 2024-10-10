@@ -1,7 +1,9 @@
 import UsersRadialChart from "@/components/UsersRadialChart";
 import BarChartDashboard from "@/components/BarChartDashboard";
 import RecentSalesChart from "@/components/RecentSalesChart";
-import CardsDashboard from "@/components/CardsDashboard";
+import BarChar2 from "@/components/BarChart2";
+import CircularChart from "@/components/CircularChart";
+import GraphDonations from "@/components/graphDonations";
 
 export default function Dashboard() {
   return (
@@ -11,11 +13,20 @@ export default function Dashboard() {
         Dashboard
       </h2>
       <br />
-      <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
-        <div>
-          <CardsDashboard />
+      <main className="flex flex-1 flex-col gap-1 md:gap-5 md:p-8">
+        <div className="grid md:gap-5 lg:grid-cols-4 xl:grid-cols-3">
+          <div>
+            <BarChar2 />
+          </div>
+          <div>
+            <CircularChart />
+          </div>
+          <div>
+            <GraphDonations />
+                    
+          </div>
         </div>
-        <div className="grid gap-2 md:gap-1 lg:grid-cols-3 xl:grid-cols-3">
+        <div className="grid md:gap-5 lg:grid-cols-3 xl:grid-cols-3">
           <div>
             <RecentSalesChart />
           </div>
