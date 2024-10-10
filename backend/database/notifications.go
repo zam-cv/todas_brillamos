@@ -5,6 +5,7 @@ package database
 
 import (
 	"backend/models"
+	"strings"
 )
 
 // Crea una nueva notificación en la base de datos para todos los clientes.
@@ -16,11 +17,35 @@ func CreateNotification(notification *models.Notifications) error {
 	return nil
 }
 
-// Obtiene todas las notificaciones de un usuario de la base de datos.
-// Devuelve un slice de models.Notifications y un error en caso de que ocurra.
+// Traducciones de los meses en inglés a español
+var monthTranslations = map[string]string{
+	"Jan": "Ene",
+	"Feb": "Feb",
+	"Mar": "Mar",
+	"Apr": "Abr",
+	"May": "May",
+	"Jun": "Jun",
+	"Jul": "Jul",
+	"Aug": "Ago",
+	"Sep": "Sep",
+	"Oct": "Oct",
+	"Nov": "Nov",
+	"Dec": "Dic",
+}
+
+// Traduce los meses en inglés a español
+func translateMonth(date string) string {
+	for eng, esp := range monthTranslations {
+		date = strings.ReplaceAll(date, eng, esp)
+	}
+	return date
+}
+
+// Obtiene las notificaciones de un cliente por su ID.
+// Devuelve un slice de models.GroupedNotifications y un error en caso de que ocurra.
 func GetNotificationsByClientID(clientID uint) ([]models.GroupedNotifications, error) {
 	var notifications []models.Notifications
-	err := db.Where("client_id = ?", clientID).Find(&notifications).Error
+	err := db.Where("client_id = ?", clientID).Order("date DESC").Find(&notifications).Error
 	if err != nil {
 		return nil, err
 	}
@@ -28,23 +53,27 @@ func GetNotificationsByClientID(clientID uint) ([]models.GroupedNotifications, e
 	grouped := make(map[string][]models.NotificationsGet)
 
 	for _, notification := range notifications {
-		dateKey := notification.Date.Format("2006-01-02") // Formato de la fecha
-		grouped[dateKey] = append(grouped[dateKey], models.NotificationsGet{
+		// Formateamos la fecha en español y en formato de 12 horas
+		displayDate := translateMonth(notification.Date.Format("Jan 2"))
+		hour := notification.Date.Format("03:04 PM")
+
+		grouped[displayDate] = append(grouped[displayDate], models.NotificationsGet{
+			Hour:        hour,
 			Title:       notification.Title,
 			Description: notification.Description,
 			ClientID:    notification.ClientID,
 		})
 	}
 
-	var result []models.GroupedNotifications
-	for date, notifs := range grouped {
-		result = append(result, models.GroupedNotifications{
+	var groupedNotifications []models.GroupedNotifications
+	for date, notifications := range grouped {
+		groupedNotifications = append(groupedNotifications, models.GroupedNotifications{
 			Date:          date,
-			Notifications: notifs,
+			Notifications: notifications,
 		})
 	}
 
-	return result, nil
+	return groupedNotifications, nil
 }
 
 // Crea una nueva notificación en la base de datos asociada a un cliente.

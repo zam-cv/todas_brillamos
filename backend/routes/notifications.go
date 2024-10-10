@@ -2,7 +2,6 @@
 // Autores:
 //   - Mariana Balderrábano
 
-
 package routes
 
 import (
@@ -32,7 +31,7 @@ func addNotificationsRoutes(rg *gin.RouterGroup) {
 
 		idClients := database.GetAllClientsIDs()
 
-		// asigna la fecha actual a la notificación
+		// Asigna la fecha a la notificación.
 		now := time.Now()
 		notification.Date = now
 
@@ -53,7 +52,7 @@ func addNotificationsRoutes(rg *gin.RouterGroup) {
 		c.Status(http.StatusCreated)
 	})
 
-	// POST /notifications/:clientID - Agrega una nueva notificación para un cliente específico
+	// POST /notifications - Agrega una nueva notificación a la base de datos asociada a un cliente
 	notifications.POST("/:clientID", auth.GetMiddleware(AdminAuth), func(c *gin.Context) {
 		userId := c.Param("clientID")
 		userIdInt, err := strconv.Atoi(userId)
@@ -83,26 +82,7 @@ func addNotificationsRoutes(rg *gin.RouterGroup) {
 
 	})
 
-	// Endpoint GET que obtiene todas las notificaciones de un cliente de la base de datos
-	// notifications.GET("/:clientID", auth.GetMiddleware(ClientAuth), middlewares.GetClientID(), func(c *gin.Context) {
-	// 	//id, _ := c.MustGet("clientID").(uint)
-	// 	clientID := c.Param("clientID")
-	// 	clientIDInt, err := strconv.Atoi(clientID)
-
-	// 	if err != nil {
-	// 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-	// 		return
-	// 	}
-	// 	notifications, err := database.GetNotificationsByClientID(uint(clientIDInt))
-	// 	if err != nil {
-	// 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-	// 		return
-	// 	}
-
-	// 	c.JSON(http.StatusOK, notifications)
-	// })
-
-	// GET /notifications/:clientID - Obtiene todas las notificaciones de un cliente específico
+	//// GET /notifications - Obtiene todas las notificaciones de un usuario
 	notifications.GET("/:clientID", auth.GetMiddleware(ClientAuth), middlewares.GetClientID(), func(c *gin.Context) {
 		clientID := c.Param("clientID")
 		clientIDInt, err := strconv.Atoi(clientID)
@@ -120,7 +100,7 @@ func addNotificationsRoutes(rg *gin.RouterGroup) {
 		c.JSON(http.StatusOK, groupedNotifications)
 	})
 
-	// GET /notifications - Obtiene todas las notificaciones de todos los clientes
+	// GET /notifications - Obtiene todas las notificaciones de todos los usuarios
 	notifications.GET("", auth.GetMiddleware(AdminAuth), func(c *gin.Context) {
 		notifications, err := database.GetAllNotifications()
 		if err != nil {
