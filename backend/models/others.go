@@ -5,14 +5,14 @@ package models
 
 // Estructura de la tabla de otros (otra información del cliente)
 type Other struct {
-	ID        uint `json:"-" gorm:"primarykey"`
-	CURP      string
-	Street    string
-	Interior  string
-	Exterior  string
-	City      string
-	State     string
-	ZIP       string
-	Reference string
-	ClientID  uint `json:"-"`
+	ID        uint   `json:"-" gorm:"primarykey"`
+	CURP      string `json:"curp" validate:"required,eq=18"`
+	Street    string `json:"street" validate:"required"`
+	Interior  int    `json:"interior" validate:"required"`
+	Exterior  int    `json:"exterior" validate:"required"`
+	City      string `json:"city" validate:"required,min=1"`
+	State     string `json:"state" validate:"required,min=1"`
+	ZIP       string `json:"zip" validate:"required,min=4"`
+	Reference string `json:"reference"`
+	ClientID  uint   `json:"-"`
 }

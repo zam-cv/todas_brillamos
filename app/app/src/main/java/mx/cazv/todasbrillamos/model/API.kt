@@ -268,6 +268,15 @@ interface API {
 
     @GET("api/favorites")
     suspend fun getFavorites(@Header("Authorization") token: String): Favorites
+
+    /**
+     * Obtiene un post por su ID.
+     *
+     * @param token El token de autenticación.
+     * @return El post solicitado.
+     */
+    @GET("api/posts/{id}")
+    suspend fun getPost(@Header("Authorization") token: String, @Path("id") id: String): Post
 }
 
 /**

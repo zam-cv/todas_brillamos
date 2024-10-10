@@ -25,6 +25,7 @@ import mx.cazv.todasbrillamos.view.screens.Register
 import mx.cazv.todasbrillamos.view.screens.Cart
 import mx.cazv.todasbrillamos.view.screens.Orders
 import mx.cazv.todasbrillamos.view.screens.Payments
+import mx.cazv.todasbrillamos.view.screens.PostView
 import mx.cazv.todasbrillamos.view.screens.TrackOrder
 import mx.cazv.todasbrillamos.view.screens.config.Config
 import mx.cazv.todasbrillamos.view.screens.ProductDetails
@@ -123,6 +124,7 @@ fun Nav(
             // Rutas protegidas (accesibles cuando el usuario está autenticado)
             val protectedRoutes = listOf(
                 Routes.ROUTE_HOME,
+                Routes.ROUTE_POST + "/{postId}",
                 Routes.ROUTE_STORE,
                 Routes.ROUTE_CALENDAR,
                 Routes.ROUTE_CHAT,
@@ -158,6 +160,12 @@ fun Nav(
 
                         when (route) {
                             Routes.ROUTE_HOME -> Home(navController, authViewModel, userViewModel, postsViewModel, randomState)
+                            Routes.ROUTE_POST + "/{postId}" -> {
+                                val postId = backStackEntry.arguments?.getString("postId")?.toInt()
+                                if (postId != null) {
+                                    PostView(navController, authViewModel, postsViewModel, postId)
+                                }
+                            }
                             Routes.ROUTE_STORE -> Store(navController, authViewModel, productsViewModel)
                             Routes.ROUTE_CALENDAR -> Calendar(navController, calendarVM)
                             Routes.ROUTE_CHAT -> Chat(navController, authViewModel, chatViewModel)

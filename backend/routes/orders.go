@@ -97,4 +97,22 @@ func addOrdersRoutes(rg *gin.RouterGroup) {
 		}
 		c.JSON(http.StatusOK, bestSell)
 	})
+
+	orders.GET("/monthRev", auth.GetMiddleware(AdminAuth), func(c *gin.Context) {
+		revenue, err := database.GetMonthlyRevenue()
+		if err != nil {
+			c.JSON(500, gin.H{"error": err.Error()})
+			return
+		}
+		c.JSON(http.StatusOK, revenue)
+	})
+
+	orders.GET("/BestSellCategory", auth.GetMiddleware(AdminAuth), func(c *gin.Context) {
+		bestSellCat, err := database.GetBestSelledCategories()
+		if err != nil {
+			c.JSON(500, gin.H{"error": err.Error()})
+			return
+		}
+		c.JSON(http.StatusOK, bestSellCat)
+	})
 }

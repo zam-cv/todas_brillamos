@@ -2,8 +2,8 @@ import UsersRadialChart from "@/components/UsersRadialChart";
 import BarChartDashboard from "@/components/BarChartDashboard";
 import RecentSalesChart from "@/components/RecentSalesChart";
 import BarChar2 from "@/components/BarChart2";
-import CircularChart from "@/components/CircularChart";
-import GraphDonations from "@/components/graphDonations";
+import PieGraph from "@/components/PieGraph";
+import GraphDonations from "@/components/GraphDonations";
 
 export default function Dashboard() {
   return (
@@ -19,7 +19,7 @@ export default function Dashboard() {
             <BarChar2 />
           </div>
           <div>
-            <CircularChart />
+            <PieGraph />
           </div>
           <div>
             <GraphDonations />
