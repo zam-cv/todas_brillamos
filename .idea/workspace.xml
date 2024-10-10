@@ -5,10 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b1be5863-8924-42bb-bf40-ff1a4c7c3adc" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/app/src/main/java/mx/cazv/todasbrillamos/view/screens/Notifications.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/app/src/main/java/mx/cazv/todasbrillamos/view/screens/Notifications.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/database/notifications.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/notifications.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/models/notifications.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/models/notifications.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/routes/notifications.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/notifications.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,6 +18,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "A01749581"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/zam-cv/todas_brillamos.git",
+    "accountId": "d92a347d-a389-4d18-8c65-6e1798103e77"
+  }
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 0
 }</component>
