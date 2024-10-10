@@ -145,6 +145,26 @@ func GetOrderInfo() ([]models.OrderInformation, error) {
 	return results, nil // Devuelve el slice de órdenes
 }
 
+func GetMostCommonProducts() ([]models.Product, error) {
+	db := GetDatabase()
+	var products []models.Product
+
+	// Realizamos la consulta que cuenta cuántas veces se ordena cada producto
+	err := db.Model(&models.Orders{}).
+		Select("products.id, products.name, COUNT(orders.product_id) as order_count").
+		Joins("JOIN products ON products.id = orders.product_id").
+		Group("products.id, products.name").
+		Order("order_count DESC").
+		Limit(3).
+		Scan(&products).Error
+
+	if err != nil {
+		return nil, err
+	}
+
+	return products, nil
+}
+
 /*
 type OrderProduct struct {
 	ProductName string  `json:"product_name"`

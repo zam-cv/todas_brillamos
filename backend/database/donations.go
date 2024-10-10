@@ -46,3 +46,9 @@ func GetAllDonations() ([]models.DonationGet, error) {
 	}
 	return donationsResponses, err
 }
+
+func SumAmountOfDonations() (uint, error) {
+	var sum uint
+	err := db.Model(&models.Donation{}).Select("SUM(amount)").Scan(&sum).Error
+	return sum, err
+}

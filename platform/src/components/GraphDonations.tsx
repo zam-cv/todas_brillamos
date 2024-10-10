@@ -2,7 +2,8 @@
 
 import { TrendingUp } from "lucide-react"
 import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
-
+import api, {Donation} from "@/utils/api/donations"; 
+import { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -18,29 +19,32 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart"
 
-export const description = "An area chart with gradient fill"
+
+export default function GraphDonations() {
+    const [amount, setAmount] = useState<number>(0);
+    useEffect(() => {
+        api.donations.getDonations().then((donations) => {
+            setAmount(donations.reduce((acc, donation) => acc + donation.amount, 0));
+        });
+    }, []);
+    
 
 const chartData = [
-  { month: "January", desktop: 186, mobile: 80 },
-  { month: "February", desktop: 305, mobile: 200 },
-  { month: "March", desktop: 237, mobile: 120 },
-  { month: "April", desktop: 73, mobile: 190 },
-  { month: "May", desktop: 209, mobile: 130 },
-  { month: "June", desktop: 214, mobile: 140 },
+  { month: "January", desktop: amount},
+  { month: "February", desktop: 0},
+  { month: "March", desktop: 0},
+  { month: "April", desktop: 0},
+  { month: "May", desktop: 0},
+  { month: "June", desktop: 0},
 ]
 
 const chartConfig = {
   desktop: {
     label: "Desktop",
     color: "hsl(var(--chart-1))",
-  },
-  mobile: {
-    label: "Mobile",
-    color: "hsl(var(--chart-2))",
-  },
+  }
 } satisfies ChartConfig
 
-export default function GraphDonations() {
   return (
     <Card className="h-full">
       <CardHeader>
@@ -82,27 +86,7 @@ export default function GraphDonations() {
                   stopOpacity={0.1}
                 />
               </linearGradient>
-              <linearGradient id="fillMobile" x1="0" y1="0" x2="0" y2="1">
-                <stop
-                  offset="5%"
-                  stopColor="var(--color-mobile)"
-                  stopOpacity={0.8}
-                />
-                <stop
-                  offset="95%"
-                  stopColor="var(--color-mobile)"
-                  stopOpacity={0.1}
-                />
-              </linearGradient>
             </defs>
-            <Area
-              dataKey="mobile"
-              type="natural"
-              fill="url(#fillMobile)"
-              fillOpacity={0.4}
-              stroke="var(--color-mobile)"
-              stackId="a"
-            />
             <Area
               dataKey="desktop"
               type="natural"

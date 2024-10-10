@@ -5,6 +5,10 @@ import { ChartConfig, ChartContainer } from "@/components/ui/chart";
 
 import { ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 
+import api from "@/utils/api/client";
+import { useEffect, useState } from "react";
+
+
 const chartData = [
   { month: "Enero", desktop: 186, mobile: 80 },
   { month: "Febrero", desktop: 305, mobile: 200 },
@@ -25,6 +29,7 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export default function BarChartDashboard() {
+
   return (
     <div>
       <Card x-chunk="dashboard-01-chunk-5">

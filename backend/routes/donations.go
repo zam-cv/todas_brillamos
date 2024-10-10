@@ -59,4 +59,14 @@ func addDonationsRoutes(rg *gin.RouterGroup) {
 
 		c.JSON(http.StatusOK, donations)
 	})
+
+	donation.GET("/sum", auth.GetMiddleware(AdminAuth), func(c *gin.Context) {
+		sum, err := database.SumAmountOfDonations()
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+
+		c.JSON(http.StatusOK, sum)
+	})
 }

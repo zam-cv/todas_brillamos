@@ -10,8 +10,8 @@ export default function RecentSalesChart() {
   useEffect(() => {
     api.orders.getOrdersInfo().then((ordersInfo) => {
       setOrdersInfo(ordersInfo);
-    })
-  })
+    });
+  }, []);
 
   return (
     <div>

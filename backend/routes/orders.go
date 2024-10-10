@@ -79,4 +79,13 @@ func addOrdersRoutes(rg *gin.RouterGroup) {
 		}
 		c.JSON(http.StatusOK, ordersInfo)
 	})
+
+	orders.GET("/BestSell", auth.GetMiddleware(AdminAuth), func(c *gin.Context) {
+		bestSell, err := database.GetMostCommonProducts()
+		if err != nil {
+			c.JSON(500, gin.H{"error": err.Error()})
+			return
+		}
+		c.JSON(http.StatusOK, bestSell)
+	})
 }
