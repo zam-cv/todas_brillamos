@@ -30,14 +30,18 @@ func GetFavoritesByClientID(clientID uint) ([]models.Favorites, error) {
 func GetAllFavoritesByClientID(clientID uint) ([]models.Product, error) {
 	var favoriteProducts []models.Product
 
-	err := db.Table("favorites").
+	result := db.Table("favorites").
 		Select("products.*").
 		Joins("LEFT JOIN products ON favorites.product_id = products.id").
 		Where("favorites.client_id = ?", clientID).
-		Scan(&favoriteProducts).Error
+		Scan(&favoriteProducts)
 
-	if err != nil {
-		return nil, err
+	if result.Error != nil {
+		return []models.Product{}, result.Error
+	}
+
+	if len(favoriteProducts) == 0 {
+		return []models.Product{}, nil
 	}
 
 	return favoriteProducts, nil
