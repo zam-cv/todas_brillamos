@@ -86,7 +86,9 @@ fun ProductGridItem(
                 AsyncImage(
                     model = url,
                     contentDescription = "Product",
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .height(150.dp),
                     contentScale = ContentScale.Crop
                 )
 
@@ -116,17 +118,17 @@ fun ProductGridItem(
                 }
             }
 
-            Box (modifier = Modifier.height(150.dp)){
-                Column (modifier = Modifier
+            Box {
+                Column (
+                    modifier = Modifier
                             .align(Alignment.Center)
                             .padding(10.dp)
                 ){
-                    Row (modifier = Modifier.weight(0.8f)){
+                    Row {
                         Box (modifier = Modifier
                             .align(Alignment.CenterVertically)
                             .clip(RoundedCornerShape(4.dp))
                             .background(Color(0xFFF4D0CB))
-                            .size(50.dp)
                         ) {
                             Text(
                                 text = "-$formattedDC% ",
@@ -136,6 +138,7 @@ fun ProductGridItem(
                                     textAlign = TextAlign.Center ),
                                 modifier = Modifier
                                     .align(Alignment.Center)
+                                    .padding(5.dp)
                             )
                         }
 
@@ -147,7 +150,6 @@ fun ProductGridItem(
                             modifier = Modifier
                                 .align(Alignment.CenterVertically)
                                 .padding(start = 10.dp)
-                                .weight(2.8f)
                         )
                     }
 
@@ -162,7 +164,6 @@ fun ProductGridItem(
                             textAlign = TextAlign.Left
                         ),
                         modifier = Modifier
-                            .weight(1f)
                             .wrapContentSize(),
                         maxLines = 2,
                         overflow = TextOverflow.Ellipsis
@@ -176,7 +177,6 @@ fun ProductGridItem(
                             textAlign = TextAlign.Left
                         ),
                         modifier = Modifier
-                            .weight(1f)
                             .wrapContentSize()
                     )
 

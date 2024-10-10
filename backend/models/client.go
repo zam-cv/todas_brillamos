@@ -27,6 +27,17 @@ type ClientDetails struct {
 	Email     string `json:"email" validate:"required,email"`
 }
 
+type ClientOthersInfo struct {
+	ClientID  uint   `json:"client_id"`
+	FirstName string `json:"first_name"`
+	LastName  string `json:"last_name"`
+	Email     string `json:"email" validate:"required,email"`
+	CURP      string `json:"curp"`
+	Street    string `json:"street"`
+	ZIP       string `json:"z_ip"`
+	Reference string `json:"reference"`
+}
+
 // Regresa el ID del cliente
 func (c *ClientUser) GetID() uint {
 	// no need to implement this method

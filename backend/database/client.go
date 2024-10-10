@@ -145,7 +145,7 @@ func GetClientDetails(clientID uint) (*models.ClientDetails, error) {
 	result := models.ClientDetails{}
 
 	err := db.Model(&models.Client{}).
-		Select("clients.first_name, clients.last_name, users.email").
+		Select("clients.first_name, clients.last_name").
 		Joins("LEFT JOIN users ON users.id = clients.user_id").
 		Where("clients.id = ?", clientID).
 		First(&result).Error
@@ -190,4 +190,19 @@ func UpdateClientDetails(clientID uint, details *models.ClientDetails) error {
 	}
 
 	return tx.Commit().Error
+}
+func GetOthersClientDetails(clientID uint) (*models.ClientOthersInfo, error) {
+	db := GetDatabase()
+	result := models.ClientOthersInfo{}
+	err := db.Model(&models.Client{}).
+		Select("clients.first_name, clients.last_name, users.email, others.client_id, others.street, others.curp, others.reference, others.z_ip").
+		Joins("LEFT JOIN users ON users.id = clients.user_id").
+		Joins("LEFT JOIN others ON others.client_id = clients.id").
+		Where("clients.id = ?", clientID).
+		First(&result).Error
+	if err != nil {
+		return nil, err
+	}
+
+	return &result, nil
 }
