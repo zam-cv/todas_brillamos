@@ -2,6 +2,7 @@ package mx.cazv.todasbrillamos.view.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -9,11 +10,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
@@ -23,6 +26,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import mx.cazv.todasbrillamos.ui.theme.BadgePink
 import mx.cazv.todasbrillamos.view.Routes
 import mx.cazv.todasbrillamos.view.layouts.CustomLayout
 import mx.cazv.todasbrillamos.view.components.footer.ChatBottomBar
@@ -117,14 +121,16 @@ fun Warning(){
 @Composable
 fun MessageChat( descrip: String, modifier: Modifier = Modifier) {
     Spacer(modifier = Modifier.height(16.dp))
-    Row (modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.Start){
+    Box (modifier = Modifier
+        .fillMaxWidth()
+        .padding(end = 50.dp)) {
         Text(
             text = descrip,
             textAlign = TextAlign.Left,
             modifier = modifier
+                .align(Alignment.CenterStart)
                 .background(
-                    Color(0xFFfae7ec),
+                    BadgePink,
                     shape = RoundedCornerShape(
                         topStart = 0.dp,
                         topEnd = 12.dp,
@@ -132,14 +138,8 @@ fun MessageChat( descrip: String, modifier: Modifier = Modifier) {
                         bottomEnd = 12.dp
                     )
                 )
-                .padding(10.dp)
-                .weight(3f)
-                ,
-            color = Color.Black)
-        Text(
-            text = "" ,
-            modifier = modifier
-                .weight(1f)
+                .padding(12.dp),
+            color = Color.Black
         )
     }
 }
@@ -153,17 +153,16 @@ fun MessageChat( descrip: String, modifier: Modifier = Modifier) {
 @Composable
 fun MessageUser(descrip: String, modifier: Modifier = Modifier) {
     Spacer(modifier = Modifier.height(16.dp))
-    Row (modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.End){
-        Text(
-            text = "" ,
-            modifier = modifier
-                .weight(1f)
-        )
+
+    Box (modifier = Modifier
+        .fillMaxWidth()
+        .padding(start = 50.dp)){
         Text(
             text = descrip,
-            textAlign = TextAlign.Right,
+            textAlign = TextAlign.Left,
             modifier = modifier
+//                .widthIn(max = 300.dp)
+                .align(Alignment.CenterEnd)
                 .background(
                     Color(0xFFffffff),
                     shape = RoundedCornerShape(
@@ -173,10 +172,11 @@ fun MessageUser(descrip: String, modifier: Modifier = Modifier) {
                         bottomEnd = 12.dp
                     )
                 )
-                .padding(10.dp)
-                .weight(3f),
+                .padding(12.dp),
             color = Color.Black)
     }
+
+
 }
 
 /**
