@@ -35,6 +35,12 @@ export interface ProductoCreado{
     name: string;
 }
 
+export interface CategoryProducts {
+    ID: number;
+    CategoryName: string;
+    ProductCount: number;
+}
+
 export default {
     product: {
         setProduct: (
@@ -90,6 +96,10 @@ export default {
             return get("/favorites")
         },
 
+        getProductCategories: (): Promise<CategoryProducts[]> => {
+            return get("/products/countCategories")
+        },
+
         //PUT
         updateProduct: (
             file: File,
@@ -119,7 +129,9 @@ export default {
 
         deleteProductFromFavorites: (id:number): Promise<void> => {
             return del(`/favorites/${id}`)
-        }
+        },
+
+
 
     }
 }

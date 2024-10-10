@@ -92,3 +92,22 @@ func GetFileByHashDB(hash string) (*models.Product, error) {
 
 	return product, nil
 }
+
+func GetProductsCountByCategory() ([]models.CategoryProductCount, error) {
+	db := GetDatabase()
+	var categoryCounts []models.CategoryProductCount
+
+	err := db.Table("products").
+		Select("categories.id, categories.name AS category_name, COUNT(products.id) AS product_count").
+		Joins("JOIN categories ON categories.id = products.category_id").
+		Group("categories.id, categories.name").
+		Order("category_name").
+		Limit(5).
+		Scan(&categoryCounts).Error
+
+	if err != nil {
+		return nil, err
+	}
+
+	return categoryCounts, nil
+}

@@ -59,6 +59,12 @@ type MostSellProducts struct {
 	OrderCount uint   `json:"order_count"`
 }
 
+type CategoryProductCount struct {
+	ID           uint   `json:"id"`
+	CategoryName string `json:"category_name"`
+	ProductCount uint   `json:"product_count"`
+}
+
 // Establece el ID del producto
 func (p *Product) SetID(id uint) {
 	p.ID = id

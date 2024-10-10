@@ -133,6 +133,16 @@ func addProductRoutes(rg *gin.RouterGroup) {
 		})
 	})
 
+	group.GET("/countCategories", auth.GetMiddleware(AdminAuth), func(c *gin.Context) {
+		countCategories, err := database.GetProductsCountByCategory()
+		if err != nil {
+			c.JSON(500, gin.H{"error": err.Error()})
+			return
+		}
+
+		c.JSON(http.StatusOK, countCategories)
+	})
+
 	// Rutas para subir, actualizar y eliminar archivos de productos (solo para administradores)
 	files.UploadFile(ProductArchive, group, auth.GetMiddleware(AdminAuth))
 	files.UpdateFile(ProductArchive, group, auth.GetMiddleware(AdminAuth))
@@ -141,4 +151,5 @@ func addProductRoutes(rg *gin.RouterGroup) {
 
 	// Servir archivos estáticos
 	files.ServeStaticFiles(ProductArchive, router)
+
 }
