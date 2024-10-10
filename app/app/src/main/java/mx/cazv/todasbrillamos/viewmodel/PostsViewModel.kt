@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import mx.cazv.todasbrillamos.model.models.Post
 import mx.cazv.todasbrillamos.model.services.PostsService
 import mx.cazv.todasbrillamos.model.states.PostsState
 
@@ -30,6 +31,22 @@ class PostsViewModel : ViewModel() {
                 val posts = postsService.posts(token)
                 println(posts)
                 _state.value = PostsState(posts)
+            } catch (e: Exception) {
+                _state.value = PostsState()
+            }
+        }
+    }
+
+    /**
+     * Carga la publicación por su ID
+     *
+     * @param token El token de autenticación.
+     */
+    suspend fun getPostById(token: String, id: String) {
+        viewModelScope.launch {
+            try {
+                val post = postsService.getPost(token, id)
+                _state.value = PostsState(listOf(post))
             } catch (e: Exception) {
                 _state.value = PostsState()
             }
