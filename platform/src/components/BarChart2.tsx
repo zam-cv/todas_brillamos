@@ -9,41 +9,18 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
+import { useEffect, useState } from "react";
+import api from "@/utils/api/orders"; // Asegúrate de importar tu API correctamente
 
 export const description = "A bar chart with a custom label";
 
-const chartData = [
-  { month: "January", desktop: 186, mobile: 80 },
-  { month: "February", desktop: 305, mobile: 200 },
-  { month: "March", desktop: 237, mobile: 120 },
-  { month: "April", desktop: 73, mobile: 190 },
-  { month: "May", desktop: 209, mobile: 130 },
-  { month: "June", desktop: 214, mobile: 140 },
-];
-
+// Configuración para la gráfica
 const chartConfig = {
-  desktop: {
-    label: "Desktop",
-    color: "hsl(var(--chart-1))",
-  },
-  mobile: {
-    label: "Mobile",
-    color: "hsl(var(--chart-2))",
+  total_revenue: {
+    label: "Ganancias",
+    color: "hsl(var(--chart-4))",
   },
   label: {
     color: "hsl(var(--background))",
@@ -51,42 +28,51 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export default function BarChart2() {
+  const [chartData, setChartData] = useState<{ month: string, total_revenue: number }[]>([]);
+
+  // Llamar a la API para obtener las ganancias por mes
+  useEffect(() => {
+    api.orders.getMonthlyRevenue().then((data) => {
+      setChartData(data);
+    });
+  }, []);
+
   return (
     <Card className="h-full"> {/* Asegura que la tarjeta ocupe toda la altura disponible */}
       <CardHeader>
         <CardTitle>Ganancias por mes</CardTitle>
-        <CardDescription>January - June 2024</CardDescription>
+        <CardDescription>Enero - Diciembre 2024</CardDescription>
       </CardHeader>
       <CardContent className="h-64"> {/* Establece una altura fija para el contenido */}
         <ChartContainer config={chartConfig}>
           <BarChart
             accessibilityLayer
-            data={chartData}
+            data={chartData} // Los datos dinámicos de la API
             layout="vertical"
             margin={{
               right: 16,
             }}
-            height={200} 
+            height={200}
           >
             <CartesianGrid horizontal={false} />
             <YAxis
-              dataKey="month"
+              dataKey="month" 
               type="category"
               tickLine={false}
               tickMargin={10}
               axisLine={false}
-              tickFormatter={(value) => value.slice(0, 3)}
-              hide
+              tickFormatter={(value) => value.slice(5, 7) + '/' + value.slice(2, 4)} 
+              hide={false} 
             />
-            <XAxis dataKey="desktop" type="number" hide />
+            <XAxis dataKey="total_revenue" type="number" hide={false} /> 
             <ChartTooltip
               cursor={false}
               content={<ChartTooltipContent indicator="line" />}
             />
             <Bar
-              dataKey="desktop"
+              dataKey="total_revenue" // Usar la clave de ganancias
               layout="vertical"
-              fill="var(--color-desktop)"
+              fill="#e76e50"
               radius={4}
             >
               <LabelList
@@ -97,7 +83,7 @@ export default function BarChart2() {
                 fontSize={12}
               />
               <LabelList
-                dataKey="desktop"
+                dataKey="total_revenue"
                 position="right"
                 offset={8}
                 className="fill-foreground"

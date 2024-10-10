@@ -38,6 +38,11 @@ export interface MostSellProducts {
     order_count: number;
 }
 
+export interface MonthlyRevenue {
+    month: string;
+    total_revenue: number;
+}
+
 
 export default {
     orders: {
@@ -52,6 +57,10 @@ export default {
 
         getMostSell: (): Promise<MostSellProducts[]> => {
             return get("/orders/BestSell")
+        },
+
+        getMonthlyRevenue: (): Promise<MonthlyRevenue[]> => {
+            return get("/orders/monthRev")
         }
     }
 }
