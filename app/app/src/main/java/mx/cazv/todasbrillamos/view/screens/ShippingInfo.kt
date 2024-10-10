@@ -15,7 +15,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -30,8 +34,6 @@ import mx.cazv.todasbrillamos.view.components.footer.ButtonBottomBar
 import mx.cazv.todasbrillamos.view.components.header.BasicTopBar
 import mx.cazv.todasbrillamos.view.layouts.CustomLayout
 import mx.cazv.todasbrillamos.viewmodel.AuthViewModel
-import mx.cazv.todasbrillamos.viewmodel.CartViewModel
-import mx.cazv.todasbrillamos.viewmodel.ProductsViewModel
 import mx.cazv.todasbrillamos.viewmodel.UserViewModel
 
 /**
@@ -43,21 +45,14 @@ import mx.cazv.todasbrillamos.viewmodel.UserViewModel
  * Pantalla de información de envío que permite al usuario ingresar sus datos personales y de dirección.
  *
  * @param navController El NavHostController utilizado para la navegación.
- * @param productId El ID del producto seleccionado.
- * @param quantity La cantidad del producto seleccionado.
  * @param authViewModel El ViewModel de autenticación (gestionar el registro del usuario).
  * @param userViewModel El ViewModel de usuario (gestionar las operaciones del usuario).
- * @param cartViewModel El ViewModel de carrito (gestionar las operaciones del carrito).
  */
 @Composable
 fun ShippingInfo(
     navController: NavHostController,
-    productId: Int,
-    quantity: Int,
     authViewModel: AuthViewModel,
-    userViewModel: UserViewModel,
-    cartViewModel: CartViewModel,
-    productsViewModel: ProductsViewModel
+    userViewModel: UserViewModel
 ) {
     var curp by remember { mutableStateOf("") }
     var street by remember { mutableStateOf("") }
@@ -94,10 +89,7 @@ fun ShippingInfo(
                     if (token != null) {
                         try {
                             userViewModel.setOthers(token, others)
-
-                            val product = productsViewModel.getProduct(token, productId.toString())
-                            cartViewModel.addProductToCart(token, product.product, quantity)
-                            navController.navigate(Routes.ROUTE_CART)
+                            navController.navigate(Routes.ROUTE_PAYMENTS)
                         } catch (e: Exception) {
                             // Handle error
                         }
@@ -118,10 +110,19 @@ fun ShippingInfo(
             ) {
                 Spacer(modifier = Modifier.size(16.dp))
 
-                Input(
-                    placeholder = "CURP",
+                LabeledInput(
+                    label = "CURP",
+                    placeholder = "Ejemplo: BADD110313HCMLNS09",
                     value = curp,
-                    onValueChange = { curp = it }
+                    onValueChange = { curp = it },
+                    required = true
+                )
+
+                Text(
+                    text = "* El CURP es requerido por la fundación",
+                    color = Color.Red,
+                    fontSize = 12.sp,
+                    modifier = Modifier.padding(top = 4.dp, bottom = 16.dp)
                 )
 
                 Spacer(modifier = Modifier.size(16.dp))
@@ -135,62 +136,106 @@ fun ShippingInfo(
 
                 Spacer(modifier = Modifier.size(16.dp))
 
-                Input(
-                    placeholder = "Calle",
+                LabeledInput(
+                    label = "Calle",
+                    placeholder = "Ejemplo: Av. Insurgentes",
                     value = street,
-                    onValueChange = { street = it }
+                    onValueChange = { street = it },
+                    required = true
                 )
 
                 Spacer(modifier = Modifier.size(16.dp))
 
-                Input(
-                    placeholder = "Número exterior",
+                LabeledInput(
+                    label = "Número exterior",
+                    placeholder = "Ejemplo: 123",
                     value = exterior,
-                    onValueChange = { exterior = it }
+                    onValueChange = { exterior = it },
+                    required = true
                 )
 
                 Spacer(modifier = Modifier.size(16.dp))
 
-                Input(
-                    placeholder = "Número interior",
+                LabeledInput(
+                    label = "Número interior",
+                    placeholder = "Ejemplo: 4B (opcional)",
                     value = interior,
-                    onValueChange = { interior = it }
+                    onValueChange = { interior = it },
+                    required = false
                 )
 
                 Spacer(modifier = Modifier.size(16.dp))
 
-                Input(
-                    placeholder = "Ciudad",
+                LabeledInput(
+                    label = "Ciudad",
+                    placeholder = "Ejemplo: Ciudad de México",
                     value = city,
-                    onValueChange = { city = it }
+                    onValueChange = { city = it },
+                    required = true
                 )
 
                 Spacer(modifier = Modifier.size(16.dp))
 
-                Input(
-                    placeholder = "Estado",
+                LabeledInput(
+                    label = "Estado",
+                    placeholder = "Ejemplo: CDMX",
                     value = state,
-                    onValueChange = { state = it }
+                    onValueChange = { state = it },
+                    required = true
                 )
 
                 Spacer(modifier = Modifier.size(16.dp))
 
-                Input(
-                    placeholder = "Código postal",
+                LabeledInput(
+                    label = "Código postal",
+                    placeholder = "Ejemplo: 03900",
                     value = zip,
-                    onValueChange = { zip = it }
+                    onValueChange = { zip = it },
+                    required = true
                 )
 
                 Spacer(modifier = Modifier.size(16.dp))
 
-                Input(
-                    placeholder = "Referencia",
+                LabeledInput(
+                    label = "Referencia",
+                    placeholder = "Ejemplo: Casa blanca con reja negra",
                     value = reference,
-                    onValueChange = { reference = it }
+                    onValueChange = { reference = it },
+                    required = false
                 )
 
                 Spacer(modifier = Modifier.size(16.dp))
             }
         }
+    }
+}
+
+@Composable
+fun LabeledInput(
+    label: String,
+    placeholder: String,
+    value: String,
+    onValueChange: (String) -> Unit,
+    required: Boolean
+) {
+    Column {
+        Text(
+            buildAnnotatedString {
+                append(label)
+                if (required) {
+                    withStyle(style = SpanStyle(color = Color.Red)) {
+                        append(" *")
+                    }
+                }
+            },
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.padding(bottom = 4.dp)
+        )
+        Input(
+            placeholder = placeholder,
+            value = value,
+            onValueChange = onValueChange
+        )
     }
 }

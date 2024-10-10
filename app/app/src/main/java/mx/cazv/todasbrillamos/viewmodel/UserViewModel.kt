@@ -74,7 +74,7 @@ class UserViewModel : ViewModel() {
     }
 
     /**
-     * Verifica la existencia del usuario utilizando el token.
+     * Verifica la existencia de los otros datos del usuario utilizando el token.
      *
      * @param token El token de autenticación del usuario.
      * @return Un objeto Exist que indica si el usuario existe.

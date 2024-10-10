@@ -36,6 +36,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import mx.cazv.todasbrillamos.model.ApiConfig
 import mx.cazv.todasbrillamos.model.models.CartItem
 import mx.cazv.todasbrillamos.view.Routes
@@ -44,6 +48,7 @@ import mx.cazv.todasbrillamos.view.components.header.BasicTopBar
 import mx.cazv.todasbrillamos.view.layouts.CustomLayout
 import mx.cazv.todasbrillamos.viewmodel.AuthViewModel
 import mx.cazv.todasbrillamos.viewmodel.CartViewModel
+import mx.cazv.todasbrillamos.viewmodel.UserViewModel
 
 /**
  * Archivo para mostrar el carrito de compras
@@ -61,7 +66,8 @@ import mx.cazv.todasbrillamos.viewmodel.CartViewModel
 fun Cart(
     navController: NavHostController,
     authViewModel: AuthViewModel,
-    cartViewModel: CartViewModel
+    cartViewModel: CartViewModel,
+    userViewModel: UserViewModel
 ) {
     val cartState by cartViewModel.state.collectAsState()
 
@@ -81,7 +87,27 @@ fun Cart(
             ButtonBottomBar(
                 buttonText = "Comprar (Total: $${String.format("%.2f", cartState.totalPrice)})",
                 onClick = {
-                    navController.navigate(Routes.ROUTE_PAYMENTS)
+                    CoroutineScope(Dispatchers.Main).launch {
+                        val token = withContext(Dispatchers.IO) {
+                            authViewModel.token()
+                        }
+
+                        if (token != null) {
+                            val exist = withContext(Dispatchers.IO) {
+                                userViewModel.exist(token)
+                            }
+
+                            if (exist != null) {
+                                if (exist.exists) {
+                                    navController.navigate(Routes.ROUTE_PAYMENTS)
+                                } else {
+                                    navController.navigate(Routes.ROUTE_SHIPPING_INFO)
+                                }
+                            } else {
+                                navController.navigate(Routes.ROUTE_SHIPPING_INFO)
+                            }
+                        }
+                    }
                 }
             )
         }

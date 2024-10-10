@@ -139,7 +139,7 @@ fun Nav(
                 Routes.ROUTE_SOCIAL_NETWORKS,
                 Routes.ROUTE_TERMS_AND_POLICIES,
                 Routes.ROUTE_ABOUT,
-                Routes.ROUTE_SHIPPING_INFO + "/{productId}/{quantity}", // Ruta dinamica
+                Routes.ROUTE_SHIPPING_INFO,
                 Routes.ROUTE_PAYMENTS
             )
 
@@ -163,7 +163,7 @@ fun Nav(
                             Routes.ROUTE_CHAT -> Chat(navController, authViewModel, chatViewModel)
                             Routes.ROUTE_FAVORITES -> Favorites(navController, authViewModel, favoritesViewModel)
                             Routes.ROUTE_NOTIFICATIONS -> Notifications(navController)
-                            Routes.ROUTE_CART -> Cart(navController, authViewModel, cartViewModel)
+                            Routes.ROUTE_CART -> Cart(navController, authViewModel, cartViewModel, userViewModel)
                             Routes.ROUTE_PRODUCT_DETAILS + "/{productId}" -> {
                                 val productId = backStackEntry.arguments?.getString("productId")
                                 val id = productId?.toInt()
@@ -174,7 +174,6 @@ fun Nav(
                                         id,
                                         randomState,
                                         authViewModel,
-                                        userViewModel,
                                         cartViewModel,
                                         favoritesViewModel
                                     )
@@ -189,21 +188,11 @@ fun Nav(
                             Routes.ROUTE_SOCIAL_NETWORKS -> SocialNetworks(navController)
                             Routes.ROUTE_TERMS_AND_POLICIES -> TermsAndPolicies(navController)
                             Routes.ROUTE_ABOUT -> About(navController)
-                            Routes.ROUTE_SHIPPING_INFO + "/{productId}/{quantity}" -> {
-                                val productId = backStackEntry.arguments?.getString("productId")?.toInt()
-                                val quantity = backStackEntry.arguments?.getString("quantity")?.toInt()
-
-                                if (productId != null && quantity != null) {
-                                    ShippingInfo(
-                                        navController,
-                                        id, quantity,
-                                        authViewModel,
-                                        userViewModel,
-                                        cartViewModel,
-                                        productsViewModel
-                                    )
-                                }
-                            }
+                            Routes.ROUTE_SHIPPING_INFO -> ShippingInfo(
+                                navController,
+                                authViewModel,
+                                userViewModel,
+                            )
                             Routes.ROUTE_PAYMENTS -> {
                                 Payments(navController, authViewModel, cartViewModel, buyViewModel)
                             }

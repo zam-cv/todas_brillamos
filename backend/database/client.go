@@ -3,7 +3,6 @@
 //   - Carlos Zamudio
 //   - Mariana Balderrábano
 
-
 package database
 
 import (
@@ -66,7 +65,6 @@ func GetUserByClientID(id int) (*models.User, error) {
 		First(&user).Error
 	return &user, err
 }
-
 
 // Obtiene el usuario por el email del cliente.
 // Devuelve un puntero a models.User y un error en caso de que ocurra.
@@ -131,7 +129,7 @@ func CreateClient(clientUser *models.ClientUser) (uint, error) {
 }
 
 // Obtiene todos los IDs de los clientes.
-// Devuelve un slice de uint con los IDs de los clientes. 
+// Devuelve un slice de uint con los IDs de los clientes.
 func GetAllClientsIDs() []uint {
 	var clients []uint
 	GetDatabase().Model(&models.Client{}).Pluck("id", &clients)
@@ -145,7 +143,7 @@ func GetClientDetails(clientID uint) (*models.ClientDetails, error) {
 	result := models.ClientDetails{}
 
 	err := db.Model(&models.Client{}).
-		Select("clients.first_name, clients.last_name").
+		Select("clients.first_name, clients.last_name, users.email").
 		Joins("LEFT JOIN users ON users.id = clients.user_id").
 		Where("clients.id = ?", clientID).
 		First(&result).Error

@@ -16,7 +16,6 @@ import androidx.compose.material.icons.automirrored.outlined.InsertDriveFile
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.outlined.Lock
-import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.QuestionMark
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -37,7 +36,6 @@ import mx.cazv.todasbrillamos.view.components.footer.BottomBar
 import mx.cazv.todasbrillamos.view.components.header.BasicTopBar
 import mx.cazv.todasbrillamos.view.layouts.CustomLayout
 import mx.cazv.todasbrillamos.viewmodel.AuthViewModel
-import mx.cazv.todasbrillamos.viewmodel.UserViewModel
 
 /**
  * Archivo para mostrar la pantalla de configuración del usuario.
@@ -164,8 +162,7 @@ fun Config(
             OptionsSection(
                 options = listOf(
                     Setting("Editar perfil", Icons.Filled.Person, Routes.ROUTE_EDIT_PROFILE, navController),
-                    Setting("Cambiar contraseña", Icons.Outlined.Lock, Routes.ROUTE_CHANGE_PASSWORD, navController),
-                    Setting("Notificaciones", Icons.Outlined.Notifications, Routes.ROUTE_NOTIFICATIONS, navController),
+                    Setting("Cambiar contraseña", Icons.Outlined.Lock, Routes.ROUTE_CHANGE_PASSWORD, navController)
                 )
             )
 

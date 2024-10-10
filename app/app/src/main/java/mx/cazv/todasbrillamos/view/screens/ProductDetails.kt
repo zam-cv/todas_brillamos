@@ -461,7 +461,6 @@ fun ProductDetails(
     productId: Int,
     randomState: State<RandomState>,
     authViewModel: AuthViewModel,
-    userViewModel: UserViewModel,
     cartViewModel: CartViewModel,
     favoritesViewModel: FavoritesViewModel = FavoritesViewModel(),
     productViewModel: ProductViewModel = viewModel(),
@@ -490,20 +489,8 @@ fun ProductDetails(
                     }
 
                     if (token != null) {
-                        val exist = withContext(Dispatchers.IO) {
-                            userViewModel.exist(token)
-                        }
-
-                        if (exist != null) {
-                            if (exist.exists) {
-                                cartViewModel.addProductToCart(token, productState.value.product.product, quantity)
-                                navController.navigate(Routes.ROUTE_CART)
-                            } else {
-                                navController.navigate(Routes.ROUTE_SHIPPING_INFO + "/$productId" + "/$quantity")
-                            }
-                        } else {
-                            navController.navigate(Routes.ROUTE_SHIPPING_INFO + "/$productId" + "/$quantity")
-                        }
+                        cartViewModel.addProductToCart(token, productState.value.product.product, quantity)
+                        navController.navigate(Routes.ROUTE_CART)
                     }
                 }
             })
