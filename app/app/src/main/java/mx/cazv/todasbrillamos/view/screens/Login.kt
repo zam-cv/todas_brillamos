@@ -14,11 +14,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Visibility
-import androidx.compose.material.icons.filled.VisibilityOff
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -30,6 +25,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -42,7 +38,6 @@ import mx.cazv.todasbrillamos.R
 import mx.cazv.todasbrillamos.ui.theme.BackgroundColor
 import mx.cazv.todasbrillamos.view.Routes
 import mx.cazv.todasbrillamos.view.components.Button
-import mx.cazv.todasbrillamos.view.components.Input
 import mx.cazv.todasbrillamos.view.components.LabeledInput
 import mx.cazv.todasbrillamos.view.layouts.BasicLayout
 import mx.cazv.todasbrillamos.viewmodel.AuthState
@@ -61,7 +56,8 @@ fun Login(navController: NavHostController, viewModel: AuthViewModel) {
 
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-    var isPasswordVisible by remember { mutableStateOf(false) }
+    var errorMessage by remember { mutableStateOf<String?>(null) }
+    var isEmptyFieldError by remember { mutableStateOf(false) }
 
     LaunchedEffect(authState) {
         when (authState) {
@@ -71,7 +67,8 @@ fun Login(navController: NavHostController, viewModel: AuthViewModel) {
                 }
             }
             is AuthState.Error -> {
-                // TODO: Mostrar mensaje de error
+                errorMessage = "Credenciales inválidas. Por favor, inténtalo de nuevo."
+                isEmptyFieldError = false
             }
             else -> {}
         }
@@ -91,11 +88,12 @@ fun Login(navController: NavHostController, viewModel: AuthViewModel) {
                     .weight(1f),
                 contentAlignment = Alignment.Center
             ) {
-                Image(painter = painterResource(id = R.drawable.degradado3),
+                Image(
+                    painter = painterResource(id = R.drawable.degradado3),
                     contentDescription = "Background",
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    contentScale = ContentScale.FillHeight)
+                    modifier = Modifier.fillMaxWidth(),
+                    contentScale = ContentScale.FillHeight
+                )
 
                 Image(
                     painter = painterResource(id = R.drawable.logo_tb),
@@ -139,7 +137,11 @@ fun Login(navController: NavHostController, viewModel: AuthViewModel) {
                 LabeledInput(
                     placeholder = "Correo electrónico",
                     value = email,
-                    onValueChange = { email = it }
+                    onValueChange = {
+                        email = it
+                        errorMessage = null
+                        isEmptyFieldError = false
+                    }
                 )
 
                 Spacer(modifier = Modifier.size(16.dp))
@@ -147,26 +149,59 @@ fun Login(navController: NavHostController, viewModel: AuthViewModel) {
                 LabeledInput(
                     placeholder = "Contraseña",
                     value = password,
-                    onValueChange = { password = it },
+                    onValueChange = {
+                        password = it
+                        errorMessage = null
+                        isEmptyFieldError = false
+                    },
                     isPassword = true,
                 )
 
                 Spacer(modifier = Modifier.size(16.dp))
+
+                // Mostrar el mensaje de error si existe
+                if (isEmptyFieldError) {
+                    Text(
+                        text = "Por favor, completa todos los campos",
+                        color = Color.Red,
+                        fontSize = 14.sp,
+                        modifier = Modifier.padding(bottom = 8.dp)
+                    )
+                } else if (errorMessage != null) {
+                    Text(
+                        text = errorMessage!!,
+                        color = Color.Red,
+                        fontSize = 14.sp,
+                        modifier = Modifier.padding(bottom = 8.dp)
+                    )
+                }
+
                 Button(
                     text = "Iniciar sesión",
-                    onClick = { viewModel.signIn(email, password) }
+                    onClick = {
+                        if (email.isBlank() || password.isBlank()) {
+                            isEmptyFieldError = true
+                            errorMessage = null
+                        } else {
+                            isEmptyFieldError = false
+                            errorMessage = null
+                            viewModel.signIn(email, password)
+                        }
+                    }
                 )
 
-                Spacer(modifier = Modifier.size(16.dp))
+/*                Spacer(modifier = Modifier.size(16.dp))
 
-                TextButton(onClick = { navController.navigate(Routes.ROUTE_FORGOT_PASSWORD) },
-                    modifier = Modifier.fillMaxWidth()) {
+                TextButton(
+                    onClick = { navController.navigate(Routes.ROUTE_FORGOT_PASSWORD) },
+                    modifier = Modifier.fillMaxWidth()
+                ) {
                     Text(
                         text = "¿Olvidaste tu contraseña?",
                         style = TextStyle(textDecoration = TextDecoration.Underline),
                         fontSize = 15.sp
                     )
-                }
+                }*/
             }
         }
     }

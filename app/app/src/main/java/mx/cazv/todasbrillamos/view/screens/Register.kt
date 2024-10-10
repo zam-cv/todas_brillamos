@@ -29,6 +29,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Checkbox
@@ -39,6 +40,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -50,6 +52,40 @@ import mx.cazv.todasbrillamos.ui.theme.BackgroundColor
 import mx.cazv.todasbrillamos.view.components.LabeledInput
 import mx.cazv.todasbrillamos.viewmodel.AuthState
 import mx.cazv.todasbrillamos.viewmodel.AuthViewModel
+
+data class ValidationResult(
+    val isValid: Boolean,
+    val errorMessage: String? = null
+)
+
+fun validateRegistration(
+    email: String,
+    password: String,
+    confirmPassword: String,
+    firstName: String,
+    lastName: String,
+    acceptPrivacy: Boolean
+): ValidationResult {
+    if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+        return ValidationResult(false, "Correo electrónico inválido")
+    }
+    if (password.length < 8) {
+        return ValidationResult(false, "La contraseña debe tener al menos 8 caracteres")
+    }
+    if (password != confirmPassword) {
+        return ValidationResult(false, "Las contraseñas no coinciden")
+    }
+    if (firstName.length < 2) {
+        return ValidationResult(false, "El nombre debe tener al menos 2 caracteres")
+    }
+    if (lastName.length < 2) {
+        return ValidationResult(false, "El apellido debe tener al menos 2 caracteres")
+    }
+    if (!acceptPrivacy) {
+        return ValidationResult(false, "Debes aceptar el aviso de privacidad")
+    }
+    return ValidationResult(true)
+}
 
 /**
  * Pantalla de registro que permite al usuario crear una nueva cuenta.
@@ -69,6 +105,7 @@ fun Register(navController: NavHostController, authViewModel: AuthViewModel) {
     var confirmPassword by remember { mutableStateOf("") }
     var receiveInfo by remember { mutableStateOf(false) }
     var acceptPrivacy by remember { mutableStateOf(false) }
+    var errorMessage by remember { mutableStateOf<String?>(null) }
 
     val authState by authViewModel.authState.collectAsState()
 
@@ -79,7 +116,9 @@ fun Register(navController: NavHostController, authViewModel: AuthViewModel) {
                     popUpTo(Routes.ROUTE_REGISTER) { inclusive = true }
                 }
             }
-            is AuthState.Error -> {}
+            is AuthState.Error -> {
+                errorMessage = (authState as AuthState.Error).message
+            }
             else -> {}
         }
     }
@@ -216,9 +255,18 @@ fun Register(navController: NavHostController, authViewModel: AuthViewModel) {
                     Spacer(modifier = Modifier.height(16.dp))
 
                     Button(
-                        text = "Continuar",
+                        "Continuar",
                         onClick = {
-                            if (password == confirmPassword && acceptPrivacy) {
+                            val validationResult = validateRegistration(
+                                email = email,
+                                password = password,
+                                confirmPassword = confirmPassword,
+                                firstName = name,
+                                lastName = lastName,
+                                acceptPrivacy = acceptPrivacy
+                            )
+
+                            if (validationResult.isValid) {
                                 val userInfo = UserInfo(
                                     first_name = name,
                                     last_name = lastName,
@@ -229,9 +277,23 @@ fun Register(navController: NavHostController, authViewModel: AuthViewModel) {
                                 coroutineScope.launch {
                                     authViewModel.register(userInfo)
                                 }
+                            } else {
+                                errorMessage = validationResult.errorMessage
                             }
                         }
                     )
+
+                    errorMessage?.let { error ->
+                        Text(
+                            text = error,
+                            color = Color.Red,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier
+                                .padding(top = 8.dp)
+                                .fillMaxWidth()
+                                .wrapContentWidth(Alignment.CenterHorizontally)
+                        )
+                    }
 
                     Spacer(modifier = Modifier.height(8.dp))
 
@@ -247,4 +309,3 @@ fun Register(navController: NavHostController, authViewModel: AuthViewModel) {
         }
     }
 }
-
