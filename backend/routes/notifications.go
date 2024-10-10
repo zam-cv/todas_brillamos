@@ -1,7 +1,8 @@
-/*
- * Backend-routes: Código que determina los endpoints de notificaciones y sus rutas
- * @author: Mariana Balderrábano
- */
+// Rutas de notificaciones
+// Autores:
+//   - Mariana Balderrábano
+
+
 package routes
 
 import (
@@ -16,13 +17,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-/*
- * Función para agregar rutas de notificaciones a la API (Post, Get)
- */
+// Agrega las rutas de notificaciones a la API
+
 func addNotificationsRoutes(rg *gin.RouterGroup) {
 	notifications := rg.Group("/notifications")
 
-	// Endpoint POST que agrega una nueva notificación a la base de datos para todos los clientes
+	// POST /notifications - Agrega una nueva notificación para todos los clientes
 	notifications.POST("", auth.GetMiddleware(AdminAuth), func(c *gin.Context) {
 		var notification models.Notifications
 		if err := c.ShouldBindJSON(&notification); err != nil {
@@ -53,7 +53,7 @@ func addNotificationsRoutes(rg *gin.RouterGroup) {
 		c.Status(http.StatusCreated)
 	})
 
-	// Endpoint POST que agrega una nueva notificación a la base de datos asociada a un cliente
+	// POST /notifications/:clientID - Agrega una nueva notificación para un cliente específico
 	notifications.POST("/:clientID", auth.GetMiddleware(AdminAuth), func(c *gin.Context) {
 		userId := c.Param("clientID")
 		userIdInt, err := strconv.Atoi(userId)
@@ -102,6 +102,7 @@ func addNotificationsRoutes(rg *gin.RouterGroup) {
 	// 	c.JSON(http.StatusOK, notifications)
 	// })
 
+	// GET /notifications/:clientID - Obtiene todas las notificaciones de un cliente específico
 	notifications.GET("/:clientID", auth.GetMiddleware(ClientAuth), middlewares.GetClientID(), func(c *gin.Context) {
 		clientID := c.Param("clientID")
 		clientIDInt, err := strconv.Atoi(clientID)
@@ -119,7 +120,7 @@ func addNotificationsRoutes(rg *gin.RouterGroup) {
 		c.JSON(http.StatusOK, groupedNotifications)
 	})
 
-	// Endpoint GET que obtiene todas las notificaciones de la base de datos de todos los clientes
+	// GET /notifications - Obtiene todas las notificaciones de todos los clientes
 	notifications.GET("", auth.GetMiddleware(AdminAuth), func(c *gin.Context) {
 		notifications, err := database.GetAllNotifications()
 		if err != nil {

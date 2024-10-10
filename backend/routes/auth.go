@@ -1,3 +1,4 @@
+// Rutas de autenticación.
 // Autores:
 //   - Carlos Zamudio
 

@@ -1,3 +1,6 @@
+// Definiciones de rutas de chat.
+// Autores:
+//   - Carlos Zamudio
 package routes
 
 import (
@@ -16,16 +19,19 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// Representa la estructura de un mensaje en el chat.
 type Message struct {
 	Message string `json:"message"`
 }
 
+// Añade las rutas relacionadas con el chat al grupo de rutas proporcionado.
 func addChatRoutes(api *gin.RouterGroup) {
 	chat := api.Group("/chat")
 
 	var ollamaEf *ollama.OllamaEmbeddingFunction
 	var err error
 
+	// Intenta crear una función de embedding Ollama con reintentos.
 	createOllamaEF := func() error {
 		for attempts := 0; attempts < 5; attempts++ {
 			ollamaEf, err = ollama.NewOllamaEmbeddingFunction(
@@ -45,17 +51,20 @@ func addChatRoutes(api *gin.RouterGroup) {
 		log.Printf("Warning: Could not create Ollama embedding function. Some features may not work: %s\n", err)
 	}
 
+	// Inicialización del cliente Chroma
 	client, err := chroma.NewClient("http://localhost:8080")
 	if err != nil {
 		log.Printf("Error creating the client: %s\n", err)
 		return
 	}
 
+	// Eliminación de la colección existente (si existe)
 	_, err = client.DeleteCollection(context.TODO(), "collection")
 	if err != nil {
 		log.Printf("Error deleting collection (this is normal if it doesn't exist): %s\n", err)
 	}
 
+	// Creación de una nueva colección
 	newCollection, err := client.NewCollection(
 		context.TODO(),
 		collection.WithName("collection"),
@@ -67,6 +76,7 @@ func addChatRoutes(api *gin.RouterGroup) {
 		return
 	}
 
+	// Creación y configuración del conjunto de registros
 	rs, err := types.NewRecordSet(
 		types.WithEmbeddingFunction(ollamaEf),
 		types.WithIDGenerator(types.NewULIDGenerator()),
@@ -86,12 +96,14 @@ func addChatRoutes(api *gin.RouterGroup) {
 		return
 	}
 
+	// Adición de registros a la colección
 	_, err = newCollection.AddRecords(context.Background(), rs)
 	if err != nil {
 		log.Printf("Error adding documents: %s\n", err)
 		return
 	}
 
+	// POST /chat - Procesa un mensaje del chat y devuelve una respuesta
 	chat.POST("", auth.GetMiddleware(ClientAuth), func(c *gin.Context) {
 		var message Message
 		if err := c.ShouldBindJSON(&message); err != nil {
