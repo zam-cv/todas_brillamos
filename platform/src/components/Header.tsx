@@ -23,6 +23,7 @@ import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
+import { useState } from "react"; // Añadimos import de useState
 
 const LINKS = [
   {
@@ -66,21 +67,21 @@ export default function Header() {
   const { pathname } = useLocation();
   const route = pathname.split("/")[1];
   
-
   return (
     <div className="hidden border-r bg-muted/40 md:block">
       <div className="flex h-full max-h-screen flex-col gap-2">
         <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
           <Link
             to=""
-            className="grid grid-cols-[4rem_1fr]  font-semibold w-full h-full"
+            className="grid grid-cols-[4rem_1fr] font-semibold w-full h-full"
           >
             <div className="w-full h-full relative p-3">
-              <div className="w-full h-full ">
+              <div className="w-full h-full">
                 <img
                   src="/logo_todasBrillamosHeader.png"
-                  className="object-contain w-full h-full "
-                ></img>
+                  className="object-contain w-full h-full"
+                  alt="Logo"
+                />
               </div>
             </div>
             <div className="flex justify-left items-center">
@@ -115,6 +116,7 @@ export function HeaderMobile() {
   const { pathname } = useLocation();
   const route = pathname.split("/")[1];
   const { signOut } = useAuth();
+  const [isOpen, setIsOpen] = useState(false); // Añadimos estado para controlar el Sheet
 
   function handleSignOut(){
     signOut();
@@ -122,7 +124,7 @@ export function HeaderMobile() {
 
   return (
     <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
-      <Sheet>
+      <Sheet open={isOpen} onOpenChange={setIsOpen}>
         <SheetTrigger asChild>
           <Button variant="outline" size="icon" className="shrink-0 md:hidden">
             <Menu className="h-5 w-5" />
@@ -135,6 +137,7 @@ export function HeaderMobile() {
               <Link
                 key={index}
                 to={link.to}
+                onClick={() => setIsOpen(false)} // Cerramos el menú al hacer clic
                 className={`mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 hover:text-foreground ${
                   route === link.to.split("/")[1]
                     ? "text-primary"
@@ -149,7 +152,6 @@ export function HeaderMobile() {
         </SheetContent>
       </Sheet>
       <div className="w-full flex-1">
-
       </div>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
@@ -160,10 +162,6 @@ export function HeaderMobile() {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Administrador</DropdownMenuLabel>
-          {/* <DropdownMenuSeparator />
-          <DropdownMenuItem>Settings</DropdownMenuItem>
-          <DropdownMenuItem>Support</DropdownMenuItem>
-          <DropdownMenuSeparator /> */}
           <DropdownMenuItem onClick={handleSignOut}>Cerrar sesión</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
