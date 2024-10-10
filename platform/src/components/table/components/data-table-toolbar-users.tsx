@@ -29,78 +29,7 @@ export function DataTableToolbar<TData>({
   return (
     <div className="flex items-center justify-between">
       <div className="flex flex-1 items-center space-x-2">
-        <Input
-          placeholder="Filtrar Usuarios"
-          value={
-            (table.getColumn("username")?.getFilterValue() as string) ?? ""
-          }
-          onChange={(event) =>
-            table.getColumn("username")?.setFilterValue(event.target.value)
-          }
-          className="h-8 w-[150px] lg:w-[250px]"
-        />
-        {table.getColumn("team") && (
-          <DataTableFacetedFilter
-            column={table.getColumn("team")}
-            title="Team"
-            options={teams.map((team) => ({
-              value: team,
-              label: team,
-            }))}
-          />
-        )}
-        {table.getColumn("campus") && (
-          <DataTableFacetedFilter
-            column={table.getColumn("campus")}
-            title="Campus"
-            options={campuses.map((campus) => ({
-              value: campus,
-              label: campus,
-            }))}
-          />
-        )}
-        {table.getColumn("with_bus") && (
-          <DataTableFacetedFilter
-            column={table.getColumn("with_bus")}
-            title="With Bus"
-            options={[
-              {
-                value: true as any,
-                label: "Yes",
-              },
-              {
-                value: false as any,
-                label: "No",
-              }
-            ]}
-          />
-        )}
-        {table.getColumn("confirmed") && (
-          <DataTableFacetedFilter
-            column={table.getColumn("confirmed")}
-            title="Confirmed"
-            options={[
-              {
-                value: true as any,
-                label: "Yes",
-              },
-              {
-                value: false as any,
-                label: "No",
-              }
-            ]}
-          />
-        )}
-        {isFiltered && (
-          <Button
-            variant="ghost"
-            onClick={() => table.resetColumnFilters()}
-            className="h-8 px-2 lg:px-3"
-          >
-            Reset
-            <Cross2Icon className="ml-2 h-4 w-4" />
-          </Button>
-        )}
+        
       </div>
       <DataTableViewOptions table={table} />
     </div>
