@@ -27,7 +27,7 @@ import mx.cazv.todasbrillamos.view.components.InteractiveCard
  */
 
 @Composable
-fun InteractiveCardsHome(){
+fun InteractiveCardsHome(navController: NavHostController){
     Column(
         modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -60,7 +60,7 @@ fun InteractiveCardsHome(){
                 imageSize = 150,
                 imageAlignment = Alignment.BottomEnd,
                 valx = 30.dp,
-//                onClick = { navController.navigate(Routes.ROUTE_CHAT) }
+                onClick = { navController.navigate(Routes.ROUTE_CHAT) }
             )
 
             InteractiveCard(
@@ -87,7 +87,7 @@ fun InteractiveCardsHome(){
                 imageSize = 200,
                 imageAlignment = Alignment.Center,
                 valy = 20.dp,
-//                onClick = { navController.navigate(Routes.ROUTE_STORE) }
+                onClick = { navController.navigate(Routes.ROUTE_STORE) }
             )
 
 
@@ -113,7 +113,7 @@ fun InteractiveCardsHome(){
                 backgroundColor = Color(0xfff4d0cb),
                 imageSize = 100,
                 imageAlignment = Alignment.BottomEnd,
-//                onClick = {  }
+                onClick = {  }
             )
 
                 InteractiveCard(
@@ -140,7 +140,7 @@ fun InteractiveCardsHome(){
                     imageAlignment = Alignment.CenterEnd,
                     valx = (-5).dp,
                     valy = 30.dp,
-//                    onClick = { navController.navigate(Routes.ROUTE_CALENDAR) }
+                    onClick = { navController.navigate(Routes.ROUTE_CALENDAR) }
                 )
         }
 //        Row(

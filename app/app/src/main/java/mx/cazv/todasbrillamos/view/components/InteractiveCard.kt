@@ -1,6 +1,7 @@
 package mx.cazv.todasbrillamos.view.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -44,14 +45,15 @@ fun InteractiveCard(
     imageSize: Int,
     imageAlignment: Alignment,
     valx: Dp = 0.dp,
-    valy: Dp = 0.dp
+    valy: Dp = 0.dp,
+    onClick: () -> Unit
     )
 {
     Card(
         shape = RoundedCornerShape(5.dp),
         elevation = CardDefaults.cardElevation(8.dp),
         colors = CardDefaults.cardColors(containerColor = backgroundColor),
-        modifier = modifier
+        modifier = modifier.clickable { onClick() }
     ){
         Box(
             modifier = Modifier.padding(8.dp).fillMaxSize(),
