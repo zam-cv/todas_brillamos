@@ -1,5 +1,5 @@
 import UsersRadialChart from "@/components/UsersRadialChart";
-import BarChartDashboard from "@/components/BarChartDashboard";
+// import BarChartDashboard from "@/components/BarChartDashboard";
 import RecentSalesChart from "@/components/RecentSalesChart";
 import BarChar2 from "@/components/BarChart2";
 import PieGraph from "@/components/PieGraph";
@@ -22,8 +22,7 @@ export default function Dashboard() {
             <PieGraph />
           </div>
           <div>
-            <GraphDonations />
-                    
+            <GraphDonations />       
           </div>
         </div>
         <div className="grid md:gap-5 lg:grid-cols-3 xl:grid-cols-3">
@@ -32,7 +31,7 @@ export default function Dashboard() {
           </div>
 
           <div>
-            <BarChartDashboard />
+            {/* <BarChartDashboard /> */}
           </div>
 
           <div>

@@ -13,12 +13,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ChartConfig, ChartContainer } from "@/components/ui/chart";
-import api, {ClientInfo} from "@/utils/api/client";
+import api from "@/utils/api/client";
 import { useState, useEffect } from 'react';
-
-
-
-
 
 const radialChartConfig = {
   visitorCount: {
