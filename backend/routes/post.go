@@ -51,6 +51,25 @@ func addPostRoutes(rg *gin.RouterGroup) {
 		c.JSON(200, posts)
 	})
 
+	// GET /posts/:id - Obtiene un post específico
+	post.GET("/:id", func(c *gin.Context){
+		idStr := c.Param("id")
+		id, err := strconv.Atoi(idStr)
+		if err != nil {
+			c.JSON(400, gin.H{"error": err.Error()})
+			return
+		}
+
+		post, err := database.GetPostByID(uint(id))
+		if err != nil {
+			c.JSON(500, gin.H{"error": err.Error()})
+			return
+		}
+
+		c.JSON(200, post)
+
+	})
+
 	// DELETE /posts/:id - Elimina un post específico (solo para administradores)
 	post.DELETE("/:id", auth.GetMiddleware(AdminAuth), func(c *gin.Context) {
 		idStr := c.Param("id")

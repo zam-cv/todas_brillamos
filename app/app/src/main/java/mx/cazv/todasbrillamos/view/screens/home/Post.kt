@@ -26,12 +26,13 @@ import mx.cazv.todasbrillamos.view.Routes
  * @author Jennyfer Jasso, Carlos Zamudio
  *
  * @param navController El controlador de navegación.
+ * @param postId El ID de la publicación.
  * @param title El título de la publicación.
  * @param content El contenido de la publicación.
  * @param wordLimit El límite de palabras a mostrar antes de truncar el contenido.
  */
 @Composable
-fun Post(navController: NavHostController,title: String, content: String, wordLimit: Int = 20) {
+fun Post(navController: NavHostController, postId: Int, title: String, content: String, wordLimit: Int = 20) {
     Card(
         shape = RoundedCornerShape(5.dp),
         elevation = CardDefaults.cardElevation(8.dp),
@@ -55,7 +56,7 @@ fun Post(navController: NavHostController,title: String, content: String, wordLi
             Spacer(modifier = Modifier.height(5.dp))
 
             TextButton(
-                onClick = { navController.navigate(Routes.ROUTE_POST) },
+                onClick = { navController.navigate(Routes.ROUTE_POST + "/$postId") },
                 modifier = Modifier.padding(start = 10.dp, end = 10.dp),
             ) {
                 Box(

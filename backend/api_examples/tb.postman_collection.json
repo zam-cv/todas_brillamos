@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "0de7a8e8-5abe-40f6-bf8b-3df57c289ca9",
+		"_postman_id": "649be9e0-a9f8-4e93-96c4-c4445c505265",
 		"name": "Todas Brillamos",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "15473377"
+		"_exporter_id": "34049463"
 	},
 	"item": [
 		{
@@ -446,7 +446,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjgwNTQ3MzcsImlkIjoiMSJ9.3NrhZJKrqlgUk_qOMsIFXTysLZxX7viydtfs8aQXB-w",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mjk4MTgyMDQsImlkIjoiMSJ9.51wFHmebd7QP90n_IIIYH9Il_-SFaoyi2PAmJr9T1fY",
 							"type": "string"
 						}
 					]
@@ -455,7 +455,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"title\": \"test2\",\n    \"author\": \"yo\",\n    \"date\": \"21-09-2024\",\n    \"content\": \"si\"\n}",
+					"raw": "{\n    \"title\": \"titulo3\",\n    \"author\": \"Anonimo\",\n    \"date\": \"10-10-2024\",\n    \"content\": \"Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Nulla aliquam fermentum magna quis rutrum. Sed hendrerit porttitor lacus sed sollicitudin. Aliquam ac lectus facilisis enim maximus eleifend. Nulla mollis sed magna nec varius. Pellentesque sit amet eros at leo fermentum efficitur eget in urna. Vestibulum malesuada ante ut finibus ornare. Sed turpis justo, mattis sed facilisis sit amet, tincidunt sed dui. Phasellus justo ipsum, dapibus id neque at, ultricies gravida est.\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -514,6 +514,49 @@
 					"path": [
 						"api",
 						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Posts by ID",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjgwNTQ3MzcsImlkIjoiMSJ9.3NrhZJKrqlgUk_qOMsIFXTysLZxX7viydtfs8aQXB-w",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"test\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/posts/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"posts",
+						"3"
 					]
 				}
 			},

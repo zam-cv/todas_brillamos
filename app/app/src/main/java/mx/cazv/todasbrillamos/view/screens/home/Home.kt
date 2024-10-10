@@ -26,8 +26,8 @@ import mx.cazv.todasbrillamos.viewmodel.UserViewModel
  * @param navController El NavHostController utilizado para la navegación.
  * @param authViewModel El ViewModel de autenticación utilizado para obtener el token del usuario.
  * @param userViewModel El ViewModel de usuario utilizado para cargar la información del usuario.
- * @param randomViewModel El ViewModel de productos aleatorios utilizado para cargar productos recomendados.
- * @param postsViewModel El ViewModel de publicaciones utilizado para cargar publicaciones.
+ * @param postsViewModel El ViewModel de publicaciones utilizado para cargar las publicaciones.
+ * @param randomState El estado del ViewModel de productos aleatorios utilizado para mostrar los productos recomendados.
  */
 @Composable
 fun Home(
@@ -71,7 +71,7 @@ fun Home(
 
             if (postsState.value.posts.isNotEmpty()) {
                 for (post in postsState.value.posts) {
-                    Post(navController, post.title, post.content)
+                    Post(navController, post.id, post.title, post.content)
                     Spacer(modifier = Modifier.height(20.dp))
                 }
             }
