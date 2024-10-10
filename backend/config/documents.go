@@ -1,4 +1,14 @@
+// Este archivo contiene una lista de documentos que se utilizan para proporcionar información
+// Autores:
+//   - Carlos Zamudio
+
 package config
+
+// Lista de strings que contiene información sobre menstruación, ciclo menstrual, fertilidad y otros 
+// temas relacionados con la salud reproductiva
+// de la mujer. 
+// Cada elemento de la slice es un documento individual que puede ser utilizado para proporcionar 
+// información a los usuarios de la aplicación.
 
 var Documents = []string{
 	"Hola",

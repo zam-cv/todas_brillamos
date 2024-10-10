@@ -1,13 +1,9 @@
-/*
- * Backend-models: Código que contiene el modelo de especialista
- * @author: Mariana Balderrábano
- */
+// Autores:
+//   - Mariana Balderrábano
 
 package models
 
-/*
- * Estructura de la tabla de especialistas
- */
+// Estructura de la tabla de especialistas
 type Specialist struct {
 	ID          uint   `json:"ID" gorm:"primarykey"`
 	FirstName   string `json:"first_name" validate:"required,min=2"`

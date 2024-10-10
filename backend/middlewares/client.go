@@ -1,3 +1,7 @@
+// Contiene los middlewares relacionados con los clientes.
+// Autores:
+//   - Carlos Zamudio
+
 package middlewares
 
 import (
@@ -8,7 +12,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// ExistsClientMiddleware es un middleware que verifica si un cliente existe en la base de datos.
+// Es un middleware que verifica si un cliente existe en la base de datos.
 // Si el cliente no existe, responde con un error 404 y aborta la solicitud.
 func ExistsClientMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
@@ -32,7 +36,7 @@ func ExistsClientMiddleware() gin.HandlerFunc {
 	}
 }
 
-// GetClientID es un middleware que obtiene el ID del cliente de la solicitud.
+// Es un middleware que obtiene el ID del cliente de la solicitud.
 // Si el ID del cliente no está presente o es inválido, responde con un error 401 y aborta la solicitud.
 func GetClientID() gin.HandlerFunc {
 	return func(ctx *gin.Context) {

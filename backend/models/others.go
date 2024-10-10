@@ -1,13 +1,9 @@
-/*
- * Backend-models: Código que contiene el modelo de Others y sus atributos
- * @author: Jennyfer Jasso
- */
+// Autores:
+//   - Jennyfer Jasso
 
 package models
 
-/*
- * Estructura de la tabla Other
- */
+// Estructura de la tabla de otros (otra información del cliente)
 type Other struct {
 	ID        uint `json:"-" gorm:"primarykey"`
 	CURP      string

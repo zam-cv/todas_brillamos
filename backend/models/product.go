@@ -1,19 +1,15 @@
-/*
- * Backend-models: Código que contiene el modelo de Product y sus atributos
- * @author: Carlos Zamudio
- * @co-author: Jennyfer Jasso
- * @co-author: Min Che Kim
- */
+// Autores:
+//   - Jennyfer Jasso
+//   - Carlos Zamudio
+//   - Min Che Kim
 
 package models
 
-/*
- * Estructura de la tabla Product
- */
+// Estructura de la tabla de productos
 type Product struct {
 	ID uint `json:"id" gorm:"primarykey" validate:"omitempty,eq=0"`
 
-	// Image
+	// ImageN
 	Hash string `json:"hash"`
 	Type string `json:"type"`
 
@@ -24,7 +20,7 @@ type Product struct {
 	Price       float64 `json:"price"`
 	Stock       int     `json:"stock"`
 
-	// Specific
+	// Especificaciones
 	Size        string `json:"size"`
 	Color       string `json:"color"`
 	Maintenance string `json:"maintenance"`
@@ -32,13 +28,11 @@ type Product struct {
 	Absorbency  string `json:"absorbency"`
 	MatFeature  string `json:"material_feature"`
 
-	// Relationships
+	// Relaciones
 	CategoryID uint `json:"category_id"`
 }
 
-/*
- * Estructura de la metadata de Product
- */
+// Estructura de la tabla de los metadatos de los productos
 type ProductMetadata struct {
 	// General
 	Model       string  `json:"model" validate:"required,min=1"`
@@ -47,7 +41,7 @@ type ProductMetadata struct {
 	Price       float64 `json:"price" validate:"required,min=0"`
 	Stock       int     `json:"stock" validate:"required,min=0"`
 
-	// Specific
+	// Especificaciones
 	Size        string `json:"size" validate:"required"`
 	Color       string `json:"color" validate:"required"`
 	Maintenance string `json:"maintenance" validate:"required"`
@@ -55,22 +49,26 @@ type ProductMetadata struct {
 	Absorbency  string `json:"absorbency" validate:"required"`
 	MatFeature  string `json:"material_feature" validate:"required"`
 
-	// Relationships
+	// Relaciones
 	CategoryID uint `json:"category_id" validate:"required,min=0"`
 }
 
+// Establece el ID del producto
 func (p *Product) SetID(id uint) {
 	p.ID = id
 }
 
+// Obtiene el hash del producto
 func (p *Product) GetHash() *string {
 	return &p.Hash
 }
 
+// Obtiene el tipo del producto
 func (p *Product) GetType() *string {
 	return &p.Type
 }
 
+// Establece los metadatos del producto
 func (p *Product) SetMetadata(metadata *ProductMetadata) {
 	if metadata == nil {
 		return

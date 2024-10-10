@@ -1,3 +1,8 @@
+// Rutas relacionadas con las compras.
+// Autores:
+//   - Jennyfer Jasso
+//   - Carlos Zamudio
+
 package routes
 
 import (
@@ -14,9 +19,11 @@ import (
 	"github.com/stripe/stripe-go/paymentintent"
 )
 
+// Añade las rutas relacionadas con las compras al grupo de rutas proporcionado.
 func addBuyRoutes(rg *gin.RouterGroup) {
 	buy := rg.Group("/buy")
 
+	// POST /buy/create-payment-intent - Crea una intención de pago
 	buy.POST("/create-payment-intent", auth.GetMiddleware(ClientAuth), middlewares.GetClientID(), func(c *gin.Context) {
 		id, _ := c.MustGet("clientID").(uint)
 
@@ -50,6 +57,7 @@ func addBuyRoutes(rg *gin.RouterGroup) {
 		})
 	})
 
+	// POST /buy/confirm - Confirma una compra
 	buy.POST("/confirm", auth.GetMiddleware(ClientAuth), middlewares.GetClientID(), func(c *gin.Context) {
 		id, _ := c.MustGet("clientID").(uint)
 
@@ -127,6 +135,8 @@ func addBuyRoutes(rg *gin.RouterGroup) {
 	})
 }
 
+// Calcula el monto total de los productos en el carrito.
+// Devuelve el monto total en centavos.
 func calculateTotalAmount(cart []models.CartItem) int64 {
 	var total float64
 	for _, product := range cart {

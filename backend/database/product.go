@@ -1,8 +1,13 @@
+// Contiene las funciones para interactuar con la base de datos de productos.
+// Autores:
+//   - Carlos Zamudio
+//   - Min Che Kim
+
 package database
 
 import "backend/models"
 
-// GetProducts obtiene todos los productos de la base de datos.
+// Obtiene todos los productos de la base de datos.
 // Devuelve una lista de productos y un error en caso de que ocurra.
 func GetProducts() ([]models.Product, error) {
 	products := []models.Product{}
@@ -13,7 +18,7 @@ func GetProducts() ([]models.Product, error) {
 	return products, nil
 }
 
-// GetProductById obtiene un producto por su ID.
+// Obtiene un producto por su ID.
 // Devuelve un puntero a models.Product y un error en caso de que ocurra.
 func GetProductById(id uint) (*models.Product, error) {
 	product := &models.Product{}
@@ -24,7 +29,7 @@ func GetProductById(id uint) (*models.Product, error) {
 	return product, nil
 }
 
-// GetRandomProducts obtiene productos aleatorios que no están en el carrito del cliente.
+// Obtiene productos aleatorios que no están en el carrito del cliente.
 // Devuelve una lista de productos y un error en caso de que ocurra.
 func GetRandomProducts(clientID uint) ([]models.Product, error) {
 	products := []models.Product{}
@@ -42,7 +47,7 @@ func GetRandomProducts(clientID uint) ([]models.Product, error) {
 	return products, nil
 }
 
-// RegisterProduct registra un nuevo producto en la base de datos.
+// Registra un nuevo producto en la base de datos.
 // Devuelve el ID del producto creado y un error en caso de que ocurra.
 func RegisterProduct(product *models.Product) (uint, error) {
 	if err := db.Create(product).Error; err != nil {
