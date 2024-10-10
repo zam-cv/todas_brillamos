@@ -1,3 +1,10 @@
+// Rutas de la API
+// Autores:
+//   - Carlos Zamudio
+//   - Min Che Kim
+//   - Mariana Balderrábano
+//   - Jennyfer Jasso
+
 package routes
 
 import (
@@ -8,9 +15,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// Instancia principal del enrutador de Gin.
 var router = gin.Default()
 
+// Configura y ejecuta el servidor HTTP.
 func Run() {
+	// Configuración de CORS
 	router.Use(cors.New(cors.Config{
 		AllowOrigins:     []string{"http://localhost:1420"},
 		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
@@ -20,18 +30,19 @@ func Run() {
 		MaxAge:           12 * time.Hour,
 	}))
 
-	// Get routes
+	// Configuración de rutas
 	getRoutes()
 
-	// Run server
+	// Iniciar el servidor
 	router.Run(":" + config.Port)
 }
 
+// Configura todas las rutas de la API.
 func getRoutes() {
-	// API routes
+	// Grupo de rutas de la API
 	api := router.Group("/api")
 
-	// Add routes
+	// Añadir rutas específicas
 	addUserAuthRoutes(api)
 	addAdminAuthRoutes(api)
 	addProductRoutes(api)

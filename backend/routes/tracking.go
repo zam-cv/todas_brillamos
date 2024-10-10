@@ -1,7 +1,7 @@
-/*
-* Backend-routes: Código que determina los endpoints de tracking y sus rutas
-* @author: Jennyfer Jasso
-*/
+// Rutas de tracking
+// Autores:
+//   - Jennyfer Jasso
+
 package routes
 
 import (
@@ -20,13 +20,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-/*
-* Función para agregar rutas de tracking a la API (Get, Post, Put, Delete)
- */
+// Añade las rutas relacionadas con el seguimiento de pedidos al grupo de rutas proporcionado.
 func addTrackingRoutes(rg *gin.RouterGroup) {
 	tracking := rg.Group("/tracking")
 
 	/*
+		//GET /tracking/order - Obtiene información de un pedido específico
 		tracking.GET("/order", auth.GetMiddleware(ClientAuth), middlewares.GetClientID(), func(c *gin.Context) {
 			clientID, exists := c.MustGet("clientID").(uint)
 			if !exists {
@@ -59,6 +58,7 @@ func addTrackingRoutes(rg *gin.RouterGroup) {
 		})
 	*/
 
+	// GET /tracking - Obtiene toda la información de seguimiento para el cliente autenticado
 	tracking.GET("", auth.GetMiddleware(ClientAuth), middlewares.GetClientID(), func(c *gin.Context) {
 		//id, _ := c.MustGet("clientID").(uint)
 
@@ -67,12 +67,14 @@ func addTrackingRoutes(rg *gin.RouterGroup) {
 		})
 	})
 
+	// GET /tracking/:id - Obtiene información de seguimiento para un pedido específico
 	tracking.GET("/:id", func(c *gin.Context) {
 		c.JSON(200, gin.H{
 			"message": "Get tracking information",
 		})
 	})
 
+	// PUT /tracking/:id - Actualiza la información de seguimiento de un pedido (solo para administradores)
 	tracking.PUT("/:id", auth.GetMiddleware(AdminAuth), func(c *gin.Context) {
 		/*
 			id := c.Param("id")
@@ -104,18 +106,21 @@ func addTrackingRoutes(rg *gin.RouterGroup) {
 		*/
 	})
 
+	// DELETE /tracking/:id - Elimina la información de seguimiento de un pedido
 	tracking.DELETE("/:id", func(c *gin.Context) {
 		c.JSON(200, gin.H{
 			"message": "Delete tracking information",
 		})
 	})
 
+	// GET /tracking/status - Obtiene el estado de seguimiento
 	tracking.GET("/status", func(c *gin.Context) {
 		c.JSON(200, gin.H{
 			"message": "Get tracking status",
 		})
 	})
 
+	// GET /tracking/location - Obtiene la ubicación de seguimiento
 	tracking.GET("/location", func(c *gin.Context) {
 		c.JSON(200, gin.H{
 			"message": "Get tracking location",

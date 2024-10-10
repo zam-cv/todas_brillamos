@@ -1,3 +1,7 @@
+// Rutas de información adicional de los clientes
+// Autores:
+//   - Min Che Kim
+
 package routes
 
 import (
@@ -10,21 +14,25 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// Añade las rutas relacionadas con información adicional de los clientes al grupo de rutas proporcionado.
 func addOthersRoutes(rg *gin.RouterGroup) {
 	group := rg.Group("/others")
 
+	// GET /others/exist - Verifica si existe información adicional para el cliente autenticado
 	group.GET("/exist", auth.GetMiddleware(ClientAuth), middlewares.GetClientID(), func(c *gin.Context) {
 		id, _ := c.MustGet("clientID").(uint)
 		exist := database.ExistOthersByClientID(id)
 		c.JSON(200, gin.H{"exist": exist})
 	})
 
+	// GET /others - Obtiene la información adicional del cliente autenticado
 	group.GET("", auth.GetMiddleware(ClientAuth), middlewares.GetClientID(), func(c *gin.Context) {
 		id, _ := c.MustGet("clientID").(uint)
 		others, _ := database.GetOthersByClientID(id)
 		c.JSON(200, others)
 	})
 
+	// POST /others - Crea información adicional para el cliente autenticado
 	group.POST("", auth.GetMiddleware(ClientAuth), middlewares.GetClientID(), func(c *gin.Context) {
 		id, _ := c.MustGet("clientID").(uint)
 		other := &models.Other{}
@@ -48,6 +56,7 @@ func addOthersRoutes(rg *gin.RouterGroup) {
 		c.Status(201)
 	})
 
+	// PUT /others - Actualiza la información adicional del cliente autenticado
 	group.PUT("", auth.GetMiddleware(ClientAuth), middlewares.GetClientID(), func(c *gin.Context) {
 		// actualizar datos adicionales del cliente
 		id, _ := c.MustGet("clientID").(uint)
