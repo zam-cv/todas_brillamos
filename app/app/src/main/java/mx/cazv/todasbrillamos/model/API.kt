@@ -19,7 +19,13 @@ import mx.cazv.todasbrillamos.model.models.Product
 import mx.cazv.todasbrillamos.model.models.ProductList
 import mx.cazv.todasbrillamos.model.models.SignInRequest
 import mx.cazv.todasbrillamos.model.models.UserInfo
+import mx.cazv.todasbrillamos.model.models.NotificationGet
+import mx.cazv.todasbrillamos.model.models.GroupedNotification
+import retrofit2.Call
+
+
 import retrofit2.HttpException
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -277,6 +283,22 @@ interface API {
      */
     @GET("api/posts/{id}")
     suspend fun getPost(@Header("Authorization") token: String, @Path("id") id: String): Post
+
+    /**
+     * Obtiene la lista de notificaciones para un cliente
+     *
+     * @param token El token de autenticación.
+     * @return La lista de notificaciones.
+     */
+//    @GET("api/notifications/{id}")
+//    suspend fun getNotifications(
+//        @Header("Authorization") token: String,
+//        @Path("id") id: UInt
+//    ): Response<List<GroupedNotification>>
+    @GET("api/notifications/all")
+    suspend fun getNotificationsByClientId(
+        @Header("Authorization") token: String
+    ): GroupedNotification
 }
 
 /**
@@ -296,3 +318,4 @@ suspend fun <T> apiCall(call: suspend () -> T): Result<T> = withContext(Dispatch
         Result.failure(e)
     }
 }
+

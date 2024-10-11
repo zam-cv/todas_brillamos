@@ -83,16 +83,19 @@ func addNotificationsRoutes(rg *gin.RouterGroup) {
 	})
 
 	//// GET /notifications - Obtiene todas las notificaciones de un usuario
-	notifications.GET("/:clientID", auth.GetMiddleware(ClientAuth), middlewares.GetClientID(), func(c *gin.Context) {
-		clientID := c.Param("clientID")
-		clientIDInt, err := strconv.Atoi(clientID)
-
-		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+	notifications.GET("/all", auth.GetMiddleware(ClientAuth), middlewares.GetClientID(), func(c *gin.Context) {
+		idClient, exists := c.MustGet("clientID").(uint)
+		if !exists {
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized: client ID not found"})
 			return
 		}
 
-		notifications, err := database.GetNotificationsByClientID(uint(clientIDInt))
+		// if err != nil {
+		// 	c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		// 	return
+		// }
+
+		notifications, err := database.GetNotificationsByClientID(uint(idClient))
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
