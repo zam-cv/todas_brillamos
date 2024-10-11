@@ -1,6 +1,5 @@
 package mx.cazv.todasbrillamos.view.screens
 
-import android.app.Activity
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -27,25 +26,57 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.stripe.android.PaymentConfiguration
-import com.stripe.android.PaymentIntentResult
 import com.stripe.android.Stripe
-import com.stripe.android.confirmPaymentIntent
 import com.stripe.android.model.CardParams
 import com.stripe.android.model.ConfirmPaymentIntentParams
-import com.stripe.android.model.PaymentIntent
 import com.stripe.android.model.PaymentMethodCreateParams
-import com.stripe.android.payments.paymentlauncher.PaymentResult
 import kotlinx.coroutines.launch
 import mx.cazv.todasbrillamos.R
-import mx.cazv.todasbrillamos.model.Config
 import mx.cazv.todasbrillamos.view.Routes
 import mx.cazv.todasbrillamos.view.components.Button
-import mx.cazv.todasbrillamos.view.components.CustomButton
 import mx.cazv.todasbrillamos.view.components.Input
 import mx.cazv.todasbrillamos.view.layouts.MainLayout
 import mx.cazv.todasbrillamos.viewmodel.AuthViewModel
 import mx.cazv.todasbrillamos.viewmodel.BuyViewModel
 import mx.cazv.todasbrillamos.viewmodel.CartViewModel
+
+data class PaymentValidationResult(
+    val isValid: Boolean,
+    val errorMessage: String? = null
+)
+
+fun validatePayment(
+    cardNumber: String,
+    expiryDate: String,
+    cvc: String,
+    cardholderName: String
+): PaymentValidationResult {
+    if (cardNumber.isBlank()) {
+        return PaymentValidationResult(false, "El número de tarjeta no puede estar vacío")
+    }
+    if (!cardNumber.replace(" ", "").matches(Regex("^\\d{16}$"))) {
+        return PaymentValidationResult(false, "El número de tarjeta debe tener 16 dígitos")
+    }
+    if (expiryDate.isBlank()) {
+        return PaymentValidationResult(false, "La fecha de expiración no puede estar vacía")
+    }
+    if (!expiryDate.matches(Regex("^(0[1-9]|1[0-2])/\\d{2}$"))) {
+        return PaymentValidationResult(false, "La fecha de expiración debe tener el formato MM/AA")
+    }
+    if (cvc.isBlank()) {
+        return PaymentValidationResult(false, "El CVC no puede estar vacío")
+    }
+    if (!cvc.matches(Regex("^\\d{3,4}$"))) {
+        return PaymentValidationResult(false, "El CVC debe tener 3 o 4 dígitos")
+    }
+    if (cardholderName.isBlank()) {
+        return PaymentValidationResult(false, "El nombre del titular de la tarjeta no puede estar vacío")
+    }
+    if (cardholderName.length < 3) {
+        return PaymentValidationResult(false, "El nombre del titular de la tarjeta debe tener al menos 3 caracteres")
+    }
+    return PaymentValidationResult(true)
+}
 
 /**
  * Archivo para mostrar el formulario de pagos.
@@ -189,45 +220,55 @@ fun Payments(
                         isProcessing = true
                         errorMessage = null
 
-                        if (cardNumber.isBlank() || expiryDate.isBlank() || cvc.isBlank() || cardholderName.isBlank()) {
-                            errorMessage = "Por favor, complete todos los campos."
-                            isProcessing = false
-                            return@launch
-                        }
+                        val trimmedCardNumber = cardNumber.replace(" ", "").trim()
+                        val trimmedExpiryDate = expiryDate.trim()
+                        val trimmedCvc = cvc.trim()
+                        val trimmedCardholderName = cardholderName.trim()
 
-                        val (expiryMonth, expiryYear) = expiryDate.split("/")
-
-                        val paymentMethodParams = PaymentMethodCreateParams.createCard(
-                            CardParams(
-                                number = cardNumber,
-                                expMonth = expiryMonth.toInt(),
-                                expYear = expiryYear.toInt(),
-                                cvc = cvc,
-                                name = cardholderName
-                            )
+                        val validationResult = validatePayment(
+                            cardNumber = trimmedCardNumber,
+                            expiryDate = trimmedExpiryDate,
+                            cvc = trimmedCvc,
+                            cardholderName = trimmedCardholderName
                         )
 
-                        try {
-                            val token = authViewModel.token() ?: ""
-                            val createIntentResult = buyViewModel.createPaymentIntent(token)
+                        if (validationResult.isValid) {
+                            val (expiryMonth, expiryYear) = expiryDate.split("/")
 
-                            if (createIntentResult.isSuccess) {
-                                val clientSecret = createIntentResult.getOrNull()
-                                if (clientSecret != null) {
-                                    val confirmParams = ConfirmPaymentIntentParams
-                                        .createWithPaymentMethodCreateParams(paymentMethodParams, clientSecret)
+                            val paymentMethodParams = PaymentMethodCreateParams.createCard(
+                                CardParams(
+                                    number = trimmedCardNumber,
+                                    expMonth = expiryMonth.toInt(),
+                                    expYear = expiryYear.toInt(),
+                                    cvc = trimmedCvc,
+                                    name = trimmedCardholderName
+                                )
+                            )
 
-                                    stripe.confirmPayment(ComponentActivity(), confirmParams)
-                                    cartViewModel.buy()
-                                    navController.navigate(Routes.ROUTE_HOME)
+                            try {
+                                val token = authViewModel.token() ?: ""
+                                val createIntentResult = buyViewModel.createPaymentIntent(token)
+
+                                if (createIntentResult.isSuccess) {
+                                    val clientSecret = createIntentResult.getOrNull()
+                                    if (clientSecret != null) {
+                                        val confirmParams = ConfirmPaymentIntentParams
+                                            .createWithPaymentMethodCreateParams(paymentMethodParams, clientSecret)
+
+                                        stripe.confirmPayment(ComponentActivity(), confirmParams)
+                                        cartViewModel.buy()
+                                        navController.navigate(Routes.ROUTE_HOME)
+                                    } else {
+                                        errorMessage = "Error al obtener el clientSecret"
+                                    }
                                 } else {
-                                    errorMessage = "Error al obtener el clientSecret"
+                                    errorMessage = "Error al crear la intención de pago"
                                 }
-                            } else {
-                                errorMessage = createIntentResult.exceptionOrNull()?.message ?: "Error al crear la intención de pago"
+                            } catch (e: Exception) {
+                                errorMessage = "Error: ${e.message}"
                             }
-                        } catch (e: Exception) {
-                            errorMessage = "Error: ${e.message}"
+                        } else {
+                            errorMessage = validationResult.errorMessage
                         }
 
                         isProcessing = false
@@ -255,5 +296,3 @@ fun NormalText(text: String, sizeT: Int, colT: Color){
         color = colT,
         fontWeight = FontWeight.W400)
 }
-
-

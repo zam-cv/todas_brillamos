@@ -70,7 +70,8 @@ class CartViewModel : ViewModel() {
                         price = product.price.toDouble(),
                         product_id = product.id,
                         hash = product.hash,
-                        type = product.type
+                        type = product.type,
+                        stock = product.stock
                     )
                     updatedCart.add(CartItem(quantity = quantity, product = cartProduct))
                 }

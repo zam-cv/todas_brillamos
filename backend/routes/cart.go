@@ -11,9 +11,12 @@ import (
 	"backend/models"
 	"backend/resources/auth"
 	"backend/resources/files"
+	"errors"
+	"net/http"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 )
 
 // Añade las rutas relacionadas con el carrito de compras al grupo de rutas proporcionado.
@@ -75,9 +78,22 @@ func addCartRoutes(rg *gin.RouterGroup) {
 			return
 		}
 
-		err = database.AddProduct(product.ID, uint(id), uint(quantity))
+		currentCartProduct, err := database.GetProductFromCartByProductIDClientID(product.ID, id)
 		if err != nil {
-			c.JSON(500, gin.H{"error": err.Error()})
+			if product.Stock == 0 {
+				c.JSON(400, gin.H{"error": "Product out of stock"})
+				return
+			}
+
+			err = database.AddProduct(product.ID, uint(id), uint(quantity))
+			if err != nil {
+				c.JSON(500, gin.H{"error": err.Error()})
+				return
+			}
+		}
+
+		if product.ID == currentCartProduct.ProductID {
+			c.JSON(400, gin.H{"error": "Product already in cart"})
 			return
 		}
 
@@ -86,28 +102,40 @@ func addCartRoutes(rg *gin.RouterGroup) {
 		})
 	})
 
-	// PUT /cart/:product_id/:quantity - Actualiza la cantidad de un producto en el carrito del cliente
 	cart.PUT("/:product_id/:quantity", auth.GetMiddleware(ClientAuth), middlewares.ExistsProductMiddleware(), middlewares.GetClientID(), func(c *gin.Context) {
 		id, _ := c.MustGet("clientID").(uint)
-
 		productValue, _ := c.Get("product")
 		product := productValue.(*models.Product)
-
 		quantityStr := c.Param("quantity")
-		quantity, err := strconv.Atoi(quantityStr)
+
+		newQuantity, err := strconv.Atoi(quantityStr)
 		if err != nil {
-			c.JSON(500, gin.H{"error": "Invalid quantity"})
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid quantity"})
 			return
 		}
 
-		err = database.UpdateProductQuantity(product.ID, id, uint(quantity))
-		if err != nil {
-			c.JSON(500, gin.H{"error": err.Error()})
+		if newQuantity <= 0 {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Quantity cannot be negative"})
 			return
 		}
 
-		c.JSON(200, gin.H{
-			"message": "Update cart item",
+		if product.Stock < newQuantity {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Not enough stock"})
+			return
+		}
+
+		err = database.UpdateCartItem(product.ID, id, uint(newQuantity))
+		if err != nil {
+			if errors.Is(err, gorm.ErrRecordNotFound) {
+				c.JSON(http.StatusNotFound, gin.H{"error": "Cart item not found"})
+			} else {
+				c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update cart"})
+			}
+			return
+		}
+
+		c.JSON(http.StatusOK, gin.H{
+			"message": "Cart item updated successfully",
 		})
 	})
 

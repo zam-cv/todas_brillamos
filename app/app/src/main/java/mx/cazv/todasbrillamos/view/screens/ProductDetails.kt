@@ -46,6 +46,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import mx.cazv.todasbrillamos.R
 import mx.cazv.todasbrillamos.model.ApiConfig
 import mx.cazv.todasbrillamos.model.models.ProductList
 import mx.cazv.todasbrillamos.model.models.ProductRaw
@@ -74,11 +75,13 @@ import mx.cazv.todasbrillamos.viewmodel.UserViewModel
  *
  * @param value El valor actual de la cantidad.
  * @param onValueChange La función que se llama cuando se cambia el valor de la cantidad.
+ * @param stock La cantidad de stock disponible del producto.
  */
 @Composable
 fun QuantityController(
     value: Int,
-    onValueChange: (Int) -> Unit
+    onValueChange: (Int) -> Unit,
+    stock: Int
 ) {
     val displayValue = if (value <= 0) 1 else value
 
@@ -121,7 +124,9 @@ fun QuantityController(
             Box(
                 modifier = Modifier
                     .clickable {
-                        onValueChange(displayValue + 1)
+                        if (displayValue < stock) {
+                            onValueChange(displayValue + 1)
+                        }
                     }
                     .clip(RoundedCornerShape(4.dp))
                     .background(Color.White)
@@ -482,18 +487,26 @@ fun ProductDetails(
             BasicTopBar(title = "Detalles del Producto", navController = navController)
         },
         bottomBar = {
-            ButtonBottomBar(buttonText = "Añadir al carrito", onClick = {
-                CoroutineScope(Dispatchers.Main).launch {
-                    val token = withContext(Dispatchers.IO) {
-                        authViewModel.token()
-                    }
+            if (productState.value.product.product.stock == 0) {
+                ButtonBottomBar(buttonText = "Producto no disponible", onClick = { }, barImage = R.drawable.bottom_bar_disabled)
+            } else {
+                ButtonBottomBar(buttonText = "Añadir al carrito", onClick = {
+                    CoroutineScope(Dispatchers.Main).launch {
+                        val token = withContext(Dispatchers.IO) {
+                            authViewModel.token()
+                        }
 
-                    if (token != null) {
-                        cartViewModel.addProductToCart(token, productState.value.product.product, quantity)
-                        navController.navigate(Routes.ROUTE_CART)
+                        if (token != null) {
+                            cartViewModel.addProductToCart(
+                                token,
+                                productState.value.product.product,
+                                quantity
+                            )
+                            navController.navigate(Routes.ROUTE_CART)
+                        }
                     }
-                }
-            })
+                })
+            }
         }
     ) {
         Column (
@@ -574,7 +587,8 @@ fun ProductDetails(
 
                     QuantityController(
                         value = quantity,
-                        onValueChange = { quantity = it }
+                        onValueChange = { quantity = it },
+                        stock = productState.value.product.product.stock
                     )
                 }
             }

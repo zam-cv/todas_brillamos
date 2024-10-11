@@ -15,11 +15,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -29,7 +25,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import mx.cazv.todasbrillamos.model.models.Others
 import mx.cazv.todasbrillamos.view.Routes
-import mx.cazv.todasbrillamos.view.components.Input
 import mx.cazv.todasbrillamos.view.components.LabeledInput
 import mx.cazv.todasbrillamos.view.components.footer.ButtonBottomBar
 import mx.cazv.todasbrillamos.view.components.header.BasicTopBar
@@ -64,6 +59,23 @@ fun ShippingInfo(
     var zip by remember { mutableStateOf("") }
     var reference by remember { mutableStateOf("") }
 
+    var errors by remember { mutableStateOf(mapOf<String, String>()) }
+
+    fun validateFields(): Boolean {
+        val newErrors = mutableMapOf<String, String>()
+
+        if (curp.length != 18) newErrors["curp"] = "CURP debe tener 18 caracteres"
+        if (street.isBlank()) newErrors["street"] = "Calle es requerida"
+        if (interior.toIntOrNull() == null) newErrors["interior"] = "Número interior debe ser un número"
+        if (exterior.toIntOrNull() == null) newErrors["exterior"] = "Número exterior debe ser un número"
+        if (city.isBlank()) newErrors["city"] = "Ciudad es requerida"
+        if (state.isBlank()) newErrors["state"] = "Estado es requerido"
+        if (zip.length < 4) newErrors["zip"] = "Código postal debe tener al menos 4 caracteres"
+
+        errors = newErrors
+        return errors.isEmpty()
+    }
+
     CustomLayout (
         navController = navController,
         topBar = {
@@ -71,28 +83,44 @@ fun ShippingInfo(
         },
         bottomBar = {
             ButtonBottomBar(buttonText = "Pagar", onClick = {
-                val others = Others(
-                    CURP = curp,
-                    Street = street,
-                    Interior = interior,
-                    Exterior = exterior,
-                    City = city,
-                    State = state,
-                    ZIP = zip,
-                    Reference = reference
-                )
+                if (validateFields()) {
+                    curp = curp.trim()
+                    street = street.trim()
+                    interior = interior.trim()
+                    exterior = exterior.trim()
+                    city = city.trim()
+                    state = state.trim()
+                    zip = zip.trim()
+                    reference = reference.trim()
 
-                CoroutineScope(Dispatchers.Main).launch {
-                    val token = withContext(Dispatchers.IO) {
-                        authViewModel.token()
-                    }
+                    val others = Others(
+                        CURP = curp,
+                        Street = street,
+                        Interior = interior.toIntOrNull() ?: 0,
+                        Exterior = exterior.toIntOrNull() ?: 0,
+                        City = city,
+                        State = state,
+                        ZIP = zip,
+                        Reference = reference
+                    )
 
-                    if (token != null) {
-                        try {
-                            userViewModel.setOthers(token, others)
-                            navController.navigate(Routes.ROUTE_PAYMENTS)
-                        } catch (e: Exception) {
-                            // Handle error
+                    CoroutineScope(Dispatchers.Main).launch {
+                        val token = withContext(Dispatchers.IO) {
+                            authViewModel.token()
+                        }
+
+                        if (token != null) {
+                            try {
+                                val success = userViewModel.setOthers(token, others)
+
+                                if (success) {
+                                    navController.navigate(Routes.ROUTE_PAYMENTS)
+                                } else {
+                                    errors = mapOf("others" to "No se pudieron guardar los datos")
+                                }
+                            } catch (e: Exception) {
+                                // Handle error
+                            }
                         }
                     }
                 }
@@ -159,10 +187,10 @@ fun ShippingInfo(
 
                 LabeledInput(
                     label = "Número interior",
-                    placeholder = "Ejemplo: 4B (opcional)",
+                    placeholder = "Ejemplo: 4",
                     value = interior,
                     onValueChange = { interior = it },
-                    required = false
+                    required = true
                 )
 
                 Spacer(modifier = Modifier.size(16.dp))
@@ -206,6 +234,15 @@ fun ShippingInfo(
                 )
 
                 Spacer(modifier = Modifier.size(16.dp))
+
+                errors.entries.firstOrNull()?.let { (_, message) ->
+                    Text(
+                        text = message,
+                        color = Color.Red,
+                        fontSize = 12.sp,
+                        modifier = Modifier.padding(bottom = 4.dp)
+                    )
+                }
             }
         }
     }
