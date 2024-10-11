@@ -1,6 +1,5 @@
 package mx.cazv.todasbrillamos.view.components
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -20,19 +19,27 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import mx.cazv.todasbrillamos.R
+import coil.compose.AsyncImage
+import mx.cazv.todasbrillamos.model.ApiConfig
+import mx.cazv.todasbrillamos.model.models.OrderSummary
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 /**
  * Función composable que muestra la información de un pedido.
  * @author Jennyfer Jasso
  */
 @Composable
-fun InfoOrder() {
+fun InfoOrder(
+    folder: String,
+    order: OrderSummary
+) {
     Divider(
         color = Color.LightGray,
         thickness = 1.dp)
@@ -52,34 +59,20 @@ fun InfoOrder() {
                     .weight(2f)
                     .horizontalScroll(rememberScrollState())
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.logo),
-                    contentDescription = "",
-                    modifier = Modifier
-                        .size(70.dp)
-                        .padding(end = 8.dp)
-                )
-                Image(
-                    painter = painterResource(id = R.drawable.logo),
-                    contentDescription = "",
-                    modifier = Modifier
-                        .size(70.dp)
-                        .padding(end = 8.dp)
-                )
-                Image(
-                    painter = painterResource(id = R.drawable.logo),
-                    contentDescription = "",
-                    modifier = Modifier
-                        .size(70.dp)
-                        .padding(end = 8.dp)
-                )
-                Image(
-                    painter = painterResource(id = R.drawable.logo),
-                    contentDescription = "",
-                    modifier = Modifier
-                        .size(70.dp)
-                        .padding(end = 8.dp)
-                )
+
+                order.products.forEach { product ->
+                    val baseUrl = ApiConfig.BASE_URL
+                    val url = "$baseUrl$folder/${product.hash}.${product.type}"
+
+                    AsyncImage(
+                        model = url,
+                        contentDescription = "Product",
+                        modifier = Modifier
+                            .size(70.dp)
+                            .padding(end = 8.dp),
+                        contentScale = ContentScale.Crop
+                    )
+                }
             }
 
             Column(
@@ -90,7 +83,7 @@ fun InfoOrder() {
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-                Text(text = "MX $1100.25 \n4 artículos",
+                Text(text = "MX ${order.total_price}.00 \n4 artículos",
                     textAlign = TextAlign.Center,
                     fontSize = 13.sp,
                     lineHeight = 14.sp
@@ -101,8 +94,17 @@ fun InfoOrder() {
         Row(modifier = Modifier
             .fillMaxWidth()
             .padding(start = 15.dp, end = 15.dp, bottom = 15.dp)
-        ){
-            Text(text = "Septiembre xx, xxxx, hh:mm am",
+        ) {
+            val inputDate = order.delivery_date
+            val inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+            val outputFormatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy, hh:mm a", Locale("es", "ES"))
+
+            val date = LocalDate.parse(inputDate, inputFormatter)
+            var formattedDate = date.atStartOfDay().format(outputFormatter)
+
+            formattedDate = formattedDate.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
+
+            Text(text = formattedDate,
                 fontSize = 14.sp,
                 color = Color(0xffd5507c),
                 fontWeight = FontWeight.Bold,

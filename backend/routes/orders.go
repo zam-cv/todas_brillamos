@@ -7,9 +7,7 @@ package routes
 
 import (
 	"backend/database"
-	"backend/middlewares"
 	"backend/resources/auth"
-	"backend/resources/files"
 	"net/http"
 	"strconv"
 
@@ -34,25 +32,8 @@ func addOrdersRoutes(rg *gin.RouterGroup) {
 		})
 	})
 
-	// GET /orders - Obtiene las órdenes del cliente autenticado
-	orders.GET("", auth.GetMiddleware(ClientAuth), middlewares.GetClientID(), func(c *gin.Context) {
-		id, _ := c.MustGet("clientID").(uint)
-
-		orders, err := database.GetOrdersClientID(id)
-		if err != nil {
-			c.JSON(500, gin.H{"error": err.Error()})
-			return
-		}
-
-		c.JSON(200, gin.H{
-			"folder": files.GetURL(ProductArchive),
-			"orders": orders,
-		})
-	})
-
 	// PUT /orders/:id - Actualiza el estado de una orden específica (solo para administradores)
 	orders.PUT("/:id", auth.GetMiddleware(AdminAuth), func(c *gin.Context) {
-		//id, _ := c.MustGet("clientID").(uint)
 		orderID, err := strconv.ParseUint(c.Param("id"), 10, 32)
 		if err != nil {
 			c.JSON(400, gin.H{"error": "Invalid order ID"})

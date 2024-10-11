@@ -3,6 +3,8 @@
 
 package models
 
+import "time"
+
 // Estructura de la tabla de pedidos
 type Orders struct {
 	ID                 uint `json:"-" gorm:"primarykey"`
@@ -39,4 +41,33 @@ type CategorySales struct {
 	ID           uint   `json:"id"`
 	CategoryName string `json:"category_name"`
 	TotalSold    uint   `json:"total_sold"`
+}
+
+type OrderInfoWithProducts struct {
+	DeliveryDate       time.Time      `json:"delivery_date"`
+	Status             string         `json:"status"`
+	OrderReceivedDate  time.Time      `json:"order_received_date"`
+	PreparingOrderDate *time.Time     `json:"preparing_order_date"`
+	ShippedDate        *time.Time     `json:"shipped_date"`
+	Products           []OrderProduct `json:"products" gorm:"-"`
+}
+
+type OrderProduct struct {
+	ProductName string  `json:"product_name"`
+	Quantity    int     `json:"quantity"`
+	Price       float64 `json:"price"`
+	Hash        string  `json:"hash"`
+	Type        string  `json:"type"`
+}
+
+type OrderSummary struct {
+	TotalPrice    float64          `json:"total_price"`
+	TotalProducts int              `json:"total_products"`
+	DeliveryDate  string           `json:"delivery_date"`
+	Products      []ProductSummary `json:"products"`
+}
+
+type ProductSummary struct {
+	Hash string `json:"hash"`
+	Type string `json:"type"`
 }

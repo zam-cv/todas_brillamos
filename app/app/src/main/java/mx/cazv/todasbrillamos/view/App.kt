@@ -50,6 +50,7 @@ import mx.cazv.todasbrillamos.viewmodel.FavoritesViewModel
 import mx.cazv.todasbrillamos.viewmodel.PostsViewModel
 import mx.cazv.todasbrillamos.viewmodel.ProductsViewModel
 import mx.cazv.todasbrillamos.viewmodel.RandomViewModel
+import mx.cazv.todasbrillamos.viewmodel.TrackingViewModel
 import mx.cazv.todasbrillamos.viewmodel.UserViewModel
 
 /**
@@ -92,6 +93,7 @@ fun Nav(
     chatViewModel: ChatViewModel = ChatViewModel(),
     buyViewModel: BuyViewModel = BuyViewModel(),
     favoritesViewModel: FavoritesViewModel = FavoritesViewModel(),
+    trackingViewModel: TrackingViewModel = TrackingViewModel(),
     //notificationsViewModel: NotificationsViewModel = NotificationsViewModel(),
     modifier: Modifier = Modifier
 ) {
@@ -177,7 +179,7 @@ fun Nav(
                             Routes.ROUTE_CHAT -> Chat(navController, authViewModel, chatViewModel)
                             Routes.ROUTE_FAVORITES -> Favorites(navController, authViewModel, favoritesViewModel)
                             //Routes.ROUTE_NOTIFICATIONS -> Notifications(navController, authViewModel, notificationsViewModel)
-                            Routes.ROUTE_CART -> Cart(navController, authViewModel, cartViewModel, userViewModel)
+                            Routes.ROUTE_CART -> Cart(navController, authViewModel, cartViewModel, userViewModel, buyViewModel)
                             Routes.ROUTE_PRODUCT_DETAILS + "/{productId}" -> {
                                 val productId = backStackEntry.arguments?.getString("productId")
                                 val id = productId?.toInt()
@@ -195,7 +197,7 @@ fun Nav(
                             }
                             Routes.ROUTE_YOUR_CYCLE -> YourCycle(navController, calendarVM)
                             Routes.ROUTE_TRACK_ORDER -> TrackOrder(navController)
-                            Routes.ROUTE_ORDERS -> Orders(navController)
+                            Routes.ROUTE_ORDERS -> Orders(navController, authViewModel, trackingViewModel)
                             Routes.ROUTE_CONFIG -> Config(navController, authViewModel)
                             Routes.ROUTE_EDIT_PROFILE -> EditProfile(navController, authViewModel, userViewModel)
                             Routes.ROUTE_CHANGE_PASSWORD -> ChangePassword(navController, authViewModel, userViewModel)

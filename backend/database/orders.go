@@ -6,9 +6,13 @@ package database
 
 import (
 	"backend/models"
+	"fmt"
+
 	//"fmt"
-	"strings"
+
 	"time"
+
+	"gorm.io/gorm"
 	//"gorm.io/gorm"
 )
 
@@ -45,62 +49,6 @@ func CreateOrders(orders []*models.Orders) error {
 		return err
 	}
 	return nil
-}
-
-// Representa la estructura de una imagen de producto.
-type ProductImage struct {
-	Hash string `json:"hash"`
-	Type string `json:"type"`
-}
-
-// Representa el resumen de una orden.
-type OrderSummary struct {
-	DeliveryDate  *string        `json:"delivery_date"`
-	TotalProducts int            `json:"total_products"`
-	TotalAmount   float64        `json:"total_amount"`
-	ProductImages []ProductImage `json:"product_images" gorm:"-"`
-}
-
-// Obtiene un resumen de órdenes por el ID del cliente.
-// Devuelve una lista de resúmenes de órdenes y un error en caso de que ocurra.
-func GetOrdersClientID(clientID uint) ([]OrderSummary, error) {
-	var results []OrderSummary
-
-	err := GetDatabase().Raw(`
-        SELECT 
-            o.delivery_date,
-            SUM(o.quantity) as total_products,
-            SUM(o.quantity * p.price) as total_amount
-        FROM orders o
-        JOIN products p ON o.product_id = p.id
-        WHERE o.client_id = ?
-        GROUP BY o.delivery_date
-        ORDER BY o.delivery_date
-    `, clientID).Scan(&results).Error
-
-	if err != nil {
-		return nil, err
-	}
-
-	for i := range results {
-		var productImages []ProductImage
-		err := GetDatabase().Raw(`
-            SELECT p.hash, p.type
-            FROM orders o
-            JOIN products p ON o.product_id = p.id
-            WHERE o.client_id = ? AND o.delivery_date = ?
-        `, clientID, results[i].DeliveryDate).Scan(&productImages).Error
-
-		if err != nil {
-			return nil, err
-		}
-
-		deliveryDate := strings.Split(*results[i].DeliveryDate, "T")[0]
-		results[i].DeliveryDate = &deliveryDate
-		results[i].ProductImages = productImages
-	}
-
-	return results, nil
 }
 
 // Actualiza el estado de una orden por su ID.
@@ -210,23 +158,8 @@ func GetBestSelledCategories() ([]models.CategorySales, error) {
 	return categoriesSales, nil
 }
 
-/*
-type OrderProduct struct {
-	ProductName string  `json:"product_name"`
-	Quantity    int     `json:"quantity"`
-	Price       float64 `json:"price"`
-}
-
-type OrderInfoWithProducts struct {
-	DeliveryDate      time.Time      `json:"delivery_date"`
-	Status            string         `json:"status"`
-	OrderReceivedDate time.Time      `json:"order_received_date"`
-	FullName          string         `json:"full_name"`
-	Products          []OrderProduct `json:"products"`
-}
-
-func GetOrderInfoWithProducts(clientID uint, deliveryDate string) (*OrderInfoWithProducts, error) {
-	var result OrderInfoWithProducts
+func GetOrderInfoWithProducts(clientID uint, deliveryDate string) (*models.OrderInfoWithProducts, error) {
+	var result models.OrderInfoWithProducts
 
 	// Parsear la fecha de entrega
 	parsedDate, err := time.Parse("2006-01-02", deliveryDate)
@@ -237,7 +170,7 @@ func GetOrderInfoWithProducts(clientID uint, deliveryDate string) (*OrderInfoWit
 	// Obtener información general del pedido (sin el nombre completo)
 	err = GetDatabase().
 		Table("orders").
-		Select("orders.delivery_date, orders.status, orders.order_received_date").
+		Select("orders.delivery_date, orders.status, orders.order_received_date, orders.preparing_order_date, orders.shipped_date").
 		Where("orders.client_id = ? AND DATE(orders.delivery_date) = DATE(?)", clientID, parsedDate).
 		First(&result).Error
 
@@ -249,12 +182,12 @@ func GetOrderInfoWithProducts(clientID uint, deliveryDate string) (*OrderInfoWit
 	}
 
 	// Obtener productos asociados al pedido
-	var products []OrderProduct
+	var products []models.OrderProduct
 	err = GetDatabase().
-		Table("order_products").
-		Select("products.name as product_name, order_products.quantity, products.price").
-		Joins("JOIN products ON order_products.product_id = products.id").
-		Where("order_products.order_id = (SELECT id FROM orders WHERE client_id = ? AND DATE(delivery_date) = DATE(?))", clientID, parsedDate).
+		Table("orders").
+		Select("products.name as product_name, orders.quantity, products.price, products.hash, products.type").
+		Joins("JOIN products ON orders.product_id = products.id").
+		Where("orders.id = (SELECT id FROM orders WHERE client_id = ? AND DATE(delivery_date) = DATE(?))", clientID, parsedDate).
 		Scan(&products).Error
 
 	if err != nil {
@@ -263,7 +196,64 @@ func GetOrderInfoWithProducts(clientID uint, deliveryDate string) (*OrderInfoWit
 
 	// Asignar productos a la estructura
 	result.Products = products
-
 	return &result, nil
 }
-*/
+
+func GetAllOrders(clientID uint) ([]models.OrderSummary, error) {
+	var orders []struct {
+		DeliveryDate      time.Time
+		OrderReceivedDate time.Time
+		TotalPrice        float64
+		TotalProducts     int
+	}
+
+	err := GetDatabase().
+		Table("orders").
+		Select("delivery_date, delivery_date, SUM(quantity * price) as total_price, SUM(quantity) as total_products").
+		Joins("JOIN products ON orders.product_id = products.id").
+		Where("client_id = ?", clientID).
+		Group("delivery_date, order_received_date").
+		Find(&orders).Error
+
+	if err != nil {
+		return nil, fmt.Errorf("error fetching orders: %v", err)
+	}
+
+	var result []models.OrderSummary
+
+	for _, order := range orders {
+		var products []struct {
+			Hash string
+			Type string
+		}
+
+		err := GetDatabase().
+			Table("orders").
+			Select("products.hash, products.type").
+			Joins("JOIN products ON orders.product_id = products.id").
+			Where("client_id = ? AND DATE(delivery_date) = DATE(?)", clientID, order.DeliveryDate).
+			Scan(&products).Error
+
+		if err != nil {
+			return nil, fmt.Errorf("error fetching products for order: %v", err)
+		}
+
+		orderSummary := models.OrderSummary{
+			TotalPrice:    order.TotalPrice,
+			TotalProducts: order.TotalProducts,
+			DeliveryDate:  order.DeliveryDate.Format("2006-01-02"),
+			Products:      make([]models.ProductSummary, len(products)),
+		}
+
+		for i, p := range products {
+			orderSummary.Products[i] = models.ProductSummary{
+				Hash: p.Hash,
+				Type: p.Type,
+			}
+		}
+
+		result = append(result, orderSummary)
+	}
+
+	return result, nil
+}

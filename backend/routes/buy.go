@@ -108,7 +108,7 @@ func addBuyRoutes(rg *gin.RouterGroup) {
 		}
 
 		orders := []*models.Orders{}
-		deliveryDate := time.Now().AddDate(0, 0, 5).Format("2006-01-02")
+		deliveryDate := time.Now().AddDate(0, 0, 5).Format("2006-01-02") // Fecha de entrega en 5 días
 		now := time.Now().Format("2006-01-02")
 		status := "En camino"
 

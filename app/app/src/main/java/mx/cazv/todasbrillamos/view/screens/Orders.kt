@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -13,6 +15,8 @@ import mx.cazv.todasbrillamos.view.components.footer.BottomBar
 import mx.cazv.todasbrillamos.view.components.InfoOrder
 import mx.cazv.todasbrillamos.view.components.header.BasicTopBar
 import mx.cazv.todasbrillamos.view.layouts.CustomLayout
+import mx.cazv.todasbrillamos.viewmodel.AuthViewModel
+import mx.cazv.todasbrillamos.viewmodel.TrackingViewModel
 
 /**
  * Pantalla de pedidos que muestra una lista de pedidos realizados por el usuario.
@@ -21,7 +25,21 @@ import mx.cazv.todasbrillamos.view.layouts.CustomLayout
  * @param navController El NavHostController utilizado para la navegación.
  */
 @Composable
-fun Orders(navController: NavHostController) {
+fun Orders(
+    navController: NavHostController,
+    authViewModel: AuthViewModel,
+    trackingViewModel: TrackingViewModel
+) {
+    val trackingState = trackingViewModel.state.collectAsState()
+
+    LaunchedEffect(key1 = Unit) {
+        val token = authViewModel.token()
+
+        if (token != null) {
+            trackingViewModel.loadTracking(token)
+        }
+    }
+
     CustomLayout(
         withStoreButton = true,
         navController = navController,
@@ -37,18 +55,21 @@ fun Orders(navController: NavHostController) {
                 .fillMaxSize()
                 .padding(top = 25.dp)
         ){
-            InfoOrder()
+/*            InfoOrder()
             Spacer(modifier = Modifier.height(25.dp))
             InfoOrder()
             Spacer(modifier = Modifier.height(25.dp))
             InfoOrder()
             Spacer(modifier = Modifier.height(25.dp))
-/*            MoreProducts(
-                text = "Más productos",
-                modifier = Modifier
-                    .padding(start = 15.dp, top = 25.dp)
-            )*/
-            Spacer(modifier = Modifier.height(25.dp))
+            Spacer(modifier = Modifier.height(25.dp))*/
+
+            trackingState.value.orders.forEach { order ->
+                InfoOrder(
+                    folder = trackingState.value.folder,
+                    order = order
+                )
+                Spacer(modifier = Modifier.height(25.dp))
+            }
         }
     }
 }

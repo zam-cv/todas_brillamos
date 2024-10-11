@@ -21,6 +21,8 @@ import mx.cazv.todasbrillamos.model.models.SignInRequest
 import mx.cazv.todasbrillamos.model.models.UserInfo
 import mx.cazv.todasbrillamos.model.models.NotificationGet
 import mx.cazv.todasbrillamos.model.models.GroupedNotification
+import mx.cazv.todasbrillamos.model.models.Tracking
+import mx.cazv.todasbrillamos.model.models.TrackingOrder
 import retrofit2.Call
 
 
@@ -73,7 +75,6 @@ interface API {
      */
     @GET("api/clients")
     suspend fun getClient(@Header("Authorization") token: String): ClientDetails
-
 
     /**
      * Actualiza la contraseña del cliente.
@@ -290,15 +291,19 @@ interface API {
      * @param token El token de autenticación.
      * @return La lista de notificaciones.
      */
-//    @GET("api/notifications/{id}")
-//    suspend fun getNotifications(
-//        @Header("Authorization") token: String,
-//        @Path("id") id: UInt
-//    ): Response<List<GroupedNotification>>
     @GET("api/notifications/all")
     suspend fun getNotificationsByClientId(
         @Header("Authorization") token: String
     ): GroupedNotification
+
+    @GET("api/tracking")
+    suspend fun getTracking(@Header("Authorization") token: String): Tracking
+
+    @GET("api/tracking/{deliveryDate}")
+    suspend fun getTrackingByDate(
+        @Header("Authorization") token: String,
+        @Path("deliveryDate") deliveryDate: String
+    ): TrackingOrder
 }
 
 /**
