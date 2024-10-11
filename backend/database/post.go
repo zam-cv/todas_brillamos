@@ -52,3 +52,8 @@ func DeletePost(id uint) (*models.Post, error) {
 
 	return post, nil
 }
+
+func UpdatePost(id uint, post *models.Post) error {
+	err := db.Model(&models.Post{}).Where("id = ?", id).Updates(post).Error
+	return err
+}

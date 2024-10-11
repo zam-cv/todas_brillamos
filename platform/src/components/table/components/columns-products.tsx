@@ -21,20 +21,36 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+import { useState } from "react";
+import { Product } from "@/utils/api/products";
 
 
-export const createColumns = (handleDelete: (id: number) => void): ColumnDef<Task>[] => [
+export const createColumns = (
+  handleDelete: (id: number) => void,
+  updateProduct: (value: Object, fields: Product) => void): ColumnDef<Task>[] => [
     {
       accessorKey: "name",
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title="Nombre" />
       ),
       cell: ({ row }) => {
+        const [name, setName] = useState<string>(row.getValue("name"));
+
+        function handleSave(value: string) {
+          updateProduct({ name: value }, (row.original as any));
+          setName(value);
+        }
+
         return (
-          <div className="flex space-x-2">
-            <span className="max-w-[500px] truncate font-medium">
-              {row.getValue("name")}
-            </span>
+          <div className="flex space-x-2 outline-none font-semibold bg-transparent  " contentEditable={true}>
+            <input
+              name = "name"
+              value={name}
+              onChange = {(e) => handleSave(e.target.value)}
+              className="bg-transparent outline-none font-semibold"
+              
+              >
+            </input>
           </div>
         );
       },
@@ -45,12 +61,23 @@ export const createColumns = (handleDelete: (id: number) => void): ColumnDef<Tas
         <DataTableColumnHeader column={column} title="Stock" />
       ),
       cell: ({ row }) => {
+        const [stock, setStock] = useState<number>(row.getValue("stock"));
+        function handleSave(value: number){
+          updateProduct({stock: value}, (row.original as any));
+          setStock(value);
+        }
+        
         return (
-          <div className="flex space-x-2">
-            <span className="max-w-[500px] truncate font-medium">
-              {row.getValue("stock")}
-            </span>
-          </div>
+          <div className="flex space-x-2 outline-none font-semibold bg-transparent  " contentEditable={true}>
+          <input
+            name = "stock"
+            value={stock}
+            onChange = {(e) => handleSave(Number(e.target.value))}
+            className="bg-transparent outline-none font-semibold"
+            
+            >
+          </input>
+        </div>
         );
       },
     },
@@ -60,12 +87,22 @@ export const createColumns = (handleDelete: (id: number) => void): ColumnDef<Tas
         <DataTableColumnHeader column={column} title="Precio" />
       ),
       cell: ({ row }) => {
+        const [price, setPrice] = useState<number>(row.getValue("price"));
+        function handleSave(value: number){
+          updateProduct({price: value}, (row.original as any));
+          setPrice(value);
+        }
         return (
-          <div className="flex space-x-2">
-            <span className="max-w-[500px] truncate font-medium">
-              {row.getValue("price")}
-            </span>
-          </div>
+          <div className="flex space-x-2 outline-none font-semibold bg-transparent  " contentEditable={true}>
+          <input
+            name = "price"
+            value={price}
+            onChange = {(e) => handleSave(Number(e.target.value))}
+            className="bg-transparent outline-none font-semibold"
+            
+            >
+          </input>
+        </div>
         );
       },
     },
@@ -75,12 +112,22 @@ export const createColumns = (handleDelete: (id: number) => void): ColumnDef<Tas
         <DataTableColumnHeader column={column} title="Model" />
       ),
       cell: ({ row }) => {
+        const [model, setModel] = useState<string>(row.getValue("model"));
+        function handleSave(value: string){
+          updateProduct({model: value}, (row.original as any));
+          setModel(value);
+        }
         return (
-          <div className="flex space-x-2">
-            <span className="max-w-[500px] truncate font-medium">
-              {row.getValue("model")}
-            </span>
-          </div>
+          <div className="flex space-x-2 outline-none font-semibold bg-transparent  " contentEditable={true}>
+          <input
+            name = "model"
+            value={model}
+            onChange = {(e) => handleSave(e.target.value)}
+            className="bg-transparent outline-none font-semibold"
+            
+            >
+          </input>
+        </div>
         );
       },
     },
@@ -90,12 +137,22 @@ export const createColumns = (handleDelete: (id: number) => void): ColumnDef<Tas
         <DataTableColumnHeader column={column} title="Tamaño" />
       ),
       cell: ({ row }) => {
+        const [size, setSize] = useState<string>(row.getValue("size"));
+        function handleSave(value: string){
+          updateProduct({size: value}, (row.original as any));
+          setSize(value);
+        }
         return (
-          <div className="flex space-x-2">
-            <span className="max-w-[500px] truncate font-medium">
-              {row.getValue("size")}
-            </span>
-          </div>
+          <div className="flex space-x-2 outline-none font-semibold bg-transparent  " contentEditable={true}>
+          <input
+            name = "size"
+            value={size}
+            onChange = {(e) => handleSave(e.target.value)}
+            className="bg-transparent outline-none font-semibold"
+            
+            >
+          </input>
+        </div>
         );
       },
     },
@@ -105,12 +162,22 @@ export const createColumns = (handleDelete: (id: number) => void): ColumnDef<Tas
         <DataTableColumnHeader column={column} title="Material" />
       ),
       cell: ({ row }) => {
+        const [material, setMaterial] = useState<string>(row.getValue("material"));
+        function handleSave(value: string){
+          updateProduct({material: value}, (row.original as any));
+          setMaterial(value);
+        }
         return (
-          <div className="flex space-x-2">
-            <span className="max-w-[500px] truncate font-medium">
-              {row.getValue("material")}
-            </span>
-          </div>
+          <div className="flex space-x-2 outline-none font-semibold bg-transparent  " contentEditable={true}>
+          <input
+            name = "material"
+            value={material}
+            onChange = {(e) => handleSave(e.target.value)}
+            className="bg-transparent outline-none font-semibold"
+            
+            >
+          </input>
+        </div>
         );
       },
     },
@@ -120,11 +187,21 @@ export const createColumns = (handleDelete: (id: number) => void): ColumnDef<Tas
         <DataTableColumnHeader column={column} title="Absorbencia" />
       ),
       cell: ({ row }) => {
+        const [absorbency, setAbsorbency] = useState<string>(row.getValue("absorbency"));
+        function handleSave(value: string){
+          updateProduct({absorbency: value}, (row.original as any));
+          setAbsorbency(value);
+        }
         return (
-          <div className="flex space-x-2">
-            <span className="max-w-[500px] truncate font-medium">
-              {row.getValue("absorbency")}
-            </span>
+          <div className="flex space-x-2 outline-none font-semibold bg-transparent  " contentEditable={true}>
+          <input
+            name = "absorbency"
+            value={absorbency}
+            onChange = {(e) => handleSave(e.target.value)}
+            className="bg-transparent outline-none font-semibold"
+            
+            >
+          </input>
           </div>
         );
       },
@@ -135,11 +212,21 @@ export const createColumns = (handleDelete: (id: number) => void): ColumnDef<Tas
         <DataTableColumnHeader column={column} title="Cuidado de la Piel" />
       ),
       cell: ({ row }) => {
+        const [material_feature, setMaterial_feature] = useState<string>(row.getValue("material_feature"));
+        function handleSave(value: string){
+          updateProduct({material_feature: value}, (row.original as any));
+          setMaterial_feature(value);
+        }
         return (
-          <div className="flex space-x-2">
-            <span className="max-w-[500px] truncate font-medium">
-              {row.getValue("material_feature")}
-            </span>
+          <div className="flex space-x-2 outline-none font-semibold bg-transparent  " contentEditable={true}>
+          <input
+            name = "material_feature"
+            value={material_feature}
+            onChange = {(e) => handleSave(e.target.value)}
+            className="bg-transparent outline-none font-semibold"
+            
+            >
+          </input>
           </div>
         );
       },
@@ -150,11 +237,21 @@ export const createColumns = (handleDelete: (id: number) => void): ColumnDef<Tas
         <DataTableColumnHeader column={column} title="Color" />
       ),
       cell: ({ row }) => {
+        const [color, setColor] = useState<string>(row.getValue("color"));
+        function handleSave(value: string){
+          updateProduct({color: value}, (row.original as any));
+          setColor(value);
+        }
         return (
-          <div className="flex space-x-2">
-            <span className="max-w-[500px] truncate font-medium">
-              {row.getValue("color")}
-            </span>
+          <div className="flex space-x-2 outline-none font-semibold bg-transparent  " contentEditable={true}>
+          <input
+            name = "color"
+            value={color}
+            onChange = {(e) => handleSave(e.target.value)}
+            className="bg-transparent outline-none font-semibold"
+            
+            >
+          </input>
           </div>
         );
       },
@@ -165,11 +262,21 @@ export const createColumns = (handleDelete: (id: number) => void): ColumnDef<Tas
         <DataTableColumnHeader column={column} title="Descripción" />
       ),
       cell: ({ row }) => {
+        const [description, setDescription] = useState<string>(row.getValue("description"));
+        function handleSave(value: string){
+          updateProduct({description: value}, (row.original as any));
+          setDescription(value);
+        }
         return (
-          <div className="flex space-x-2">
-            <span className="max-w-[500px] truncate font-medium">
-              {row.getValue("description")}
-            </span>
+          <div className="flex space-x-2 outline-none font-semibold bg-transparent  " contentEditable={true}>
+          <input
+            name = "description"
+            value={description}
+            onChange = {(e) => handleSave(e.target.value)}
+            className="bg-transparent outline-none font-semibold"
+            
+            >
+          </input>
           </div>
         );
       },

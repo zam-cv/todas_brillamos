@@ -41,7 +41,7 @@ func addPostRoutes(rg *gin.RouterGroup) {
 
 	// GET /posts - Obtiene todos los posts
 	post.GET("", func(c *gin.Context) {
-		
+
 		posts, err := database.GetPosts()
 		if err != nil {
 			c.JSON(500, gin.H{"error": err.Error()})
@@ -52,7 +52,7 @@ func addPostRoutes(rg *gin.RouterGroup) {
 	})
 
 	// GET /posts/:id - Obtiene un post específico
-	post.GET("/:id", func(c *gin.Context){
+	post.GET("/:id", func(c *gin.Context) {
 		idStr := c.Param("id")
 		id, err := strconv.Atoi(idStr)
 		if err != nil {
@@ -78,7 +78,7 @@ func addPostRoutes(rg *gin.RouterGroup) {
 			c.JSON(400, gin.H{"error": err.Error()})
 			return
 		}
-		
+
 		post, err := database.DeletePost(uint(id))
 		if err != nil {
 			c.JSON(500, gin.H{"error": err.Error()})
@@ -87,4 +87,28 @@ func addPostRoutes(rg *gin.RouterGroup) {
 
 		c.JSON(200, post)
 	})
+
+	post.POST("/:id", auth.GetMiddleware(AdminAuth), func(c *gin.Context) {
+		idStr := c.Param("id")
+		id, err := strconv.Atoi(idStr)
+		if err != nil {
+			c.JSON(400, gin.H{"error": "ID inválido"})
+			return
+		}
+
+		var post models.Post
+		if err := c.ShouldBindJSON(&post); err != nil {
+			c.JSON(400, gin.H{"error": "Datos inválidos"})
+			return
+		}
+
+		err = database.UpdatePost(uint(id), &post)
+		if err != nil {
+			c.JSON(500, gin.H{"error": "No se pudo actualizar el post"})
+			return
+		}
+
+		c.JSON(200, gin.H{"message": "Post actualizado"})
+	})
+
 }

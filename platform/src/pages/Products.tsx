@@ -155,6 +155,13 @@ export default function UploadProducts() {
     }
   }
 
+  function updateProduct(value: Object, fields: Product) {
+    api.product.updateMetadataProduct(fields.id, {
+      ...fields,
+      ...value,
+    } as any);
+  }
+
   const [categories, setCategories] = useState<Category[]>([]);
 
   useEffect(() => {
@@ -194,191 +201,194 @@ export default function UploadProducts() {
       });
   }
 
-  const columns = createColumns(handleDelete);
+  const columns = createColumns(handleDelete, updateProduct);
+
   return (
-    <div>
-      <div className="flex justify-between items-center">
-        <h2 className="scroll-m-20 text-3xl font-semibold tracking-tight first:mt-0">
-          Productos
-        </h2>
+    <div className="space-y-4 relative w-full h-full">
+      <div className="w-full absolute">
+        <div className="flex justify-between items-center">
+          <h2 className="scroll-m-20 text-3xl font-semibold tracking-tight first:mt-0">
+            Productos
+          </h2>
+        </div>
+        <br />
+        <Accordion type="single" collapsible className="w-3/4">
+          <AccordionItem value="item-1">
+            <AccordionTrigger className="font-semibold">
+              Agregar
+            </AccordionTrigger>
+            <AccordionContent>
+              <div className="flex flex-wrap flex-col">
+                <div className="flex flex-rows space-x-2 px-2 pt-2">
+                  <label className="w-3/4">
+                    <span className="font-semibold">Nombre</span>
+                    <Input
+                      name="name"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      placeholder="Toalla reusable...."
+                      required
+                    />
+                  </label>
+                  <label className="w-3/4">
+                    <span className="font-semibold">Stock</span>
+                    <Input
+                      name="stock"
+                      value={stock}
+                      onChange={(e) => setStock(Number(e.target.value))}
+                      className="w-1/3"
+                      placeholder="Cantidad"
+                      type="number"
+                    />
+                  </label>
+                </div>
+                <div className="flex flex-row space-x-2 px-2 pt-2">
+                  <label className="w-1/5">
+                    <span className="font-semibold">Precio</span>
+                    <Input
+                      name="price"
+                      value={price}
+                      onChange={(e) => setPrice(Number(e.target.value))}
+                      placeholder="Precio"
+                      type="number"
+                      required
+                    />
+                  </label>
+                  <label className="w-3/5">
+                    <span className="font-semibold">Modelo</span>
+                    <Input
+                      name="model"
+                      value={model}
+                      onChange={(e) => setModel(e.target.value)}
+                      placeholder="GX-1201.."
+                      required
+                    />
+                  </label>
+                  <label className="w-1/5">
+                    <span className="font-semibold">Tamaño</span>
+                    <Input
+                      name="size"
+                      value={size}
+                      onChange={(e) => setSize(e.target.value)}
+                      placeholder="12x12.."
+                    />
+                  </label>
+                </div>
+                <div className="flex flex-row space-x-2 px-2 pt-2">
+                  <label className="w-2/4">
+                    <span className="font-semibold">Material</span>
+                    <Input
+                      name="material"
+                      value={material}
+                      onChange={(e) => setMaterial(e.target.value)}
+                      placeholder="fibras de algodón.."
+                    />
+                  </label>
+                  <label className="w-2/4">
+                    <span className="font-semibold">Absorbencia</span>
+                    <Input
+                      name="absorbency"
+                      value={absorbency}
+                      onChange={(e) => setAbsorbency(e.target.value)}
+                      placeholder="Alta.."
+                    />
+                  </label>
+                </div>
+                <div className="flex flex-row space-x-2 px-2 pt-2">
+                  <label className="w-3/4">
+                    <span className="font-semibold">
+                      Características del material
+                    </span>
+                    <Input
+                      name="material_feature"
+                      value={material_feature}
+                      onChange={(e) => setMaterial_feature(e.target.value)}
+                      placeholder="Hipoalergénica..."
+                    />
+                  </label>
+                  <label className="w-1/4">
+                    <span className="font-semibold">Color</span>
+                    <Input
+                      name="color"
+                      value={color}
+                      onChange={(e) => setColor(e.target.value)}
+                      placeholder="Azul.."
+                    />
+                  </label>
+                </div>
+                <div className="grid space-x-2 px-2 pt-2">
+                  <label>
+                    <span className="font-semibold">Mantenimiento</span>
+                    <Input
+                      name="maintenance"
+                      value={maintenance}
+                      onChange={(e) => setMaintenance(e.target.value)}
+                      placeholder="Lavable..."
+                    />
+                  </label>
+                </div>
+                <div className="grid space-x-2 px-2 pt-2">
+                  <label>
+                    <span className="font-semibold">Descripción</span>
+                    <Textarea
+                      name="description"
+                      value={description}
+                      onChange={(e) => setDescription(e.target.value)}
+                      placeholder="Medidas, indicaciones.."
+                      className="w-full"
+                    />
+                  </label>
+                </div>
+                <div className="flex flex-row space-x-2 px-2 pt-2">
+                  <label className="w-2/4">
+                    <span className="font-semibold">Categoría</span>
+                    <Select
+                      value={category_id.toString()}
+                      onValueChange={(value) => setCategory_id(Number(value))}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Selecciona una categoría" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          <SelectLabel>Categorías</SelectLabel>
+                          {categories.map((category) => (
+                            <SelectItem
+                              key={category.id}
+                              value={category.id.toString()}
+                            >
+                              {category.name}
+                            </SelectItem>
+                          ))}
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  </label>
+                </div>
+                <div className="flex flex-row space-x-2 px-2 pt-2">
+                  <label>
+                    <span className="font-semibold">Imagen</span>
+                    <Input
+                      ref={imageInput}
+                      type="file"
+                      onChange={() => {}}
+                      required
+                    />
+                  </label>
+                </div>
+                <div className="flex flex-row space-x-2 px-2 pt-2">
+                  <Button onClick={uploadProduct} disabled={!isFormValid}>
+                    Agregar Producto
+                  </Button>
+                </div>
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+        <br />
+
+        <DataTable data={products} columns={columns} setId={setId} />
       </div>
-      <br />
-      <Accordion type="single" collapsible className="w-3/4">
-        <AccordionItem value="item-1">
-          <AccordionTrigger className="font-semibold">Agregar</AccordionTrigger>
-          <AccordionContent>
-            <div className="flex flex-wrap flex-col">
-              <div className="flex flex-rows space-x-2 px-2 pt-2">
-                <label className="w-3/4">
-                  <span className="font-semibold">Nombre</span>
-                  <Input
-                    name="name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder="Toalla reusable...."
-                    required
-                  />
-                </label>
-                <label className="w-3/4">
-                  <span className="font-semibold">Stock</span>
-                  <Input
-                    name="stock"
-                    value={stock}
-                    onChange={(e) => setStock(Number(e.target.value))}
-                    className="w-1/3"
-                    placeholder="Cantidad"
-                    type="number"
-                    
-                  />
-                </label>
-              </div>
-              <div className="flex flex-row space-x-2 px-2 pt-2">
-                <label className="w-1/5">
-                  <span className="font-semibold">Precio</span>
-                  <Input
-                    name="price"
-                    value={price}
-                    onChange={(e) => setPrice(Number(e.target.value))}
-                    placeholder="Precio"
-                    type="number"
-                    required
-                  />
-                </label>
-                <label className="w-3/5">
-                  <span className="font-semibold">Modelo</span>
-                  <Input
-                    name="model"
-                    value={model}
-                    onChange={(e) => setModel(e.target.value)}
-                    placeholder="GX-1201.."
-                    required
-                  />
-                </label>
-                <label className="w-1/5">
-                  <span className="font-semibold">Tamaño</span>
-                  <Input
-                    name="size"
-                    value={size}
-                    onChange={(e) => setSize(e.target.value)}
-                    placeholder="12x12.."
-                  />
-                </label>
-              </div>
-              <div className="flex flex-row space-x-2 px-2 pt-2">
-                <label className="w-2/4">
-                  <span className="font-semibold">Material</span>
-                  <Input
-                    name="material"
-                    value={material}
-                    onChange={(e) => setMaterial(e.target.value)}
-                    placeholder="fibras de algodón.."
-                  />
-                </label>
-                <label className="w-2/4">
-                  <span className="font-semibold">Absorbencia</span>
-                  <Input
-                    name="absorbency"
-                    value={absorbency}
-                    onChange={(e) => setAbsorbency(e.target.value)}
-                    placeholder="Alta.."
-                  />
-                </label>
-              </div>
-              <div className="flex flex-row space-x-2 px-2 pt-2">
-                <label className="w-3/4">
-                  <span className="font-semibold">
-                    Características del material
-                  </span>
-                  <Input
-                    name="material_feature"
-                    value={material_feature}
-                    onChange={(e) => setMaterial_feature(e.target.value)}
-                    placeholder="Hipoalergénica..."
-                  />
-                </label>
-                <label className="w-1/4">
-                  <span className="font-semibold">Color</span>
-                  <Input
-                    name="color"
-                    value={color}
-                    onChange={(e) => setColor(e.target.value)}
-                    placeholder="Azul.."
-                  />
-                </label>
-              </div>
-              <div className="grid space-x-2 px-2 pt-2">
-                <label>
-                  <span className="font-semibold">Mantenimiento</span>
-                  <Input
-                    name="maintenance"
-                    value={maintenance}
-                    onChange={(e) => setMaintenance(e.target.value)}
-                    placeholder="Lavable..."
-                  />
-                </label>
-              </div>
-              <div className="grid space-x-2 px-2 pt-2">
-                <label>
-                  <span className="font-semibold">Descripción</span>
-                  <Textarea
-                    name="description"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    placeholder="Medidas, indicaciones.."
-                    className="w-full"
-                  />
-                </label>
-              </div>
-              <div className="flex flex-row space-x-2 px-2 pt-2">
-                <label className="w-2/4">
-                  <span className="font-semibold">Categoría</span>
-                  <Select
-                    value={category_id.toString()}
-                    onValueChange={(value) => setCategory_id(Number(value))}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Selecciona una categoría" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        <SelectLabel>Categorías</SelectLabel>
-                        {categories.map((category) => (
-                          <SelectItem
-                            key={category.id}
-                            value={category.id.toString()}
-                          >
-                            {category.name}
-                          </SelectItem>
-                        ))}
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-                </label>
-              </div>
-              <div className="flex flex-row space-x-2 px-2 pt-2">
-                <label>
-                  <span className="font-semibold">Imagen</span>
-                  <Input
-                    ref={imageInput}
-                    type="file"
-                    onChange={() => {}}
-                    required
-                  />
-                </label>
-              </div>
-              <div className="flex flex-row space-x-2 px-2 pt-2">
-                <Button onClick={uploadProduct} disabled={!isFormValid}>
-                  Agregar Producto
-                </Button>
-              </div>
-            </div>
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
-
-      <br />
-
-      <DataTable data={products} columns={columns} setId={setId} />
     </div>
   );
 }

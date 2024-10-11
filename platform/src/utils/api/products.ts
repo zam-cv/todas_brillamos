@@ -1,4 +1,4 @@
-import {get, del, upload } from "../methods";
+import {get, del, upload, post} from "../methods";
 import { SERVER } from "../constants";
 
 export interface Product {
@@ -53,11 +53,10 @@ export default {
 
         
         updateMetadataProduct : (
-            file: File,
-            product: Product,
-            id:number
-        ): Promise<void> => {
-            return upload(`/products/${id}/metadata`, file, product, false);
+            id:number,
+            product: Product
+        ): Promise<ProductoCreado> => {
+            return post(`/products/${id}/metadata`, product);
         },
 
         addProductToCart: (

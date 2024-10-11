@@ -77,7 +77,7 @@ export default function BarChartDashboard() {
 
     if (error) {
       return (
-        <p>Erro</p>
+        <></>
       )
     }
 
