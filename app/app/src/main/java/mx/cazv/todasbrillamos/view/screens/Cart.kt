@@ -26,20 +26,26 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import com.stripe.android.PaymentConfiguration
+import com.stripe.android.paymentsheet.PaymentSheet
+import com.stripe.android.paymentsheet.PaymentSheetResult
+import com.stripe.android.paymentsheet.rememberPaymentSheet
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import mx.cazv.todasbrillamos.model.ApiConfig
 import mx.cazv.todasbrillamos.model.models.CartItem
 import mx.cazv.todasbrillamos.view.Routes
@@ -47,6 +53,7 @@ import mx.cazv.todasbrillamos.view.components.footer.ButtonBottomBar
 import mx.cazv.todasbrillamos.view.components.header.BasicTopBar
 import mx.cazv.todasbrillamos.view.layouts.CustomLayout
 import mx.cazv.todasbrillamos.viewmodel.AuthViewModel
+import mx.cazv.todasbrillamos.viewmodel.BuyViewModel
 import mx.cazv.todasbrillamos.viewmodel.CartViewModel
 import mx.cazv.todasbrillamos.viewmodel.UserViewModel
 
@@ -67,41 +74,103 @@ fun Cart(
     navController: NavHostController,
     authViewModel: AuthViewModel,
     cartViewModel: CartViewModel,
-    userViewModel: UserViewModel
+    userViewModel: UserViewModel,
+    buyViewModel: BuyViewModel
 ) {
     val cartState by cartViewModel.state.collectAsState()
+
+    val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
+    var isProcessing by remember { mutableStateOf(false) }
+    var errorMessage by remember { mutableStateOf<String?>(null) }
+    var paymentIntentID by remember { mutableStateOf<String?>(null) }
+    var paymentIntentClientSecret by remember { mutableStateOf<String?>(null) }
+
+    val paymentSheet = rememberPaymentSheet { paymentResult ->
+        when (paymentResult) {
+            is PaymentSheetResult.Completed -> {
+                coroutineScope.launch {
+                    val token = authViewModel.token() ?: ""
+                    paymentIntentID?.let { id ->
+                        val confirmResult = buyViewModel.confirmPayment(token, id)
+                        if (confirmResult.isSuccess) {
+                            cartViewModel.buy()
+                            navController.navigate(Routes.ROUTE_HOME)
+                        } else {
+                            errorMessage = "Error al confirmar el pago en el servidor"
+                        }
+                    } ?: run {
+                        errorMessage = "Error: clientSecret es nulo"
+                    }
+                }
+            }
+            is PaymentSheetResult.Canceled -> {
+                errorMessage = "Pago cancelado"
+            }
+            is PaymentSheetResult.Failed -> {
+                errorMessage = "Error en el pago: ${paymentResult.error.message}"
+            }
+        }
+        isProcessing = false
+    }
 
     LaunchedEffect(key1 = Unit) {
         val token = authViewModel.token()
         if (token != null) {
             cartViewModel.loadCart(token)
         }
+
+        val publishableKey = mx.cazv.todasbrillamos.model.Config.STRIPE_PUBLISHABLE_KEY
+        PaymentConfiguration.init(context, publishableKey)
     }
 
-    CustomLayout (
+    CustomLayout(
         navController = navController,
         topBar = {
             BasicTopBar(title = "Mi carrito", navController = navController)
         },
         bottomBar = {
             ButtonBottomBar(
-                buttonText = "Comprar (Total: $${String.format("%.2f", cartState.totalPrice)})",
+                buttonText = if (isProcessing) "Procesando..." else "Comprar (Total: $${String.format("%.2f", cartState.totalPrice)})",
                 onClick = {
-                    CoroutineScope(Dispatchers.Main).launch {
-                        val token = withContext(Dispatchers.IO) {
-                            authViewModel.token()
-                        }
+                    coroutineScope.launch {
+                        val token = authViewModel.token()
 
                         if (token != null) {
-                            val exist = withContext(Dispatchers.IO) {
-                                userViewModel.exist(token)
-                            }
+                            val exist = userViewModel.exist(token)
 
-                            if (exist != null) {
-                                if (exist.exists) {
-                                    navController.navigate(Routes.ROUTE_PAYMENTS)
-                                } else {
-                                    navController.navigate(Routes.ROUTE_SHIPPING_INFO)
+                            if (exist != null && exist.exists) {
+                                isProcessing = true
+                                errorMessage = null
+
+                                try {
+                                    val createIntentResult = buyViewModel.createPaymentIntent(token)
+
+                                    if (createIntentResult.isSuccess) {
+                                        val resultData = createIntentResult.getOrNull()
+                                        val paymentIntentId = resultData?.paymentIntentId
+                                        val clientSecret = resultData?.clientSecret
+                                        if (paymentIntentId != null && clientSecret != null) {
+                                            paymentIntentID = paymentIntentId
+                                            paymentIntentClientSecret = clientSecret
+                                            paymentSheet.presentWithPaymentIntent(
+                                                paymentIntentClientSecret!!,
+                                                PaymentSheet.Configuration(
+                                                    merchantDisplayName = "Todas Brillamos",
+                                                    allowsDelayedPaymentMethods = false
+                                                )
+                                            )
+                                        } else {
+                                            errorMessage = "Error al obtener el clientSecret"
+                                            isProcessing = false
+                                        }
+                                    } else {
+                                        errorMessage = "Error al crear la intención de pago"
+                                        isProcessing = false
+                                    }
+                                } catch (e: Exception) {
+                                    errorMessage = "Error: ${e.message}"
+                                    isProcessing = false
                                 }
                             } else {
                                 navController.navigate(Routes.ROUTE_SHIPPING_INFO)
@@ -118,6 +187,14 @@ fun Cart(
                 .fillMaxSize()
                 .background(Color(0xFFFCFAF2))
         ) {
+            if (errorMessage != null) {
+                Text(
+                    text = errorMessage!!,
+                    color = Color.Red,
+                    modifier = Modifier.padding(16.dp)
+                )
+            }
+
             if (cartState.isLoading) {
                 CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
             } else if (cartState.error != null) {

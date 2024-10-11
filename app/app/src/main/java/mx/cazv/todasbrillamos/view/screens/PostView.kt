@@ -43,7 +43,6 @@ fun PostView(
     postsViewModel: PostsViewModel,
     postId: Int
 ) {
-
     val postsState by postsViewModel.state.collectAsState()
 
     LaunchedEffect(key1 = Unit) {

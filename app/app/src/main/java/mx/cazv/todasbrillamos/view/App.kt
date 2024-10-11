@@ -171,7 +171,7 @@ fun Nav(
                             Routes.ROUTE_CHAT -> Chat(navController, authViewModel, chatViewModel)
                             Routes.ROUTE_FAVORITES -> Favorites(navController, authViewModel, favoritesViewModel)
                             Routes.ROUTE_NOTIFICATIONS -> Notifications(navController)
-                            Routes.ROUTE_CART -> Cart(navController, authViewModel, cartViewModel, userViewModel)
+                            Routes.ROUTE_CART -> Cart(navController, authViewModel, cartViewModel, userViewModel, buyViewModel)
                             Routes.ROUTE_PRODUCT_DETAILS + "/{productId}" -> {
                                 val productId = backStackEntry.arguments?.getString("productId")
                                 val id = productId?.toInt()

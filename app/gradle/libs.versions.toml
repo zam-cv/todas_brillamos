@@ -17,7 +17,7 @@ materialIconsExtended = "1.0.1"
 retrofit = "2.11.0"
 gson = "2.11.0"
 coil = "2.7.0"
-stripe = "20.25.8"
+stripe = "20.52.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }

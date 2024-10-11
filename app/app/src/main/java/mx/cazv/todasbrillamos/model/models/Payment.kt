@@ -8,8 +8,10 @@ package mx.cazv.todasbrillamos.model.models
  * la transacción.
  */
 data class PaymentIntentResponse(
-    val clientSecret: String
+    val clientSecret: String,
+    val paymentIntentId: String
 )
+
 /**
  * Data class que representa una solicitud de confirmación de pago.
  * Se utiliza para enviar el ID de la intención de pago que se desea confirmar.

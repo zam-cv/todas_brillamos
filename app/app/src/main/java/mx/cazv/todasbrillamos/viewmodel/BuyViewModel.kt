@@ -1,6 +1,7 @@
 package mx.cazv.todasbrillamos.viewmodel
 
 import androidx.lifecycle.ViewModel
+import mx.cazv.todasbrillamos.model.models.PaymentIntentResponse
 import mx.cazv.todasbrillamos.model.services.BuyService
 
 /**
@@ -18,7 +19,7 @@ class BuyViewModel : ViewModel() {
      * @param token El token de autenticación del usuario.
      * @return Un resultado que contiene el ID del intent de pago o un mensaje de error.
      */
-    suspend fun createPaymentIntent(token: String): Result<String> {
+    suspend fun createPaymentIntent(token: String): Result<PaymentIntentResponse> {
         return buyService.createPaymentIntent(token)
     }
 

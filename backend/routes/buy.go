@@ -11,7 +11,9 @@ import (
 	"backend/models"
 	"backend/resources/auth"
 	"fmt"
+	"log"
 	"math"
+	"net/http"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -53,7 +55,8 @@ func addBuyRoutes(rg *gin.RouterGroup) {
 		}
 
 		c.JSON(200, gin.H{
-			"clientSecret": pi.ClientSecret,
+			"clientSecret":    pi.ClientSecret,
+			"paymentIntentId": pi.ID,
 		})
 	})
 
@@ -65,36 +68,42 @@ func addBuyRoutes(rg *gin.RouterGroup) {
 			PaymentIntentID string `json:"paymentIntentId"`
 		}
 		if err := c.BindJSON(&paymentData); err != nil {
-			c.JSON(400, gin.H{"error": "Invalid payment data"})
+			log.Printf("Error binding JSON: %v", err)
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Datos de pago inválidos"})
 			return
 		}
 
 		pi, err := paymentintent.Get(paymentData.PaymentIntentID, nil)
 		if err != nil {
-			c.JSON(400, gin.H{"error": "Invalid PaymentIntent"})
+			log.Printf("Error getting PaymentIntent: %v", err)
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Intención de pago inválida"})
 			return
 		}
 
 		if pi.Metadata["clientID"] != fmt.Sprintf("%d", id) {
-			c.JSON(403, gin.H{"error": "Unauthorized"})
+			log.Println("Unauthorized: ClientID mismatch")
+			c.JSON(http.StatusForbidden, gin.H{"error": "No autorizado"})
 			return
 		}
 
 		cart, err := database.GetAllCartByClientID(id)
 		if err != nil {
-			c.JSON(500, gin.H{"error": err.Error()})
+			log.Printf("Error getting cart: %v", err)
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
 		}
 
 		recalculatedAmount := calculateTotalAmount(cart)
 
 		if recalculatedAmount != pi.Amount {
-			c.JSON(400, gin.H{"error": "Amount mismatch"})
+			log.Printf("Amount mismatch: expected %d, got %d", recalculatedAmount, pi.Amount)
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Discrepancia en el monto"})
 			return
 		}
 
 		if pi.Status != stripe.PaymentIntentStatusSucceeded {
-			c.JSON(400, gin.H{"error": "Payment not successful"})
+			log.Printf("Payment not successful: status is %s", pi.Status)
+			c.JSON(http.StatusBadRequest, gin.H{"error": "El pago no fue exitoso"})
 			return
 		}
 
@@ -119,18 +128,20 @@ func addBuyRoutes(rg *gin.RouterGroup) {
 
 		err = database.CreateOrders(orders)
 		if err != nil {
-			c.JSON(500, gin.H{"error": err.Error()})
+			log.Printf("Error creating orders: %v", err)
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Error al crear las órdenes"})
 			return
 		}
 
 		err = database.DeleteAllProductsFromCart(id)
 		if err != nil {
-			c.JSON(500, gin.H{"error": err.Error()})
+			log.Printf("Error deleting products from cart: %v", err)
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Error al limpiar el carrito"})
 			return
 		}
 
-		c.JSON(200, gin.H{
-			"message": "Purchase completed",
+		c.JSON(http.StatusOK, gin.H{
+			"message": "Compra completada",
 		})
 	})
 }

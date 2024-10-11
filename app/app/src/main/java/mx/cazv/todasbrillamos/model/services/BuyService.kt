@@ -5,6 +5,7 @@ import mx.cazv.todasbrillamos.model.ApiConfig
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import mx.cazv.todasbrillamos.model.models.PaymentConfirmationRequest
+import mx.cazv.todasbrillamos.model.models.PaymentIntentResponse
 
 /**
  * Servicio encargado de gestionar las operaciones relacionadas con la compra,
@@ -33,10 +34,10 @@ class BuyService {
      * @param token El token de autenticación del usuario.
      * @return El resultado de la operación, ya sea con éxito (el clientSecret) o con error.
      */
-    suspend fun createPaymentIntent(token: String): Result<String> {
+    suspend fun createPaymentIntent(token: String): Result<PaymentIntentResponse> {
         return try {
             val response = apiService.createPaymentIntent("Bearer $token")
-            Result.success(response.clientSecret)
+            Result.success(response)
         } catch (e: Exception) {
             Result.failure(e)
         }
