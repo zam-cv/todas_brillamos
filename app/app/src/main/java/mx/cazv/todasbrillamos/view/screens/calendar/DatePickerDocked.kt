@@ -1,5 +1,7 @@
 package mx.cazv.todasbrillamos.view.screens.calendar
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -8,11 +10,14 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -24,6 +29,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.DefaultAlpha
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -54,6 +61,7 @@ fun DatePickerDocked(text: String = "", calendarVM: CalendarVM = viewModel()) {
             timeZone = TimeZone.getTimeZone("UTC")
         }.format(Date(it))
     } ?: ""
+
 
     Row (modifier = Modifier) {
 
@@ -92,7 +100,14 @@ fun DatePickerDocked(text: String = "", calendarVM: CalendarVM = viewModel()) {
                     },
                     modifier = Modifier
                         .fillMaxWidth()
+//                        .height(64.dp)
+                )
+
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
                         .height(64.dp)
+                        .clickable {  showDatePicker = true  }
                 )
 
 //                if (showDatePicker) {
