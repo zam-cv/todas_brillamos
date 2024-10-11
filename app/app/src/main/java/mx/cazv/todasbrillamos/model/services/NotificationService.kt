@@ -24,14 +24,7 @@ class NotificationService {
         retrofitApi.create(API::class.java)
     }
 
-    suspend fun getNotifications(token: String): GroupedNotification {
-        return withContext(Dispatchers.IO) {
-            try {
-                apiCall { apiService.getNotificationsByClientId("Bearer $token") }.getOrNull()!!
-            } catch (e: Exception) {
-                e.printStackTrace()
-                GroupedNotification("", listOf(NotificationGet("", "", "", 10)))
-            }
-        }
+    suspend fun getNotifications(token: String): List<GroupedNotification> {
+        return apiCall { apiService.getNotifications("Bearer $token") }.getOrNull()!!
     }
 }

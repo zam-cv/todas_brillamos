@@ -295,9 +295,9 @@ interface API {
      * @return La lista de notificaciones.
      */
     @GET("api/notifications/all")
-    suspend fun getNotificationsByClientId(
+    suspend fun getNotifications(
         @Header("Authorization") token: String
-    ): GroupedNotification
+    ): List<GroupedNotification>
 
     @GET("api/tracking")
     suspend fun getTracking(@Header("Authorization") token: String): Tracking

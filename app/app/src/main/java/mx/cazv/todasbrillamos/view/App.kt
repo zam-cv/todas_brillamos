@@ -23,6 +23,7 @@ import mx.cazv.todasbrillamos.view.screens.Login
 //import mx.cazv.todasbrillamos.view.screens.Notifications
 import mx.cazv.todasbrillamos.view.screens.Register
 import mx.cazv.todasbrillamos.view.screens.Cart
+import mx.cazv.todasbrillamos.view.screens.Notifications
 import mx.cazv.todasbrillamos.view.screens.Orders
 import mx.cazv.todasbrillamos.view.screens.PostView
 import mx.cazv.todasbrillamos.view.screens.TrackOrder
@@ -45,6 +46,7 @@ import mx.cazv.todasbrillamos.viewmodel.CalendarVM
 import mx.cazv.todasbrillamos.viewmodel.CartViewModel
 import mx.cazv.todasbrillamos.viewmodel.ChatViewModel
 import mx.cazv.todasbrillamos.viewmodel.FavoritesViewModel
+import mx.cazv.todasbrillamos.viewmodel.NotificationsViewModel
 //import mx.cazv.todasbrillamos.viewmodel.NotificationsViewModel
 import mx.cazv.todasbrillamos.viewmodel.PostsViewModel
 import mx.cazv.todasbrillamos.viewmodel.ProductsViewModel
@@ -93,7 +95,7 @@ fun Nav(
     buyViewModel: BuyViewModel = BuyViewModel(),
     favoritesViewModel: FavoritesViewModel = FavoritesViewModel(),
     trackingViewModel: TrackingViewModel = TrackingViewModel(),
-    //notificationsViewModel: NotificationsViewModel = NotificationsViewModel(),
+    notificationsViewModel: NotificationsViewModel = NotificationsViewModel(),
     modifier: Modifier = Modifier
 ) {
     var startDestination by remember { mutableStateOf<String?>(null) }
@@ -176,7 +178,7 @@ fun Nav(
                             Routes.ROUTE_CALENDAR -> Calendar(navController, calendarVM)
                             Routes.ROUTE_CHAT -> Chat(navController, authViewModel, chatViewModel)
                             Routes.ROUTE_FAVORITES -> Favorites(navController, authViewModel, favoritesViewModel)
-                            //Routes.ROUTE_NOTIFICATIONS -> Notifications(navController, authViewModel, notificationsViewModel)
+                            Routes.ROUTE_NOTIFICATIONS -> Notifications(navController, authViewModel, notificationsViewModel)
                             Routes.ROUTE_CART -> Cart(navController, authViewModel, cartViewModel, userViewModel, buyViewModel)
                             Routes.ROUTE_PRODUCT_DETAILS + "/{productId}" -> {
                                 val productId = backStackEntry.arguments?.getString("productId")

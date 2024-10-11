@@ -13,7 +13,7 @@ export default {
         setNotification: (
             notification: Notification,
         ): Promise<Notification> => {
-            return post(`/notifications/${notification.client_id}`, notification);
+            return post(`/notifications`, notification);
         },
 
         getNotifications: (): Promise<Notification[]> =>{

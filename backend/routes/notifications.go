@@ -30,6 +30,7 @@ func addNotificationsRoutes(rg *gin.RouterGroup) {
 		}
 
 		idClients := database.GetAllClientsIDs()
+		println(idClients)
 
 		// Asigna la fecha a la notificación.
 		now := time.Now()
@@ -90,15 +91,14 @@ func addNotificationsRoutes(rg *gin.RouterGroup) {
 			return
 		}
 
-		// if err != nil {
-		// 	c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		// 	return
-		// }
-
 		notifications, err := database.GetNotificationsByClientID(uint(idClient))
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
+		}
+
+		if len(notifications) == 0 {
+			notifications = []models.GroupedNotifications{}
 		}
 
 		c.JSON(http.StatusOK, notifications)

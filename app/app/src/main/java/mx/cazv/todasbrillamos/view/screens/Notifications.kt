@@ -164,29 +164,21 @@ fun Notification(
  * @param navController El NavHostController utilizado para la navegación.
  */
 @Composable
-fun getNotsifications(
+fun Notifications(
     navController: NavHostController,
     authViewModel: AuthViewModel,
     notificationsViewModel: NotificationsViewModel
 ) {
     val notifications = notificationsViewModel.state.collectAsState()
 
-//    LaunchedEffect(Unit) {
-//        notificationsViewModel.getNotifications(authViewModel.token)
-//    }
+    LaunchedEffect(key1 = Unit) {
+        val token = authViewModel.token()
 
-//    LaunchedEffect(Unit) {
-//        authViewModel.token?.let { token ->
-//            notificationsViewModel.getNotifications(token)
-//        }
-//    }
-    LaunchedEffect(Unit) {
-    authViewModel.tokenState.collect { token ->
-        token?.let {
-            notificationsViewModel.getNotifications(it)
+        if (token != null) {
+            notificationsViewModel.loadNotifications(token)
         }
     }
-}
+
     CustomLayout (
         withStoreButton = true,
         navController = rememberNavController(),
@@ -204,13 +196,18 @@ fun getNotsifications(
                 .background(BackgroundColor)
                 .padding(top = 15.dp, start = 15.dp, end = 15.dp, bottom = 25.dp)
         ) {
-            Date("Hoy")
+            notifications.value.forEach { group ->
+                Date(group.date)
 
-            Notification(
-                title = "¡Oferta exclusiva!",
-                description = "Aprovecha un 20% de descuento en tu próxima compra. válido hasta el domingo.",
-                hour = "2:16 PM"
-            )
+                group.notifications.forEach { notification ->
+                    Notification(
+                        title = notification.title,
+                        description = notification.description,
+                        hour = notification.hour,
+                        withLine = group.notifications.last() != notification
+                    )
+                }
+            }
         }
     }
 }
