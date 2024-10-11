@@ -5,7 +5,13 @@
 
 package database
 
-import "backend/models"
+import (
+	"backend/models"
+	"errors"
+	"fmt"
+
+	"gorm.io/gorm"
+)
 
 // Obtiene todos los productos de la base de datos.
 // Devuelve una lista de productos y un error en caso de que ocurra.
@@ -13,6 +19,24 @@ func GetProducts() ([]models.Product, error) {
 	products := []models.Product{}
 	if err := db.Find(&products).Error; err != nil {
 		return nil, err
+	}
+
+	return products, nil
+}
+
+func GetProductsByCategory(category string) ([]models.Product, error) {
+	var products []models.Product
+
+	var categoryObj models.Category
+	if err := db.Where("name = ?", category).First(&categoryObj).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, fmt.Errorf("category not found: %s", category)
+		}
+		return nil, fmt.Errorf("error fetching category: %w", err)
+	}
+
+	if err := db.Where("category_id = ?", categoryObj.ID).Find(&products).Error; err != nil {
+		return nil, fmt.Errorf("error fetching products: %w", err)
 	}
 
 	return products, nil

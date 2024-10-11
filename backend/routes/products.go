@@ -92,6 +92,34 @@ func addProductRoutes(rg *gin.RouterGroup) {
 		})
 	})
 
+	group.GET("/category/:name", func(c *gin.Context) {
+		categoryName := c.Param("name")
+		var products []models.Product
+
+		if categoryName == "Ver todos" {
+			prods, err := database.GetProducts()
+			if err != nil {
+				c.JSON(500, gin.H{"error": err.Error()})
+				return
+			}
+
+			products = prods
+		} else {
+			prods, err := database.GetProductsByCategory(categoryName)
+			if err != nil {
+				c.JSON(500, gin.H{"error": err.Error()})
+				return
+			}
+
+			products = prods
+		}
+
+		c.JSON(200, gin.H{
+			"folder":   files.GetURL(ProductArchive),
+			"products": products,
+		})
+	})
+
 	// GET /products/:id - Obtiene un producto específico
 	group.GET("/:id", auth.GetMiddleware(ClientAuth), func(c *gin.Context) {
 		productIDStr := c.Param("id")

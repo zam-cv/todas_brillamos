@@ -117,10 +117,14 @@ interface API {
      * Obtiene la lista de productos.
      *
      * @param token El token de autenticación.
+     * @param category La categoría de productos a obtener.
      * @return La lista de productos.
      */
-    @GET("api/products")
-    suspend fun getProducts(@Header("Authorization") token: String): ProductList
+    @GET("api/products/category/{name}")
+    suspend fun getProducts(
+        @Header("Authorization") token: String,
+        @Path("name") category: String
+    ): ProductList
 
     /**
      * Obtiene la lista de categorías de productos.

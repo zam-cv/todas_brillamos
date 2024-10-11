@@ -41,15 +41,12 @@ import mx.cazv.todasbrillamos.ui.theme.BackgroundColor
  */
 
 @Composable
-fun CategoryFilter(categories: List<Category>) {
+fun CategoryFilter(
+    categories: List<Category>,
+    selectedCategory: String,
+    onCategorySelected: (String) -> Unit
+) {
     if (categories.isEmpty()) return
-
-    var selectedOption by remember {
-        mutableStateOf(categories[0].name)
-    }
-    val onSelectionChange = { text: String ->
-        selectedOption = text
-    }
 
     val fSize = 18.sp
 
@@ -59,51 +56,11 @@ fun CategoryFilter(categories: List<Category>) {
             .wrapContentSize()
             .padding(top = 15.dp)
             .background(BackgroundColor)
-
     ) {
         Row ( modifier = Modifier
             .clip(shape = RoundedCornerShape(24.dp))
             .background(BackgroundColor)
         ) {
-            /*Box(modifier = Modifier
-                .padding(
-                    start = 5.dp
-                )
-                .border(width = 1.dp,
-                    color = Color.LightGray,
-                    shape = RoundedCornerShape(24.dp)
-                )
-                .wrapContentSize()
-                .clickable {  })
-            {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_filter),
-                    contentDescription = null,
-                    modifier = Modifier.align(Alignment.CenterStart)
-                        .padding(start = 10.dp)
-                )
-                Text(
-                    text = "Filtro",
-                    textAlign = TextAlign.End,
-                    fontSize = fSize,
-                    modifier = Modifier
-                        .clip(shape = RoundedCornerShape(24.dp))
-                        .align(Alignment.CenterEnd)
-                        .width(90.dp)
-                        .padding(
-                            vertical = 12.dp,
-                            horizontal = 16.dp
-                        )
-                )
-            }
-
-            Text(text = "|",
-                fontSize = 40.sp,
-                fontWeight = FontWeight.Light,
-                modifier = Modifier
-                    .padding(start = 12.dp)
-            )*/
-
             LazyRow(
                 modifier = Modifier
                     .clip(shape = RoundedCornerShape(24.dp))
@@ -115,13 +72,13 @@ fun CategoryFilter(categories: List<Category>) {
                         text = name,
                         style = TextStyle(
                             fontSize = fSize,
-                            color = if (name == selectedOption) Color.Black else Color.LightGray,
-                            fontWeight = if (name == selectedOption) FontWeight.ExtraBold else FontWeight.Normal
+                            color = if (name == selectedCategory) Color.Black else Color.LightGray,
+                            fontWeight = if (name == selectedCategory) FontWeight.ExtraBold else FontWeight.Normal
                         ),
                         modifier = Modifier
                             .clip(shape = RoundedCornerShape(24.dp))
                             .clickable {
-                                onSelectionChange(name)
+                                onCategorySelected(name)
                             }
                             .padding(
                                 vertical = 12.dp,

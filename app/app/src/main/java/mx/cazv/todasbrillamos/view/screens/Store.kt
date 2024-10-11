@@ -37,12 +37,20 @@ fun Store(
 ) {
     val productsState = productsViewModel.state.collectAsState()
     var viewType by remember { mutableStateOf("grid") }
+    var selectedCategory by remember { mutableStateOf("Ver todos") }
 
     LaunchedEffect(key1 = Unit) {
         val token = authViewModel.token()
 
         if (token != null) {
-            productsViewModel.load(token)
+            productsViewModel.load(token, selectedCategory)
+        }
+    }
+
+    LaunchedEffect(selectedCategory) {
+        val token = authViewModel.token()
+        if (token != null) {
+            productsViewModel.load(token, selectedCategory)
         }
     }
 
@@ -55,7 +63,13 @@ fun Store(
                 onSelectionChange = { newType -> viewType = newType }
             )
 
-            CategoryFilter(productsState.value.categories)
+            CategoryFilter(
+                categories = productsState.value.categories,
+                selectedCategory = selectedCategory,
+                onCategorySelected = { category ->
+                    selectedCategory = category
+                }
+            )
 
             Box (
                 modifier = Modifier

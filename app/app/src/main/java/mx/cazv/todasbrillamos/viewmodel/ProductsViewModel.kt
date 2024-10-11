@@ -27,7 +27,7 @@ class ProductsViewModel : ViewModel() {
      *
      * @param token El token de autenticación.
      */
-    fun load(token: String) {
+    fun load(token: String, category: String) {
         viewModelScope.launch {
             var products = ProductList("", emptyList())
             var categories: List<Category> = listOf(
@@ -35,7 +35,7 @@ class ProductsViewModel : ViewModel() {
             )
 
             try {
-                products = productsService.products(token)
+                products = productsService.products(token, category)
             } catch (e: Exception) {
                 // TODO: Handle error
             }

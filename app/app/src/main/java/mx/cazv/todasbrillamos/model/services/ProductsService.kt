@@ -44,8 +44,8 @@ class ProductsService {
      * @param token El token de autenticación.
      * @return La lista de productos.
      */
-    suspend fun products(token: String): ProductList {
-        return apiCall { apiService.getProducts("Bearer $token") }.getOrNull()!!
+    suspend fun products(token: String, category: String): ProductList {
+        return apiCall { apiService.getProducts("Bearer $token", category) }.getOrNull()!!
     }
 
     /**
