@@ -141,7 +141,7 @@ fun Nav(
                 Routes.ROUTE_CART,
                 Routes.ROUTE_PRODUCT_DETAILS + "/{productId}", // Ruta dinamica
                 Routes.ROUTE_YOUR_CYCLE,
-                Routes.ROUTE_TRACK_ORDER,
+                Routes.ROUTE_TRACK_ORDER + "/{deliveryDate}", // Ruta dinamica
                 Routes.ROUTE_ORDERS,
                 Routes.ROUTE_CONFIG,
                 Routes.ROUTE_EDIT_PROFILE,
@@ -196,8 +196,21 @@ fun Nav(
                                 }
                             }
                             Routes.ROUTE_YOUR_CYCLE -> YourCycle(navController, calendarVM)
-                            Routes.ROUTE_TRACK_ORDER -> TrackOrder(navController)
-                            Routes.ROUTE_ORDERS -> Orders(navController, authViewModel, trackingViewModel)
+                            Routes.ROUTE_TRACK_ORDER + "/{deliveryDate}" -> {
+                                val deliveryDate = backStackEntry.arguments?.getString("deliveryDate")
+
+                                if (deliveryDate != null) {
+                                    TrackOrder(
+                                        navController,
+                                        deliveryDate,
+                                        authViewModel,
+                                        trackingViewModel,
+                                        userViewModel,
+                                        randomViewModel
+                                    )
+                                }
+                            }
+                            Routes.ROUTE_ORDERS -> Orders( navController, authViewModel, trackingViewModel)
                             Routes.ROUTE_CONFIG -> Config(navController, authViewModel)
                             Routes.ROUTE_EDIT_PROFILE -> EditProfile(navController, authViewModel, userViewModel)
                             Routes.ROUTE_CHANGE_PASSWORD -> ChangePassword(navController, authViewModel, userViewModel)

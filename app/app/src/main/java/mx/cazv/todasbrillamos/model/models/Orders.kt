@@ -4,8 +4,8 @@ data class OrderInfoWithProducts(
     val delivery_date: String,
     val status: String,
     val order_received_date: String,
-    val preparing_order_date: String,
-    val shipped_date: String,
+    val preparing_order_date: String?,
+    val shipped_date: String?,
     val products: List<OrderProduct>
 )
 
@@ -35,6 +35,6 @@ data class Tracking(
 )
 
 data class TrackingOrder(
-    val order: OrderInfoWithProducts,
-    val products: List<Product>
+    val folder: String,
+    val order: OrderInfoWithProducts
 )

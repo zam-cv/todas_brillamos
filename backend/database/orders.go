@@ -241,7 +241,7 @@ func GetAllOrders(clientID uint) ([]models.OrderSummary, error) {
 		orderSummary := models.OrderSummary{
 			TotalPrice:    order.TotalPrice,
 			TotalProducts: order.TotalProducts,
-			DeliveryDate:  order.DeliveryDate.Format("2006-01-02"),
+			DeliveryDate:  order.DeliveryDate.UTC().Format(time.RFC3339),
 			Products:      make([]models.ProductSummary, len(products)),
 		}
 

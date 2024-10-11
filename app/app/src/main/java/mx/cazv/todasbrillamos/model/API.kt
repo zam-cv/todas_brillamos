@@ -140,6 +140,9 @@ interface API {
     @GET("api/others/exist")
     suspend fun exist(@Header("Authorization") token: String): Exist
 
+    @GET("api/others/address")
+    suspend fun getAddress(@Header("Authorization") token: String): String
+
     /**
      * Obtiene un producto específico por su ID.
      *
@@ -299,7 +302,7 @@ interface API {
     @GET("api/tracking")
     suspend fun getTracking(@Header("Authorization") token: String): Tracking
 
-    @GET("api/tracking/{deliveryDate}")
+    @GET("api/tracking/order/{deliveryDate}")
     suspend fun getTrackingByDate(
         @Header("Authorization") token: String,
         @Path("deliveryDate") deliveryDate: String

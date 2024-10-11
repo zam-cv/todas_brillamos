@@ -85,4 +85,8 @@ class UserService {
             false
         }
     }
+
+    suspend fun getAddress(token: String): String {
+        return apiCall { apiService.getAddress("Bearer $token") }.getOrNull()!!
+    }
 }

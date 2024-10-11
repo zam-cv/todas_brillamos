@@ -23,6 +23,8 @@ import mx.cazv.todasbrillamos.viewmodel.TrackingViewModel
  * @author Jennyfer Jasso
  *
  * @param navController El NavHostController utilizado para la navegación.
+ * @param authViewModel El AuthViewModel utilizado para obtener el token de autenticación.
+ * @param trackingViewModel El TrackingViewModel utilizado para obtener la información de los pedidos.
  */
 @Composable
 fun Orders(
@@ -55,18 +57,11 @@ fun Orders(
                 .fillMaxSize()
                 .padding(top = 25.dp)
         ){
-/*            InfoOrder()
-            Spacer(modifier = Modifier.height(25.dp))
-            InfoOrder()
-            Spacer(modifier = Modifier.height(25.dp))
-            InfoOrder()
-            Spacer(modifier = Modifier.height(25.dp))
-            Spacer(modifier = Modifier.height(25.dp))*/
-
             trackingState.value.orders.forEach { order ->
                 InfoOrder(
                     folder = trackingState.value.folder,
-                    order = order
+                    order = order,
+                    navController = navController
                 )
                 Spacer(modifier = Modifier.height(25.dp))
             }

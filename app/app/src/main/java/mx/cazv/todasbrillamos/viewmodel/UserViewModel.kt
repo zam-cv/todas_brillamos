@@ -93,4 +93,14 @@ class UserViewModel : ViewModel() {
     suspend fun setOthers(token: String, others: Others): Boolean {
         return userService.setOthers(token, others)
     }
+
+    /**
+     * Obtiene la dirección del usuario.
+     *
+     * @param token El token de autenticación del usuario.
+     * @return La dirección del usuario.
+     */
+    suspend fun getAddress(token: String): String {
+        return userService.getAddress(token)
+    }
 }

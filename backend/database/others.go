@@ -6,6 +6,7 @@ package database
 
 import (
 	"backend/models"
+	"fmt"
 )
 
 // Crea un nuevo registro "Other" asociado a un cliente.
@@ -43,4 +44,21 @@ func ExistOthersByClientID(clientID uint) bool {
 func UpdateOthersByClientID(other *models.Other) error {
 	err := db.Model(&models.Other{}).Where("client_id = ?", other.ClientID).Updates(other).Error
 	return err
+}
+
+func GetAddressByClientID(clientID uint) (string, error) {
+	other := &models.Other{}
+	if err := db.Where("client_id = ?", clientID).First(other).Error; err != nil {
+		return "", err
+	}
+
+	address := fmt.Sprintf("Calle %s", other.Street)
+	address += fmt.Sprintf(" No. %d", other.Interior)
+
+	if other.Exterior != nil {
+		address += fmt.Sprintf("-%d", *other.Exterior)
+	}
+
+	address += fmt.Sprintf(" Colonia %s", other.City)
+	return address, nil
 }

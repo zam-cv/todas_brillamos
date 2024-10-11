@@ -1,6 +1,5 @@
 package mx.cazv.todasbrillamos.view.screens
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Box
@@ -15,31 +14,36 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
-import mx.cazv.todasbrillamos.R
-import mx.cazv.todasbrillamos.ui.theme.BackgroundColor
+import coil.compose.AsyncImage
+import mx.cazv.todasbrillamos.model.ApiConfig
+import mx.cazv.todasbrillamos.model.models.TrackingOrder
 import mx.cazv.todasbrillamos.view.components.footer.BottomBar
+import mx.cazv.todasbrillamos.view.components.formatDate
 import mx.cazv.todasbrillamos.view.components.header.BasicTopBar
-import mx.cazv.todasbrillamos.view.components.header.CustomTopBar
-import mx.cazv.todasbrillamos.view.layouts.BasicLayout
 import mx.cazv.todasbrillamos.view.layouts.CustomLayout
-import mx.cazv.todasbrillamos.view.layouts.MainLayout
+import mx.cazv.todasbrillamos.viewmodel.AuthViewModel
+import mx.cazv.todasbrillamos.viewmodel.RandomViewModel
+import mx.cazv.todasbrillamos.viewmodel.TrackingViewModel
+import mx.cazv.todasbrillamos.viewmodel.UserViewModel
 
 /**
  * Archivo que contiene la vista de rastreo de pedido.
@@ -54,10 +58,26 @@ import mx.cazv.todasbrillamos.view.layouts.MainLayout
  * @param navController El NavHostController utilizado para la navegación.
  */
 @Composable
-fun TrackOrder(navController: NavHostController) {
-    val configuration = LocalConfiguration.current
-    val screenWidth = configuration.screenWidthDp.dp
-    val screenHeight = configuration.screenHeightDp.dp
+fun TrackOrder(
+    navController: NavHostController,
+    deliveryDate: String,
+    authViewModel: AuthViewModel,
+    trackingViewModel: TrackingViewModel,
+    userViewModel: UserViewModel,
+    randomViewModel: RandomViewModel
+) {
+    var address by remember { mutableStateOf("") }
+    val trackingOrderState = trackingViewModel.stateOrder.collectAsState()
+
+    LaunchedEffect(key1 = Unit) {
+        val token = authViewModel.token()
+
+        if (token != null) {
+            val date = deliveryDate.split("T")[0]
+            trackingViewModel.loadTrackingByDate(token, date)
+            address = userViewModel.getAddress(token)
+        }
+    }
 
     CustomLayout(
         withStoreButton = true,
@@ -85,16 +105,17 @@ fun TrackOrder(navController: NavHostController) {
                         .padding(top = 15.dp, bottom = 15.dp)
                 )
 
+                val deliveryDateFormatted = formatDate(deliveryDate)
+
                 Text(
-                    text = "Entrega: ## ago ####",
+                    text = "Entrega: $deliveryDateFormatted",
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color(0xffd5507c),
                     modifier = Modifier
                         .fillMaxWidth(),
-                    textAlign = TextAlign.Center,
-
-                    )
+                    textAlign = TextAlign.Center
+                )
 
                 Divider(
                     color = Color.LightGray,
@@ -111,18 +132,19 @@ fun TrackOrder(navController: NavHostController) {
                             .horizontalScroll(rememberScrollState())
                             .padding(top = 10.dp, bottom = 10.dp, start = 10.dp, end = 10.dp)
                     ) {
+                        val fullname = userViewModel.state.value.details.first_name + " " + userViewModel.state.value.details.last_name
 
                         Text(
-                            text = "Enviar a Fernanda Herrera, Calle ##### No. # Colonia wfhuqwhfiUHIOQ",
+                            text = "Enviar a $fullname, $address",
                             fontSize = 14.sp,
-                            //fontWeight = FontWeight.Bold
-                            //.padding(start = 16.dp, end = 16.dp, top = 10.dp, bottom = 10.dp),
                             maxLines = 1
                         )
                     }
 
-                    OrderStatus(status = "Pedido recibido")
-
+                    OrderStatus(
+                        status = "Pedido recibido",
+                        trackingOrder = trackingOrderState.value
+                    )
 
                     Spacer(modifier = Modifier.height(16.dp))
 
@@ -141,7 +163,6 @@ fun TrackOrder(navController: NavHostController) {
                     .fillMaxWidth()
                     .padding(top = 50.dp)
                     .background(Color.White)
-                //.weight(1f)
             ) {
                 Text(text = "Detalles del pedido",
                     color = Color(0xffd5507c),
@@ -158,15 +179,16 @@ fun TrackOrder(navController: NavHostController) {
                         .fillMaxWidth()
                         .padding(top = 5.dp, bottom = 5.dp))
 
-                OrderProducts(lenProducts = 3)
+                OrderProducts(trackingOrderState.value)
             }
 
-/*            MoreProducts(
+            MoreProducts(
                 text = "Más productos",
+                products = randomViewModel.state.value.products,
+                navController = navController,
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 10.dp, end = 10.dp, top = 25.dp, bottom = 25.dp)
-            )*/
+                    .padding(start = 10.dp, end = 10.dp, top = 45.dp, bottom = 25.dp)
+            )
         }
     }
 }
@@ -177,29 +199,36 @@ fun TrackOrder(navController: NavHostController) {
  * @param lenProducts La cantidad de productos en el pedido.
  */
 @Composable
-fun OrderProducts(lenProducts: Int) {
-    for (i in 1..lenProducts) {
+fun OrderProducts(trackingOrder: TrackingOrder) {
+    trackingOrder.order.products.forEach { product ->
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 10.dp, end = 10.dp, top = 10.dp, bottom = 10.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Image(painter = painterResource(id = R.drawable.temp_img),
-                contentDescription = "Producto",
-                modifier = Modifier
-                    .size(80.dp)
+            val baseUrl = ApiConfig.BASE_URL
+            val url = "$baseUrl${trackingOrder.folder}/${product.hash}.${product.type}"
+
+            AsyncImage(
+                model = url,
+                contentDescription = "Product",
+                modifier = Modifier.size(80.dp),
+                contentScale = ContentScale.Crop
             )
 
             Column(modifier = Modifier.padding(start = 8.dp)) {
                 Row {
-                    Text(text = "Producto",
+                    Text(text = product.product_name,
                         fontSize = 16.sp,
                         modifier = Modifier
                             .fillMaxWidth()
                             .weight(1f))
+
+                    val price = product.price.toString()
+
                     Text(
-                        text = "$000.00",
+                        text = "$$price.00",
                         fontSize = 14.sp,
                         textAlign = TextAlign.Right,
                         modifier = Modifier
@@ -228,11 +257,21 @@ fun OrderProducts(lenProducts: Int) {
  * Composable que muestra el estado del pedido.
  *
  * @param status El estado actual del pedido.
+ * @param trackingOrder El objeto de rastreo del pedido.
  */
 @Composable
-fun OrderStatus(status: String) {
-    val statusList = listOf("Entregado", "En camino", "Preparando pedido", "Pedido recibido")
-    val currentStatus = statusList.indexOf(status)
+fun OrderStatus(
+    status: String,
+    trackingOrder: TrackingOrder
+) {
+    val statusList = listOf(
+        Pair("Pedido recibido", trackingOrder.order.order_received_date),
+        Pair("Preparando pedido", trackingOrder.order.preparing_order_date),
+        Pair("En camino", trackingOrder.order.shipped_date),
+        Pair("Entregado", trackingOrder.order.delivery_date)
+    )
+
+    val currentStatus = statusList.indexOfFirst { it.first == status }
 
     Column {
         statusList.forEachIndexed { index, s ->
@@ -247,7 +286,7 @@ fun OrderStatus(status: String) {
                         .size(15.dp)
                         .clip(CircleShape)
                         .background(
-                            if (index >= currentStatus) {
+                            if (index == currentStatus) {
                                 Color(0xffd5507c)
                             } else {
                                 Color.LightGray
@@ -263,26 +302,25 @@ fun OrderStatus(status: String) {
                         .padding(start = 6.dp)
                 ) {
                     Text(
-                        text = s,
+                        text = s.first,
                         fontSize = 16.sp,
-                        color = if (index >= currentStatus) Color(0xffd5507c) else Color.LightGray
+                        color = if (index == currentStatus) Color(0xffd5507c) else Color.Black
                     )
 
-                    Text(
-                        text = "Agosto xx, xxxx, hh:mm am",
-                        modifier = Modifier.padding(top = 2.dp))
+                    if (s.second != null && s.second!!.isNotEmpty()) {
+                        Text(
+                            text = formatDate(s.second!!),
+                            modifier = Modifier.padding(top = 2.dp)
+                        )
+                    } else {
+                        Text(
+                            text = "Pendiente",
+                            color = Color.Gray,
+                            modifier = Modifier.padding(top = 2.dp)
+                        )
+                    }
                 }
             }
         }
     }
-}
-
-/**
- * Vista previa de la pantalla de rastreo de pedido.
- */
-@Preview
-@Composable
-fun TOPreview() {
-    val navController = rememberNavController()
-    TrackOrder(navController)
 }

@@ -18,6 +18,12 @@ import (
 func addOthersRoutes(rg *gin.RouterGroup) {
 	group := rg.Group("/others")
 
+	group.GET("/address", auth.GetMiddleware(ClientAuth), middlewares.GetClientID(), func(c *gin.Context) {
+		id, _ := c.MustGet("clientID").(uint)
+		address, _ := database.GetAddressByClientID(id)
+		c.JSON(200, address)
+	})
+
 	// GET /others/exist - Verifica si existe información adicional para el cliente autenticado
 	group.GET("/exist", auth.GetMiddleware(ClientAuth), middlewares.GetClientID(), func(c *gin.Context) {
 		id, _ := c.MustGet("clientID").(uint)
