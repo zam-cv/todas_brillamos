@@ -89,7 +89,7 @@ fun ProductColumnItem(
                     .align(Alignment.Center)
                     .fillMaxWidth()
             ) {
-                Row(modifier = Modifier.weight(1f)) {
+/*                Row(modifier = Modifier.weight(1f)) {
                     Box(
                         modifier = Modifier
                             .align(Alignment.CenterVertically)
@@ -118,7 +118,7 @@ fun ProductColumnItem(
                             .align(Alignment.CenterVertically)
                             .padding(start = 10.dp)
                     )
-                }
+                }*/
 
 
                 Text(
@@ -149,7 +149,7 @@ fun ProductColumnItem(
                             .align(Alignment.Bottom)
                             .wrapContentSize()
                     )
-                    Text(
+/*                    Text(
                         text = "$$discountPrice",
                         fontSize = 13.sp,
                         style = TextStyle(textDecoration = TextDecoration.LineThrough),
@@ -157,7 +157,7 @@ fun ProductColumnItem(
                             .align(Alignment.Bottom)
                             .padding(start = 20.dp)
                             .wrapContentSize()
-                    )
+                    )*/
                 }
 
             }

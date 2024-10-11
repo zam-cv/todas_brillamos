@@ -92,7 +92,7 @@ fun ProductGridItem(
                             .align(Alignment.Center)
                             .padding(10.dp)
                 ){
-                    Row {
+/*                    Row {
                         Box (modifier = Modifier
                             .align(Alignment.CenterVertically)
                             .clip(RoundedCornerShape(4.dp))
@@ -119,8 +119,7 @@ fun ProductGridItem(
                                 .align(Alignment.CenterVertically)
                                 .padding(start = 10.dp)
                         )
-                    }
-
+                    }*/
 
                     Spacer (modifier = Modifier.height(8.dp))
 
@@ -148,6 +147,8 @@ fun ProductGridItem(
                             .wrapContentSize()
                     )
 
+                    Spacer (modifier = Modifier.height(8.dp))
+
                     Row {
                         Text(
                             text = "$formattedPrice.00",
@@ -159,7 +160,7 @@ fun ProductGridItem(
                             modifier = Modifier
                                 .wrapContentSize()
                         )
-                        Text(
+/*                        Text(
                             text = "$$discountPrice",
                             style = TextStyle(
                                 fontSize = 16.sp,
@@ -170,7 +171,7 @@ fun ProductGridItem(
                                 .align(Alignment.Bottom)
                                 .padding(start = 20.dp)
                                 .wrapContentSize()
-                        )
+                        )*/
                     }
                 }
             }

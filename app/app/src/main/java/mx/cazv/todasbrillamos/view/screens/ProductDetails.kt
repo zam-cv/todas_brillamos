@@ -312,7 +312,7 @@ fun Product(
                 )
             }
 
-            Row (
+/*            Row (
                 modifier = Modifier
                     .padding(top = 7.dp, bottom = 7.dp)
                     .padding(start = 7.dp, end = 7.dp)
@@ -343,7 +343,9 @@ fun Product(
                     modifier = Modifier
                         .padding(start = 5.dp, end = 5.dp, top = 2.dp, bottom = 1.dp)
                 )
-            }
+            }*/
+
+            Spacer(modifier = Modifier.height(10.dp))
 
             Column (
                 modifier = Modifier
@@ -380,7 +382,7 @@ fun Product(
                             .padding(top = 4.dp, end = 10.dp)
                     )
 
-                    Text(
+/*                    Text(
                         text = "\$000.00",
                         fontSize = 7.sp,
                         textDecoration = TextDecoration.LineThrough,
@@ -389,7 +391,7 @@ fun Product(
                         style = TextStyle(
                             baselineShift = BaselineShift(-1.4f)
                         )
-                    )
+                    )*/
                 }
             }
         }
