@@ -31,6 +31,7 @@ import mx.cazv.todasbrillamos.view.screens.config.Config
 import mx.cazv.todasbrillamos.view.screens.ProductDetails
 import mx.cazv.todasbrillamos.view.screens.ShippingInfo
 import mx.cazv.todasbrillamos.view.screens.Store
+import mx.cazv.todasbrillamos.view.screens.TermsAndPoliciesRegister
 import mx.cazv.todasbrillamos.view.screens.calendar.Calendar
 import mx.cazv.todasbrillamos.view.screens.calendar.YourCycle
 import mx.cazv.todasbrillamos.view.screens.config.About
@@ -119,6 +120,9 @@ fun Nav(
             }
             composable(Routes.ROUTE_FORGOT_PASSWORD) {
                 ForgotPassword(navController)
+            }
+            composable(Routes.ROUTE_TERMS_AND_POLICIES_REGISTER) {
+                TermsAndPoliciesRegister(navController)
             }
 
             // Rutas protegidas (accesibles cuando el usuario está autenticado)

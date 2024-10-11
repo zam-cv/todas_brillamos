@@ -67,7 +67,7 @@ fun Login(navController: NavHostController, viewModel: AuthViewModel) {
                 }
             }
             is AuthState.Error -> {
-                errorMessage = "Credenciales inválidas. Por favor, inténtalo de nuevo."
+                errorMessage = "Contraseña o correo inválidos. Por favor, inténta de nuevo."
                 isEmptyFieldError = false
             }
             else -> {}
@@ -126,8 +126,8 @@ fun Login(navController: NavHostController, viewModel: AuthViewModel) {
                     Row {
                         Text(text = "¿No tienes una cuenta? ")
                         Text(
-                            text = "Regístrate",
-                            fontWeight = FontWeight.Bold
+                            text = "Únete a nosotros",
+                            fontWeight = FontWeight.Black
                         )
                     }
                 }
@@ -160,6 +160,7 @@ fun Login(navController: NavHostController, viewModel: AuthViewModel) {
                 Spacer(modifier = Modifier.size(16.dp))
 
                 // Mostrar el mensaje de error si existe
+
                 if (isEmptyFieldError) {
                     Text(
                         text = "Por favor, completa todos los campos",
