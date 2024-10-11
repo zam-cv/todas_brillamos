@@ -152,7 +152,14 @@ export default function Specialists() {
 
   }
 
-  const columns = createColumns(handleDelete);
+  function updateProduct(value: Object, fields: Posts) {
+    apiPost.posts.updatePost(fields.id,{
+      ...fields,
+      ...value
+    } as any);
+  }
+
+  const columns = createColumns(handleDelete, updateProduct);
 
   return (
     <div>

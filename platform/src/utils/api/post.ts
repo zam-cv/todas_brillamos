@@ -26,7 +26,15 @@ export default {
 
         deletePost: (id: number): Promise<void> => {
             return del(`/posts/${id}`)
+        },
+
+        updatePost: (
+            id: number,
+            posts: Posts) : Promise<void> => {
+            return post(`/posts/${id}`, posts)
         }
+
+
 
     }
 }
