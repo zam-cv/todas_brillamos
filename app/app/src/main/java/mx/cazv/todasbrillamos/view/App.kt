@@ -24,7 +24,6 @@ import mx.cazv.todasbrillamos.view.screens.Login
 import mx.cazv.todasbrillamos.view.screens.Register
 import mx.cazv.todasbrillamos.view.screens.Cart
 import mx.cazv.todasbrillamos.view.screens.Orders
-import mx.cazv.todasbrillamos.view.screens.Payments
 import mx.cazv.todasbrillamos.view.screens.PostView
 import mx.cazv.todasbrillamos.view.screens.TrackOrder
 import mx.cazv.todasbrillamos.view.screens.config.Config
@@ -149,8 +148,7 @@ fun Nav(
                 Routes.ROUTE_SOCIAL_NETWORKS,
                 Routes.ROUTE_TERMS_AND_POLICIES,
                 Routes.ROUTE_ABOUT,
-                Routes.ROUTE_SHIPPING_INFO,
-                Routes.ROUTE_PAYMENTS
+                Routes.ROUTE_SHIPPING_INFO
             )
 
             protectedRoutes.forEach { route ->
@@ -222,9 +220,6 @@ fun Nav(
                                 authViewModel,
                                 userViewModel,
                             )
-                            Routes.ROUTE_PAYMENTS -> {
-                                Payments(navController, authViewModel, cartViewModel, buyViewModel)
-                            }
                         }
                     } else {
                         // Redireccion a login si no está autenticado.

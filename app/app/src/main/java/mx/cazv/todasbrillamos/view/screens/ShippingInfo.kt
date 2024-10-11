@@ -114,7 +114,7 @@ fun ShippingInfo(
                                 val success = userViewModel.setOthers(token, others)
 
                                 if (success) {
-                                    navController.navigate(Routes.ROUTE_PAYMENTS)
+                                    navController.navigate(Routes.ROUTE_CART)
                                 } else {
                                     errors = mapOf("others" to "No se pudieron guardar los datos")
                                 }

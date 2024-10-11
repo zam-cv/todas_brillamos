@@ -46,7 +46,6 @@ sealed class Routes (
         const val ROUTE_ORDERS = "Orders"
         const val ROUTE_TRACK_ORDER = "TrackOrder"
         const val ROUTE_SHIPPING_INFO = "ShippingInfo"
-        const val ROUTE_PAYMENTS = "Payments"
 
         // Config
         const val ROUTE_CONFIG = "Config"
