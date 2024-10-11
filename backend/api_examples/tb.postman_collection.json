@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "649be9e0-a9f8-4e93-96c4-c4445c505265",
+		"_postman_id": "0de7a8e8-5abe-40f6-bf8b-3df57c289ca9",
 		"name": "Todas Brillamos",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "34049463"
+		"_exporter_id": "15473377"
 	},
 	"item": [
 		{
@@ -76,7 +76,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"email\": \"juan3@gmail.com\",\n    \"password\": \"awdrqwer12\",\n    \"first_name\": \"juan\",\n    \"last_name\": \"martinez\"\n}",
+					"raw": "{\n    \"email\": \"juan4@gmail.com\",\n    \"password\": \"awdrqwer12\",\n    \"first_name\": \"juan\",\n    \"last_name\": \"martinez\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -107,7 +107,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"email\": \"hola@gmail.com\",\n    \"password\": \"awdrqwer12\"\n}",
+					"raw": "{\n    \"email\": \"juan2@gmail.com\",\n    \"password\": \"awdrqwer12\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -202,7 +202,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mjg3MDc1NjAsImlkIjoiMyJ9.D7rm3AWWWIaAhHsEjtmpmg_0g0dwYeNGgpGHvqpCaNc",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mjk4ODQwNjQsImlkIjoiMiJ9.auGnExV75tj5xwWTrhtl_7PV5-qjvBeHFHDZ8sQqqrQ",
 							"type": "string"
 						}
 					]
@@ -211,7 +211,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"CURP\": \"FHEM060926MMCSHNA2\",\n    \"Street\": \"Calle1\",\n    \"Interior\": \"1\",\n    \"Exterior\": \"2\",\n    \"City\": \"Ciudad\",\n    \"State\": \"Estado\",\n    \"ZIP\": \"00000\",\n    \"Reference\": \"Referencia\"\n}",
+					"raw": "{\n    \"CURP\": \"FHEM060926MMCSHNA2\",\n    \"Street\": \"Calle1\",\n    \"Interior\": 1,\n    \"Exterior\": 2,\n    \"City\": \"Ciudad\",\n    \"State\": \"Estado\",\n    \"ZIP\": \"00000\",\n    \"Reference\": \"Referencia\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -446,7 +446,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mjk4MTgyMDQsImlkIjoiMSJ9.51wFHmebd7QP90n_IIIYH9Il_-SFaoyi2PAmJr9T1fY",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjgwNTQ3MzcsImlkIjoiMSJ9.3NrhZJKrqlgUk_qOMsIFXTysLZxX7viydtfs8aQXB-w",
 							"type": "string"
 						}
 					]
@@ -455,7 +455,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"title\": \"titulo3\",\n    \"author\": \"Anonimo\",\n    \"date\": \"10-10-2024\",\n    \"content\": \"Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Nulla aliquam fermentum magna quis rutrum. Sed hendrerit porttitor lacus sed sollicitudin. Aliquam ac lectus facilisis enim maximus eleifend. Nulla mollis sed magna nec varius. Pellentesque sit amet eros at leo fermentum efficitur eget in urna. Vestibulum malesuada ante ut finibus ornare. Sed turpis justo, mattis sed facilisis sit amet, tincidunt sed dui. Phasellus justo ipsum, dapibus id neque at, ultricies gravida est.\"\n}",
+					"raw": "{\n    \"title\": \"test2\",\n    \"author\": \"yo\",\n    \"date\": \"21-09-2024\",\n    \"content\": \"si\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -514,49 +514,6 @@
 					"path": [
 						"api",
 						"posts"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get Posts by ID",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjgwNTQ3MzcsImlkIjoiMSJ9.3NrhZJKrqlgUk_qOMsIFXTysLZxX7viydtfs8aQXB-w",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"name\": \"test\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8000/api/posts/3",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8000",
-					"path": [
-						"api",
-						"posts",
-						"3"
 					]
 				}
 			},
@@ -869,7 +826,14 @@
 			},
 			"request": {
 				"auth": {
-					"type": "noauth"
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mjk3MzE3NjEsImlkIjoiMTMifQ.qUufmY4Lh0uGmri4AfsVc9buVisfTTSVkXRWc8qhMqU",
+							"type": "string"
+						}
+					]
 				},
 				"method": "GET",
 				"header": [
@@ -979,6 +943,45 @@
 					"path": [
 						"api",
 						"chat"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Buy",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mjk3MzE3NjEsImlkIjoiMTMifQ.qUufmY4Lh0uGmri4AfsVc9buVisfTTSVkXRWc8qhMqU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"message\": \"¿Qué es menstruación?\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/buy",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"buy"
 					]
 				}
 			},
@@ -1095,7 +1098,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mjg1MTA5MTcsImlkIjoiMiJ9.krMoFZbC6tJTb4coRpZ6jFhXApP97xH49RnjHTYsGfo",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mjk4ODY5NjQsImlkIjoiMyJ9.eT31QFBOHQ6SwmB5IuaG4lDwqY-wY3aQXgtUwXbmzrI",
 							"type": "string"
 						}
 					]
@@ -1110,18 +1113,7 @@
 				],
 				"body": {
 					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "file",
-							"type": "file",
-							"src": "/Users/albertovelazquez/Documents/Galeria/hackmx5_2.jpg"
-						},
-						{
-							"key": "metadata",
-							"value": "{\n  \"name\": \"toalla\",\n  \"description\": \"description\",\n  \"price\": 10.4,\n  \"stock\": 5,\n  \"category_id\": 1\n}",
-							"type": "text"
-						}
-					]
+					"formdata": []
 				},
 				"url": {
 					"raw": "http://localhost:8000/api/cart/1/1",
@@ -1198,7 +1190,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"title\": \"test2\",\n    \"author\": \"yo\",\n    \"date\": \"21-09-2024\",\n    \"content\": \"si\"\n}",
+					"raw": "",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -1229,7 +1221,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mjg1ODU5ODIsImlkIjoiMiJ9.YwzMyY-0LZ3YN4CSp43j85frLIbwYN0gvq11KqZT9mg",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mjk4NzEzNTIsImlkIjoiMTYifQ.Ia9rU6E53ySM-PhVTBkVoPv7Ib2XmqZ-90ubHTlMG-0",
 							"type": "string"
 						}
 					]
@@ -1237,7 +1229,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8000/api/favorites",
+					"raw": "http://localhost:8000/api/favorites/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1245,7 +1237,8 @@
 					"port": "8000",
 					"path": [
 						"api",
-						"favorites"
+						"favorites",
+						""
 					]
 				}
 			},
@@ -1259,7 +1252,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mjg1ODU5ODIsImlkIjoiMiJ9.YwzMyY-0LZ3YN4CSp43j85frLIbwYN0gvq11KqZT9mg",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mjk4NzEzNTIsImlkIjoiMTYifQ.Ia9rU6E53ySM-PhVTBkVoPv7Ib2XmqZ-90ubHTlMG-0",
 							"type": "string"
 						}
 					]
@@ -1267,7 +1260,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8000/api/favorites/exists/1",
+					"raw": "http://localhost:8000/api/favorites/exists/10",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1277,7 +1270,7 @@
 						"api",
 						"favorites",
 						"exists",
-						"1"
+						"10"
 					]
 				}
 			},
@@ -1387,7 +1380,7 @@
 			"response": []
 		},
 		{
-			"name": "Buy",
+			"name": "Clients Exist",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -1399,19 +1392,10 @@
 						}
 					]
 				},
-				"method": "POST",
+				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"message\": \"¿Qué es menstruación?\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
 				"url": {
-					"raw": "http://localhost:8000/api/buy",
+					"raw": "http://localhost:8000/api/clients",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1419,7 +1403,100 @@
 					"port": "8000",
 					"path": [
 						"api",
-						"buy"
+						"clients"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Tracking Order",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mjk5NjgwNjMsImlkIjoiMyJ9.p1G9Ei3s0CjAViOjNL_-NvvpPYpv-LfNFsBUCrZVybs",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/api/tracking/order/2024-10-16",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"tracking",
+						"order",
+						"2024-10-16"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Tracking",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mjk5NzM0MjcsImlkIjoiMyJ9.auF-JEVAFQ0yokddy_6miiLS0J7SGvCGliV7zfFjwzM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/api/tracking",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"tracking"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Address",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mjk5NzM0MjcsImlkIjoiMyJ9.auF-JEVAFQ0yokddy_6miiLS0J7SGvCGliV7zfFjwzM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/api/others/address",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"others",
+						"address"
 					]
 				}
 			},
