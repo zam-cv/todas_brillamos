@@ -31,6 +31,9 @@ class AuthViewModel (application: Application): AndroidViewModel(application) {
 
     private var token: String? = null
 
+    private val _tokenState = MutableStateFlow<String?>(null)
+    val tokenState: StateFlow<String?> = _tokenState
+
     // Constantes para las preferencias compartidas
     companion object {
         private const val PREFS_NAME = "AuthPrefs"

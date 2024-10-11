@@ -20,7 +20,7 @@ import mx.cazv.todasbrillamos.view.screens.Favorites
 import mx.cazv.todasbrillamos.view.screens.ForgotPassword
 import mx.cazv.todasbrillamos.view.screens.home.Home
 import mx.cazv.todasbrillamos.view.screens.Login
-import mx.cazv.todasbrillamos.view.screens.Notifications
+//import mx.cazv.todasbrillamos.view.screens.Notifications
 import mx.cazv.todasbrillamos.view.screens.Register
 import mx.cazv.todasbrillamos.view.screens.Cart
 import mx.cazv.todasbrillamos.view.screens.Orders
@@ -31,6 +31,7 @@ import mx.cazv.todasbrillamos.view.screens.config.Config
 import mx.cazv.todasbrillamos.view.screens.ProductDetails
 import mx.cazv.todasbrillamos.view.screens.ShippingInfo
 import mx.cazv.todasbrillamos.view.screens.Store
+import mx.cazv.todasbrillamos.view.screens.TermsAndPoliciesRegister
 import mx.cazv.todasbrillamos.view.screens.calendar.Calendar
 import mx.cazv.todasbrillamos.view.screens.calendar.YourCycle
 import mx.cazv.todasbrillamos.view.screens.config.About
@@ -45,6 +46,7 @@ import mx.cazv.todasbrillamos.viewmodel.CalendarVM
 import mx.cazv.todasbrillamos.viewmodel.CartViewModel
 import mx.cazv.todasbrillamos.viewmodel.ChatViewModel
 import mx.cazv.todasbrillamos.viewmodel.FavoritesViewModel
+//import mx.cazv.todasbrillamos.viewmodel.NotificationsViewModel
 import mx.cazv.todasbrillamos.viewmodel.PostsViewModel
 import mx.cazv.todasbrillamos.viewmodel.ProductsViewModel
 import mx.cazv.todasbrillamos.viewmodel.RandomViewModel
@@ -90,6 +92,7 @@ fun Nav(
     chatViewModel: ChatViewModel = ChatViewModel(),
     buyViewModel: BuyViewModel = BuyViewModel(),
     favoritesViewModel: FavoritesViewModel = FavoritesViewModel(),
+    //notificationsViewModel: NotificationsViewModel = NotificationsViewModel(),
     modifier: Modifier = Modifier
 ) {
     var startDestination by remember { mutableStateOf<String?>(null) }
@@ -119,6 +122,9 @@ fun Nav(
             }
             composable(Routes.ROUTE_FORGOT_PASSWORD) {
                 ForgotPassword(navController)
+            }
+            composable(Routes.ROUTE_TERMS_AND_POLICIES_REGISTER) {
+                TermsAndPoliciesRegister(navController)
             }
 
             // Rutas protegidas (accesibles cuando el usuario está autenticado)
@@ -170,8 +176,8 @@ fun Nav(
                             Routes.ROUTE_CALENDAR -> Calendar(navController, calendarVM)
                             Routes.ROUTE_CHAT -> Chat(navController, authViewModel, chatViewModel)
                             Routes.ROUTE_FAVORITES -> Favorites(navController, authViewModel, favoritesViewModel)
-                            Routes.ROUTE_NOTIFICATIONS -> Notifications(navController)
-                            Routes.ROUTE_CART -> Cart(navController, authViewModel, cartViewModel, userViewModel, buyViewModel)
+                            //Routes.ROUTE_NOTIFICATIONS -> Notifications(navController, authViewModel, notificationsViewModel)
+                            Routes.ROUTE_CART -> Cart(navController, authViewModel, cartViewModel, userViewModel)
                             Routes.ROUTE_PRODUCT_DETAILS + "/{productId}" -> {
                                 val productId = backStackEntry.arguments?.getString("productId")
                                 val id = productId?.toInt()

@@ -260,7 +260,7 @@ fun Details(product: ProductRaw) {
                         Detail(name = "Tamaño", text = product.size)
                         Detail(name = "Mantenimiento", text = product.maintenance)
                         Detail(name = "Material", text = product.material)
-                        Detail(name = "Absorbencia", text = product.absorbency)
+                        Detail(name = "Flujo", text = product.absorbency)
                         Detail(name = "Cuidado de la piel", text = product.material_feature)
                         Detail(name = "Color", text = product.color)
                     }
@@ -558,7 +558,7 @@ fun ProductDetails(
                 }
 
                 Text(
-                    text = "Producto",
+                    text = productState.value.product.product.name,
                     fontSize = 25.sp,
                     modifier = Modifier.padding(top = 15.dp)
                 )

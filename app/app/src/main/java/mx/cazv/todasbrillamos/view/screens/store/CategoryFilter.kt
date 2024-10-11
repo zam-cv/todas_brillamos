@@ -65,7 +65,7 @@ fun CategoryFilter(categories: List<Category>) {
             .clip(shape = RoundedCornerShape(24.dp))
             .background(BackgroundColor)
         ) {
-            Box(modifier = Modifier
+            /*Box(modifier = Modifier
                 .padding(
                     start = 5.dp
                 )
@@ -73,8 +73,8 @@ fun CategoryFilter(categories: List<Category>) {
                     color = Color.LightGray,
                     shape = RoundedCornerShape(24.dp)
                 )
-                .wrapContentSize())
-
+                .wrapContentSize()
+                .clickable {  })
             {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_filter),
@@ -102,7 +102,7 @@ fun CategoryFilter(categories: List<Category>) {
                 fontWeight = FontWeight.Light,
                 modifier = Modifier
                     .padding(start = 12.dp)
-            )
+            )*/
 
             LazyRow(
                 modifier = Modifier

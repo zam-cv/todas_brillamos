@@ -2,6 +2,7 @@ package mx.cazv.todasbrillamos.view.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,9 +14,13 @@ import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -44,6 +49,7 @@ import mx.cazv.todasbrillamos.viewmodel.CalendarVM
  * @param text El texto que se mostrará en el diálogo minimalista.
  * @param calendarVM El ViewModel del calendario.
  */
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DropDownMenu(
     suggestions: List<String>,
@@ -70,34 +76,115 @@ fun DropDownMenu(
                 .weight(0.5f)
                 .align(Alignment.CenterVertically))
 
-        Column(modifier = Modifier
+        Column(
+            modifier = Modifier
+                .weight(10f)
+                .padding(start = 20.dp, end = 20.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+
+            // ExposedDropdownMenuBox
+            ExposedDropdownMenuBox(
+                expanded = expanded,
+                onExpandedChange = { expanded = !expanded }
+            ) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { expanded = !expanded }
+                        .onGloballyPositioned { coordinates ->
+                            textfieldSize = coordinates.size.toSize()
+                        }
+                ) {
+                    OutlinedTextField(
+                        value = selectedText,
+                        onValueChange = { },
+                        readOnly = true,
+                        label = {
+                            Text(
+                                when (type) {
+                                    "period" -> "¿Cuánto suele durar tu periodo?"
+                                    "cycle" -> "¿Cuánto dura tu ciclo?"
+                                    else -> ""
+                                },
+                                fontSize = 14.sp
+                            )
+                        },
+                        trailingIcon = {
+                            ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .menuAnchor() // En Material3, se debe usar este modificador para el menú
+                    )
+                }
+
+                ExposedDropdownMenu(
+                    expanded = expanded,
+                    onDismissRequest = { expanded = false },
+                    modifier = Modifier
+                        .heightIn(max = maxHeight)
+                        .width(with(LocalDensity.current) { textfieldSize.width.toDp() })
+                        .background(Color.White)
+                ) {
+                    suggestions.forEach { label ->
+                        DropdownMenuItem(
+                            text = { Text(text = label) },
+                            onClick = {
+                                selectedText = label
+                                expanded = false
+                                calendarVM.updateSelectedNumber(selectedText, type)
+                            }
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+        /*Column(modifier = Modifier
             .weight(10f)
             .padding(start = 20.dp, end = 20.dp),
             horizontalAlignment = Alignment.CenterHorizontally) {
-            OutlinedTextField(
-                value = selectedText,
-                onValueChange = { selectedText = it },
+            Box(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .clickable { expanded = !expanded } // Click en toda la caja
                     .onGloballyPositioned { coordinates ->
-                        //This value is used to assign to the DropDown the same width
-                        textfieldSize = coordinates.size.toSize()
+                        textfieldSize = coordinates.size.toSize() // Obtener tamaño del TextField
+                    }
+                    .background(Color.White)
+            ) {
+                OutlinedTextField(
+                    value = selectedText,
+                    onValueChange = { selectedText = it },
+                    modifier = Modifier
+                        .clickable { expanded = !expanded }
+                        .fillMaxWidth()
+                        .onGloballyPositioned { coordinates ->
+                            //This value is used to assign to the DropDown the same width
+                            textfieldSize = coordinates.size.toSize()
+                        },
+                    label = {
+                        Text(
+                            when (type) {
+                                "period" -> "¿Cuánto suele durar tu periodo?"
+                                "cycle" -> "¿Cuánto dura tu ciclo?"
+                                else -> ""
+                            },
+                            fontSize = 14.sp
+                        )
                     },
-                label = { Text(
-                    when (type) {
-                        "period" -> "¿Cuánto suele durar tu periodo?"
-                        "cycle" -> "¿Cuánto dura tu ciclo?"
-                        else -> ""
-                    },
-                    fontSize = 14.sp
-                ) },
-                readOnly = true,
-                trailingIcon = {
-                    Icon(icon,"contentDescription",
-                        Modifier.clickable { expanded = !expanded },
-                        tint = AccentColor)
-                }
-            )
+                    readOnly = true,
+                    trailingIcon = {
+                        Icon(
+                            icon, "contentDescription",
+                            Modifier.clickable { expanded = !expanded },
+                            tint = AccentColor
+                        )
+                    }
+                )
+            }
             DropdownMenu(
                 expanded = expanded,
                 onDismissRequest = { expanded = false },
@@ -117,6 +204,6 @@ fun DropDownMenu(
                 }
             }
         }
-    }
+    }*/
 
 }

@@ -15,6 +15,8 @@ import androidx.compose.material.icons.outlined.NotificationsActive
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -23,12 +25,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import mx.cazv.todasbrillamos.ui.theme.BackgroundColor
 import mx.cazv.todasbrillamos.ui.theme.BadgeColor
 import mx.cazv.todasbrillamos.view.components.footer.BottomBar
 import mx.cazv.todasbrillamos.view.components.Line
 import mx.cazv.todasbrillamos.view.components.header.BasicTopBar
 import mx.cazv.todasbrillamos.view.layouts.CustomLayout
+//import mx.cazv.todasbrillamos.viewmodel.NotificationViewModel
+import mx.cazv.todasbrillamos.viewmodel.NotificationsViewModel
+import mx.cazv.todasbrillamos.viewmodel.AuthViewModel
 
 /**
  * Archivo para mostrar notificaciones.
@@ -88,7 +94,7 @@ fun Date(value: String) {
 fun Notification(
     title: String,
     description: String,
-    time: String,
+    hour: String,
     withLine: Boolean = true
 ) {
     Column {
@@ -112,6 +118,7 @@ fun Notification(
             }
 
             Column {
+
                 Row {
                     Box(
                         modifier = Modifier
@@ -128,7 +135,7 @@ fun Notification(
                         modifier = Modifier
                             .wrapContentWidth()
                     ) {
-                        Text(time,
+                        Text(hour,
                             fontSize = 14.sp,
                             fontWeight = FontWeight.Normal,
                             color = Color.Gray
@@ -157,10 +164,32 @@ fun Notification(
  * @param navController El NavHostController utilizado para la navegación.
  */
 @Composable
-fun Notifications(navController: NavHostController) {
+fun getNotsifications(
+    navController: NavHostController,
+    authViewModel: AuthViewModel,
+    notificationsViewModel: NotificationsViewModel
+) {
+    val notifications = notificationsViewModel.state.collectAsState()
+
+//    LaunchedEffect(Unit) {
+//        notificationsViewModel.getNotifications(authViewModel.token)
+//    }
+
+//    LaunchedEffect(Unit) {
+//        authViewModel.token?.let { token ->
+//            notificationsViewModel.getNotifications(token)
+//        }
+//    }
+    LaunchedEffect(Unit) {
+    authViewModel.tokenState.collect { token ->
+        token?.let {
+            notificationsViewModel.getNotifications(it)
+        }
+    }
+}
     CustomLayout (
         withStoreButton = true,
-        navController = navController,
+        navController = rememberNavController(),
         topBar = {
             BasicTopBar(title = "Notificaciones", navController = navController)
         },
@@ -180,56 +209,7 @@ fun Notifications(navController: NavHostController) {
             Notification(
                 title = "¡Oferta exclusiva!",
                 description = "Aprovecha un 20% de descuento en tu próxima compra. válido hasta el domingo.",
-                time = "2:16 PM"
-            )
-
-            Notification(
-                title = "Calendario Menstrual",
-                description = "¡Descubre nuestra nueva función! Ahora puedes seguir tus ciclos de manera personalizada.",
-                time = "11:30 AM",
-                withLine = false
-            )
-
-            Date("Ayer")
-
-            Notification(
-                title = "¡Novedad en la tienda!",
-                description = "Descubre nuestros nuevos productos recién llegados. No te lo pierdas.",
-                time = "8:05 PM"
-            )
-
-            Notification(
-                title = "Envío",
-                description = "Buenas noticias! Tu pedido #1234 ha sido enviado. Estará en tus manos pronto.",
-                time = "3:50 PM"
-            )
-
-            Notification(
-                title = "Gracias por tu compra",
-                description = "Tu compra fue realizada con éxito. Gracias por comprar con nosotros.",
-                time = "9:30 AM",
-                withLine = false
-            )
-
-            Date("Ago 17")
-
-            Notification(
-                title = "Producto favorito en oferta",
-                description = "Un producto de tu lista de deseos tiene descuento. ¡Cómpralo ahora!",
-                time = "7:22 PM"
-            )
-
-            Notification(
-                title = "Checa este nuevo artículo",
-                description = "'Toallas sanitarias para frenar la contaminación'. Léelo ahora y descubre una opción más sostenible para tu cuidado personal.",
-                time = "5:26 PM"
-            )
-
-            Notification(
-                title = "Carrito abandonado",
-                description = "Los artículos en tu carrito están esperando por ti. Completa tu compra ahora.",
-                time = "11:42 AM",
-                withLine = false
+                hour = "2:16 PM"
             )
         }
     }

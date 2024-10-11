@@ -24,6 +24,7 @@ import mx.cazv.todasbrillamos.view.Routes
 import mx.cazv.todasbrillamos.view.components.Button
 import mx.cazv.todasbrillamos.view.layouts.BasicLayout
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
@@ -43,8 +44,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.withStyle
 import kotlinx.coroutines.launch
 import mx.cazv.todasbrillamos.R
 import mx.cazv.todasbrillamos.model.models.UserInfo
@@ -163,7 +169,7 @@ fun Register(navController: NavHostController, authViewModel: AuthViewModel) {
                     verticalArrangement = Arrangement.Top
                 ) {
                     Text(
-                        text = "Regístrate",
+                        text = "¡Únete a nosotros!",
                         fontSize = 28.sp,
                         fontWeight = FontWeight.Bold,
                         textAlign = TextAlign.Center
@@ -247,8 +253,20 @@ fun Register(navController: NavHostController, authViewModel: AuthViewModel) {
                             onCheckedChange = { acceptPrivacy = it }
                         )
                         Text(
-                            text = "Acepto el aviso de privacidad",
-                            fontSize = 12.sp
+                            text = buildAnnotatedString {
+                                withStyle(style = SpanStyle(fontStyle = FontStyle.Normal)) {
+                                    append("Acepto el ")
+                                }
+                                withStyle(
+                                    style = SpanStyle(
+                                        fontWeight = FontWeight.Bold,
+                                        textDecoration = TextDecoration.Underline),
+                                ) {
+                                    append("Aviso de Privacidad")
+                                }
+                            },
+                            fontSize = 12.sp,
+                            modifier = Modifier.clickable { navController.navigate(Routes.ROUTE_TERMS_AND_POLICIES_REGISTER) }
                         )
                     }
 
@@ -288,6 +306,7 @@ fun Register(navController: NavHostController, authViewModel: AuthViewModel) {
                             }
                         }
                     )
+
 
                     errorMessage?.let { error ->
                         Text(
