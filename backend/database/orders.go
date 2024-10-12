@@ -167,7 +167,7 @@ func GetOrderInfoWithProducts(clientID uint, deliveryDate string) (*models.Order
 		return nil, fmt.Errorf("error parsing delivery date: %v", err)
 	}
 
-	// Obtener información general del pedido (sin el nombre completo)
+	// Obtener información general del pedido
 	err = GetDatabase().
 		Table("orders").
 		Select("orders.delivery_date, orders.status, orders.order_received_date, orders.preparing_order_date, orders.shipped_date").
@@ -187,7 +187,7 @@ func GetOrderInfoWithProducts(clientID uint, deliveryDate string) (*models.Order
 		Table("orders").
 		Select("products.name as product_name, orders.quantity, products.price, products.hash, products.type").
 		Joins("JOIN products ON orders.product_id = products.id").
-		Where("orders.id = (SELECT id FROM orders WHERE client_id = ? AND DATE(delivery_date) = DATE(?))", clientID, parsedDate).
+		Where("orders.client_id = ? AND DATE(orders.delivery_date) = DATE(?)", clientID, parsedDate).
 		Scan(&products).Error
 
 	if err != nil {
