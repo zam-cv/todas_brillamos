@@ -117,6 +117,26 @@ go run main.go
 
 ### Testing
 
+1. Install the dependencies
+
 ```bash
+# For Linux
+INSTALL_DIR=/tmp
+VERSION=5.0.1
+curl --silent --location https://github.com/Orange-OpenSource/hurl/releases/download/$VERSION/hurl-$VERSION-x86_64-unknown-linux-gnu.tar.gz | tar xvz -C $INSTALL_DIR
+export PATH=$INSTALL_DIR/hurl-$VERSION-x86_64-unknown-linux-gnu/bin:$PATH
+
+# For MacOS
+brew install hurl
+
+# For Windows
+choco install hurl
+```
+
+2. Run the tests
+
+```bash
+cd backend
 go test ./tests
+hurl --test --color ./tests/api/*.hurl
 ```

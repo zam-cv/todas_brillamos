@@ -18,13 +18,13 @@ resource "digitalocean_vpc" "tb_vpc" {
 }
 
 resource "digitalocean_database_cluster" "tb_db" {
-  name                  = "tb-db-cluster"
-  engine                = "pg"
-  version               = "13"
-  size                  = "db-s-1vcpu-2gb"
-  region                = var.region
-  node_count            = 1
-  private_network_uuid  = digitalocean_vpc.tb_vpc.id
+  name                 = "tb-db-cluster"
+  engine               = "pg"
+  version              = "13"
+  size                 = "db-s-1vcpu-2gb"
+  region               = var.region
+  node_count           = 1
+  private_network_uuid = digitalocean_vpc.tb_vpc.id
 
   maintenance_window {
     day  = "sunday"
@@ -40,6 +40,15 @@ resource "digitalocean_database_user" "tb_db_user" {
 resource "digitalocean_database_db" "tb_db" {
   cluster_id = digitalocean_database_cluster.tb_db.id
   name       = var.postgres_db_name
+}
+
+resource "digitalocean_database_firewall" "tb_db_firewall" {
+  cluster_id = digitalocean_database_cluster.tb_db.id
+
+  rule {
+    type  = "ip_addr"
+    value = digitalocean_droplet.app.ipv4_address_private
+  }
 }
 
 resource "digitalocean_droplet" "app" {
@@ -64,12 +73,13 @@ resource "digitalocean_droplet" "app" {
     apt-get update
     apt-get install -y docker-ce
     usermod -aG docker admin
-    docker run -d --name app-server
+    docker run -d --name app-server \
       --restart always \
       -p ${var.port}:${var.port} \
       -e PORT=${var.port} \
-      -e DB_HOST=postgres://${digitalocean_database_user.tb_db_user.name}:${digitalocean_database_user.tb_db_user.password}@${digitalocean_database_cluster.tb_db.private_host}:${digitalocean_database_cluster.tb_db.port}/${var.postgres_db_name} \
-      -e DB_USER=${var.postgres_user} \
+      -e DB_HOST=${digitalocean_database_cluster.tb_db.private_host} \
+      -e DB_PORT=${digitalocean_database_cluster.tb_db.port} \
+      -e DB_USER=${digitalocean_database_user.tb_db_user.name} \
       -e DB_PASSWORD=${digitalocean_database_user.tb_db_user.password} \
       -e DB_NAME=${var.postgres_db_name} \
       -e ADMIN_EMAIL=${var.admin_email} \
@@ -84,66 +94,48 @@ resource "digitalocean_droplet" "app" {
 }
 
 resource "digitalocean_firewall" "public_firewall" {
-  name = "public-firewall-new"
+  name = "public-firewall"
   droplet_ids = [digitalocean_droplet.app.id]
 
   inbound_rule {
     protocol         = "tcp"
     port_range       = "22"
-    source_addresses = ["0.0.0.0/0"]
+    source_addresses = ["0.0.0.0/0", "::/0"]
   }
 
   inbound_rule {
     protocol         = "tcp"
     port_range       = "80"
-    source_addresses = ["0.0.0.0/0"]
+    source_addresses = ["0.0.0.0/0", "::/0"]
   }
 
   inbound_rule {
     protocol         = "tcp"
     port_range       = "443"
-    source_addresses = ["0.0.0.0/0"]
+    source_addresses = ["0.0.0.0/0", "::/0"]
   }
 
   inbound_rule {
     protocol         = "tcp"
     port_range       = var.port
-    source_addresses = ["0.0.0.0/0"]
+    source_addresses = ["0.0.0.0/0", "::/0"]
   }
 
   outbound_rule {
     protocol              = "tcp"
     port_range            = "1-65535"
-    destination_addresses = ["0.0.0.0/0"]
+    destination_addresses = ["0.0.0.0/0", "::/0"]
   }
 
   outbound_rule {
     protocol              = "udp"
     port_range            = "1-65535"
-    destination_addresses = ["0.0.0.0/0"]
+    destination_addresses = ["0.0.0.0/0", "::/0"]
   }
 
   outbound_rule {
-    protocol         = "tcp"
-    port_range       = "80"
-    destination_addresses = ["0.0.0.0/0"]
-  }
-
-  outbound_rule {
-    protocol         = "tcp"
-    port_range       = "8000"
-    destination_addresses = ["0.0.0.0/0"]
-  }
-
-  outbound_rule {
-    protocol = "icmp"
-    destination_addresses = ["0.0.0.0/0"]
-  }
-
-  outbound_rule {
-    protocol                = "tcp"
-    port_range              = "5432"
-    destination_addresses   = ["10.0.0.0/16"]
+    protocol              = "icmp"
+    destination_addresses = ["0.0.0.0/0", "::/0"]
   }
 }
 
