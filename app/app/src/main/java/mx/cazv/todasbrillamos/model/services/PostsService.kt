@@ -44,5 +44,4 @@ class PostsService {
     suspend fun getPost(token: String, id: String): Post {
         return apiCall { apiService.getPost("Bearer $token", id) }.getOrNull()!!
     }
-
 }

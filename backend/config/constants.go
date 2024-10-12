@@ -19,6 +19,7 @@ var (
 	// Configuración de la base de datos
 	DbHost     string
 	DbUser     string
+	DbPort     string
 	DbPassword string
 	DbName     string
 
@@ -43,6 +44,7 @@ func LoadEnvVars() {
 	// Configuración de la base de datos
 	DbHost = os.Getenv("DB_HOST")
 	DbUser = os.Getenv("DB_USER")
+	DbPort = os.Getenv("DB_PORT")
 	DbPassword = os.Getenv("DB_PASSWORD")
 	DbName = os.Getenv("DB_NAME")
 

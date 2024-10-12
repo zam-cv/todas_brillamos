@@ -57,6 +57,7 @@ DB_HOST=localhost
 DB_USER=admin
 DB_PASSWORD=awdrqwer12
 DB_NAME=todasbrillamos
+DB_PORT=5432
 
 ADMIN_EMAIL=admin@todasbrillamos.com
 ADMIN_PASSWORD=awdrqwer12
@@ -112,4 +113,10 @@ go run main.go
 
 ```bash
 # run the application in android studio
+```
+
+### Testing
+
+```bash
+go test ./tests
 ```

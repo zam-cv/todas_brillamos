@@ -69,34 +69,4 @@ func addTrackingRoutes(rg *gin.RouterGroup) {
 			"order":  result,
 		})
 	})
-
-	// PUT /tracking/:id - Actualiza la información de seguimiento de un pedido (solo para administradores)
-	// tracking.PUT("/:id", auth.GetMiddleware(AdminAuth), func(c *gin.Context) {
-	// 	id := c.Param("id")
-
-	// 	var input struct {
-	// 		Status models.Status `json:"status"`
-	// 	}
-
-	// 	if err := c.ShouldBindJSON(&input); err != nil {
-	// 		c.JSON(400, gin.H{"error": err.Error()})
-	// 		return
-	// 	}
-
-	// 	orderID, err := strconv.Atoi(id)
-	// 	if err != nil {
-	// 		c.JSON(400, gin.H{"error": "Invalid order ID"})
-	// 		return
-	// 	}
-
-	// 	if err := database.UpdateStatusOrders(uint(orderID), input.Status); err != nil {
-	// 		c.JSON(500, gin.H{"error": err.Error()})
-	// 		return
-	// 	}
-
-	// 	c.JSON(200, gin.H{
-	// 		"message": "Tracking information updated",
-	// 		"status":  input.Status,
-	// 	})
-	// })
 }

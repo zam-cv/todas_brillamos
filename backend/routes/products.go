@@ -75,7 +75,7 @@ func (i *Product) GetFileByHashDB(hash string) (*models.Product, error) {
 var ProductArchive files.Files[models.ProductMetadata, *models.Product] = &Product{}
 
 // Añade las rutas relacionadas con los productos al grupo de rutas proporcionado.
-func addProductRoutes(rg *gin.RouterGroup) {
+func addProductRoutes(rg *gin.RouterGroup, router *gin.Engine) {
 	group := rg.Group("/products")
 
 	// GET /products - Obtiene todos los productos

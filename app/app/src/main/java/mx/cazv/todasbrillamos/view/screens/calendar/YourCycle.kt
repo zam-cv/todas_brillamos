@@ -99,13 +99,7 @@ fun YourCycle(navController: NavHostController, calendarVM: CalendarVM) {
     )
 
     MainLayout(navController = navController) {
-        Column (
-//            modifier = Modifier
-//                .fillMaxHeight()
-//                .fillMaxWidth()
-//                .background(BackgroundColor)
-//                .verticalScroll(rememberScrollState())
-        ) {
+        Column {
             Text(
                 text = "Tu siguiente ciclo",
                 fontSize = 29.sp,

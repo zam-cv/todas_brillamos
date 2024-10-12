@@ -17,7 +17,7 @@ import (
 type Limit struct {
 	MaxAttempts   int
 	BlockDuration time.Duration
-	cache         *bigcache.BigCache
+	Cache         *bigcache.BigCache
 }
 
 // Crea una nueva instancia de Limit.
@@ -32,14 +32,14 @@ func NewLimit(maxAttempts int, blockDuration time.Duration) (*Limit, error) {
 	return &Limit{
 		MaxAttempts:   maxAttempts,
 		BlockDuration: blockDuration,
-		cache:         cache,
+		Cache:         cache,
 	}, nil
 }
 
 // Obtiene el número de intentos de autenticación para una clave dada.
 // Devuelve el número de intentos.
 func GetAttempts(l *Limit, key string) int {
-	attempts, err := l.cache.Get(key)
+	attempts, err := l.Cache.Get(key)
 	if err != nil {
 		return 0
 	}
@@ -55,12 +55,12 @@ func IncrementAttempts(l *Limit, key string) error {
 	if count > l.MaxAttempts {
 		return errors.New("max attempts reached")
 	} else {
-		l.cache.Set(key, []byte(strconv.Itoa(count)))
+		l.Cache.Set(key, []byte(strconv.Itoa(count)))
 		return nil
 	}
 }
 
 // Reinicia el número de intentos de autenticación para una clave dada.
 func ResetAttempts(l *Limit, key string) {
-	l.cache.Delete(key)
+	l.Cache.Delete(key)
 }

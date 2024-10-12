@@ -15,11 +15,11 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// Instancia principal del enrutador de Gin.
-var router = gin.Default()
-
 // Configura y ejecuta el servidor HTTP.
-func Run() {
+func Run() *gin.Engine {
+	// Instancia principal del enrutador de Gin.
+	var router = gin.Default()
+
 	// Configuración de CORS
 	router.Use(cors.New(cors.Config{
 		AllowOrigins:     []string{"http://localhost:1420"},
@@ -31,25 +31,26 @@ func Run() {
 	}))
 
 	// Configuración de rutas
-	getRoutes()
+	GetRoutes(router)
 
 	// Iniciar el servidor
 	router.Run(":" + config.Port)
+
+	return router
 }
 
 // Configura todas las rutas de la API.
-func getRoutes() {
+func GetRoutes(router *gin.Engine) {
 	// Grupo de rutas de la API
 	api := router.Group("/api")
 
 	// Añadir rutas específicas
 	addUserAuthRoutes(api)
 	addAdminAuthRoutes(api)
-	addProductRoutes(api)
+	addProductRoutes(api, router)
 	addCartRoutes(api)
 	addBuyRoutes(api)
 	addTrackingRoutes(api)
-	addConfigRoutes(api)
 	addCategoriesRoutes(api)
 	addPostRoutes(api)
 	addNotificationsRoutes(api)

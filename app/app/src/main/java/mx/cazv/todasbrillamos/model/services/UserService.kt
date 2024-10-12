@@ -61,10 +61,10 @@ class UserService {
     }
 
     /**
-     * Verifica si el cliente autenticado existe en el sistema.
+     * Verifica existen los otros datos del cleinte
      *
      * @param token El token de autenticación del usuario.
-     * @return Un objeto Exist que indica si el cliente existe.
+     * @return Un objeto Exist que indica si existen los otros datos del cliente.
      */
     suspend fun exist(token: String): Exist? {
         val result = apiCall { apiService.exist("Bearer $token") }

@@ -107,7 +107,16 @@ func addChatRoutes(api *gin.RouterGroup) {
 	chat.POST("", auth.GetMiddleware(ClientAuth), func(c *gin.Context) {
 		var message Message
 		if err := c.ShouldBindJSON(&message); err != nil {
-			c.JSON(400, gin.H{"error": err.Error()})
+			c.JSON(200, gin.H{
+				"message": "Lo siento, no tengo una respuesta para esa pregunta.",
+			})
+			return
+		}
+
+		if message.Message == "" {
+			c.JSON(200, gin.H{
+				"message": "Lo siento, no tengo una respuesta para esa pregunta.",
+			})
 			return
 		}
 

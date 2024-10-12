@@ -40,7 +40,7 @@ func addPostRoutes(rg *gin.RouterGroup) {
 	})
 
 	// GET /posts - Obtiene todos los posts
-	post.GET("", func(c *gin.Context) {
+	post.GET("", auth.GetMiddleware(ClientAuth), func(c *gin.Context) {
 
 		posts, err := database.GetPosts()
 		if err != nil {
@@ -52,7 +52,7 @@ func addPostRoutes(rg *gin.RouterGroup) {
 	})
 
 	// GET /posts/:id - Obtiene un post específico
-	post.GET("/:id", func(c *gin.Context) {
+	post.GET("/:id", auth.GetMiddleware(ClientAuth), func(c *gin.Context) {
 		idStr := c.Param("id")
 		id, err := strconv.Atoi(idStr)
 		if err != nil {
@@ -110,5 +110,4 @@ func addPostRoutes(rg *gin.RouterGroup) {
 
 		c.JSON(200, gin.H{"message": "Post actualizado"})
 	})
-
 }

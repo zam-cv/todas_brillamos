@@ -18,6 +18,9 @@ retrofit = "2.11.0"
 gson = "2.11.0"
 coil = "2.7.0"
 stripe = "20.52.0"
+mockito = "5.11.0"
+mockitoInline = "5.2.0"
+kotlinCoroutinesTest = "1.8.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -44,6 +47,9 @@ retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = 
 gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "gson" }
 coil = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
 stripe-android = { group = "com.stripe", name = "stripe-android", version.ref = "stripe" }
+mockito-core = { group = "org.mockito", name = "mockito-core", version.ref = "mockito" }
+mockito-inline = { group = "org.mockito", name = "mockito-inline", version.ref = "mockitoInline" }
+kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinCoroutinesTest" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

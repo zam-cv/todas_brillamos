@@ -20,6 +20,7 @@ func main() {
 	// Database setup
 	database.InitDatabase(
 		config.DbHost,
+		config.DbPort,
 		config.DbUser,
 		config.DbPassword,
 		config.DbName,
