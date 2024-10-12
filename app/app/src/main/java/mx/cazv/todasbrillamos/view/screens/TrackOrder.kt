@@ -237,7 +237,7 @@ fun OrderProducts(trackingOrder: TrackingOrder) {
                     )
                 }
                 Spacer(modifier = Modifier.height(30.dp))
-                Text(text = "x2",
+                Text(text = "x${product.quantity}",
                     fontSize = 14.sp,
                     textAlign = TextAlign.Right,
                     modifier = Modifier.fillMaxWidth())
