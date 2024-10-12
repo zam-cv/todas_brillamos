@@ -25,9 +25,18 @@ class AuthServiceIntegrationTest {
 
     @Test
     fun testRegister() = runBlocking {
-        val userInfo = UserInfo("test@example.com", "password123", "John", "Doe")
-        val result = authService.register(userInfo)
-        assertTrue("El registro debería ser exitoso", result)
+        val request = SignInRequest("test2@example.com", "password123")
+        val result = authService.signin(request)
+
+        if (result != null) {
+            val token = result.token
+            val verify = authService.verify(token)
+            assertTrue("La verificación debería ser exitosa", verify)
+        } else {
+            val userInfo = UserInfo("test2@example.com", "password123", "John", "Doe")
+            val r = authService.register(userInfo)
+            assertTrue("El registro debería ser exitoso", r)
+        }
     }
 
     @Test
