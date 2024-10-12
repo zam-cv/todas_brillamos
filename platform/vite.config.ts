@@ -34,4 +34,7 @@ export default defineConfig(async () => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  test: {
+    setupFiles: './src/utils/__tests__/setup.ts'
+  }
 }));

@@ -1,5 +1,4 @@
 import { get } from "@/utils/methods";
-import { Product } from "@/utils/api/products";
 
 // Ajustamos las propiedades de acuerdo al formato del JSON proporcionado
 export interface Order {
