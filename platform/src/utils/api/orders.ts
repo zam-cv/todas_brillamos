@@ -1,4 +1,4 @@
-import { get } from "@/utils/methods";
+import { get, post } from "@/utils/methods";
 
 // Ajustamos las propiedades de acuerdo al formato del JSON proporcionado
 export interface Order {
@@ -42,6 +42,10 @@ export interface MonthlyRevenue {
     total_revenue: number;
 }
 
+export interface SetStatus {
+    Status: string;
+}
+
 
 export default {
     orders: {
@@ -60,6 +64,12 @@ export default {
 
         getMonthlyRevenue: (): Promise<MonthlyRevenue[]> => {
             return get("/orders/monthRev")
+        },
+
+        updateOrderStatus: (
+            orderID: number, 
+            status: SetStatus ): Promise<void> => {
+            return post(`/orders/${orderID}`, status)
         }
     }
 }

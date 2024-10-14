@@ -7,7 +7,7 @@ import "time"
 
 // Estructura de la tabla de pedidos
 type Orders struct {
-	ID                 uint `json:"-" gorm:"primarykey"`
+	ID                 uint `json:"id" gorm:"primarykey" validate:"omitempty, eq=0"`
 	Quantity           uint
 	DeliveryDate       string  `gorm:"type:date"`
 	Status             string  `gorm:"type:varchar(20)"`
