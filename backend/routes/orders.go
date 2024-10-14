@@ -33,7 +33,7 @@ func addOrdersRoutes(rg *gin.RouterGroup) {
 	})
 
 	// PUT /orders/:id - Actualiza el estado de una orden específica (solo para administradores)
-	orders.PUT("/:id", auth.GetMiddleware(AdminAuth), func(c *gin.Context) {
+	orders.POST("/:id", auth.GetMiddleware(AdminAuth), func(c *gin.Context) {
 		orderID, err := strconv.ParseUint(c.Param("id"), 10, 32)
 		if err != nil {
 			c.JSON(400, gin.H{"error": "Invalid order ID"})

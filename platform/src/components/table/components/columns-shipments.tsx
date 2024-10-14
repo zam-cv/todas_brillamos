@@ -1,10 +1,17 @@
-import { useState } from "react";
 import { ColumnDef } from "@tanstack/react-table";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Task } from "../data/schema_shipments";
 import { DataTableColumnHeader } from "./data-table-column-header-shipments";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
-export const columns: ColumnDef<Task>[] = [
+
+export const createColumns = (
+  updateOrderStatus: (orderID: number, status: string) => void):  ColumnDef<Task>[] => [
     {
         accessorKey: "Quantity",
         header: ({ column }) => (
@@ -43,9 +50,19 @@ export const columns: ColumnDef<Task>[] = [
       cell: ({ row }) => {
         return (
           <div className="flex space-x-2">
-            <span className="max-w-[500px] truncate font-medium">
-              {row.getValue("Status")}
-            </span>
+            <Select
+            onValueChange={(value) => {
+              updateOrderStatus((row.original as any).id, value);
+            }}>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder={row.getValue("Status")}/>
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="Preparando envio">Preparando envio</SelectItem>
+                <SelectItem value="Enviado">Enviado</SelectItem>
+                <SelectItem value="Entregado">Entregado</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
         );
       },
