@@ -1,5 +1,7 @@
 package mx.cazv.todasbrillamos.view.components
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -16,8 +18,6 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -31,13 +31,11 @@ import coil.compose.AsyncImage
 import mx.cazv.todasbrillamos.model.ApiConfig
 import mx.cazv.todasbrillamos.model.models.OrderSummary
 import mx.cazv.todasbrillamos.view.Routes
-import mx.cazv.todasbrillamos.viewmodel.AuthViewModel
-import mx.cazv.todasbrillamos.viewmodel.TrackingViewModel
-import java.time.LocalDate
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
+@RequiresApi(Build.VERSION_CODES.O)
 fun formatDate(inputDate: String): String {
     val inputFormatter = DateTimeFormatter.ISO_DATE_TIME
     val outputFormatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy, hh:mm a", Locale("es", "ES"))
@@ -104,7 +102,7 @@ fun InfoOrder(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-                Text(text = "MX ${order.total_price}.00 \n4 artículos",
+                Text(text = "MX ${order.total_price}.00 \n${order.total_products} artículos",
                     textAlign = TextAlign.Center,
                     fontSize = 13.sp,
                     lineHeight = 14.sp
