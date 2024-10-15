@@ -2,6 +2,7 @@ package mx.cazv.todasbrillamos.view.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -125,6 +126,7 @@ fun Cart(
     }
 
     CustomLayout(
+        withScroll = cartState.cart.isNotEmpty(),
         navController = navController,
         topBar = {
             BasicTopBar(title = "Mi carrito", navController = navController)
@@ -204,23 +206,32 @@ fun Cart(
                     modifier = Modifier.padding(16.dp)
                 )
             } else {
-                cartState.cart.forEach { cartItem ->
-                    Prod(
-                        folder = cartState.folder,
-                        item = cartItem,
-                        onQuantityChange = { newQuantity ->
-                            authViewModel.token()?.let { token ->
-                                if (cartItem.product.stock >= newQuantity) {
-                                    cartViewModel.updateProductQuantityInCart(token, cartItem.product.product_id, newQuantity)
+                if (cartState.cart.isEmpty()) {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text("No hay productos en el carrito")
+                    }
+                } else {
+                    cartState.cart.forEach { cartItem ->
+                        Prod(
+                            folder = cartState.folder,
+                            item = cartItem,
+                            onQuantityChange = { newQuantity ->
+                                authViewModel.token()?.let { token ->
+                                    if (cartItem.product.stock >= newQuantity) {
+                                        cartViewModel.updateProductQuantityInCart(token, cartItem.product.product_id, newQuantity)
+                                    }
+                                }
+                            },
+                            onDelete = {
+                                authViewModel.token()?.let { token ->
+                                    cartViewModel.deleteProductFromCart(token, cartItem.product.product_id)
                                 }
                             }
-                        },
-                        onDelete = {
-                            authViewModel.token()?.let { token ->
-                                cartViewModel.deleteProductFromCart(token, cartItem.product.product_id)
-                            }
-                        }
-                    )
+                        )
+                    }
                 }
             }
         }

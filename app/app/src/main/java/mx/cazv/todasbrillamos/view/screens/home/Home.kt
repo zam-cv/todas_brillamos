@@ -85,12 +85,11 @@ fun Home(
                     text = "Recomendado",
                     products = randomState.value.products,
                     navController = navController,
-                    modifier = Modifier.padding(top = 20.dp)
+                    modifier = Modifier.padding(top = 40.dp)
                 )
+
+                Spacer(modifier = Modifier.height(30.dp))
             }
-
-            Spacer(modifier = Modifier.height(60.dp))
-
 
             Box {
                 Row (modifier = Modifier.fillMaxWidth(),
@@ -127,7 +126,6 @@ fun Home(
 
                 }
             }
-
 
             Spacer(modifier = Modifier.height(20.dp))
 
