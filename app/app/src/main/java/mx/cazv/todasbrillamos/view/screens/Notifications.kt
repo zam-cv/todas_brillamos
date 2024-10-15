@@ -203,7 +203,7 @@ fun Notifications(
                         modifier = Modifier.fillMaxSize(),
                         contentAlignment = Alignment.Center
                     ) {
-                        Text("No tienes favoritos guardados")
+                        Text("No tienes notificaciones guardadas")
                     }
                 }
                 else -> {
