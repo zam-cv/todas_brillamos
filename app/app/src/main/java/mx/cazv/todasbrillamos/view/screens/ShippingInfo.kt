@@ -190,7 +190,7 @@ fun ShippingInfo(
                     placeholder = "Ejemplo: 4",
                     value = interior,
                     onValueChange = { interior = it },
-                    required = true
+                    required = false
                 )
 
                 Spacer(modifier = Modifier.size(16.dp))
