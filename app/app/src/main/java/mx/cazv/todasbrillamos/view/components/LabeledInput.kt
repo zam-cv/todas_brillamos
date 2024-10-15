@@ -6,6 +6,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -52,6 +53,7 @@ fun LabeledInput(
     onValueChange: (String) -> Unit,
     required: Boolean = false,
     isPassword: Boolean = false,
+    errorMessage: String? = null,
     suffixIcon: @Composable (() -> Unit)? = null,
     imageId: Int? = null,
     height: Dp = 60.dp,
@@ -87,7 +89,7 @@ fun LabeledInput(
                 .fillMaxWidth()
                 .height(height)
                 .background(Color.White, shape)
-                .border(1.dp, Stroke, shape)
+                .border(1.dp, if (errorMessage != null) MaterialTheme.colorScheme.error else Stroke, shape)
         ) {
             Row(
                 modifier = Modifier
@@ -145,6 +147,17 @@ fun LabeledInput(
                     )
                 }
             }
+        }
+
+        if (errorMessage != null) {
+            Text(
+                text = errorMessage,
+                color = MaterialTheme.colorScheme.error,
+                fontSize = 15.sp,
+                modifier = Modifier.padding(top = 4.dp)
+            )
+
+            Spacer(modifier = Modifier.height(5.dp))
         }
     }
 }
