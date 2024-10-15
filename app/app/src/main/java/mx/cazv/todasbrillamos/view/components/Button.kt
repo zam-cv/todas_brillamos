@@ -22,14 +22,14 @@ import mx.cazv.todasbrillamos.ui.theme.ButtonColor
  * @param onClick La acción que se ejecutará al hacer clic en el botón.
  */
 @Composable
-fun Button(text: String, onClick: () -> Unit = {}) {
+fun Button(text: String, enabled: Boolean = true, onClick: () -> Unit = {}) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .background(ButtonColor, shape = RoundedCornerShape(30.dp))
+            .background(if (enabled) ButtonColor else Color.Gray, shape = RoundedCornerShape(30.dp))
     ) {
         OutlinedButton(
-            onClick = onClick,
+            onClick = { if (enabled) onClick() },
             border = null,
             modifier = Modifier
                 .fillMaxWidth(),

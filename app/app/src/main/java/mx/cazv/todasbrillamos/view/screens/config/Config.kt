@@ -170,7 +170,7 @@ fun Config(
                 options = listOf(
                     Setting("Quienes somos", Icons.Outlined.QuestionMark, Routes.ROUTE_ABOUT, navController),
                     Setting("Terminos y condiciones", Icons.AutoMirrored.Outlined.InsertDriveFile, Routes.ROUTE_TERMS_AND_POLICIES, navController),
-                    Setting("Compartir esta aplicación", Icons.Filled.Share, Routes.ROUTE_HOME, navController),
+                    Setting("Compartir esta aplicación", Icons.Filled.Share, Routes.ROUTE_SOCIAL_NETWORKS, navController),
                 )
             )
 
