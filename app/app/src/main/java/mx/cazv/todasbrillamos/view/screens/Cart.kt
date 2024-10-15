@@ -2,7 +2,6 @@ package mx.cazv.todasbrillamos.view.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -126,7 +125,6 @@ fun Cart(
     }
 
     CustomLayout(
-        withScroll = false,
         navController = navController,
         topBar = {
             BasicTopBar(title = "Mi carrito", navController = navController)
@@ -199,12 +197,7 @@ fun Cart(
 
             if (cartState.isLoading) {
                 CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
-            } else if (cartState.cart.isEmpty()){
-                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    Text("No tienes productos en el carrito")
-                }
-            }
-            else if (cartState.error != null) {
+            } else if (cartState.error != null) {
                 Text(
                     text = cartState.error!!,
                     color = Color.Red,

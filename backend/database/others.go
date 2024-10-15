@@ -54,10 +54,7 @@ func GetAddressByClientID(clientID uint) (string, error) {
 
 	address := fmt.Sprintf("Calle %s", other.Street)
 	address += fmt.Sprintf(" No. %d", other.Interior)
-
-	if other.Exterior != nil {
-		address += fmt.Sprintf("-%d", *other.Exterior)
-	}
+	address += fmt.Sprintf("-%d", other.Exterior)
 
 	address += fmt.Sprintf(" Colonia %s", other.City)
 	return address, nil

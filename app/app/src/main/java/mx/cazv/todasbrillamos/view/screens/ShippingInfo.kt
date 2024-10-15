@@ -66,7 +66,7 @@ fun ShippingInfo(
 
         if (curp.length != 18) newErrors["curp"] = "CURP debe tener 18 caracteres"
         if (street.isBlank()) newErrors["street"] = "Calle es requerida"
-        if (interior.toIntOrNull() == null) newErrors["interior"] = "Número interior debe ser un número"
+        if (interior.toIntOrNull() == null && interior.isNotEmpty()) newErrors["interior"] = "Número interior debe ser un número"
         if (exterior.toIntOrNull() == null) newErrors["exterior"] = "Número exterior debe ser un número"
         if (city.isBlank()) newErrors["city"] = "Ciudad es requerida"
         if (state.isBlank()) newErrors["state"] = "Estado es requerido"
