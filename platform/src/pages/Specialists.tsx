@@ -337,17 +337,9 @@ export default function Specialists() {
         </div>
 
         <br></br>
-
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <div style={{ flex: 1 }}>
-            
-            <DataTable data={post} columns={columns} setId={setIdPost}/>
-          </div>
-          
-        </div>
-
-
       </div>
+      <DataTable data={post} columns={columns} setId={setIdPost}/>
+
     </div>
   );
 }

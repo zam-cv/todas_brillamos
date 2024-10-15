@@ -11,13 +11,24 @@ export default function Home() {
   const { signIn } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error] = useState("");
+  const [error, setError] = useState(""); 
 
-  function handleLogin(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault(); // Prevenir la recarga
-    signIn(email, password, navigate);
+  async function handleLogin(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault(); 
+
+    // Validar si los campos están vacíos
+    if (!email || !password) {
+      setError("Por favor, ingrese su correo electrónico y contraseña.");
+      return;
+    }
+
+    // Intentar iniciar sesión
+    try {
+      await signIn(email, password, navigate); 
+    } catch (err) {
+      setError("No se pudo iniciar sesión. Verifique sus credenciales.");
+    }
   }
-
 
   return (
     <div className="container h-full min-h-screen items-center justify-center grid lg:max-w-none lg:grid-cols-2 lg:px-0">
@@ -46,12 +57,11 @@ export default function Home() {
               Introduce tu usuario y contraseña para iniciar sesión
             </p>
           </div>
-          {error && <p className="text-red-500 text-center">{error}</p>}{" "}
-          {/* Mostrar errores */}
+          {/* Mostrar error si existe */}
+          {error && <p className="text-red-500 text-center">{error}</p>} 
+          
           <div className={cn("grid gap-6")}>
             <form onSubmit={handleLogin}>
-              {" "}
-              {/* Manejar envío de formulario */}
               <div className="grid gap-2">
                 <div className="grid gap-1">
                   <Label className="card" htmlFor="email">
@@ -67,16 +77,15 @@ export default function Home() {
                       autoCorrect="off"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      // Manejar cambios en email
                     />
                     <Input
-                      id="password" // Cambiar id a password
+                      id="password"
                       type="password"
                       autoCapitalize="none"
-                      autoComplete="current-password" // Cambiar a current-password
+                      autoComplete="current-password"
                       autoCorrect="off"
                       value={password}
-                      onChange={(e) => setPassword(e.target.value)} // Manejar cambios en password
+                      onChange={(e) => setPassword(e.target.value)}
                     />
                   </div>
                 </div>
@@ -84,7 +93,6 @@ export default function Home() {
               </div>
             </form>
           </div>
-          
         </div>
       </div>
     </div>

@@ -90,9 +90,9 @@ export default function Notifications() {
           </Accordion>
         </div>
       </div>
-      <div>
+      
         <DataTable data={notification} columns={notificationColumns} event_id={1}/>
-      </div>
+
     </div>
   );
 }
