@@ -45,8 +45,8 @@ export default function PieGraph() {
         const data = await api.product.getProductCategories();
         // Transformar y establecer los datos del gráfico con color
         setChartData(data.map((category, index) => ({
-          name: category.CategoryName, // Asegúrate de que este campo se llama así
-          value: category.ProductCount,
+          name: category.category_name, // Asegúrate de que este campo se llama así
+          value: category.product_count,
           fill: colors[index % colors.length], // Asigna un color
         })));
       } catch (err) {
@@ -74,9 +74,9 @@ export default function PieGraph() {
                 data={chartData}
                 dataKey="value"
                 nameKey="name"
-                innerRadius={60}
-                outerRadius={80}
-                label
+                innerRadius={40}
+                
+                
               >
                 {chartData.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={entry.fill} />
@@ -87,6 +87,9 @@ export default function PieGraph() {
      
       </CardContent>
       <CardFooter className="flex-col gap-2 text-sm">
+          <div>
+            Mostrando desgloze de todos los productos existentes
+          </div>
       </CardFooter>
     </Card>
   );

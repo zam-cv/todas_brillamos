@@ -1,8 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import api, { OrderInfo } from "@/utils/api/orders";
 import { useState, useEffect } from "react";
-import orders from "@/utils/api/orders";
 
 export default function RecentSalesChart() {
   const [ordersInfo, setOrdersInfo] = useState<OrderInfo[]>([]);
@@ -19,19 +17,21 @@ export default function RecentSalesChart() {
         <CardHeader>
           <CardTitle>Últimas Ordenes</CardTitle>
         </CardHeader>
-        <CardContent className="grid gap-8">
-          <div className="flex items-center gap-4">
+        <CardContent className="max-h-64 overflow-y-auto grid gap-8"> {/* Añadido max-h-64 y overflow-y-auto */}
+          <div className="flex flex-col gap-4">
             {ordersInfo.map((orderInfo) => (
-              <div>
-                  <div className="grid gap-1">
-                    <p className="text-sm font-medium leading-none">
-                      {orderInfo.first_name} {orderInfo.last_name}
-                    </p>
-                    <p className="text-sm text-muted-foreground">
-                      {orderInfo.email}
-                    </p>
+              <div key={orderInfo.id} className="border-b pb-4">
+                <div className="grid gap-1">
+                  <p className="text-sm font-medium leading-none">
+                    {orderInfo.first_name} {orderInfo.last_name}
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    {orderInfo.email}
+                  </p>
                 </div>
-                <div className="ml-auto font-medium">Total de la orden: ${orderInfo.total_price} </div>
+                <div className="ml-auto font-medium">
+                  Total de la orden: ${orderInfo.total_price}
+                </div>
               </div>
             ))}
           </div>
