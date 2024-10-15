@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -181,6 +182,7 @@ fun Notifications(
 
     CustomLayout (
         withStoreButton = true,
+        withScroll = notifications.value.isNotEmpty(),
         navController = rememberNavController(),
         topBar = {
             BasicTopBar(title = "Notificaciones", navController = navController)
@@ -191,21 +193,32 @@ fun Notifications(
     ) {
         Column (
             modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight()
+                .fillMaxSize()
                 .background(BackgroundColor)
                 .padding(top = 15.dp, start = 15.dp, end = 15.dp, bottom = 25.dp)
         ) {
-            notifications.value.forEach { group ->
-                Date(group.date)
+            when {
+                notifications.value.isEmpty() -> {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text("No tienes favoritos guardados")
+                    }
+                }
+                else -> {
+                    notifications.value.forEach { group ->
+                        Date(group.date)
 
-                group.notifications.forEach { notification ->
-                    Notification(
-                        title = notification.title,
-                        description = notification.description,
-                        hour = notification.hour,
-                        withLine = group.notifications.last() != notification
-                    )
+                        group.notifications.forEach { notification ->
+                            Notification(
+                                title = notification.title,
+                                description = notification.description,
+                                hour = notification.hour,
+                                withLine = group.notifications.last() != notification
+                            )
+                        }
+                    }
                 }
             }
         }
