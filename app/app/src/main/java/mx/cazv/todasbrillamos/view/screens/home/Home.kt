@@ -4,11 +4,14 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import mx.cazv.todasbrillamos.model.states.RandomState
@@ -67,6 +70,12 @@ fun Home(
                 )
             }
 
+            Spacer(modifier = Modifier.height(60.dp))
+
+            Text(text = "Descubre y aprende...",
+                style = MaterialTheme.typography.headlineSmall,
+                fontWeight = FontWeight.Bold)
+
             Spacer(modifier = Modifier.height(20.dp))
 
             if (postsState.value.posts.isNotEmpty()) {
@@ -74,6 +83,10 @@ fun Home(
                     Post(navController, post.id, post.title, post.content)
                     Spacer(modifier = Modifier.height(20.dp))
                 }
+            }
+            else {
+                Text(text = "Todavía no hay publicaciones para mostrar.")
+                Spacer(modifier = Modifier.height(20.dp))
             }
         }
     }
