@@ -1,6 +1,7 @@
 package mx.cazv.todasbrillamos.view.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -218,6 +219,7 @@ fun Cart(
                         Prod(
                             folder = cartState.folder,
                             item = cartItem,
+                            navController = navController,
                             onQuantityChange = { newQuantity ->
                                 authViewModel.token()?.let { token ->
                                     if (cartItem.product.stock >= newQuantity) {
@@ -250,12 +252,15 @@ fun Cart(
 fun Prod(
     folder: String,
     item: CartItem,
+    navController: NavHostController,
     onQuantityChange: (Int) -> Unit,
     onDelete: () -> Unit
 ) {
     Row(
         modifier = Modifier
-            .padding(16.dp),
+            .padding(top = 16.dp)
+            .fillMaxWidth()
+            .clickable { navController.navigate(Routes.ROUTE_PRODUCT_DETAILS + "/${item.product.product_id}") },
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {

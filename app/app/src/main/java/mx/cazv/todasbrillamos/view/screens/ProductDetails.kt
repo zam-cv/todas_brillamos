@@ -504,6 +504,14 @@ fun ProductDetails(
         bottomBar = {
             if (productState.value.product.product.stock == 0) {
                 ButtonBottomBar(buttonText = "Producto no disponible", onClick = { }, barImage = R.drawable.bottom_bar_disabled)
+            } else if (isProductInCart) {
+                ButtonBottomBar(buttonText = "Producto en el carrito", onClick = {
+                    isProductInCart = true
+                    dialogTitle = "Producto ya agregado"
+                    dialogText = "El producto ya se encuentra en el carrito"
+                    dialogIcon = Icons.Outlined.Info
+                    showDialog = true
+                })
             } else {
                 ButtonBottomBar(buttonText = "Añadir al carrito", onClick = {
                     CoroutineScope(Dispatchers.Main).launch {
@@ -518,15 +526,10 @@ fun ProductDetails(
                                 quantity
                             )
 
-                            if (isProductInCart) {
-                                dialogTitle = "Producto ya agregado"
-                                dialogText = "El producto ya se encuentra en el carrito"
-                                dialogIcon = Icons.Outlined.Info
-                            } else {
-                                dialogTitle = "Producto agregado"
-                                dialogText = "El producto se ha agregado al carrito"
-                                dialogIcon = Icons.Outlined.Check
-                            }
+
+                            dialogTitle = "Producto agregado"
+                            dialogText = "El producto se ha agregado al carrito"
+                            dialogIcon = Icons.Outlined.Check
 
 //                            navController.navigate(Routes.ROUTE_CART)
                             showDialog = true
