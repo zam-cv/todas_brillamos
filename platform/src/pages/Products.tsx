@@ -243,17 +243,22 @@ export default function UploadProducts() {
                   </label>
                 </div>
                 <div className="flex flex-row space-x-2 px-2 pt-2">
-                  <label className="w-1/5">
+                    <label className="w-1/5">
                     <span className="font-semibold">Precio</span>
                     <Input
                       name="price"
                       value={price}
-                      onChange={(e) => setPrice(Number(e.target.value))}
-                      placeholder="Precio"
+                      onChange={(e) => {
+                      const newValue = Math.max(20, Number(e.target.value));
+                      setPrice(newValue);
+                      }}
+                      placeholder="20"
                       type="number"
+                      min="20"
                       required
+                      
                     />
-                  </label>
+                    </label>
                   <label className="w-3/5">
                     <span className="font-semibold">Modelo</span>
                     <Input

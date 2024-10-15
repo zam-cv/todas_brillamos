@@ -37,8 +37,8 @@ export interface ProductoCreado{
 
 export interface CategoryProducts {
     ID: number;
-    CategoryName: string;
-    ProductCount: number;
+    category_name: string;
+    product_count: number;
 }
 
 export default {
