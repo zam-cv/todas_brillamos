@@ -90,6 +90,10 @@ fun Home(
 
                 Spacer(modifier = Modifier.height(30.dp))
             }
+            else {
+                Spacer(modifier = Modifier.height(60.dp))
+            }
+
 
             Box {
                 Row (modifier = Modifier.fillMaxWidth(),
