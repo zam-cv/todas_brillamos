@@ -33,6 +33,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.outlined.Check
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Checkbox
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -42,6 +44,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
@@ -55,6 +58,7 @@ import kotlinx.coroutines.launch
 import mx.cazv.todasbrillamos.R
 import mx.cazv.todasbrillamos.model.models.UserInfo
 import mx.cazv.todasbrillamos.ui.theme.BackgroundColor
+import mx.cazv.todasbrillamos.view.components.AlertDialogExample
 import mx.cazv.todasbrillamos.view.components.LabeledInput
 import mx.cazv.todasbrillamos.viewmodel.AuthState
 import mx.cazv.todasbrillamos.viewmodel.AuthViewModel
@@ -113,14 +117,17 @@ fun Register(navController: NavHostController, authViewModel: AuthViewModel) {
     var acceptPrivacy by remember { mutableStateOf(false) }
     var errorMessage by remember { mutableStateOf<String?>(null) }
 
+    var showDialog by remember { mutableStateOf(false) }
+
     val authState by authViewModel.authState.collectAsState()
 
     LaunchedEffect(authState) {
         when (authState) {
             is AuthState.RegisterSuccess -> {
-                navController.navigate(Routes.ROUTE_LOGIN) {
-                    popUpTo(Routes.ROUTE_REGISTER) { inclusive = true }
-                }
+                showDialog = true
+//                navController.navigate(Routes.ROUTE_LOGIN) {
+//                    popUpTo(Routes.ROUTE_REGISTER) { inclusive = true }
+//                }
             }
             is AuthState.Error -> {
                 errorMessage = (authState as AuthState.Error).message
@@ -332,5 +339,21 @@ fun Register(navController: NavHostController, authViewModel: AuthViewModel) {
                 }
             }
         }
+    }
+
+    if (showDialog) {
+        AlertDialogExample(
+            onDismissRequest = { showDialog = false },
+            onConfirmation = {
+                showDialog = false
+                authViewModel.resetAuthState()
+
+                navController.navigate(Routes.ROUTE_LOGIN) {
+                    popUpTo(Routes.ROUTE_REGISTER) { inclusive = true }
+                } },
+            dialogTitle = "Registro exitoso",
+            dialogText = "Ahora puedes iniciar sesión con tu cuenta",
+            icon = Icons.Outlined.Check
+        )
     }
 }

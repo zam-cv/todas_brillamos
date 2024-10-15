@@ -146,6 +146,13 @@ class AuthViewModel (application: Application): AndroidViewModel(application) {
             launchSingleTop = true
         }
     }
+
+    /**
+     * Reinicia el estado de autenticación.
+     */
+    fun resetAuthState() {
+        _authState.value = AuthState.Idle
+    }
 }
 
 /**

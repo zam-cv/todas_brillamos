@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -75,13 +76,18 @@ fun Login(navController: NavHostController, viewModel: AuthViewModel) {
     }
 
     BasicLayout(navController = navController) {
-        Column(
+        Box(
             modifier = Modifier
                 .fillMaxSize()
                 .background(BackgroundColor)
-                .verticalScroll(rememberScrollState())
         ) {
-            Box(
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState()),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                /*Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .offset(y = (-210).dp)
@@ -103,98 +109,118 @@ fun Login(navController: NavHostController, viewModel: AuthViewModel) {
                         .align(Alignment.Center)
                         .offset(y = 80.dp)
                 )
-            }
-
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 10.dp, end = 10.dp, bottom = 16.dp)
-                    .offset(y = (-130).dp)
-                    .weight(1f),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Text(
-                    text = "Inicio de sesión",
-                    fontSize = 35.sp,
-                    fontWeight = FontWeight.Bold
-                )
-
-                Spacer(modifier = Modifier.size(12.dp))
-
-                TextButton(onClick = { navController.navigate(Routes.ROUTE_REGISTER) }) {
-                    Row {
-                        Text(text = "¿No tienes una cuenta? ")
-                        Text(
-                            text = "Únete a nosotros",
-                            fontWeight = FontWeight.Black
-                        )
-                    }
-                }
-
-                Spacer(modifier = Modifier.size(12.dp))
-
-                LabeledInput(
-                    placeholder = "Correo electrónico",
-                    value = email,
-                    onValueChange = {
-                        email = it
-                        errorMessage = null
-                        isEmptyFieldError = false
-                    }
-                )
-
-                Spacer(modifier = Modifier.size(16.dp))
-
-                LabeledInput(
-                    placeholder = "Contraseña",
-                    value = password,
-                    onValueChange = {
-                        password = it
-                        errorMessage = null
-                        isEmptyFieldError = false
-                    },
-                    isPassword = true,
-                )
-
-                Spacer(modifier = Modifier.size(16.dp))
-
-                // Mostrar el mensaje de error si existe
-
-                if (isEmptyFieldError) {
-                    Text(
-                        text = "Por favor, completa todos los campos",
-                        color = Color.Red,
-                        fontSize = 14.sp,
-                        modifier = Modifier.padding(bottom = 8.dp)
+            }*/
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.degradado3),
+                        contentDescription = "Background",
+                        modifier = Modifier.fillMaxSize(),
+                        contentScale = ContentScale.FillBounds
                     )
-                } else if (errorMessage != null) {
-                    Text(
-                        text = errorMessage!!,
-                        color = Color.Red,
-                        fontSize = 14.sp,
-                        modifier = Modifier.padding(bottom = 8.dp)
+
+                    Image(
+                        painter = painterResource(id = R.drawable.logo_tb),
+                        contentDescription = "Logo",
+                        modifier = Modifier.size(140.dp)
                     )
                 }
 
-                Button(
-                    text = "Iniciar sesión",
-                    onClick = {
-                        email = email.trim()
-                        password = password.trim()
+                Spacer(modifier = Modifier.padding(100.dp))
 
-                        if (email.isBlank() || password.isBlank()) {
-                            isEmptyFieldError = true
-                            errorMessage = null
-                        } else {
-                            isEmptyFieldError = false
-                            errorMessage = null
-                            viewModel.signIn(email, password)
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 10.dp, end = 10.dp, bottom = 16.dp)
+                        .offset(y = (-130).dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        text = "Inicio de sesión",
+                        fontSize = 35.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+
+                    Spacer(modifier = Modifier.size(12.dp))
+
+                    TextButton(onClick = { navController.navigate(Routes.ROUTE_REGISTER) }) {
+                        Row {
+                            Text(text = "¿No tienes una cuenta? ")
+                            Text(
+                                text = "Únete a nosotros",
+                                fontWeight = FontWeight.Black
+                            )
                         }
                     }
-                )
 
-/*                Spacer(modifier = Modifier.size(16.dp))
+                    Spacer(modifier = Modifier.size(12.dp))
+
+                    LabeledInput(
+                        placeholder = "Correo electrónico",
+                        value = email,
+                        onValueChange = {
+                            email = it
+                            errorMessage = null
+                            isEmptyFieldError = false
+                        }
+                    )
+
+                    Spacer(modifier = Modifier.size(16.dp))
+
+                    LabeledInput(
+                        placeholder = "Contraseña",
+                        value = password,
+                        onValueChange = {
+                            password = it
+                            errorMessage = null
+                            isEmptyFieldError = false
+                        },
+                        isPassword = true,
+                    )
+
+                    Spacer(modifier = Modifier.size(16.dp))
+
+                    // Mostrar el mensaje de error si existe
+
+                    if (isEmptyFieldError) {
+                        Text(
+                            text = "Por favor, completa todos los campos",
+                            color = Color.Red,
+                            fontSize = 14.sp,
+                            modifier = Modifier.padding(bottom = 8.dp)
+                        )
+                    } else if (errorMessage != null) {
+                        Text(
+                            text = errorMessage!!,
+                            color = Color.Red,
+                            fontSize = 14.sp,
+                            modifier = Modifier.padding(bottom = 8.dp)
+                        )
+                    }
+
+                    Button(
+                        text = "Iniciar sesión",
+                        onClick = {
+                            email = email.trim()
+                            password = password.trim()
+
+                            if (email.isBlank() || password.isBlank()) {
+                                isEmptyFieldError = true
+                                errorMessage = null
+                            } else {
+                                isEmptyFieldError = false
+                                errorMessage = null
+                                viewModel.signIn(email, password)
+                            }
+                        }
+                    )
+
+                    /*                Spacer(modifier = Modifier.size(16.dp))
 
                 TextButton(
                     onClick = { navController.navigate(Routes.ROUTE_FORGOT_PASSWORD) },
@@ -206,6 +232,7 @@ fun Login(navController: NavHostController, viewModel: AuthViewModel) {
                         fontSize = 15.sp
                     )
                 }*/
+                }
             }
         }
     }
