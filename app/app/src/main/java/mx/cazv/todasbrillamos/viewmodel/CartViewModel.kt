@@ -142,4 +142,12 @@ class CartViewModel : ViewModel() {
     private fun calculateTotalPrice(cart: List<CartItem>): Double {
         return cart.sumOf { it.quantity * it.product.price }
     }
+
+    /**
+     * Verifica si un producto está en el carrito.
+     * @param productId El ID del producto a verificar.
+     */
+    fun isProductInCart(productId: Int): Boolean {
+        return _state.value.cart.any { it.product.product_id == productId }
+    }
 }

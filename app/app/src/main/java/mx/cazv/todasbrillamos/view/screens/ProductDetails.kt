@@ -17,6 +17,11 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.outlined.Check
+import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material.icons.outlined.LocalShipping
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -57,6 +62,7 @@ import mx.cazv.todasbrillamos.ui.theme.BadgePink
 import mx.cazv.todasbrillamos.ui.theme.ImageBackgroundColor
 import mx.cazv.todasbrillamos.ui.theme.SelectorsBackgroundColor
 import mx.cazv.todasbrillamos.view.Routes
+import mx.cazv.todasbrillamos.view.components.AlertDialogExample
 import mx.cazv.todasbrillamos.view.components.Description
 import mx.cazv.todasbrillamos.view.components.FavoriteComponent
 import mx.cazv.todasbrillamos.view.components.Line
@@ -475,11 +481,18 @@ fun ProductDetails(
     var quantity by remember { mutableStateOf(1) }
     val productState = productViewModel.state.collectAsState()
 
+    var showDialog by remember { mutableStateOf(false) }
+    var isProductInCart by remember { mutableStateOf(false) }
+    var dialogTitle by remember { mutableStateOf("") }
+    var dialogText by remember { mutableStateOf("") }
+    var dialogIcon by remember { mutableStateOf(Icons.Outlined.Info) }
+
     LaunchedEffect(key1 = Unit) {
         val token = authViewModel.token()
 
         if (token != null) {
             productViewModel.loadProduct(token, productId.toString())
+            isProductInCart = cartViewModel.isProductInCart(productId)
         }
     }
 
@@ -504,7 +517,20 @@ fun ProductDetails(
                                 productState.value.product.product,
                                 quantity
                             )
-                            navController.navigate(Routes.ROUTE_CART)
+
+                            if (isProductInCart) {
+                                dialogTitle = "Producto ya agregado"
+                                dialogText = "El producto ya se encuentra en el carrito"
+                                dialogIcon = Icons.Outlined.Info
+                            } else {
+                                dialogTitle = "Producto agregado"
+                                dialogText = "El producto se ha agregado al carrito"
+                                dialogIcon = Icons.Outlined.Check
+                            }
+
+//                            navController.navigate(Routes.ROUTE_CART)
+                            showDialog = true
+
                         }
                     }
                 })
@@ -616,5 +642,17 @@ fun ProductDetails(
                 }
             }
         }
+    }
+
+    if (showDialog) {
+        AlertDialogExample(
+            onDismissRequest = { showDialog = false
+                                 isProductInCart = true},
+            onConfirmation = { showDialog = false
+                                isProductInCart = true},
+            dialogTitle = dialogTitle,
+            dialogText = dialogText,
+            icon = dialogIcon
+        )
     }
 }
