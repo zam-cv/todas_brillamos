@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -190,14 +191,14 @@ fun Login(navController: NavHostController, viewModel: AuthViewModel) {
                     if (isEmptyFieldError) {
                         Text(
                             text = "Por favor, completa todos los campos",
-                            color = Color.Red,
+                            color = MaterialTheme.colorScheme.error,
                             fontSize = 14.sp,
                             modifier = Modifier.padding(bottom = 8.dp)
                         )
                     } else if (errorMessage != null) {
                         Text(
                             text = errorMessage!!,
-                            color = Color.Red,
+                            color = MaterialTheme.colorScheme.error,
                             fontSize = 14.sp,
                             modifier = Modifier.padding(bottom = 8.dp)
                         )
