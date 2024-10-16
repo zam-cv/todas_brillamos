@@ -168,7 +168,7 @@ func GetOrderInfoWithProducts(clientID uint, deliveryDate string) (*models.Order
 	err = GetDatabase().
 		Table("orders").
 		Select("orders.delivery_date, orders.status, orders.order_received_date, orders.preparing_order_date, orders.shipped_date").
-		Where("orders.client_id = ? AND DATE(orders.delivery_date) = DATE(?)", clientID, parsedDate).
+		Where("orders.client_id = ? AND DATE(orders.delivery_date) = DATE(?) AND orders.status != ?", clientID, parsedDate, "Entregado").
 		First(&result).Error
 
 	if err != nil {
@@ -184,7 +184,7 @@ func GetOrderInfoWithProducts(clientID uint, deliveryDate string) (*models.Order
 		Table("orders").
 		Select("products.name as product_name, orders.quantity, products.price, products.hash, products.type").
 		Joins("JOIN products ON orders.product_id = products.id").
-		Where("orders.client_id = ? AND DATE(orders.delivery_date) = DATE(?)", clientID, parsedDate).
+		Where("orders.client_id = ? AND DATE(orders.delivery_date) = DATE(?) AND orders.status != ?", clientID, parsedDate, "Entregado").
 		Scan(&products).Error
 
 	if err != nil {
