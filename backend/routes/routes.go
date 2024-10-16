@@ -58,7 +58,7 @@ func GetRoutes(router *gin.Engine) {
 	addOthersRoutes(api)
 	addOrdersRoutes(api)
 	addClientsRoutes(api)
-	addDonationsRoutes(api)
 	addSpecialistsRoutes(api)
 	addChatRoutes(api)
+	addDonationsRoutes(api)
 }

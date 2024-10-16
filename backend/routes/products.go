@@ -179,5 +179,4 @@ func addProductRoutes(rg *gin.RouterGroup, router *gin.Engine) {
 
 	// Servir archivos estáticos
 	files.ServeStaticFiles(ProductArchive, router)
-
 }

@@ -53,6 +53,17 @@ type ProductMetadata struct {
 	CategoryID uint `json:"category_id" validate:"required,min=0"`
 }
 
+// Estructura de la información de las donaciones
+type DonationInfo struct {
+	ProductID   uint    `json:"product_id"`
+	ProductName string  `json:"product_name"`
+	Amount      float64 `json:"amount"`
+	UserEmail   string  `json:"user_email"`
+	FirstName   string  `json:"first_name"`
+	LastName    string  `json:"last_name"`
+	CURP        string  `json:"curp"`
+}
+
 type MostSellProducts struct {
 	ID         uint   `json:"id"`
 	Name       string `json:"name"`

@@ -26,9 +26,14 @@ func main() {
 		config.DbName,
 	)
 
-	// Migrate and create default admin
+	// Migrate
 	config.Migrate()
+
+	// Create default admin
 	config.CreateDefaultAdmin()
+
+	// Create default categories
+	config.CreateDefaultCategories()
 
 	// Create storage folder
 	config.CreateStorageFolder()

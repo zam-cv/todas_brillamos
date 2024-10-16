@@ -33,7 +33,6 @@ func Migrate() {
 	db.AutoMigrate(&models.Favorites{})
 	db.AutoMigrate(&models.Orders{})
 	db.AutoMigrate(&models.Other{})
-	db.AutoMigrate(&models.Donation{})
 }
 
 // Crea un administrador por defecto utilizando las variables de entorno ADMIN_EMAIL y ADMIN_PASSWORD.
@@ -52,5 +51,18 @@ func CreateDefaultAdmin() {
 			Email:    email,
 			Password: hashedPassword,
 		})
+	}
+}
+
+func CreateDefaultCategories() {
+	categories := []models.Category{
+		{Name: "Donaciones"},
+	}
+
+	for _, category := range categories {
+		_, err := database.GetCategoryByName(category.Name)
+		if err != nil {
+			database.CreateCategory(&category)
+		}
 	}
 }

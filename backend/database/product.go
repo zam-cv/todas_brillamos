@@ -16,14 +16,42 @@ import (
 // Obtiene todos los productos de la base de datos.
 // Devuelve una lista de productos y un error en caso de que ocurra.
 func GetProducts() ([]models.Product, error) {
-	products := []models.Product{}
-	if err := db.Find(&products).Error; err != nil {
+	var products []models.Product
+
+	if err := db.Joins("JOIN categories ON products.category_id = categories.id").
+		Where("categories.name != ?", "Donaciones").
+		Find(&products).Error; err != nil {
 		return nil, err
 	}
 
 	return products, nil
 }
 
+// Obtiene todas las donaciones de la base de datos.
+// Devuelve una lista de productos y un error en caso de que ocurra.
+func GetDonations() ([]models.DonationInfo, error) {
+	var donations []models.DonationInfo
+
+	err := db.Table("orders").
+		Select("products.id as product_id, products.name as product_name, SUM(orders.quantity * products.price) as amount, users.email as user_email, clients.first_name, clients.last_name, others.curp").
+		Joins("JOIN products ON orders.product_id = products.id").
+		Joins("JOIN categories ON products.category_id = categories.id").
+		Joins("JOIN clients ON orders.client_id = clients.id").
+		Joins("JOIN users ON clients.user_id = users.id").
+		Joins("JOIN others ON clients.id = others.client_id").
+		Where("categories.name = ?", "Donaciones").
+		Group("products.id, products.name, users.email, clients.first_name, clients.last_name, others.curp").
+		Scan(&donations).Error
+
+	if err != nil {
+		return nil, err
+	}
+
+	return donations, nil
+}
+
+// Obtiene todos los productos de la base de datos que no son donaciones.
+// Devuelve una lista de productos y un error en caso de que ocurra.
 func GetProductsByCategory(category string) ([]models.Product, error) {
 	var products []models.Product
 
