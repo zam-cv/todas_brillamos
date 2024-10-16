@@ -54,6 +54,7 @@ sealed class Routes (
         const val ROUTE_SOCIAL_NETWORKS = "SocialNetworks"
         const val ROUTE_TERMS_AND_POLICIES = "TermsAndPolicies"
         const val ROUTE_ABOUT = "About"
+        const val ROUTE_CREDITS = "Credits"
     }
 
     // Bottom bar routes

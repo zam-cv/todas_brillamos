@@ -15,6 +15,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ExitToApp
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.automirrored.outlined.InsertDriveFile
+import androidx.compose.material.icons.filled.Code
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.outlined.Lock
@@ -181,12 +182,13 @@ fun Config(
                 options = listOf(
                     Setting("Quienes somos", Icons.Outlined.QuestionMark, Routes.ROUTE_ABOUT, navController),
                     Setting("Terminos y condiciones", Icons.AutoMirrored.Outlined.InsertDriveFile, Routes.ROUTE_TERMS_AND_POLICIES, navController),
-                    Setting("Redes Sociales", Icons.Filled.Share, Routes.ROUTE_SOCIAL_NETWORKS, navController),
+                    Setting("Redes Sociales", Icons.Filled.Share, Routes.ROUTE_SOCIAL_NETWORKS, navController)
                 )
             )
 
             OptionsSection(
                 options = listOf(
+                    Setting("Créditos", Icons.Default.Code, Routes.ROUTE_CREDITS, navController),
                     Setting(
                         "Cerrar sesión",
                         Icons.AutoMirrored.Filled.ExitToApp,
