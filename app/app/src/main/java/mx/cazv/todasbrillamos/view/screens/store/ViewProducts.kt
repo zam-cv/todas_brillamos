@@ -84,6 +84,9 @@ fun ViewProducts(
 
 /**
  * Composable que muestra los productos favoritos en una vista de cuadrícula.
+ * @param authViewModel El AuthViewModel utilizado para obtener el token del usuario.
+ * @param favoritesViewModel El FavoritesViewModel utilizado para obtener los productos favoritos del usuario.
+ * @param navController El NavHostController utilizado para la navegación.
  */
 @Composable
 fun ViewFavorites(

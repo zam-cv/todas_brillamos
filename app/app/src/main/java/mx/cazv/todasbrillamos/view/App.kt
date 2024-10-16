@@ -36,6 +36,7 @@ import mx.cazv.todasbrillamos.view.screens.calendar.Calendar
 import mx.cazv.todasbrillamos.view.screens.calendar.YourCycle
 import mx.cazv.todasbrillamos.view.screens.config.About
 import mx.cazv.todasbrillamos.view.screens.config.ChangePassword
+import mx.cazv.todasbrillamos.view.screens.config.DeveloperCredits
 import mx.cazv.todasbrillamos.view.screens.config.EditProfile
 import mx.cazv.todasbrillamos.view.screens.config.SocialNetworks
 import mx.cazv.todasbrillamos.view.screens.config.TermsAndPolicies
@@ -150,7 +151,8 @@ fun Nav(
                 Routes.ROUTE_SOCIAL_NETWORKS,
                 Routes.ROUTE_TERMS_AND_POLICIES,
                 Routes.ROUTE_ABOUT,
-                Routes.ROUTE_SHIPPING_INFO
+                Routes.ROUTE_SHIPPING_INFO,
+                Routes.ROUTE_CREDITS
             )
 
             protectedRoutes.forEach { route ->
@@ -217,6 +219,7 @@ fun Nav(
                             Routes.ROUTE_SOCIAL_NETWORKS -> SocialNetworks(navController)
                             Routes.ROUTE_TERMS_AND_POLICIES -> TermsAndPolicies(navController)
                             Routes.ROUTE_ABOUT -> About(navController)
+                            Routes.ROUTE_CREDITS -> DeveloperCredits(navController)
                             Routes.ROUTE_SHIPPING_INFO -> ShippingInfo(
                                 navController,
                                 authViewModel,

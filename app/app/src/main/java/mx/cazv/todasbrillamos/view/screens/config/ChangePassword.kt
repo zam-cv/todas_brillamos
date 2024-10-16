@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -21,6 +22,7 @@ import mx.cazv.todasbrillamos.view.components.footer.BottomBar
 import mx.cazv.todasbrillamos.view.components.Button
 import mx.cazv.todasbrillamos.view.components.Eye
 import mx.cazv.todasbrillamos.view.components.Input
+import mx.cazv.todasbrillamos.view.components.LabeledInput
 import mx.cazv.todasbrillamos.view.components.header.BasicTopBar
 import mx.cazv.todasbrillamos.view.layouts.CustomLayout
 import mx.cazv.todasbrillamos.viewmodel.AuthViewModel
@@ -60,29 +62,29 @@ fun ChangePassword(
                 .background(BackgroundColor)
                 .padding(start = 10.dp, end = 10.dp, top = 30.dp)
         ) {
-            Input(
+            LabeledInput(
                 placeholder = "Contraseña Actual",
                 value = currentPassword,
                 onValueChange = { currentPassword = it },
-                suffixIcon = { Eye() }
+                isPassword = true
             )
 
             Spacer(modifier = Modifier.padding(15.dp))
 
-            Input(
+            LabeledInput(
                 placeholder = "Nueva Contraseña",
                 value = newPassword,
                 onValueChange = { newPassword = it },
-                suffixIcon = { Eye() }
+                isPassword = true
             )
 
             Spacer(modifier = Modifier.padding(15.dp))
 
-            Input(
+            LabeledInput(
                 placeholder = "Confirmar contraseña",
                 value = confirmPassword,
                 onValueChange = { confirmPassword = it },
-                suffixIcon = { Eye() }
+                isPassword = true
             )
 
             Spacer(modifier = Modifier.padding(15.dp))

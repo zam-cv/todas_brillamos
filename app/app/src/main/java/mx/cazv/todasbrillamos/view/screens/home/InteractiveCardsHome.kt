@@ -1,5 +1,6 @@
 package mx.cazv.todasbrillamos.view.screens.home
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -9,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontStyle
@@ -20,6 +22,7 @@ import androidx.navigation.NavHostController
 import mx.cazv.todasbrillamos.R
 import mx.cazv.todasbrillamos.view.Routes
 import mx.cazv.todasbrillamos.view.components.InteractiveCard
+import mx.cazv.todasbrillamos.view.openUrl
 
 /**
  * Composable que muestra una serie de tarjetas interactivas en la pantalla principal.
@@ -28,6 +31,8 @@ import mx.cazv.todasbrillamos.view.components.InteractiveCard
 
 @Composable
 fun InteractiveCardsHome(navController: NavHostController){
+    val context = LocalContext.current
+
     Column(
         modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -113,7 +118,7 @@ fun InteractiveCardsHome(navController: NavHostController){
                 backgroundColor = Color(0xfff4d0cb),
                 imageSize = 100,
                 imageAlignment = Alignment.BottomEnd,
-                onClick = {  }
+                onClick = { openUrl(context, "https://www.instagram.com/p/C9Xy_Kuu5ca/?igsh=dDk2djU5bmJ1cmJ5") }
             )
 
                 InteractiveCard(
