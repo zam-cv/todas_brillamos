@@ -56,8 +56,9 @@ class UserService {
      * @param token El token de autenticación del usuario.
      * @param passwordUpdate El objeto que contiene la nueva contraseña y posiblemente la antigua.
      */
-    suspend fun updatePassword(token: String, passwordUpdate: PasswordUpdate) {
-        apiCall { apiService.updatePassword("Bearer $token", passwordUpdate) }
+    suspend fun updatePassword(token: String, passwordUpdate: PasswordUpdate): Boolean {
+
+        return apiCall { apiService.updatePassword("Bearer $token", passwordUpdate) }.isSuccess
     }
 
     /**
