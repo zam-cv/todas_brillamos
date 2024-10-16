@@ -1,9 +1,13 @@
 import {get} from "@/utils/methods";
 
 export interface Donation {
-    amount: number;
-    description: string;
-    date: string;
+    product_id : number;
+    product_name : string;
+    amount : number;
+    user_email : string;
+    first_name : string;
+    last_name : string;
+    curp: string;
 
 }
 
