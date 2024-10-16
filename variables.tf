@@ -57,3 +57,13 @@ variable "port" {
   description = "Port for the application"
   type        = number
 }
+
+variable "api_key_mailerlite" {
+  description = "API key for Mailer"
+  type        = string
+}
+
+variable "email_mailer" {
+  description = "Email for Mailer"
+  type        = string
+}

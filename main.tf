@@ -89,6 +89,8 @@ resource "digitalocean_droplet" "app" {
       -e CLIENT_SECRET_KEY=${var.client_secret_key} \
       -e CLIENT_TOKEN_COOKIE_NAME=${var.client_token_cookie_name} \
       -e STRIPE_SECRET_KEY=${var.stripe_secret_key} \
+      -e API_KEY_MAILER=${var.api_key_mailer} \
+      -e EMAIL_MAILER=${var.email_mailer} \
       zamcv/todasbrillamos:latest
   EOF
 }

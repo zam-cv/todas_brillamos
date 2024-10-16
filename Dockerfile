@@ -1,11 +1,12 @@
 # Usar una imagen base de Golang
 FROM golang:1.22.4
 
-# Instalar dependencias del sistema y Python
+# Instalar dependencias del sistema, Python y curl
 RUN apt-get update && apt-get install -y \
     python3 \
     python3-pip \
     python3-venv \
+    curl \
     && rm -rf /var/lib/apt/lists/*
 
 # Crear un entorno virtual de Python
@@ -18,6 +19,9 @@ RUN pip install --upgrade pip
 
 # Instalar ChromaDB en el entorno virtual
 RUN pip install chromadb
+
+# Instalar Ollama
+RUN curl -fsSL https://ollama.com/install.sh | sh
 
 # Establecer el directorio de trabajo
 WORKDIR /app
@@ -35,7 +39,7 @@ RUN cd backend && go build -o main .
 RUN chmod +x entrypoint.sh
 
 # Exponer los puertos necesarios
-EXPOSE 8000
+EXPOSE 8000 8080 11434
 
 # Usar el script de entrada como punto de entrada
 ENTRYPOINT ["./entrypoint.sh"]
