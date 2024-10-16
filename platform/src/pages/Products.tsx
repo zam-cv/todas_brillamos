@@ -46,7 +46,7 @@ export default function UploadProducts() {
   const [model, setModel] = useState<string>("");
   const [name, setName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
-  const [price, setPrice] = useState<number>(0);
+  const [price, setPrice] = useState<number>(20);
   const [stock, setStock] = useState<number>(0);
   const [size, setSize] = useState<string>("");
   const [color, setColor] = useState<string>("");
