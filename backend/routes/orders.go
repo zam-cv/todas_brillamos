@@ -6,8 +6,10 @@
 package routes
 
 import (
+	"backend/config"
 	"backend/database"
 	"backend/resources/auth"
+	"backend/resources/mail"
 	"net/http"
 	"strconv"
 
@@ -54,6 +56,14 @@ func addOrdersRoutes(rg *gin.RouterGroup) {
 			c.JSON(500, gin.H{"error": err.Error()})
 			return
 		}
+
+		user, err := database.GetUserByOrderID(uint(orderID))
+		if err != nil {
+			c.JSON(500, gin.H{"error": err.Error()})
+			return
+		}
+
+		mail.UpdateOrderStatus(input.Status, user.Email, config.ApiKeyMailer, config.EmailMailer)
 
 		c.JSON(200, gin.H{
 			"message": "Order status updated",

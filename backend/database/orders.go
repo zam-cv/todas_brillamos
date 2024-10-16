@@ -8,12 +8,9 @@ import (
 	"backend/models"
 	"fmt"
 
-	//"fmt"
-
 	"time"
 
 	"gorm.io/gorm"
-	//"gorm.io/gorm"
 )
 
 // Obtiene todas las órdenes de la base de datos.

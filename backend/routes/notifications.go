@@ -5,10 +5,12 @@
 package routes
 
 import (
+	"backend/config"
 	"backend/database"
 	"backend/middlewares"
 	"backend/models"
 	"backend/resources/auth"
+	"backend/resources/mail"
 	"net/http"
 	"strconv"
 	"time"
@@ -29,20 +31,25 @@ func addNotificationsRoutes(rg *gin.RouterGroup) {
 			return
 		}
 
-		idClients := database.GetAllClientsIDs()
-		println(idClients)
+		emailsClients := database.GetAllClientsEmails()
 
 		// Asigna la fecha a la notificación.
 		now := time.Now()
 		notification.Date = now
 
 		// Ciclo para crear notificaciones para cada cliente
-		for _, id := range idClients {
+		for _, client := range emailsClients {
+			mail.SendEmail(mail.EmailPayload{
+				Title:  notification.Title,
+				Body:   notification.Description,
+				Emails: []string{client.Email},
+			}, config.ApiKeyMailer, config.EmailMailer)
+
 			newNotification := models.Notifications{
 				Title:       notification.Title,
 				Description: notification.Description,
 				Date:        now,
-				ClientID:    id,
+				ClientID:    client.ID,
 			}
 			err := database.CreateNotification(&newNotification)
 			if err != nil {
@@ -80,7 +87,6 @@ func addNotificationsRoutes(rg *gin.RouterGroup) {
 			c.Status(http.StatusInternalServerError)
 			return
 		}
-
 	})
 
 	//// GET /notifications - Obtiene todas las notificaciones de un usuario

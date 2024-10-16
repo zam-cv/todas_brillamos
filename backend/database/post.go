@@ -4,7 +4,9 @@
 
 package database
 
-import "backend/models"
+import (
+	"backend/models"
+)
 
 // Obtiene un post por su ID.
 // Devuelve un puntero a models.Post y un error en caso de que ocurra.

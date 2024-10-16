@@ -7,6 +7,7 @@ package database
 
 import (
 	"backend/models"
+	"backend/resources/mail"
 	"errors"
 
 	"gorm.io/gorm"
@@ -85,9 +86,11 @@ func GetUserByClientEmail(email string) (*models.User, error) {
 
 // Crea un nuevo cliente en la base de datos.
 // Devuelve el ID del cliente creado y un error en caso de que ocurra.
-func CreateClient(clientUser *models.ClientUser) (uint, error) {
+func CreateClient(clientUser *models.ClientUser, api, email string) (uint, error) {
 	db := GetDatabase()
 	tx := db.Begin()
+
+	mail.Register(clientUser.Email, api, email)
 
 	var existingClient models.Client
 	err := tx.Joins("JOIN users ON users.id = clients.user_id").
@@ -133,6 +136,35 @@ func CreateClient(clientUser *models.ClientUser) (uint, error) {
 func GetAllClientsIDs() []uint {
 	var clients []uint
 	GetDatabase().Model(&models.Client{}).Pluck("id", &clients)
+	return clients
+}
+
+// Obtiene el ID del cliente por el ID del usuario.
+// Devuelve el ID del cliente y un error en caso de que ocurra.
+func GetUserByOrderID(orderID uint) (*models.User, error) {
+	db := GetDatabase()
+	var user models.User
+	err := db.Model(&models.User{}).
+		Joins("JOIN clients ON clients.user_id = users.id").
+		Joins("JOIN orders ON orders.client_id = clients.id").
+		Where("orders.id = ?", orderID).
+		First(&user).Error
+	if err != nil {
+		return nil, err
+	}
+	return &user, nil
+}
+
+type ClientEmail struct {
+	ID    uint
+	Email string
+}
+
+// Obtiene todos los IDs y correos de los clientes.
+// Devuelve un slice de models.ClientEmail con los IDs y correos de los clientes.
+func GetAllClientsEmails() []ClientEmail {
+	var clients []ClientEmail
+	GetDatabase().Model(&models.Client{}).Select("id, email").Scan(&clients)
 	return clients
 }
 

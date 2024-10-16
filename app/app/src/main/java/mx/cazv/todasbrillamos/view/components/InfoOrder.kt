@@ -53,6 +53,7 @@ fun formatDate(inputDate: String): String {
  * @param order El resumen del pedido.
  * @param navController El NavHostController utilizado para la navegación.
  */
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun InfoOrder(
     folder: String,

@@ -29,6 +29,10 @@ var (
 	ClientSecretKey       string
 	ClientTokenCookieName string
 	StripeSecretKey       string
+
+	// Configuración de correo
+	ApiKeyMailer string
+	EmailMailer  string
 )
 
 // LoadEnvVars carga las variables de entorno desde un archivo .env.
@@ -54,4 +58,8 @@ func LoadEnvVars() {
 	ClientSecretKey = os.Getenv("CLIENT_SECRET_KEY")
 	ClientTokenCookieName = os.Getenv("CLIENT_TOKEN_COOKIE_NAME")
 	StripeSecretKey = os.Getenv("STRIPE_SECRET_KEY")
+
+	// Configuración de correo
+	ApiKeyMailer = os.Getenv("API_KEY_MAILER")
+	EmailMailer = os.Getenv("EMAIL_MAILER")
 }

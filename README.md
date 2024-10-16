@@ -67,6 +67,9 @@ ADMIN_TOKEN_COOKIE_NAME=token_admin
 CLIENT_SECRET_KEY=secret
 CLIENT_TOKEN_COOKIE_NAME=token
 STRIPE_SECRET_KEY=sk_test_51Q7usUL7iE9WvPEQaoGeGY1XGBUHBypQ69iLA7nDJ3wvl0i4r5doVmTv5iu24oPRMcbTS0pmB79fgQEPgl6Xgq0D004M272XQ0
+
+API_KEY_MAILER=mlsn.example
+EMAIL_MAILER=todasbrillamos@example.com
 ```
 
 5. Create a `.env` file in the `platform` directory with the following content
@@ -135,8 +138,35 @@ choco install hurl
 
 2. Run the tests
 
+Create a `.env` file in the `backend/tests/api` directory with the following content
+
+```bash
+PORT=8000
+
+DB_HOST=localhost
+DB_USER=admin
+DB_PASSWORD=awdrqwer12
+DB_NAME=todasbrillamos
+DB_PORT=5432
+
+ADMIN_EMAIL=admin@todasbrillamos.com
+ADMIN_PASSWORD=awdrqwer12
+
+ADMIN_SECRET_KEY=secret_admin
+ADMIN_TOKEN_COOKIE_NAME=token_admin
+CLIENT_SECRET_KEY=secret
+CLIENT_TOKEN_COOKIE_NAME=token
+STRIPE_SECRET_KEY=sk_test_51Q7usUL7iE9WvPEQaoGeGY1XGBUHBypQ69iLA7nDJ3wvl0i4r5doVmTv5iu24oPRMcbTS0pmB79fgQEPgl6Xgq0D004M272XQ0
+
+API_KEY_MAILER=mlsn.example
+EMAIL_MAILER=todasbrillamos@example.com
+```
+
+3. Run the tests
+
 ```bash
 cd backend
 go test ./tests
+go test ./tests/api/main_test.go
 hurl --test --color ./tests/api/*.hurl
 ```

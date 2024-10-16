@@ -6,10 +6,12 @@
 package routes
 
 import (
+	"backend/config"
 	"backend/database"
 	"backend/middlewares"
 	"backend/models"
 	"backend/resources/auth"
+	"backend/resources/mail"
 	"fmt"
 	"log"
 	"math"
@@ -139,6 +141,19 @@ func addBuyRoutes(rg *gin.RouterGroup) {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Error al limpiar el carrito"})
 			return
 		}
+
+		user, err := database.GetUserByClientID(int(id))
+		if err != nil {
+			log.Printf("Error getting user: %v", err)
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Error al obtener el usuario"})
+			return
+		}
+
+		mail.BuyConfirmation(
+			user.Email,
+			config.ApiKeyMailer,
+			config.EmailMailer,
+		)
 
 		c.JSON(http.StatusOK, gin.H{
 			"message": "Compra completada",

@@ -5,10 +5,12 @@
 package routes
 
 import (
+	"backend/config"
 	"backend/database"
 	"backend/models"
 	"backend/resources"
 	"backend/resources/auth"
+	"backend/resources/mail"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -36,6 +38,20 @@ func addPostRoutes(rg *gin.RouterGroup) {
 			c.JSON(500, gin.H{"error": err.Error()})
 			return
 		}
+
+		emailsClients := database.GetAllClientsEmails()
+		emails := make([]string, len(emailsClients))
+		for i, client := range emailsClients {
+			emails[i] = client.Email
+		}
+
+		mail.NewPost(
+			emails,
+			post.Title,
+			config.ApiKeyMailer,
+			config.EmailMailer,
+		)
+
 		c.JSON(201, gin.H{"id": id})
 	})
 

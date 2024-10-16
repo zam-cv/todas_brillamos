@@ -107,9 +107,11 @@ var AdminAuth auth.Auth[*models.User] = &AdminAuthService{}
 func addUserAuthRoutes(rg *gin.RouterGroup) {
 	group := rg.Group("/auth/user")
 
-	auth.SigninHandler(ClientAuth, group)
-	auth.Register(ClientAuth, group, database.CreateClient)
 	auth.VerifyHandler(ClientAuth, group)
+	auth.SigninHandler(ClientAuth, group)
+	auth.Register(ClientAuth, group, func(clientUser *models.ClientUser) (uint, error) {
+		return database.CreateClient(clientUser, config.ApiKeyMailer, config.EmailMailer)
+	})
 
 	// auth.POST("/forgot-password", func(c *gin.Context) {
 	// 	c.JSON(200, gin.H{
