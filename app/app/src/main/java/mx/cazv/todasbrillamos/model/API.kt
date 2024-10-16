@@ -19,15 +19,13 @@ import mx.cazv.todasbrillamos.model.models.Product
 import mx.cazv.todasbrillamos.model.models.ProductList
 import mx.cazv.todasbrillamos.model.models.SignInRequest
 import mx.cazv.todasbrillamos.model.models.UserInfo
-import mx.cazv.todasbrillamos.model.models.NotificationGet
 import mx.cazv.todasbrillamos.model.models.GroupedNotification
 import mx.cazv.todasbrillamos.model.models.Tracking
 import mx.cazv.todasbrillamos.model.models.TrackingOrder
-import retrofit2.Call
+import mx.cazv.todasbrillamos.model.models.Unread
 
 
 import retrofit2.HttpException
-import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -144,6 +142,12 @@ interface API {
     @GET("api/others/exist")
     suspend fun exist(@Header("Authorization") token: String): Exist
 
+    /**
+     * Obtiene la información adicional.
+     *
+     * @param token El token de autenticación.
+     * @return La información adicional.
+     */
     @GET("api/others/address")
     suspend fun getAddress(@Header("Authorization") token: String): String
 
@@ -262,24 +266,49 @@ interface API {
     @GET("api/posts")
     suspend fun getPosts(@Header("Authorization") token: String): List<Post>
 
+    /**
+     * Verifica si un post es favorito.
+     *
+     * @param token El token de autenticación.
+     * @param id El ID del post.
+     * @return Un objeto Exist que indica si el post es favorito.
+     */
     @GET("api/favorites/exists/{id}")
     suspend fun existFavorite(
         @Header("Authorization") token: String,
         @Path("id") id: Int
     ): Exist
 
+    /**
+     * Agrega un post a favoritos.
+     *
+     * @param token El token de autenticación.
+     * @param id El ID del post.
+     */
     @POST("api/favorites/{id}")
     suspend fun addFavorite(
         @Header("Authorization") token: String,
         @Path("id") id: Int
     )
 
+    /**
+     * Elimina un post de favoritos.
+     *
+     * @param token El token de autenticación.
+     * @param id El ID del post.
+     */
     @DELETE("api/favorites/{id}")
     suspend fun deleteFavorite(
         @Header("Authorization") token: String,
         @Path("id") id: Int
     )
 
+    /**
+     * Obtiene la lista de favoritos.
+     *
+     * @param token El token de autenticación.
+     * @return La lista de favoritos.
+     */
     @GET("api/favorites")
     suspend fun getFavorites(@Header("Authorization") token: String): Favorites
 
@@ -303,14 +332,32 @@ interface API {
         @Header("Authorization") token: String
     ): List<GroupedNotification>
 
+    /**
+     * Obtiene la lista de notificaciones para un cliente
+     *
+     * @param token El token de autenticación.
+     * @return La lista de notificaciones.
+     */
     @GET("api/tracking")
     suspend fun getTracking(@Header("Authorization") token: String): Tracking
 
+    /**
+     * Obtiene la lista de notificaciones para un cliente
+     *
+     * @param token El token de autenticación.
+     * @param deliveryDate La fecha de entrega de los pedidos a obtener.
+     * @return La lista de notificaciones.
+     */
     @GET("api/tracking/order/{deliveryDate}")
     suspend fun getTrackingByDate(
         @Header("Authorization") token: String,
         @Path("deliveryDate") deliveryDate: String
     ): TrackingOrder
+
+    @GET("api/notifications/unread")
+    suspend fun getUnreadNotifications(
+        @Header("Authorization") token: String
+    ): Unread
 }
 
 /**

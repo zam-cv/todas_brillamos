@@ -14,6 +14,8 @@ import mx.cazv.todasbrillamos.ui.theme.BackgroundColor
 import mx.cazv.todasbrillamos.view.components.footer.BottomBar
 import mx.cazv.todasbrillamos.view.components.StoreButton
 import mx.cazv.todasbrillamos.view.components.header.TopBar
+import mx.cazv.todasbrillamos.viewmodel.AuthViewModel
+import mx.cazv.todasbrillamos.viewmodel.NotificationsViewModel
 
 /**
  * Layout principal que utiliza un Scaffold con una barra superior, una barra inferior,
@@ -24,9 +26,14 @@ import mx.cazv.todasbrillamos.view.components.header.TopBar
  * @param content El contenido que se mostrará dentro del layout.
  */
 @Composable
-fun MainLayout(navController: NavHostController, content: @Composable () -> Unit) {
+fun MainLayout(
+    navController: NavHostController,
+    authViewModel: AuthViewModel,
+    notificationsViewModel: NotificationsViewModel,
+    content: @Composable () -> Unit
+) {
     Scaffold(
-        topBar = { TopBar(navController) },
+        topBar = { TopBar(navController, authViewModel, notificationsViewModel) },
         bottomBar = { BottomBar(navController) },
         floatingActionButtonPosition = FabPosition.Center,
         floatingActionButton = { StoreButton(navController) },

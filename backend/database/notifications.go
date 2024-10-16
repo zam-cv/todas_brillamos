@@ -41,6 +41,21 @@ func translateMonth(date string) string {
 	return date
 }
 
+// Obtener el numero de notificaciones no leídas de un cliente.
+// Devuelve un entero y un error en caso de que ocurra.
+func GetUnreadNotificationsCount(clientID uint) (int, error) {
+	var count int64
+	err := db.Model(&models.Notifications{}).Where("client_id = ? AND read = ?", clientID, false).Count(&count).Error
+	return int(count), err
+}
+
+// Marcar todas las notificaciones de un cliente como leídas.
+// Devuelve un error en caso de que ocurra.
+func MarkAllNotificationsAsRead(clientID uint) error {
+	err := db.Model(&models.Notifications{}).Where("client_id = ?", clientID).Update("read", true).Error
+	return err
+}
+
 // Obtiene las notificaciones de un cliente por su ID.
 // Devuelve un slice de models.GroupedNotifications y un error en caso de que ocurra.
 func GetNotificationsByClientID(clientID uint) ([]models.GroupedNotifications, error) {
@@ -73,6 +88,7 @@ func GetNotificationsByClientID(clientID uint) ([]models.GroupedNotifications, e
 		})
 	}
 
+	MarkAllNotificationsAsRead(clientID)
 	return groupedNotifications, nil
 }
 

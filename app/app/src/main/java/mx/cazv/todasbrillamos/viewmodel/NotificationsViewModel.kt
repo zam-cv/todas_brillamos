@@ -24,4 +24,8 @@ class NotificationsViewModel : ViewModel() {
             }
         }
     }
+
+    suspend fun getUnread(token: String): Int {
+        return notificationService.getUnread(token)
+    }
 }

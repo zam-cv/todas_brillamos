@@ -36,7 +36,9 @@ import mx.cazv.todasbrillamos.view.Routes
 import mx.cazv.todasbrillamos.view.components.PinkButton
 import mx.cazv.todasbrillamos.view.layouts.MainLayout
 import mx.cazv.todasbrillamos.view.screens.CalendarView
+import mx.cazv.todasbrillamos.viewmodel.AuthViewModel
 import mx.cazv.todasbrillamos.viewmodel.CalendarVM
+import mx.cazv.todasbrillamos.viewmodel.NotificationsViewModel
 
 /**
  * Archivo para mostrar el calendario del ciclo menstrual
@@ -81,14 +83,15 @@ fun Group(color: Color, name: String) {
  * @param navController El NavHostController utilizado para la navegación.
  */
 @Composable
-fun YourCycle(navController: NavHostController, calendarVM: CalendarVM) {
-
+fun YourCycle(
+    navController: NavHostController,
+    calendarVM: CalendarVM,
+    authViewModel: AuthViewModel,
+    notificationsViewModel: NotificationsViewModel
+) {
     calendarVM.calculateCycle()
-
     val estado = calendarVM.state.collectAsState()
-
     var currentMonthDate by remember { mutableStateOf(estado.value.threeCycles.first().nextPeriodStartDate,) }
-
     val nextMonth = calendarVM.getNextMonth(currentMonthDate)
     val prevMonth = calendarVM.getPreviousMonth(currentMonthDate)
 
@@ -98,7 +101,7 @@ fun YourCycle(navController: NavHostController, calendarVM: CalendarVM) {
         threeCycles = estado.value.threeCycles
     )
 
-    MainLayout(navController = navController) {
+    MainLayout(navController = navController, authViewModel, notificationsViewModel) {
         Column {
             Text(
                 text = "Tu siguiente ciclo",

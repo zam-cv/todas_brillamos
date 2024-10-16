@@ -18,6 +18,7 @@ import mx.cazv.todasbrillamos.view.screens.store.CategoryFilter
 import mx.cazv.todasbrillamos.view.screens.store.ToggleView
 import mx.cazv.todasbrillamos.view.screens.store.ViewProducts
 import mx.cazv.todasbrillamos.viewmodel.AuthViewModel
+import mx.cazv.todasbrillamos.viewmodel.NotificationsViewModel
 import mx.cazv.todasbrillamos.viewmodel.ProductsViewModel
 
 /**
@@ -33,7 +34,8 @@ import mx.cazv.todasbrillamos.viewmodel.ProductsViewModel
 fun Store(
     navController: NavHostController,
     authViewModel: AuthViewModel,
-    productsViewModel: ProductsViewModel
+    productsViewModel: ProductsViewModel,
+    notificationsViewModel: NotificationsViewModel
 ) {
     val productsState = productsViewModel.state.collectAsState()
     var viewType by remember { mutableStateOf("grid") }
@@ -54,7 +56,7 @@ fun Store(
         }
     }
 
-    StaticLayout(navController = navController) {
+    StaticLayout(navController = navController, authViewModel, notificationsViewModel) {
         Column (modifier = Modifier
             .fillMaxSize()
         ){

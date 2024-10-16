@@ -36,6 +36,7 @@ import mx.cazv.todasbrillamos.view.layouts.MainLayout
 import mx.cazv.todasbrillamos.view.openUrl
 import mx.cazv.todasbrillamos.view.screens.MoreProducts
 import mx.cazv.todasbrillamos.viewmodel.AuthViewModel
+import mx.cazv.todasbrillamos.viewmodel.NotificationsViewModel
 import mx.cazv.todasbrillamos.viewmodel.PostsViewModel
 import mx.cazv.todasbrillamos.viewmodel.RandomViewModel
 import mx.cazv.todasbrillamos.viewmodel.UserViewModel
@@ -56,6 +57,7 @@ fun Home(
     authViewModel: AuthViewModel,
     userViewModel: UserViewModel,
     postsViewModel: PostsViewModel,
+    notificationsViewModel: NotificationsViewModel,
     randomState: State<RandomState>
 ) {
     val userState = userViewModel.state.collectAsState()
@@ -71,7 +73,7 @@ fun Home(
         }
     }
 
-    MainLayout(navController = navController) {
+    MainLayout(navController = navController, authViewModel, notificationsViewModel) {
         Column(
             modifier = Modifier
                 .padding(top = 75.dp, start = 15.dp, end = 15.dp, bottom = 25.dp)

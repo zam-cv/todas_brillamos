@@ -12,6 +12,7 @@ type Notifications struct {
 	ID          uint      `json:"id" gorm:"primarykey" validate:"omitempty,eq=0"`
 	Title       string    `json:"title" validate:"required,min=1"`
 	Description string    `json:"description" validate:"required,min=1"`
+	Read        bool      `json:"-"`
 	Date        time.Time `json:"-"`
 	ClientID    uint      `json:"-"`
 }
@@ -24,7 +25,6 @@ type NotificationsGet struct {
 	Title       string `json:"title" validate:"required,min=1"`
 	Description string `json:"description" validate:"required,min=1"`
 	ClientID    uint   `json:"-"`
-	//DisplayDate string `json:"display_date" validate:"required,min=1"`
 }
 
 /*

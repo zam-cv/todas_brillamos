@@ -10,3 +10,7 @@ data class GroupedNotification(
     val date: String,
     val notifications: List<NotificationGet>
 )
+
+data class Unread(
+    val unread: Int
+)

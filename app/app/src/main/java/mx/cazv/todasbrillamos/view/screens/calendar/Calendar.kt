@@ -27,7 +27,9 @@ import mx.cazv.todasbrillamos.view.Routes
 import mx.cazv.todasbrillamos.view.components.DropDownMenu
 import mx.cazv.todasbrillamos.view.components.PinkButton
 import mx.cazv.todasbrillamos.view.layouts.MainLayout
+import mx.cazv.todasbrillamos.viewmodel.AuthViewModel
 import mx.cazv.todasbrillamos.viewmodel.CalendarVM
+import mx.cazv.todasbrillamos.viewmodel.NotificationsViewModel
 
 /**
  * Composable que muestra la pantalla inicial para el calculo del periodo menstrual
@@ -37,14 +39,18 @@ import mx.cazv.todasbrillamos.viewmodel.CalendarVM
  * @param calendarVM El ViewModel del calendario.
  */
 @Composable
-fun Calendar(navController: NavHostController, calendarVM: CalendarVM) {
-
+fun Calendar(
+    navController: NavHostController,
+    calendarVM: CalendarVM,
+    authViewModel: AuthViewModel,
+    notificationsViewModel: NotificationsViewModel
+) {
     val period = (1..10).toList()
     val cycle = (21..40).toList()
 
     val estado = calendarVM.state.collectAsState()
 
-    MainLayout(navController = navController) {
+    MainLayout(navController = navController, authViewModel, notificationsViewModel) {
         Column(modifier = Modifier) {
             Box(modifier = Modifier.fillMaxWidth()) {
                 Image(painter = painterResource(id = R.drawable.circle_deco),

@@ -120,4 +120,21 @@ func addNotificationsRoutes(rg *gin.RouterGroup) {
 
 		c.JSON(http.StatusOK, notifications)
 	})
+
+	// PUT /notifications - Obtener todas las notficaciones de un usuario que no han sido leídas
+	notifications.GET("/unread", auth.GetMiddleware(ClientAuth), middlewares.GetClientID(), func(c *gin.Context) {
+		idClient, exists := c.MustGet("clientID").(uint)
+		if !exists {
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized: client ID not found"})
+			return
+		}
+
+		number, err := database.GetUnreadNotificationsCount(uint(idClient))
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+
+		c.JSON(http.StatusOK, gin.H{"unread": number})
+	})
 }

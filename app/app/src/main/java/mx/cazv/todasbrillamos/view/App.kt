@@ -1,5 +1,7 @@
 package mx.cazv.todasbrillamos.view
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -83,6 +85,7 @@ fun App() {
  * @param buyViewModel El ViewModel de compra.
  * @param modifier El modificador para personalizar la apariencia y el comportamiento del componente.
  */
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun Nav(
     navController: NavHostController,
@@ -169,15 +172,15 @@ fun Nav(
                         }
 
                         when (route) {
-                            Routes.ROUTE_HOME -> Home(navController, authViewModel, userViewModel, postsViewModel, randomState)
+                            Routes.ROUTE_HOME -> Home(navController, authViewModel, userViewModel, postsViewModel, notificationsViewModel, randomState)
                             Routes.ROUTE_POST + "/{postId}" -> {
                                 val postId = backStackEntry.arguments?.getString("postId")?.toInt()
                                 if (postId != null) {
                                     PostView(navController, authViewModel, postsViewModel, postId)
                                 }
                             }
-                            Routes.ROUTE_STORE -> Store(navController, authViewModel, productsViewModel)
-                            Routes.ROUTE_CALENDAR -> Calendar(navController, calendarVM)
+                            Routes.ROUTE_STORE -> Store(navController, authViewModel, productsViewModel, notificationsViewModel)
+                            Routes.ROUTE_CALENDAR -> Calendar(navController, calendarVM, authViewModel, notificationsViewModel)
                             Routes.ROUTE_CHAT -> Chat(navController, authViewModel, chatViewModel)
                             Routes.ROUTE_FAVORITES -> Favorites(navController, authViewModel, favoritesViewModel)
                             Routes.ROUTE_NOTIFICATIONS -> Notifications(navController, authViewModel, notificationsViewModel)
@@ -197,7 +200,7 @@ fun Nav(
                                     )
                                 }
                             }
-                            Routes.ROUTE_YOUR_CYCLE -> YourCycle(navController, calendarVM)
+                            Routes.ROUTE_YOUR_CYCLE -> YourCycle(navController, calendarVM, authViewModel, notificationsViewModel)
                             Routes.ROUTE_TRACK_ORDER + "/{deliveryDate}" -> {
                                 val deliveryDate = backStackEntry.arguments?.getString("deliveryDate")
 
