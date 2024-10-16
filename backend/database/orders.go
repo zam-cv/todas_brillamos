@@ -64,7 +64,7 @@ func UpdateStatusOrders(id uint, status string) error {
 	switch status {
 	case "Preparando pedido":
 		orders.PreparingOrderDate = &now
-	case "Enviado":
+	case "En camino":
 		orders.ShippedDate = &now
 	}
 
@@ -168,7 +168,7 @@ func GetOrderInfoWithProducts(clientID uint, deliveryDate string) (*models.Order
 	err = GetDatabase().
 		Table("orders").
 		Select("orders.delivery_date, orders.status, orders.order_received_date, orders.preparing_order_date, orders.shipped_date").
-		Where("orders.client_id = ? AND DATE(orders.delivery_date) = DATE(?) AND orders.status != ?", clientID, parsedDate, "Entregado").
+		Where("orders.client_id = ? AND DATE(orders.delivery_date) = DATE(?)", clientID, parsedDate).
 		First(&result).Error
 
 	if err != nil {
@@ -184,7 +184,7 @@ func GetOrderInfoWithProducts(clientID uint, deliveryDate string) (*models.Order
 		Table("orders").
 		Select("products.name as product_name, orders.quantity, products.price, products.hash, products.type").
 		Joins("JOIN products ON orders.product_id = products.id").
-		Where("orders.client_id = ? AND DATE(orders.delivery_date) = DATE(?) AND orders.status != ?", clientID, parsedDate, "Entregado").
+		Where("orders.client_id = ? AND DATE(orders.delivery_date) = DATE(?)", clientID, parsedDate).
 		Scan(&products).Error
 
 	if err != nil {
@@ -208,7 +208,7 @@ func GetAllOrders(clientID uint) ([]models.OrderSummary, error) {
 		Table("orders").
 		Select("delivery_date, delivery_date, SUM(quantity * price) as total_price, SUM(quantity) as total_products").
 		Joins("JOIN products ON orders.product_id = products.id").
-		Where("client_id = ?", clientID).
+		Where("client_id = ? AND orders.status != ?", clientID, "Entregado").
 		Group("delivery_date, order_received_date").
 		Find(&orders).Error
 

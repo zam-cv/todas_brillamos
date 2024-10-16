@@ -164,7 +164,10 @@ type ClientEmail struct {
 // Devuelve un slice de models.ClientEmail con los IDs y correos de los clientes.
 func GetAllClientsEmails() []ClientEmail {
 	var clients []ClientEmail
-	GetDatabase().Model(&models.Client{}).Select("id, email").Scan(&clients)
+	GetDatabase().Model(&models.Client{}).
+		Select("clients.id, users.email").
+		Joins("JOIN users ON users.id = clients.user_id").
+		Scan(&clients)
 	return clients
 }
 

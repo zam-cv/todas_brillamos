@@ -7,6 +7,7 @@ package routes
 import (
 	"backend/database"
 	"backend/middlewares"
+	"log"
 	"time"
 
 	"backend/resources/auth"
@@ -60,6 +61,7 @@ func addTrackingRoutes(rg *gin.RouterGroup) {
 
 		result, err := database.GetOrderInfoWithProducts(clientID, deliveryDateStr)
 		if err != nil {
+			log.Println(result)
 			c.JSON(500, gin.H{"error": err.Error()})
 			return
 		}

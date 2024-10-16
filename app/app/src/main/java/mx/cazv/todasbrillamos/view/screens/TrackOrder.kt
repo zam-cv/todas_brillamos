@@ -1,5 +1,8 @@
 package mx.cazv.todasbrillamos.view.screens
 
+import android.annotation.SuppressLint
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Box
@@ -57,6 +60,8 @@ import mx.cazv.todasbrillamos.viewmodel.UserViewModel
  *
  * @param navController El NavHostController utilizado para la navegación.
  */
+@SuppressLint("StateFlowValueCalledInComposition")
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun TrackOrder(
     navController: NavHostController,
@@ -142,7 +147,7 @@ fun TrackOrder(
                     }
 
                     OrderStatus(
-                        status = "Pedido recibido",
+                        status = trackingOrderState.value.order.status,
                         trackingOrder = trackingOrderState.value
                     )
 
@@ -259,6 +264,7 @@ fun OrderProducts(trackingOrder: TrackingOrder) {
  * @param status El estado actual del pedido.
  * @param trackingOrder El objeto de rastreo del pedido.
  */
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun OrderStatus(
     status: String,
@@ -286,7 +292,7 @@ fun OrderStatus(
                         .size(15.dp)
                         .clip(CircleShape)
                         .background(
-                            if (index == currentStatus) {
+                            if (index <= currentStatus) {
                                 Color(0xffd5507c)
                             } else {
                                 Color.LightGray
@@ -304,7 +310,7 @@ fun OrderStatus(
                     Text(
                         text = s.first,
                         fontSize = 16.sp,
-                        color = if (index == currentStatus) Color(0xffd5507c) else Color.Black
+                        color = if (index <= currentStatus) Color(0xffd5507c) else Color.Black
                     )
 
                     if (s.second != null && s.second!!.isNotEmpty()) {

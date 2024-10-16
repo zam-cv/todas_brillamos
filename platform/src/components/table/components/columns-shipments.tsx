@@ -58,8 +58,8 @@ export const createColumns = (
                 <SelectValue placeholder={row.getValue("Status")}/>
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="Preparando envio">Preparando envio</SelectItem>
-                <SelectItem value="Enviado">Enviado</SelectItem>
+                <SelectItem value="Preparando pedido">Preparando pedido</SelectItem>
+                <SelectItem value="En camino">En camino</SelectItem>
                 <SelectItem value="Entregado">Entregado</SelectItem>
               </SelectContent>
             </Select>
