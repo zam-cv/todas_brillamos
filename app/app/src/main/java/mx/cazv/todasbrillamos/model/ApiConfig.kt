@@ -5,7 +5,7 @@ package mx.cazv.todasbrillamos.model
  * @author Carlos Zamudio
  */
 object ApiConfig {
-    private const val DEFAULT_BASE_URL = "http://10.0.2.2:8000/"
+    //private const val DEFAULT_BASE_URL = "http://10.0.2.2:8000/"
 
-    val BASE_URL: String = DEFAULT_BASE_URL
+    val BASE_URL: String = "http://206.189.236.35:8000/"
 }
