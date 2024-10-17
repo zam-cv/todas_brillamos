@@ -114,8 +114,8 @@ fun Calendar(
             Spacer(modifier = Modifier.height(20.dp))
 
             Text(
-                text = "Los resultados de esta calculadora de periodos pueden no ser 100% precisos y eso se debe a que cada cuerpo y cada ciclo es diferente.",
-                maxLines = 3,
+                text = "Los resultados de esta calculadora de periodos pueden no ser 100% precisos y eso se debe a que cada cuerpo y cada ciclo es diferente. Si tiene dudas más específicas de su ciclo menstrual, consulte a un especialista.",
+                maxLines = 4,
                 style = TextStyle(
                     lineHeight = 15.sp,
                     textAlign = TextAlign.Center,

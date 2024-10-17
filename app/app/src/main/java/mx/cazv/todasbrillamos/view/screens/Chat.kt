@@ -24,8 +24,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -122,11 +124,16 @@ fun Chat(
 @Composable
 fun Warning(){
     Column {
-        Text(text = "Este es un chat que contesta tus dudas con ayuda de Inteligencia Artificial" +
-                ", las respuestas pueden no ser del todo acertadas, por lo que también" +
-                " podrá sugerirte especialistas expertos con los que podrás ponerte en contacto " +
-                "y recibir atención personalizada",
-            textAlign = TextAlign.Center,
+        Text(text = "Este chat, impulsado por Inteligencia Artificial, tiene como objetivo responder" +
+                " a tus consultas. Sin embargo, las respuestas podrían no ser completamente precisas, " +
+                "por lo que también podrá sugerirte una variedad de especialistas a quienes podrás " +
+                "contactar para recibir atención personalizada.",
+            style = TextStyle(
+                fontSize = 15.sp,
+                lineHeight = 17.sp,
+                textAlign = TextAlign.Center,
+                color = Color.Gray
+            ),
             modifier = Modifier
                 .padding(10.dp)
                 .fillMaxWidth())
