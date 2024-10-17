@@ -64,7 +64,7 @@ fun InteractiveCardsHome(navController: NavHostController){
                 backgroundColor = Color(0xffd5507c),
                 imageSize = 150,
                 imageAlignment = Alignment.BottomEnd,
-                valx = 30.dp,
+                valx = 38.dp,
                 onClick = { navController.navigate(Routes.ROUTE_CHAT) }
             )
 
@@ -143,8 +143,8 @@ fun InteractiveCardsHome(navController: NavHostController){
                     backgroundColor = Color(0xffd5507c),
                     imageSize = 100,
                     imageAlignment = Alignment.CenterEnd,
-                    valx = (-5).dp,
-                    valy = 30.dp,
+                    valx = 2.dp,
+                    valy = 34.dp,
                     onClick = { navController.navigate(Routes.ROUTE_CALENDAR) }
                 )
         }
