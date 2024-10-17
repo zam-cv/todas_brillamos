@@ -25,8 +25,6 @@ import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -36,21 +34,16 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.toImmutableList
-import mx.cazv.todasbrillamos.formatToCalendarDay
-import mx.cazv.todasbrillamos.formatToMonthAndYearString
-import mx.cazv.todasbrillamos.getDayOfWeek
-import mx.cazv.todasbrillamos.getDayOfWeek3Letters
-import mx.cazv.todasbrillamos.getWeekDays
+import mx.cazv.todasbrillamos.view.formatToCalendarDay
+import mx.cazv.todasbrillamos.view.formatToMonthAndYearString
+import mx.cazv.todasbrillamos.view.getDayOfWeek
+import mx.cazv.todasbrillamos.view.getDayOfWeek3Letters
+import mx.cazv.todasbrillamos.view.getWeekDays
 import mx.cazv.todasbrillamos.model.YourCycleInfo
 import mx.cazv.todasbrillamos.ui.theme.ColorOfMostFertilePeriod
 import mx.cazv.todasbrillamos.ui.theme.OvulationColor
 import mx.cazv.todasbrillamos.ui.theme.PeriodColor
-import mx.cazv.todasbrillamos.viewmodel.CalendarVM
-import java.text.SimpleDateFormat
-import java.util.Calendar
 import java.util.Date
-import java.util.Locale
 
 /**
  * Archivo que contiene los componentes para la vista del calendario con los datos del periodo menstrual.
@@ -84,7 +77,7 @@ private fun CalendarCell(
             .padding(2.dp)
             .border(
                 width = 2.dp,
-                color = if (isPeriod) PeriodColor.copy(alpha = 0.7f) else Color.Transparent,
+                color = if (isPeriod) PeriodColor else Color.Transparent,
                 shape = RoundedCornerShape(CornerSize(8.dp))
             )
             .background(

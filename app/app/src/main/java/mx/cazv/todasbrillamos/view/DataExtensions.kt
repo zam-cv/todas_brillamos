@@ -1,4 +1,4 @@
-package mx.cazv.todasbrillamos
+package mx.cazv.todasbrillamos.view
 
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
+import java.util.TimeZone
 
 /**
  * Archivo que contiene las extensiones para formatear fechas y obtener información de fechas.
@@ -17,14 +18,16 @@ import java.util.Locale
  * @return El día del mes como cadena.
  */
 fun Date.formatToCalendarDay(): String =
-    SimpleDateFormat("d", Locale.getDefault()).format(this)
-
+    SimpleDateFormat("d", Locale.getDefault())
+        .apply{ timeZone = TimeZone.getTimeZone("UTC-6:00") }
+        .format(this)
 /**
  * Extensión para obtener el nombre del día de la semana en tres letras.
  * @return El nombre del día de la semana como cadena.
  */
 fun Int.getDayOfWeek3Letters(): String? = Calendar.getInstance().apply {
     set(Calendar.DAY_OF_WEEK, this@getDayOfWeek3Letters)
+    timeZone = TimeZone.getTimeZone("UTC-6:00")
 }.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.getDefault())
 
 
@@ -51,4 +54,6 @@ fun getWeekDays(startFromSunday: Boolean): ImmutableList<Int> {
  * Extensión para formatear una fecha a una cadena con el mes y el año.
  * @return El mes y el año como cadena.
  */
-fun Date.formatToMonthAndYearString(): String = SimpleDateFormat("MMMM yyyy", Locale.getDefault()).format(this)
+fun Date.formatToMonthAndYearString(): String = SimpleDateFormat("MMMM yyyy", Locale.getDefault())
+                                                    .apply{ timeZone = TimeZone.getTimeZone("UTC-6:00") }
+                                                    .format(this)

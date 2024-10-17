@@ -112,7 +112,8 @@ fun ViewFavorites(
         }
         favoritesState.favorites.favorites.isEmpty() -> {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Text("No tienes favoritos guardados")
+                Text("No tienes productos en favoritos"
+                )
             }
         }
         else -> {

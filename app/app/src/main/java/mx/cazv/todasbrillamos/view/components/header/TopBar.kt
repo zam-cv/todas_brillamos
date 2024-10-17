@@ -40,6 +40,7 @@ import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import mx.cazv.todasbrillamos.view.Routes
 import mx.cazv.todasbrillamos.viewmodel.AuthViewModel
@@ -81,7 +82,13 @@ fun TopBar(
                 modifier = Modifier.align(Alignment.CenterStart),
                 contentAlignment = Alignment.Center
             ) {
-                IconButton(onClick = { navController.navigate(Routes.ROUTE_NOTIFICATIONS) }) {
+                IconButton(onClick = { navController.navigate(Routes.ROUTE_NOTIFICATIONS) {
+                    launchSingleTop = true
+                    restoreState = true
+                    popUpTo(navController.graph.findStartDestination().id) {
+                        saveState = true
+                    }
+                }}) {
                     Icon(
                         imageVector = Icons.Outlined.Notifications,
                         contentDescription = "Notifications"
@@ -104,19 +111,38 @@ fun TopBar(
                     .padding(end = 8.dp),
                 horizontalArrangement = Arrangement.spacedBy(-8.dp)
             ) {
-                IconButton(onClick = { navController.navigate(Routes.ROUTE_ORDERS) }) {
+                IconButton(onClick = { navController.navigate(Routes.ROUTE_ORDERS) {
+                    launchSingleTop = true
+                    restoreState = true
+                    popUpTo(navController.graph.startDestinationId) {
+                        saveState = true
+                    }
+                } }) {
                     Icon(
                         imageVector = Icons.Outlined.LocalShipping,
                         contentDescription = "Orders"
                     )
                 }
-                IconButton(onClick = { navController.navigate(Routes.ROUTE_FAVORITES) }) {
+                IconButton(onClick = { navController.navigate(Routes.ROUTE_FAVORITES) {
+                    launchSingleTop = true
+                    restoreState = true
+                    popUpTo(navController.graph.startDestinationId) {
+                        saveState = true
+                    }
+                }
+                }) {
                     Icon(
                         imageVector = Icons.Outlined.FavoriteBorder,
                         contentDescription = "Favorites"
                     )
                 }
-                IconButton(onClick = { navController.navigate(Routes.ROUTE_CART) }) {
+                IconButton(onClick = { navController.navigate(Routes.ROUTE_CART) {
+                    launchSingleTop = true
+                    restoreState = true
+                    popUpTo(navController.graph.startDestinationId) {
+                        saveState = true
+                    }
+                }}) {
                     Icon(
                         imageVector = Icons.Outlined.ShoppingCart,
                         contentDescription = "Shopping Cart"
