@@ -1,4 +1,4 @@
-import {get, del, post, upload } from "../methods";
+import {get, upload } from "../methods";
 
 export interface Others{
     CURP: string;

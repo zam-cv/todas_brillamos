@@ -2,7 +2,6 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { createColumns } from "@/components/table/components/columns-products";
 import { DataTable } from "@/components/table/components/data-table-products";
-import { Textarea } from "@/components/ui/textarea";
 import { useEffect, useState, useRef } from "react";
 import api, { Product } from "@/utils/api/products";
 import apiCategory, { Category } from "@/utils/api/category";
@@ -26,7 +25,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { SelectGroup, SelectLabel } from "@radix-ui/react-select";
-import { Space } from "lucide-react";
 
 // {
 //   "model": "0017",
@@ -194,19 +192,19 @@ export default function UploadProducts() {
     }
   }, [navigate]);
 
-  function handleDelete(productId: number) {
-    api.product
-      .deleteProduct(productId)
-      .then(() => {
-        setProducts(products.filter((product) => product.id !== productId));
-        console.log("Producto eliminado");
-      })
-      .catch((error) => {
-        console.error("Error al eliminar el producto:", error);
-      });
-  }
+  // function handleDelete(productId: number) {
+  //   api.product
+  //     .deleteProduct(productId)
+  //     .then(() => {
+  //       setProducts(products.filter((product) => product.id !== productId));
+  //       console.log("Producto eliminado");
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error al eliminar el producto:", error);
+  //     });
+  // }
 
-  const columns = createColumns(handleDelete, updateProduct);
+  const columns = createColumns(updateProduct);
 
 
 

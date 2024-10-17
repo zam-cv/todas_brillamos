@@ -1,4 +1,4 @@
-import {get, del, post, upload } from "../methods";
+import {get,  post,  } from "../methods";
 
 export interface User{
     email: string;

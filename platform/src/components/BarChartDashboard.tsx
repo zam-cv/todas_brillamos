@@ -1,7 +1,6 @@
 "use client"
 
 import { Bar, BarChart, CartesianGrid, Rectangle, XAxis } from "recharts"
-import { AlertCircle } from 'lucide-react'
 import { useState, useEffect } from "react"
 
 import {

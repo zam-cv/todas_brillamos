@@ -60,6 +60,7 @@ export default function PieGraph() {
       <CardHeader className="items-center pb-0">
         <CardTitle>Productos por categoría</CardTitle>
       </CardHeader>
+      {error && <div className="text-red-500">{error}</div>}
       <CardContent className="flex-1 pb-0">
           <ChartContainer
             config={chartConfig}

@@ -12,21 +12,13 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
+
 import { useState } from "react";
 import { Product } from "@/utils/api/products";
 
 
 export const createColumns = (
-  handleDelete: (id: number) => void,
+  // handleDelete: (id: number) => void,
   updateProduct: (value: Object, fields: Product) => void): ColumnDef<Task>[] => [
     {
       accessorKey: "name",
