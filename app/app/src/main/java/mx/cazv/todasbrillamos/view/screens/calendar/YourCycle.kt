@@ -95,7 +95,7 @@ fun YourCycle(
     val nextMonth = calendarVM.getNextMonth(currentMonthDate)
     val prevMonth = calendarVM.getPreviousMonth(currentMonthDate)
 
-    println(estado.value.threeCycles.first().fertileDayEnd)
+
     val dates = calendarVM.generateCalendarDates(
         monthDate = currentMonthDate,
         threeCycles = estado.value.threeCycles
