@@ -183,7 +183,7 @@ fun Notifications(
     CustomLayout (
         withStoreButton = true,
         withScroll = notifications.value.isNotEmpty(),
-        navController = rememberNavController(),
+        navController = navController,//rememberNavController(),
         topBar = {
             BasicTopBar(title = "Notificaciones", navController = navController)
         },
