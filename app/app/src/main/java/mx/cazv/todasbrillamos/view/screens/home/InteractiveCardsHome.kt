@@ -18,6 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import mx.cazv.todasbrillamos.R
 import mx.cazv.todasbrillamos.view.Routes
@@ -65,7 +66,13 @@ fun InteractiveCardsHome(navController: NavHostController){
                 imageSize = 150,
                 imageAlignment = Alignment.BottomEnd,
                 valx = 38.dp,
-                onClick = { navController.navigate(Routes.ROUTE_CHAT) }
+                onClick = { navController.navigate(Routes.ROUTE_CHAT) {
+                    launchSingleTop = true
+                    restoreState = true
+                    popUpTo(navController.graph.findStartDestination().id) {
+                        saveState = true
+                    }
+                }}
             )
 
             InteractiveCard(
@@ -92,7 +99,13 @@ fun InteractiveCardsHome(navController: NavHostController){
                 imageSize = 200,
                 imageAlignment = Alignment.Center,
                 valy = 20.dp,
-                onClick = { navController.navigate(Routes.ROUTE_STORE) }
+                onClick = { navController.navigate(Routes.ROUTE_STORE) {
+                    launchSingleTop = true
+                    restoreState = true
+                    popUpTo(navController.graph.findStartDestination().id) {
+                        saveState = true
+                    }
+                }}
             )
 
 
@@ -145,7 +158,13 @@ fun InteractiveCardsHome(navController: NavHostController){
                     imageAlignment = Alignment.CenterEnd,
                     valx = 2.dp,
                     valy = 34.dp,
-                    onClick = { navController.navigate(Routes.ROUTE_CALENDAR) }
+                    onClick = { navController.navigate(Routes.ROUTE_CALENDAR){
+                        launchSingleTop = true
+                        restoreState = true
+                        popUpTo(navController.graph.findStartDestination().id) {
+                            saveState = true
+                        }
+                    } }
                 )
         }
 //        Row(
