@@ -64,7 +64,7 @@ fun Orders(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
-                Text("No tienes pedidos guardados")
+                Text("No hay pedidos que mostrar")
             }
         } else {
             Column(
