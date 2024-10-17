@@ -78,6 +78,9 @@ export default function Home() {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                     />
+                    <Label className="card">
+                      Contraseña
+                    </Label>
                     <Input
                       id="password"
                       type="password"
@@ -89,7 +92,7 @@ export default function Home() {
                     />
                   </div>
                 </div>
-                <Button type="submit">Continue</Button>
+                <Button type="submit">Ingresar</Button>
               </div>
             </form>
           </div>
