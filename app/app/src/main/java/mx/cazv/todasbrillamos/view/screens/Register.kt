@@ -219,7 +219,7 @@ fun Register(navController: NavHostController, authViewModel: AuthViewModel) {
                     Image(
                         painter = painterResource(id = R.drawable.logo_tb),
                         contentDescription = "Logo",
-                        modifier = Modifier.size(100.dp)
+                        modifier = Modifier.size(140.dp)
                     )
                 }
 
@@ -322,12 +322,12 @@ fun Register(navController: NavHostController, authViewModel: AuthViewModel) {
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        Checkbox(
-                            checked = receiveInfo,
-                            onCheckedChange = { receiveInfo = it }
-                        )
+//                        Checkbox(
+//                            checked = receiveInfo,
+//                            onCheckedChange = { receiveInfo = it }
+//                        )
                         Text(
-                            text = "Me gustaría recibir información de Todas Brillamos por correo",
+                            text = "* Al registrarte recibirás información de Todas Brillamos por correo",
                             fontSize = 12.sp,
                             style = TextStyle(lineHeight = 15.sp)
                         )

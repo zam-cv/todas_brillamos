@@ -64,7 +64,8 @@ fun DeveloperCredits(navController: NavHostController) {
                 Text(
                     text = "Carlos Alberto Zamudio Velazquez",
                     style = MaterialTheme.typography.titleMedium,
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
+                    fontWeight = FontWeight.SemiBold
                 )
 
                 Text(
@@ -78,7 +79,8 @@ fun DeveloperCredits(navController: NavHostController) {
                 Text(
                     text = "Mariana Balderrábano Aguilar",
                     style = MaterialTheme.typography.titleMedium,
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
+                    fontWeight = FontWeight.SemiBold
                 )
                 Text(
                     text = "A01749581@tec.mx",
@@ -88,9 +90,10 @@ fun DeveloperCredits(navController: NavHostController) {
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Text(
-                    text = "Sebastian Antonio Almanza",
+                    text = "Sebastián Antonio Almanza",
                     style = MaterialTheme.typography.titleMedium,
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
+                    fontWeight = FontWeight.SemiBold
                 )
                 Text(
                     text = "A01749694@tec.mx",
@@ -102,7 +105,8 @@ fun DeveloperCredits(navController: NavHostController) {
                 Text(
                     text = "Jennyfer Nahomi Jasso Hernández",
                     style = MaterialTheme.typography.titleMedium,
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
+                    fontWeight = FontWeight.SemiBold
                 )
 
                 Text(
@@ -116,7 +120,8 @@ fun DeveloperCredits(navController: NavHostController) {
                 Text(
                     text = "Min Che Kim",
                     style = MaterialTheme.typography.titleMedium,
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
+                    fontWeight = FontWeight.SemiBold
                 )
                 Text(
                     text = "A01750338@tec.mx",
