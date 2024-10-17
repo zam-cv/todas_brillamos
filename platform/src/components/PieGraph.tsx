@@ -87,9 +87,7 @@ export default function PieGraph() {
      
       </CardContent>
       <CardFooter className="flex-col gap-2 text-sm">
-          <div>
-            Mostrando desgloze de todos los productos existentes
-          </div>
+          
       </CardFooter>
     </Card>
   );

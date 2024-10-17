@@ -8,6 +8,8 @@ import api, { Product } from "@/utils/api/products";
 import apiCategory, { Category } from "@/utils/api/category";
 import { useNavigate } from "react-router-dom";
 import { SERVER } from "@/utils/constants";
+import DynamicInputFields from "@/components/DynamicTextField";
+
 
 import {
   Accordion,
@@ -45,7 +47,10 @@ export default function UploadProducts() {
   const imageInput = useRef<HTMLInputElement>(null);
   const [model, setModel] = useState<string>("");
   const [name, setName] = useState<string>("");
+
   const [description, setDescription] = useState<string>("");
+
+
   const [price, setPrice] = useState<number>(20);
   const [stock, setStock] = useState<number>(0);
   const [size, setSize] = useState<string>("");
@@ -203,6 +208,10 @@ export default function UploadProducts() {
 
   const columns = createColumns(handleDelete, updateProduct);
 
+
+
+
+
   return (
     <div className="space-y-4 relative w-full h-full">
       <div className="w-full absolute">
@@ -235,7 +244,16 @@ export default function UploadProducts() {
                     <Input
                       name="stock"
                       value={stock}
-                      onChange={(e) => setStock(Number(e.target.value))}
+                      onChange={(e) => {
+                        const inputValue = Number(e.target.value);
+                        const maxInt32 = 2147483647;
+
+                        if(inputValue <= maxInt32){
+                          setStock(inputValue);
+                        } else {
+                          alert(`El stock no puede ser mayor a ${maxInt32}`)
+                        }
+                      }}
                       className="w-1/3"
                       placeholder="Cantidad"
                       type="number"
@@ -335,13 +353,15 @@ export default function UploadProducts() {
                 <div className="grid space-x-2 px-2 pt-2">
                   <label>
                     <span className="font-semibold">Descripción</span>
-                    <Textarea
-                      name="description"
-                      value={description}
-                      onChange={(e) => setDescription(e.target.value)}
-                      placeholder="Medidas, indicaciones.."
-                      className="w-full"
-                    />
+                    <div className="grid space-x-2 px-2 pt-2">
+                      <label>
+                       
+                        <DynamicInputFields 
+                          description={description}
+                          setDescription={setDescription}
+                        />
+                      </label>
+                    </div>
                   </label>
                 </div>
                 <div className="flex flex-row space-x-2 px-2 pt-2">

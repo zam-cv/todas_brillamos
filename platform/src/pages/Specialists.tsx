@@ -8,11 +8,7 @@ import apiPost, { Posts } from "@/utils/api/post";
 import { Badge } from "@/components/ui/badge";
 import { DataTable } from "@/components/table/components/tablePosts/data-table-posts";
 import { createColumns } from "@/components/table/components/tablePosts/columns-posts";
-import  { DeleteWrapper } from '@/components/Delete';
 import apiSpecialist, { Specialist} from "@/utils/api/specialist";
-import {
-  Drawer,
-} from "@/components/ui/drawer";
 
 import {
   Card,
@@ -26,7 +22,6 @@ import {
 
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { set } from "zod";
 
 export default function Specialists() {
   const [name, setName] = useState<string>("");
@@ -148,9 +143,7 @@ export default function Specialists() {
     console.log(idPost);
   }, [idPost]);
 
-  function deleteCategory(){
 
-  }
 
   function updateProduct(value: Object, fields: Posts) {
     apiPost.posts.updatePost(fields.id,{
@@ -202,11 +195,9 @@ export default function Specialists() {
           </Popover>
         <div className="flex flex-wrap gap-4"> {}
           {category.map((category) => (
-            <DeleteWrapper message="Mensaje" key={category.id} del={() => deleteCategory()}>
               <Badge key={category.id} variant="outline" className="cursor-pointer">
                 {category.name}
                 </Badge>
-              </DeleteWrapper>
           ))}
         </div> 
         </div>      
