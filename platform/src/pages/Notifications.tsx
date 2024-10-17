@@ -18,8 +18,8 @@ export default function Notifications() {
   const [notification, setNotification] = useState<Notification[]>([]);
   const [title, setTitle] = useState<string>(""); 
   const [description, setDescription] = useState<string>(""); 
-  const [date, setDate] = useState<string>("");
-  const [client_id, setClient_id] = useState<number>(0);
+  const [date] = useState<string>("");
+  const [client_id] = useState<number>(0);
 
   function uploadNotification() {
     api.notification.setNotification({

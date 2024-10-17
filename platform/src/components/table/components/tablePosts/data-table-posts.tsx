@@ -24,8 +24,7 @@ import {
 } from "@/components/ui/table";
 
 import { DataTablePagination } from "./data-table-pagination-posts";
-import { DataTableToolbar } from "./data-table-toolbar-posts";
-import { set } from "zod";
+
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];

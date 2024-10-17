@@ -40,7 +40,7 @@ fun StoreButton(navController: NavHostController, modifier: Modifier = Modifier)
     val isInStoreScreen = currentBackStackEntry?.destination?.route == ROUTE_STORE
 
     Box(modifier = modifier
-        .size(95.dp)
+        .size(90.dp)
         .offset(y = 80.dp)
         .padding(4.dp)
     ) {
@@ -84,9 +84,9 @@ fun StoreButton(navController: NavHostController, modifier: Modifier = Modifier)
                 )
         ) {
             Icon(
-                Icons.Default.Store,
+                painter = painterResource(id = R.drawable.store_ic),
                 contentDescription = "tienda",
-                modifier = Modifier.size(35.dp),
+                modifier = Modifier.size(32.dp),
                 tint = SelectedScreen
             )
         }

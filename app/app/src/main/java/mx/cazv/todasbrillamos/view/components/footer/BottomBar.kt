@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBarItem
@@ -90,9 +91,14 @@ fun navigateTo(route: String, navController: NavHostController) {
     val currentRoute = navController.currentBackStackEntry?.destination?.route
     if (currentRoute != route) {
         navController.navigate(route) {
+
             // Eliminar o ajustar popUpTo
             launchSingleTop = true
             restoreState = true
+
+            popUpTo(navController.graph.findStartDestination().id) {
+                saveState = true
+            }
         }
     } else {
         Log.d("Navigation", "Attempted to navigate to current route: $route")
@@ -136,7 +142,8 @@ fun IconDisplay(screen: Routes, currentRoute: String?) {
             Icon(
                 painter = painterResource(id = iconType.resId),
                 contentDescription = screen.tag,
-                tint = tintColor
+                tint = tintColor,
+                modifier = Modifier.size(22.dp)
             )
         }
     }

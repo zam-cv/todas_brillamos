@@ -24,7 +24,6 @@ import {
 } from "@/components/ui/table";
 
 import { DataTablePagination } from "./data-table-pagination-donations";
-import { DataTableToolbar } from "./data-table-toolbar-donations";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -35,7 +34,6 @@ interface DataTableProps<TData, TValue> {
 export function DataTable<TData, TValue>({
   columns,
   data,
-  event_id,
 }: DataTableProps<TData, TValue>) {
   const [rowSelection, setRowSelection] = React.useState({});
   const [columnVisibility, setColumnVisibility] =

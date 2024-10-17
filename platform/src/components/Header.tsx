@@ -2,7 +2,6 @@ import { Link, useLocation } from "react-router-dom";
 import {
   CircleUser,
   Menu,
-  Search,
   ChartArea,
   ShoppingBasket,
   Truck,
@@ -15,11 +14,9 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { IoIosAddCircleOutline } from "react-icons/io";
-import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";

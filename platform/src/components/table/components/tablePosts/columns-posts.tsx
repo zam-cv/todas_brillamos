@@ -13,7 +13,6 @@ import {
 } from "@/components/ui/dialog"
 import { Posts } from "@/utils/api/post";
 import { useState } from "react";
-import { set } from "zod";
 
 export const createColumns = (
   handleDelete: (postId: number) => void,

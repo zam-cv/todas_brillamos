@@ -63,14 +63,8 @@ class UserViewModel : ViewModel() {
      * @param token El token de autenticación.
      * @param passwordUpdate La nueva contraseña.
      */
-    fun updatePassword(token: String, passwordUpdate: PasswordUpdate) {
-        viewModelScope.launch {
-            try {
-                userService.updatePassword(token, passwordUpdate)
-            } catch (e: Exception) {
-                // Handle error
-            }
-        }
+    suspend fun updatePassword(token: String, passwordUpdate: PasswordUpdate): Boolean {
+        return userService.updatePassword(token, passwordUpdate)
     }
 
     /**

@@ -2,12 +2,13 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { createColumns } from "@/components/table/components/columns-products";
 import { DataTable } from "@/components/table/components/data-table-products";
-import { Textarea } from "@/components/ui/textarea";
 import { useEffect, useState, useRef } from "react";
 import api, { Product } from "@/utils/api/products";
 import apiCategory, { Category } from "@/utils/api/category";
 import { useNavigate } from "react-router-dom";
 import { SERVER } from "@/utils/constants";
+import DynamicInputFields from "@/components/DynamicTextField";
+
 
 import {
   Accordion,
@@ -24,7 +25,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { SelectGroup, SelectLabel } from "@radix-ui/react-select";
-import { Space } from "lucide-react";
 
 // {
 //   "model": "0017",
@@ -45,7 +45,10 @@ export default function UploadProducts() {
   const imageInput = useRef<HTMLInputElement>(null);
   const [model, setModel] = useState<string>("");
   const [name, setName] = useState<string>("");
+
   const [description, setDescription] = useState<string>("");
+
+
   const [price, setPrice] = useState<number>(20);
   const [stock, setStock] = useState<number>(0);
   const [size, setSize] = useState<string>("");
@@ -189,19 +192,23 @@ export default function UploadProducts() {
     }
   }, [navigate]);
 
-  function handleDelete(productId: number) {
-    api.product
-      .deleteProduct(productId)
-      .then(() => {
-        setProducts(products.filter((product) => product.id !== productId));
-        console.log("Producto eliminado");
-      })
-      .catch((error) => {
-        console.error("Error al eliminar el producto:", error);
-      });
-  }
+  // function handleDelete(productId: number) {
+  //   api.product
+  //     .deleteProduct(productId)
+  //     .then(() => {
+  //       setProducts(products.filter((product) => product.id !== productId));
+  //       console.log("Producto eliminado");
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error al eliminar el producto:", error);
+  //     });
+  // }
 
-  const columns = createColumns(handleDelete, updateProduct);
+  const columns = createColumns(updateProduct);
+
+
+
+
 
   return (
     <div className="space-y-4 relative w-full h-full">
@@ -235,7 +242,16 @@ export default function UploadProducts() {
                     <Input
                       name="stock"
                       value={stock}
-                      onChange={(e) => setStock(Number(e.target.value))}
+                      onChange={(e) => {
+                        const inputValue = Number(e.target.value);
+                        const maxInt32 = 2147483647;
+
+                        if(inputValue <= maxInt32){
+                          setStock(inputValue);
+                        } else {
+                          alert(`El stock no puede ser mayor a ${maxInt32}`)
+                        }
+                      }}
                       className="w-1/3"
                       placeholder="Cantidad"
                       type="number"
@@ -335,13 +351,15 @@ export default function UploadProducts() {
                 <div className="grid space-x-2 px-2 pt-2">
                   <label>
                     <span className="font-semibold">Descripción</span>
-                    <Textarea
-                      name="description"
-                      value={description}
-                      onChange={(e) => setDescription(e.target.value)}
-                      placeholder="Medidas, indicaciones.."
-                      className="w-full"
-                    />
+                    <div className="grid space-x-2 px-2 pt-2">
+                      <label>
+                       
+                        <DynamicInputFields 
+                          description={description}
+                          setDescription={setDescription}
+                        />
+                      </label>
+                    </div>
                   </label>
                 </div>
                 <div className="flex flex-row space-x-2 px-2 pt-2">

@@ -59,10 +59,10 @@ sealed class Routes (
 
     // Bottom bar routes
     private data object Home: Routes(ROUTE_HOME, "Inicio", Icon.ResourceIcon(R.drawable.home_icon))
-    private data object Calendar: Routes(ROUTE_CALENDAR, "Calendario", Icon.VectorIcon(Icons.Default.CalendarToday))
-    private data object Store: Routes(ROUTE_STORE, "Store", Icon.VectorIcon(Icons.Default.Store))
+    private data object Calendar: Routes(ROUTE_CALENDAR, "Calendario", Icon.ResourceIcon(R.drawable.calendar_icon))
+    private data object Store: Routes(ROUTE_STORE, "Store", Icon.ResourceIcon(R.drawable.store_ic))
     private data object Chat: Routes(ROUTE_CHAT, "Chat", Icon.ResourceIcon(R.drawable.chat_icon))
-    private data object Config: Routes(ROUTE_CONFIG, "Config", Icon.VectorIcon(Icons.Default.Settings))
+    private data object Config: Routes(ROUTE_CONFIG, "Config", Icon.ResourceIcon(R.drawable.setting_icon))
 }
 
 /**

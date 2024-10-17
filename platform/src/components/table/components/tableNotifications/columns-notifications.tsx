@@ -1,6 +1,4 @@
-import { useState } from "react";
 import { ColumnDef } from "@tanstack/react-table";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Task } from "@/components/table/components/tableNotifications/schema_notifications";
 import { DataTableColumnHeader } from "./data-table-column-header-notifications";
 

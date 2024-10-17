@@ -1,10 +1,5 @@
-import { Cross2Icon } from "@radix-ui/react-icons";
 import { Table } from "@tanstack/react-table";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { DataTableViewOptions } from "./data-table-view-options-notifications";
-import { DataTableFacetedFilter } from "./data-table-faceted-filter-notifications";
-import { useEffect, useState } from "react";
 //import api from "@/utils/api";
 
 interface DataTableToolbarProps<TData> {
@@ -14,11 +9,9 @@ interface DataTableToolbarProps<TData> {
 
 export function DataTableToolbar<TData>({
   table,
-  event_id,
+  
 }: DataTableToolbarProps<TData>) {
-  const [teams, setTeams] = useState<string[]>([]);
-  const [campuses, setCampuses] = useState<string[]>([]);
-  const isFiltered = table.getState().columnFilters.length > 0;
+  
 
 /*
   useEffect(() => {

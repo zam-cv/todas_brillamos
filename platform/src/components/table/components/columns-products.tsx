@@ -12,21 +12,13 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
+
 import { useState } from "react";
 import { Product } from "@/utils/api/products";
 
 
 export const createColumns = (
-  handleDelete: (id: number) => void,
+  // handleDelete: (id: number) => void,
   updateProduct: (value: Object, fields: Product) => void): ColumnDef<Task>[] => [
     {
       accessorKey: "name",
@@ -87,21 +79,11 @@ export const createColumns = (
         <DataTableColumnHeader column={column} title="Precio" />
       ),
       cell: ({ row }) => {
-        const [price, setPrice] = useState<number>(row.getValue("price"));
-        function handleSave(value: number){
-          updateProduct({price: value}, (row.original as any));
-          setPrice(value);
-        }
         return (
-          <div className="flex space-x-2 outline-none font-semibold bg-transparent  " contentEditable={true}>
-          <input
-            name = "price"
-            value={price}
-            onChange = {(e) => handleSave(Number(e.target.value))}
-            className="bg-transparent outline-none font-semibold"
-            
-            >
-          </input>
+          <div className="flex space-x-2">
+          <span className="max-w-[500px] truncate font-medium">
+              {row.getValue("price")}
+          </span>
         </div>
         );
       },
@@ -308,36 +290,36 @@ export const createColumns = (
         );
       },
     },
-    {
-      id: "actions",
-      header: "Acciones",
-      cell: ({ row }) => {
-        return (
-          <div className="flex justify-end">
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button variant="destructive">Eliminar</Button>
-              </DialogTrigger>
-              <DialogContent className="sm:max-w-[425px]">
-                  <DialogHeader>
-                    <DialogTitle>Eliminar Producto</DialogTitle>
-                    <DialogDescription>
-                      Esta acción no se puede deshacer.
-                    </DialogDescription>
-                  </DialogHeader>
-                  <DialogFooter>
-                  <Button 
-                    variant="destructive" 
-                    onClick={() => handleDelete((row.original as any).id)}
-                  >
-                    Eliminar
-                  </Button>
-                  </DialogFooter>
-              </DialogContent>
-            </Dialog>
-          </div>
-        );
-      },
-    },
+    // {
+    //   id: "actions",
+    //   header: "Acciones",
+    //   cell: ({ row }) => {
+    //     return (
+    //       <div className="flex justify-end">
+    //         <Dialog>
+    //           <DialogTrigger asChild>
+    //             <Button variant="destructive">Eliminar</Button>
+    //           </DialogTrigger>
+    //           <DialogContent className="sm:max-w-[425px]">
+    //               <DialogHeader>
+    //                 <DialogTitle>Eliminar Producto</DialogTitle>
+    //                 <DialogDescription>
+    //                   Esta acción no se puede deshacer.
+    //                 </DialogDescription>
+    //               </DialogHeader>
+    //               <DialogFooter>
+    //               <Button 
+    //                 variant="destructive" 
+    //                 onClick={() => handleDelete((row.original as any).id)}
+    //               >
+    //                 Eliminar
+    //               </Button>
+    //               </DialogFooter>
+    //           </DialogContent>
+    //         </Dialog>
+    //       </div>
+    //     );
+    //   },
+    // },
   ];
   
