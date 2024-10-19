@@ -1,4 +1,4 @@
-import {get, del, post , getUserToken} from "@/utils/methods";
+import {get, del, post} from "@/utils/methods";
 
 export interface Posts {
     id: number;
@@ -7,10 +7,6 @@ export interface Posts {
     date: string;
     content: string
 }
-
-
-   
-
 
 export default {
     posts: {
@@ -21,7 +17,7 @@ export default {
         },
 
         getPosts: (): Promise<Posts[]> =>{
-            return getUserToken("/posts")
+            return get("/posts")
         },
 
         deletePost: (id: number): Promise<void> => {
@@ -33,8 +29,5 @@ export default {
             posts: Posts) : Promise<void> => {
             return post(`/posts/${id}`, posts)
         }
-
-
-
     }
 }

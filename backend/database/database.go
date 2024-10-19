@@ -47,7 +47,7 @@ func InitDatabase(host, port, user, password, name string) *gorm.DB {
 
 // isProd determina si la aplicación está en modo producción
 func isProd() bool {
-	return false
+	return true
 }
 
 // Obtiene la instancia de la base de datos.
