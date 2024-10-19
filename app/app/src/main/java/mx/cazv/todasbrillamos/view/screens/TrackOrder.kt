@@ -233,7 +233,7 @@ fun OrderProducts(trackingOrder: TrackingOrder) {
                     val price = product.price.toString()
 
                     Text(
-                        text = "$$price.00",
+                        text = "$$price",
                         fontSize = 14.sp,
                         textAlign = TextAlign.Right,
                         modifier = Modifier

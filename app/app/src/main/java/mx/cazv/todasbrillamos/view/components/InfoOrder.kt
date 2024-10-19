@@ -103,7 +103,7 @@ fun InfoOrder(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-                Text(text = "MX ${order.total_price}.00 \n${order.total_products} artículos",
+                Text(text = "MX ${order.total_price} \n${order.total_products} artículos",
                     textAlign = TextAlign.Center,
                     fontSize = 13.sp,
                     lineHeight = 14.sp

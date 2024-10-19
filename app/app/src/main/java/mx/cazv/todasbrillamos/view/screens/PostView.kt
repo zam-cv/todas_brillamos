@@ -80,8 +80,8 @@ fun PostView(
                 Spacer(modifier = Modifier.padding(5.dp))
 
                 Text(
-                    text = "escrito por: ${post.author}",
-                    style = MaterialTheme.typography.bodySmall,
+                    text = "Escrito por: ${post.author}",
+                    style = MaterialTheme.typography.bodyMedium,
                     textAlign = TextAlign.Left,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -90,7 +90,7 @@ fun PostView(
 
                 Text(
                     text = post.date,
-                    style = MaterialTheme.typography.bodySmall,
+                    style = MaterialTheme.typography.bodyMedium,
                     textAlign = TextAlign.Left,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -99,7 +99,7 @@ fun PostView(
 
                 Text(
                     text = post.content,
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = MaterialTheme.typography.bodyLarge,
                     textAlign = TextAlign.Justify,
                     modifier = Modifier.fillMaxWidth()
                 )
