@@ -1,6 +1,12 @@
 import {get, del, upload, post} from "../methods";
 import { SERVER } from "../constants";
 
+/**
+ * API para la información de los productos
+ * @Author Sebastian Antonio Almanza
+ */
+
+// Interfaz para los datos de los productos
 export interface Product {
     id: number;
     model: string;
@@ -17,24 +23,31 @@ export interface Product {
     category_id: number;
 }
 
+// Interfaz para los datos de los productos procesados
 export interface ProductsInfo {
     folder: string;
     products: ProductRaw[];
 }
 
+// Interfaz para los datos de los productos crudos
 export interface ProductRaw extends Product {
     hash: string;
     type: string;
+
 }
+
+// Interfaz para los datos de los productos procesados
 export interface processedProduct extends Product {
     url: string;
 }
 
+// Interfaz para los datos de los productos creados
 export interface ProductoCreado{
     id: number;
     name: string;
 }
 
+// Interfaz para los datos de los productos en categorias
 export interface CategoryProducts {
     ID: number;
     category_name: string;
@@ -43,6 +56,7 @@ export interface CategoryProducts {
 
 export default {
     product: {
+        // endpoint para subir un producto a la base de datos
         setProduct: (
             file: File,
             product: Product
@@ -51,7 +65,7 @@ export default {
             return upload("/products/upload", file, product);
         },
 
-        
+        // endpoint para actualizar los datos de un producto
         updateMetadataProduct : (
             id:number,
             product: Product
@@ -59,6 +73,7 @@ export default {
             return post(`/products/${id}/metadata`, product);
         },
 
+        // endpoint para añadir un producto al carrito
         addProductToCart: (
             file:File,
             product: Product,
@@ -68,6 +83,7 @@ export default {
             return upload(`/cart/${id}/${id_cart}`, file, product, false)
         },
 
+        // endpoint para añadir un producto a favoritos
         addProductToFavorites: (
             file: File,
             product: Product,
@@ -76,7 +92,7 @@ export default {
             return upload(`/favorites/${id}`, file, product, false)
         },
         
-        //GET
+        //endpoint para obtener los productos
         getProducts: async (): Promise<[Product[], string]> => {
             const prodInfo = await get<ProductsInfo>("/products")
             return [prodInfo.products.map((prod: ProductRaw) => ({
@@ -86,20 +102,22 @@ export default {
         
         },
 
-    
+        //endpoint para obtener un producto del carrito
         getProductFromCart: (id:number): Promise<void> => {
-            return get(`/products/${id}`)
+             return get(`/products/${id}`)
         },
 
+        // endpoint para obtener un producto de los favoritos
         getProductFromFavorites: (): Promise<void> => {
             return get("/favorites")
         },
 
+        // endpoint para obtener los productos por categoria 
         getProductCategories: (): Promise<CategoryProducts[]> => {
             return get("/products/countCategories")
         },
 
-        //PUT
+        //Endpoint para actualizar la información de los productos
         updateProduct: (
             file: File,
             product: Product,
@@ -108,6 +126,7 @@ export default {
             return upload(`/products/${id}`, file, product, false);
         },
 
+        //Endpoint para actualizar la cantidad de un producto en el carrito
         updateProdQuantityInCart: (
             file: File,
             product: Product,
@@ -117,15 +136,17 @@ export default {
             return upload(`/cart/${id}/${quantity}`, file, product, false)
         },
 
-        //DEL
+        //endpoint para eliminar un producto
         deleteProduct: (id: number): Promise<void> => {
             return del(`/products/${id}`)
         },
 
+        //endpoint para eliminar un producto del carrito
         deleteProductFromCart: (id:number): Promise<void> => {
             return del(`/cart/${id}`)
         },
 
+        //endpoint para eliminar un producto de los favoritos
         deleteProductFromFavorites: (id:number): Promise<void> => {
             return del(`/favorites/${id}`)
         },

@@ -14,7 +14,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
@@ -23,7 +22,13 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
+/**
+ * Página de añadir 
+ * @author Sebastian Antonio Almanza
+ */
+
 export default function Specialists() {
+  //Constantes para almacenar los datos de la categoría, especialistas y artículos
   const [name, setName] = useState<string>("");
   const [category, setCategory] = useState<Category[]>([]);
   const [title, setTitle] = useState<string>("");
@@ -33,8 +38,6 @@ export default function Specialists() {
   const [idPost, setIdPost] = useState<number | null>(null);
   const [isCategoryValid, setIsCategoryValid] = useState(false);
   const [isPostValid, setIsPostValid] = useState(false); 
-
-
   const [FirstName, setFirstName] = useState<string>("");
   const [LastName, setLastName] = useState<string>("");
   const [phone, setPhone] = useState<string>("");
@@ -42,16 +45,19 @@ export default function Specialists() {
   const [description, setDescription] = useState<string>("");
   const [specialist, setSpecialist] = useState<Specialist[]>([]); 
 
+  // Validar campos de la categoría
   useEffect(() => {
     const categoryValid = name !== "";
     setIsCategoryValid(categoryValid);
   }, [name]);
 
+  // Validar campos de el artículo
   useEffect(() => {
     const postValid = title !== "" && author !== "" && content !== "";
     setIsPostValid(postValid);
   }, [title, author, content]);
 
+  // Función para subir la categoría a la base de datos
   function uploadCategory() {
     api.category.setCategory({
       name,
@@ -63,6 +69,7 @@ export default function Specialists() {
     });
   }
 
+  // Función para subir el artículo a la base de datos
   function uploadPost() {
     apiPost.posts.setPost({
       title,
@@ -79,6 +86,7 @@ export default function Specialists() {
     });
   }
 
+  // Función para subir el especialista a la base de datos
   function uploadSpecialist() {
     apiSpecialist.specialist.setSpecialist({
       FirstName,
@@ -133,18 +141,20 @@ export default function Specialists() {
     });
   }, []);
 
+  // Obtener especislitas
   useEffect(() => {
     apiSpecialist.specialist.getSpacialist().then((specialist) => {
       setSpecialist(specialist);
     })
   })
 
+  // Obtener el id del post
   useEffect(() => {
     console.log(idPost);
   }, [idPost]);
 
 
-
+  // Función para actualizar la información
   function updateProduct(value: Object, fields: Posts) {
     apiPost.posts.updatePost(fields.id,{
       ...fields,
@@ -152,6 +162,8 @@ export default function Specialists() {
     } as any);
   }
 
+
+  // Crear las columnas de la tabla
   const columns = createColumns(handleDelete, updateProduct);
 
   return (
@@ -278,9 +290,6 @@ export default function Specialists() {
               <CardDescription>{specialist.phone}</CardDescription>
               <CardDescription>{specialist.description}</CardDescription>
             </CardContent>
-            <CardFooter>
-              <Button variant="destructive">Eliminar</Button>
-            </CardFooter>
           </Card>
         ))}
         <br></br>

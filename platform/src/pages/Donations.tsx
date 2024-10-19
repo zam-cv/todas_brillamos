@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 export default function Donations() {
   const [donations, setDonations] = useState<Donation[]>([]);
 
+
+  // Obtener las donaciones de la base de datos
   useEffect(() => {
     api.donations.getDonations().then((donations) => {
       setDonations(donations);
