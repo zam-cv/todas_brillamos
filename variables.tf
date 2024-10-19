@@ -58,7 +58,7 @@ variable "port" {
   type        = number
 }
 
-variable "api_key_mailerlite" {
+variable "api_key_mailer" {
   description = "API key for Mailer"
   type        = string
 }
