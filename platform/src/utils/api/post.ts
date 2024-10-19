@@ -1,4 +1,4 @@
-import {get, del, post } from "@/utils/methods";
+import {get, del, post , getUserToken} from "@/utils/methods";
 
 export interface Posts {
     id: number;
@@ -21,7 +21,7 @@ export default {
         },
 
         getPosts: (): Promise<Posts[]> =>{
-            return get("/posts")
+            return getUserToken("/posts")
         },
 
         deletePost: (id: number): Promise<void> => {

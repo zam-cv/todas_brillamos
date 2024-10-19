@@ -3,16 +3,23 @@ import { columns } from "@/components/table/components/columns-users";
 import { DataTable } from "@/components/table/components/data-table-users";
 import api, { ClientInfo } from "@/utils/api/client";
 
+/**
+ * Página de usuarios
+ * @author Sebastian Antonio Almanza 
+ */
 export default function Users(){
+  // constante para almacenar los datos de los usuarios
   const [ids, setIds] = useState<number[]> ([]);
   const [clientInfo, setClientInfo] = useState<ClientInfo[]>([]);
 
+  //Obtener los ids de los usuarios
   useEffect(() => {
     api.client.getClientsIDs().then((ids) => {
       setIds(ids);
     });
   }, []);
 
+  //Obtener la información de los usuarios
   function getClientInfo(ids: number[]) {
     const clientPromises = ids.map((id) => api.client.getClientsInfo(id));
 
@@ -26,12 +33,12 @@ export default function Users(){
       });
   }
 
+  //Obtener la información de los usuarios
   useEffect(() => {
     if (ids.length > 0) {
       getClientInfo(ids);
     }
   }, [ids]);
-
 
     return (
       <div>

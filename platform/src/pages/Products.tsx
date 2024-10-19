@@ -41,7 +41,13 @@ import { SelectGroup, SelectLabel } from "@radix-ui/react-select";
 //   "category_id": 1
 // }
 
+/**
+ * Página de productos
+ * @author Sebastian Antonio Almanza
+ */
+
 export default function UploadProducts() {
+  // Constantes para almacenar los datos del producto
   const imageInput = useRef<HTMLInputElement>(null);
   const [model, setModel] = useState<string>("");
   const [name, setName] = useState<string>("");
@@ -64,6 +70,8 @@ export default function UploadProducts() {
   const navigate = useNavigate();
   const [folder, setFolder] = useState<string>("");
 
+
+  //Revisar que el fomulario este completo
   useEffect(() => {
     const formValid =
       model !== "" &&
@@ -93,6 +101,7 @@ export default function UploadProducts() {
     category_id,
   ]);
 
+  //Función para subir el producto a la base de datos
   function uploadProduct() {
     if (imageInput.current) {
       const file = imageInput.current.files?.[0];
@@ -158,6 +167,7 @@ export default function UploadProducts() {
     }
   }
 
+  //Función para actualizar la información de los productos
   function updateProduct(value: Object, fields: Product) {
     api.product.updateMetadataProduct(fields.id, {
       ...fields,
@@ -165,8 +175,10 @@ export default function UploadProducts() {
     } as any);
   }
 
+  //Constante para almacenar las categorías de la base de datos
   const [categories, setCategories] = useState<Category[]>([]);
 
+  //Obtener las categorías de la base de datos
   useEffect(() => {
     apiCategory.category.getCategories().then((categories) => {
       console.log(categories);
@@ -174,6 +186,8 @@ export default function UploadProducts() {
     });
   }, []);
 
+
+  //Obtener los productos de la base de datos
   useEffect(() => {
     api.product.getProducts().then(([products, folder]) => {
       setProducts(products);
@@ -181,10 +195,12 @@ export default function UploadProducts() {
     });
   }, []);
 
+  //Obtener el id del producto
   useEffect(() => {
     console.log(id);
   }, [id]);
 
+  //Revisar si el token esta en el local storage
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -204,12 +220,8 @@ export default function UploadProducts() {
   //     });
   // }
 
+  //Crear las columnas de la tabla
   const columns = createColumns(updateProduct);
-
-
-
-
-
   return (
     <div className="space-y-4 relative w-full h-full">
       <div className="w-full absolute">

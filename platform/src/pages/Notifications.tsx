@@ -14,13 +14,20 @@ import {
 } from "@/components/ui/accordion";
 import { useState } from "react";
 
+/**
+ * Página de notificaciones
+ * @author Sebastian Antonio Almanza
+ */
+
 export default function Notifications() {
+  //Constantes para almacenar los datos de la notificación
   const [notification, setNotification] = useState<Notification[]>([]);
   const [title, setTitle] = useState<string>(""); 
   const [description, setDescription] = useState<string>(""); 
   const [date] = useState<string>("");
   const [client_id] = useState<number>(0);
 
+  //Función para subir la notificación a la base de datos
   function uploadNotification() {
     api.notification.setNotification({
       title,
@@ -42,7 +49,7 @@ export default function Notifications() {
     });
   }
 
-
+  //Obtener las notificaciones de la base de datos
   useEffect(() => {
     api.notification.getNotifications().then((notification) => {
       setNotification(notification);
