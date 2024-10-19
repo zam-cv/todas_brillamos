@@ -16,16 +16,24 @@ import (
 var db *gorm.DB
 var once sync.Once
 
-// Inicializa la conexión a la base de datos.
+// InitDatabase inicializa la conexión a la base de datos.
 // Devuelve una instancia de *gorm.DB.
 func InitDatabase(host, port, user, password, name string) *gorm.DB {
 	once.Do(func() {
-		dsn := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=require",
-			host, port, user, password, name)
-
-		log.Printf("Attempting to connect to database with SSL enabled")
-
+		var dsn string
 		var err error
+
+		// Compilación condicional
+		if isProd() {
+			dsn = fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=require",
+				host, port, user, password, name)
+			log.Printf("Attempting to connect to database with SSL enabled")
+		} else {
+			dsn = fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
+				host, port, user, password, name)
+			log.Printf("Attempting to connect to database with SSL disabled")
+		}
+
 		db, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 		if err != nil {
 			log.Fatalf("Failed to connect to database: %v", err)
@@ -37,19 +45,10 @@ func InitDatabase(host, port, user, password, name string) *gorm.DB {
 	return db
 }
 
-// func InitDatabase(host, port, user, password, name string) *gorm.DB {
-// 	once.Do(func() {
-// 		dsn := "host=" + host + " port=" + port + " user=" + user + " dbname=" + name + " sslmode=disable password=" + password
-
-// 		var err error
-// 		db, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
-// 		if err != nil {
-// 			panic(err)
-// 		}
-// 	})
-
-// 	return db
-// }
+// isProd determina si la aplicación está en modo producción
+func isProd() bool {
+	return false
+}
 
 // Obtiene la instancia de la base de datos.
 // Pánico si la base de datos no está inicializada.

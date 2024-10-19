@@ -11,9 +11,9 @@ type Orders struct {
 	Quantity           uint
 	DeliveryDate       string  `gorm:"type:date"`
 	Status             string  `gorm:"type:varchar(20)"`
-	OrderReceivedDate  string  `gorm:"type:date"`
-	PreparingOrderDate *string `json:"-" gorm:"type:date"`
-	ShippedDate        *string `json:"-" gorm:"type:date"`
+	OrderReceivedDate  string  `json:"order_received_date" gorm:"type:date"`
+	PreparingOrderDate *string `json:"preparing_order_date" gorm:"type:date"`
+	ShippedDate        *string `json:"shipped_date" gorm:"type:date"`
 	ProductID          uint
 	ClientID           uint
 }

@@ -270,6 +270,7 @@ fun OrderStatus(
     status: String,
     trackingOrder: TrackingOrder
 ) {
+    println(trackingOrder.order)
     val statusList = listOf(
         Pair("Pedido recibido", trackingOrder.order.order_received_date),
         Pair("Preparando pedido", trackingOrder.order.preparing_order_date),
