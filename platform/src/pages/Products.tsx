@@ -318,7 +318,7 @@ export default function UploadProducts() {
                     />
                   </label>
                   <label className="w-2/4">
-                    <span className="font-semibold">Absorbencia</span>
+                    <span className="font-semibold">Flujo</span>
                     <Input
                       name="absorbency"
                       value={absorbency}
