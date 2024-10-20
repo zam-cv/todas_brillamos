@@ -245,7 +245,7 @@ export default function UploadProducts() {
                       name="name"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
-                      placeholder="Toalla reusable...."
+                      placeholder="Toalla reusable..."
                       required
                     />
                   </label>
@@ -293,7 +293,7 @@ export default function UploadProducts() {
                       name="model"
                       value={model}
                       onChange={(e) => setModel(e.target.value)}
-                      placeholder="GX-1201.."
+                      placeholder="GX-1201..."
                       required
                     />
                   </label>
@@ -303,7 +303,7 @@ export default function UploadProducts() {
                       name="size"
                       value={size}
                       onChange={(e) => setSize(e.target.value)}
-                      placeholder="12x12.."
+                      placeholder="12x12..."
                     />
                   </label>
                 </div>
@@ -314,7 +314,7 @@ export default function UploadProducts() {
                       name="material"
                       value={material}
                       onChange={(e) => setMaterial(e.target.value)}
-                      placeholder="fibras de algodón.."
+                      placeholder="Fibras de algodón..."
                     />
                   </label>
                   <label className="w-2/4">
@@ -323,7 +323,7 @@ export default function UploadProducts() {
                       name="absorbency"
                       value={absorbency}
                       onChange={(e) => setAbsorbency(e.target.value)}
-                      placeholder="Alta.."
+                      placeholder="Alta..."
                     />
                   </label>
                 </div>
@@ -345,7 +345,7 @@ export default function UploadProducts() {
                       name="color"
                       value={color}
                       onChange={(e) => setColor(e.target.value)}
-                      placeholder="Azul.."
+                      placeholder="Azul..."
                     />
                   </label>
                 </div>
