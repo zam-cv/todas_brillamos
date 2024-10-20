@@ -21,6 +21,7 @@ fun Date.formatToCalendarDay(): String =
     SimpleDateFormat("d", Locale.getDefault())
         .apply{ timeZone = TimeZone.getTimeZone("UTC-6:00") }
         .format(this)
+
 /**
  * Extensión para obtener el nombre del día de la semana en tres letras.
  * @return El nombre del día de la semana como cadena.

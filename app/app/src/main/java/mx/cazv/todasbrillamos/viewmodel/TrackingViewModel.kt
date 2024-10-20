@@ -11,6 +11,10 @@ import mx.cazv.todasbrillamos.model.models.Tracking
 import mx.cazv.todasbrillamos.model.models.TrackingOrder
 import mx.cazv.todasbrillamos.model.services.TrackingService
 
+/**
+ * ViewModel para gestionar el estado del seguimiento de pedidos.
+ * @author Carlos Zamudio
+ */
 class TrackingViewModel : ViewModel() {
     private val trackingService = TrackingService()
 
@@ -32,6 +36,11 @@ class TrackingViewModel : ViewModel() {
     )
     val stateOrder: StateFlow<TrackingOrder> = _stateOrder.asStateFlow()
 
+    /**
+     * Carga el seguimiento de un pedido.
+     *
+     * @param token El token de autenticación.
+     */
     fun loadTracking(token: String) {
         viewModelScope.launch {
             try {
@@ -46,6 +55,12 @@ class TrackingViewModel : ViewModel() {
         }
     }
 
+    /**
+     * Carga el seguimiento de un pedido por fecha.
+     *
+     * @param token El token de autenticación.
+     * @param date La fecha de entrega de los pedidos a obtener.
+     */
     fun loadTrackingByDate(token: String, date: String) {
         viewModelScope.launch {
             try {

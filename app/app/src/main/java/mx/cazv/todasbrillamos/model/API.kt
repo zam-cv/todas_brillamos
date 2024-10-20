@@ -336,7 +336,7 @@ interface API {
      * Obtiene la lista de notificaciones para un cliente
      *
      * @param token El token de autenticación.
-     * @return La lista de notificaciones.
+     * @return El seguimiento del pedido.
      */
     @GET("api/tracking")
     suspend fun getTracking(@Header("Authorization") token: String): Tracking
@@ -346,7 +346,7 @@ interface API {
      *
      * @param token El token de autenticación.
      * @param deliveryDate La fecha de entrega de los pedidos a obtener.
-     * @return La lista de notificaciones.
+     * @return Información del pedido.
      */
     @GET("api/tracking/order/{deliveryDate}")
     suspend fun getTrackingByDate(
@@ -354,6 +354,12 @@ interface API {
         @Path("deliveryDate") deliveryDate: String
     ): TrackingOrder
 
+    /**
+     * Obtiene la lista de notificaciones para un cliente
+     *
+     * @param token El token de autenticación.
+     * @return Número de notificaciones no leídas.
+     */
     @GET("api/notifications/unread")
     suspend fun getUnreadNotifications(
         @Header("Authorization") token: String

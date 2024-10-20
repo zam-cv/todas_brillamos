@@ -30,15 +30,22 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import mx.cazv.todasbrillamos.model.ApiConfig
 import mx.cazv.todasbrillamos.model.models.OrderSummary
+import mx.cazv.todasbrillamos.ui.theme.AccentColor
 import mx.cazv.todasbrillamos.view.Routes
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
+/**
+ * Función que formatea una fecha en un formato legible.
+ * @author Carlos Zamudio
+ *
+ * @param inputDate La fecha a formatear.
+ */
 @RequiresApi(Build.VERSION_CODES.O)
 fun formatDate(inputDate: String): String {
     val inputFormatter = DateTimeFormatter.ISO_DATE_TIME
-    val outputFormatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy, hh:mm a", Locale("es", "ES"))
+    val outputFormatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy", Locale("es", "ES"))
 
     val date = ZonedDateTime.parse(inputDate, inputFormatter)
     val formattedDate = date.format(outputFormatter)
@@ -110,6 +117,12 @@ fun InfoOrder(
                 )
             }
         }
+
+        Text( text = "Fecha de entrega:",
+            fontSize = 14.sp,
+            fontWeight = FontWeight.Bold,
+            color = AccentColor,
+            modifier = Modifier.padding(start = 15.dp))
 
         Row(modifier = Modifier
             .fillMaxWidth()
