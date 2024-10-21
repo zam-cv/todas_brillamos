@@ -260,11 +260,10 @@ interface API {
     /**
      * Obtiene la lista de publicaciones.
      *
-     * @param token El token de autenticación.
      * @return La lista de publicaciones.
      */
     @GET("api/posts")
-    suspend fun getPosts(@Header("Authorization") token: String): List<Post>
+    suspend fun getPosts(): List<Post>
 
     /**
      * Verifica si un post es favorito.

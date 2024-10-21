@@ -23,12 +23,11 @@ class PostsViewModel : ViewModel() {
     /**
      * Carga las publicaciones utilizando el token de autenticación.
      *
-     * @param token El token de autenticación.
      */
-    fun loadPosts(token: String) {
+    fun loadPosts() {
         viewModelScope.launch {
             try {
-                val posts = postsService.posts(token)
+                val posts = postsService.posts()
                 println(posts)
                 _state.value = PostsState(posts)
             } catch (e: Exception) {

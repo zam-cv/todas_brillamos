@@ -31,8 +31,8 @@ class PostsService {
      * @param token El token de autenticación.
      * @return La lista de publicaciones.
      */
-    suspend fun posts(token: String): List<Post> {
-        return apiCall { apiService.getPosts("Bearer $token") }.getOrNull()!!
+    suspend fun posts(): List<Post> {
+        return apiCall { apiService.getPosts() }.getOrNull()!!
     }
 
     /**

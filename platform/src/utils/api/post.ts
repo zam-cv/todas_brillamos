@@ -1,4 +1,5 @@
 import {get, del, post} from "@/utils/methods";
+import { flattenBy } from "@tanstack/react-table";
 
 export interface Posts {
     id: number;
@@ -17,7 +18,7 @@ export default {
         },
 
         getPosts: (): Promise<Posts[]> =>{
-            return get("/posts")
+            return get("/posts", false)
         },
 
         deletePost: (id: number): Promise<void> => {

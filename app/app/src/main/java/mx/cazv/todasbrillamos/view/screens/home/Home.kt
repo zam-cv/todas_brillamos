@@ -69,7 +69,7 @@ fun Home(
 
         if (token != null) {
             userViewModel.loadUserInfo(token)
-            postsViewModel.loadPosts(token)
+            postsViewModel.loadPosts()
         }
     }
 

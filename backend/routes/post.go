@@ -56,8 +56,7 @@ func addPostRoutes(rg *gin.RouterGroup) {
 	})
 
 	// GET /posts - Obtiene todos los posts
-	post.GET("", auth.GetMiddleware(AdminAuth), func(c *gin.Context) {
-
+	post.GET("", func(c *gin.Context) {
 		posts, err := database.GetPosts()
 		if err != nil {
 			c.JSON(500, gin.H{"error": err.Error()})
