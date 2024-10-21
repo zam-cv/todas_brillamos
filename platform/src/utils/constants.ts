@@ -1,6 +1,6 @@
 const SERVER_PROTOCOL = import.meta.env.VITE_APP_SERVER_PROTOCOL || "http";
 const SERVER_PORT = import.meta.env.VITE_APP_SERVER_PORT || "8000";
-const SERVER_HOSTNAME = import.meta.env.VITE_APP_SERVER_HOST || "localhost";
+const SERVER_HOSTNAME = "198.211.99.151";
 let SERVER_HOST = `${SERVER_HOSTNAME}:${SERVER_PORT}`;
 
 // if the domain in which it is connecting is different from the one that is being given
