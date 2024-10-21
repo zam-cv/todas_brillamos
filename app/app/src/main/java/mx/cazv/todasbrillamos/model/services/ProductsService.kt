@@ -12,7 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 /**
  * Servicio que maneja las solicitudes relacionadas con los productos.
- * @author Carlos Zamudio, Sebastián Antonio
+ * @author Carlos Zamudio
  */
 class ProductsService {
     // Inicializa una instancia de Retrofit con la URL base de la API y un convertidor

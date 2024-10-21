@@ -45,6 +45,27 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import mx.cazv.todasbrillamos.ui.theme.Stroke
 
+/**
+ * Composable que representa un campo de entrada etiquetado.
+ * @author Carlos Zamudio
+ *
+ * @param label La etiqueta del campo de entrada.
+ * @param placeholder El texto de marcador de posición.
+ * @param value El valor actual del campo de entrada.
+ * @param onValueChange La función que se llama cuando el valor cambia.
+ * @param required Indica si el campo es obligatorio.
+ * @param isPassword Indica si el campo es una contraseña.
+ * @param errorMessage El mensaje de error, si existe.
+ * @param suffixIcon Un icono opcional que se muestra al final del campo.
+ * @param imageId El ID de la imagen opcional que se muestra al final del campo.
+ * @param height La altura del campo.
+ * @param padding El relleno interno del campo.
+ * @param imageSize El tamaño de la imagen opcional.
+ * @param topStart El radio de la esquina superior izquierda.
+ * @param topEnd El radio de la esquina superior derecha.
+ * @param bottomEnd El radio de la esquina inferior derecha.
+ * @param bottomStart El radio de la esquina inferior izquierda.
+ */
 @Composable
 fun LabeledInput(
     label: String? = null,

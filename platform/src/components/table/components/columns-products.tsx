@@ -166,7 +166,7 @@ export const createColumns = (
     {
       accessorKey: "absorbency",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Absorbencia" />
+        <DataTableColumnHeader column={column} title="Flujo" />
       ),
       cell: ({ row }) => {
         const [absorbency, setAbsorbency] = useState<string>(row.getValue("absorbency"));

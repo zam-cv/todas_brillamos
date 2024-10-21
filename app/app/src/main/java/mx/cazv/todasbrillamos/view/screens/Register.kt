@@ -65,79 +65,6 @@ import mx.cazv.todasbrillamos.view.components.LabeledInput
 import mx.cazv.todasbrillamos.viewmodel.AuthState
 import mx.cazv.todasbrillamos.viewmodel.AuthViewModel
 
-data class ValidationResult(
-    val isValid: Boolean,
-    val emailError: String? = null,
-    val passwordError: String? = null,
-    val confirmPasswordError: String? = null,
-    val firstNameError: String? = null,
-    val lastNameError: String? = null,
-    val privacyError: String? = null
-)
-
-fun validateField(value: String, rules: List<(String) -> String?>): String? {
-    for (rule in rules) {
-        val error = rule(value)
-        if (error != null) return error
-    }
-    return null
-}
-
-fun validateRegistration(
-    email: String,
-    password: String,
-    confirmPassword: String,
-    firstName: String,
-    lastName: String,
-    acceptPrivacy: Boolean
-): ValidationResult {
-
-    var emailError: String? = null
-    var passwordError: String? = null
-    var confirmPasswordError: String? = null
-    var firstNameError: String? = null
-    var lastNameError: String? = null
-    var privacyError: String? = null
-
-    val nameRegex = "^[a-zA-Z\\s]+$".toRegex()
-
-    val errors = mutableMapOf<String, String?>()
-
-
-
-    if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-        emailError = "Correo electrónico inválido"
-    }
-    if (password.length < 8) {
-        passwordError = "La contraseña debe tener al menos 8 caracteres"
-    }
-    if (password != confirmPassword) {
-        confirmPasswordError = "Las contraseñas no coinciden"
-    }
-    if (firstName.length < 2 || !firstName.matches(nameRegex)) {
-        firstNameError = "El nombre solo debe contener letras y al menos 2 caracteres"
-    }
-    if (lastName.length < 2 || !lastName.matches(nameRegex)) {
-        lastNameError = "El apellido solo debe contener letras y al menos 2 caracteres"
-    }
-    if (!acceptPrivacy) {
-        privacyError = "Debes aceptar el aviso de privacidad"
-    }
-
-
-    val isValid = emailError == null && passwordError == null && confirmPasswordError == null &&
-            firstNameError == null && lastNameError == null && privacyError == null
-
-    return ValidationResult(
-        isValid = isValid,
-        emailError = emailError,
-        passwordError = passwordError,
-        confirmPasswordError = confirmPasswordError,
-        firstNameError = firstNameError,
-        lastNameError = lastNameError,
-        privacyError = privacyError
-    )
-}
 
 /**
  * Pantalla de registro que permite al usuario crear una nueva cuenta.
@@ -464,4 +391,107 @@ fun Register(navController: NavHostController, authViewModel: AuthViewModel) {
             icon = Icons.Outlined.Check
         )
     }
+}
+
+/**
+ * Resultado de la validación de los campos de registro.
+ *
+ * @property isValid Indica si la validación fue exitosa.
+ * @property emailError El mensaje de error del correo electrónico, si existe.
+ * @property passwordError El mensaje de error de la contraseña, si existe.
+ * @property confirmPasswordError El mensaje de error de la confirmación de la contraseña, si existe.
+ * @property firstNameError El mensaje de error del nombre, si existe.
+ * @property lastNameError El mensaje de error del apellido, si existe.
+ * @property privacyError El mensaje de error de la aceptación de la privacidad, si existe.
+ */
+data class ValidationResult(
+    val isValid: Boolean,
+    val emailError: String? = null,
+    val passwordError: String? = null,
+    val confirmPasswordError: String? = null,
+    val firstNameError: String? = null,
+    val lastNameError: String? = null,
+    val privacyError: String? = null
+)
+
+/**
+ * Valida un campo de entrada basado en una lista de reglas.
+ *
+ * @param value El valor del campo de entrada.
+ * @param rules La lista de reglas de validación.
+ * @return El mensaje de error, si existe.
+ */
+fun validateField(value: String, rules: List<(String) -> String?>): String? {
+    for (rule in rules) {
+        val error = rule(value)
+        if (error != null) return error
+    }
+    return null
+}
+
+/**
+ * Valida los campos de registro.
+ *
+ * @param email El correo electrónico.
+ * @param password La contraseña.
+ * @param confirmPassword La confirmación de la contraseña.
+ * @param firstName El nombre.
+ * @param lastName El apellido.
+ * @param acceptPrivacy Indica si se aceptó la privacidad.
+ * @return El resultado de la validación.
+ */
+fun validateRegistration(
+    email: String,
+    password: String,
+    confirmPassword: String,
+    firstName: String,
+    lastName: String,
+    acceptPrivacy: Boolean
+): ValidationResult {
+
+    var emailError: String? = null
+    var passwordError: String? = null
+    var confirmPasswordError: String? = null
+    var firstNameError: String? = null
+    var lastNameError: String? = null
+    var privacyError: String? = null
+
+    val nameRegex = "^[a-zA-Z\\s]+$".toRegex()
+
+    val errors = mutableMapOf<String, String?>()
+
+
+
+    if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+        emailError = "Correo electrónico inválido"
+    }
+    if (password.length < 8) {
+        passwordError = "La contraseña debe tener al menos 8 caracteres"
+    }
+    if (password != confirmPassword) {
+        confirmPasswordError = "Las contraseñas no coinciden"
+    }
+    if (firstName.length < 2 || !firstName.matches(nameRegex)) {
+        firstNameError = "El nombre solo debe contener letras y al menos 2 caracteres"
+    }
+    if (lastName.length < 2 || !lastName.matches(nameRegex)) {
+        lastNameError = "El apellido solo debe contener letras y al menos 2 caracteres"
+    }
+    if (!acceptPrivacy) {
+        privacyError = "Debes aceptar el aviso de privacidad"
+    }
+
+
+    val isValid = emailError == null && passwordError == null && confirmPasswordError == null &&
+            firstNameError == null && lastNameError == null && privacyError == null
+
+    return ValidationResult(
+        isValid = isValid,
+        emailError = emailError,
+        passwordError = passwordError,
+        confirmPasswordError = confirmPasswordError,
+        firstNameError = firstNameError,
+        lastNameError = lastNameError,
+        privacyError = privacyError
+    )
 }

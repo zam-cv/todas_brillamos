@@ -46,7 +46,7 @@ fun InteractiveCardsHome(navController: NavHostController){
             InteractiveCard(
                 text = buildAnnotatedString {
                     withStyle(style = SpanStyle(fontStyle = FontStyle.Italic)) {
-                        append("Pregunta \na la ")
+                        append("Consulta \nal ")
                     }
                     withStyle(
                         style = SpanStyle(
@@ -54,7 +54,7 @@ fun InteractiveCardsHome(navController: NavHostController){
                             fontStyle = FontStyle.Italic
                         )
                     ) {
-                        append("IA")
+                        append("Chatbot")
                     }
                 },
                 image = R.drawable.med_ic,

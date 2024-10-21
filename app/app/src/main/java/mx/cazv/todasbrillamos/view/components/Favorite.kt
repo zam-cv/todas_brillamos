@@ -25,6 +25,14 @@ import mx.cazv.todasbrillamos.model.models.ProductRaw
 import mx.cazv.todasbrillamos.viewmodel.AuthViewModel
 import mx.cazv.todasbrillamos.viewmodel.FavoritesViewModel
 
+/**
+ * Componente de UI para mostrar y gestionar el estado de un producto favorito.
+ * @author Carlos Zamudio
+ *
+ * @param authViewModel El ViewModel de autenticación.
+ * @param favoritesViewModel El ViewModel de favoritos.
+ * @param productRaw El producto a mostrar como favorito.
+ */
 @Composable
 fun FavoriteComponent(
     authViewModel: AuthViewModel,
