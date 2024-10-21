@@ -1,5 +1,4 @@
 import {get, del, post} from "@/utils/methods";
-import { flattenBy } from "@tanstack/react-table";
 
 export interface Posts {
     id: number;
